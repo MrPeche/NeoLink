@@ -27,4 +27,6 @@
     <string name="IngresoContraseñaRegistroOne">Ingrese una contraseña</string>
     <string name="RepitaContraseñaRegistroOne">Repita su contraseña</string>
     <string name="RepitaIngresoContraseñaRegistroOne"> Repita su contraseña</string>
+    <string name="botonRegistroOne"> Siguiente</string>
+
 </resources>

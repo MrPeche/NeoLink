@@ -55,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean verificarPass(String pass){  //Verificacion de password
         return false;
     }
+
     public void registro(View view){  //Funcion para registrarse
-        Toast.makeText( this, "Registrando", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this,registroone.class));
     }
     public void recuperar(View view){ //Funcion de recuperar
         startActivity(new Intent(this,recuperar.class));
