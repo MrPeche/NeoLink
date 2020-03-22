@@ -2,6 +2,7 @@ package com.example.neolink_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -58,6 +59,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText( this, "Registrando", Toast.LENGTH_SHORT).show();
     }
     public void recuperar(View view){ //Funcion de recuperar
-        //startActivity(new Intent(this,recuperar.class));
+        startActivity(new Intent(this,recuperar.class));
     }
 }
