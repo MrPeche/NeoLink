@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">neolink_app</string>
+
+    //MainActivity
+    <string name="titulo1">Neo</string>
+    <string name="titulo2">Link</string>
+    <string name="usuario">Email</string>
+    //Correo Electrónico
+    <string name="contraseña">Contraseña</string>
+    //Contraseña
+    <string name="sesion">Recordarme</string>
+    <string name="botoningreso">Iniciar Sesión</string>
+    <string name="creaccuenta">Crear Cuenta</string>
+    <string name="recuperarcuenta">Recuperar Contraseña</string>
+
+    //Actividad Recuperar
+    <string name="TituloRecuperar">Recuperación de la contraseña</string>
+    <string name="recuperarRecuperar">Ingrese su correo</string>
+    <string name="botonRecuperar">Recuperar contraseña</string>
+    <string name="volverRecuperar">Volver</string>
+
+    //Actividad Registro 1
+    <string name="TituloRegistroOne">Registrar cuenta</string>
+    <string name="CorreoRegistroOne">Email</string>
+    <string name="IngresoCorreoRegistroOne">Ingrese su correo electrónico</string>
+    <string name="ContraseñaRegistroOne">Contraseña</string>
+    <string name="IngresoContraseñaRegistroOne">Ingrese una contraseña</string>
+    <string name="RepitaContraseñaRegistroOne">Repita su contraseña</string>
+    <string name="RepitaIngresoContraseñaRegistroOne"> Repita su contraseña</string>
+</resources>
