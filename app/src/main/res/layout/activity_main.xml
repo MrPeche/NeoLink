@@ -79,7 +79,6 @@
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 app:errorEnabled="true"
-                app:errorTextColor="#000000"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -139,7 +138,6 @@
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 app:errorEnabled="true"
-                app:errorTextColor="#000000"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
