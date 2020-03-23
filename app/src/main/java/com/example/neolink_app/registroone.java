@@ -23,12 +23,12 @@ public class registroone extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registroone);
-        correo = (TextInputEditText)findViewById(R.id.correoRecuperar);
-        passwuno = (TextInputEditText)findViewById(R.id.ContraseñaRecuperar);
-        passwdos = (TextInputEditText)findViewById(R.id.ContraseñaRecuperartwo);
-        cor = (TextInputLayout)findViewById(R.id.layoutcorreoregistroone);
-        pasu = (TextInputLayout)findViewById(R.id.layoutcontraseñaregistroone);
-        pasd = (TextInputLayout)findViewById(R.id.layoutcontraseñaregistrotwo);
+        correo = findViewById(R.id.correoRecuperar);
+        passwuno = findViewById(R.id.ContraseñaRecuperar);
+        passwdos = findViewById(R.id.ContraseñaRecuperartwo);
+        cor = findViewById(R.id.layoutcorreoregistroone);
+        pasu = findViewById(R.id.layoutcontraseñaregistroone);
+        pasd = findViewById(R.id.layoutcontraseñaregistrotwo);
 
         correo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -43,7 +43,9 @@ public class registroone extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if(eselemailvalido(s.toString())){
+                    cor.setError("Correo valido");
+                } else cor.setError("Correo invalido");
             }
         });
         passwuno.addTextChangedListener(new TextWatcher() {
@@ -59,7 +61,9 @@ public class registroone extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if(s.length()>pasu.getCounterMaxLength()){
+                    pasu.setError("Contraseña valida");
+                } else pasu.setError("Mínimo 6 caracteres o más");
             }
         });
         passwdos.addTextChangedListener(new TextWatcher() {
@@ -75,7 +79,11 @@ public class registroone extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if((s.length()!=0)&&(passwuno.length()!=0)){
+                    if(s.toString().equals(passwuno.getText().toString())) {
+                        pasd.setError("Contraseña valida");
+                    }
+                } else pasd.setError("Repita su contraseña");
             }
         });
     }
@@ -83,7 +91,7 @@ public class registroone extends AppCompatActivity {
 
     public void siguiente(View view){
         if(eselemailvalido(correo.getText().toString())){
-            if(esacontraseñavale(passwuno.getText().toString(),passwdos.getText().toString())) {
+            if(esacontrasenavale(passwuno.getText().toString(),passwdos.getText().toString())) {
                 Bundle paqueteregistro = new Bundle();
                 paqueteregistro.putString("correo",correo.getText().toString());
                 paqueteregistro.putString("passw",passwuno.getText().toString());
@@ -100,10 +108,8 @@ public class registroone extends AppCompatActivity {
 
     }
 
-    public static boolean esacontraseñavale(String contraein,String contraswei) { //sacado de internet
-        if((contraein.length()>=6)&&(contraswei==contraein)){
-            return true;
-        } else return false;
+    public static boolean esacontrasenavale(String contraein,String contraswei) { //sacado de internet
+        return (contraein.length() >= 6) && (contraswei.equals(contraein));
     }
 
 

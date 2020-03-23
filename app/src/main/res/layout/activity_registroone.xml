@@ -87,7 +87,8 @@
                 android:id="@+id/layoutcorreoregistroone"
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
-                app:hintEnabled="true">
+                app:hintEnabled="true"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/correoRecuperar"
@@ -149,7 +150,8 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="6"
                 app:counterOverflowTextAppearance="@style/CounterOverFlow"
-                app:counterTextAppearance="#DE1738">
+                app:counterTextAppearance="#DE1738"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ContraseñaRecuperar"
@@ -207,7 +209,8 @@
                 android:id="@+id/layoutcontraseñaregistrotwo"
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
-                app:hintEnabled="true">
+                app:hintEnabled="true"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ContraseñaRecuperartwo"
