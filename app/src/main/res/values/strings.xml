@@ -29,4 +29,10 @@
     <string name="RepitaIngresoContraseñaRegistroOne"> Repita su contraseña</string>
     <string name="botonRegistroOne"> Siguiente</string>
 
+    //Actividad Registro 2
+    <string name="TituloRegistroTwo">Registrar cuenta</string>
+    <string name="CodigoRegistroTwo">Código de confirmación</string>
+    <string name="IngresoCodigoRegistroTwo">Ingrese su codigo</string>
+    <string name="MensajeRegistroTwo">Revise su correo y copie el código que le hemos enviamos</string>
+
 </resources>

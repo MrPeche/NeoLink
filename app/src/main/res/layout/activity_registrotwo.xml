@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registroone"
+    tools:context=".registrotwo"
     android:background="@drawable/greenfiedl2">
 
     <LinearLayout
@@ -45,13 +45,17 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tituloregone"
+            android:id="@+id/tituloregtwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/TituloRegistroOne"
-            android:textSize="18sp"
             android:fontFamily="@font/lato"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/TituloRegistroTwo"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,12 +68,12 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/correotituloregistroone"
+                android:id="@+id/correotituloregistrotwo"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:text="@string/CorreoRegistroOne"
                 android:fontFamily="@font/lato"
-                android:textSize="18sp"/>
+                android:text="@string/CodigoRegistroTwo"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -84,19 +88,19 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutcorreoregistroone"
+                android:id="@+id/layoutcodigoregistrotwo"
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/correoRecuperar"
+                    android:id="@+id/codigorecuperartwo"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:ems="10"
                     android:fontFamily="@font/lato"
-                    android:hint="@string/IngresoCorreoRegistroOne"
                     android:gravity="center"
+                    android:hint="@string/IngresoCodigoRegistroTwo"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:textSize="18sp"
@@ -110,6 +114,10 @@
                 android:layout_weight="1" />
 
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,119 +125,29 @@
             android:orientation="horizontal">
 
             <Space
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/contraseñatituloregistroone"
-                android:layout_width="280dp"
+                android:id="@+id/mensajeregistrotwo"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="@string/ContraseñaRegistroOne"
-                android:fontFamily="@font/lato"
-                android:textSize="18sp"/>
+                android:layout_weight="1"
+                android:fontFamily = "@font/lato"
+                android:textSize = "18sp"
+                android:gravity = "center"
+                android:text="@string/MensajeRegistroTwo" />
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
 
-        <LinearLayout
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutcontraseñaregistroone"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                app:hintEnabled="true"
-                app:counterEnabled="true"
-                app:counterMaxLength="6"
-                app:counterOverflowTextAppearance="@style/CounterOverFlow"
-                app:counterTextAppearance="#DE1738">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ContraseñaRecuperar"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:ems="10"
-                    android:fontFamily="@font/lato"
-                    android:hint="@string/IngresoContraseñaRegistroOne"
-                    android:gravity="center"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:textSize="18sp"
-                    android:theme="@style/camposdeingreso" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/contraseñatituloregistroone2"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:text="@string/RepitaContraseñaRegistroOne"
-                android:fontFamily="@font/lato"
-                android:textSize="18sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutcontraseñaregistrotwo"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                app:hintEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ContraseñaRecuperartwo"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:ems="10"
-                    android:fontFamily="@font/lato"
-                    android:hint="@string/RepitaIngresoContraseñaRegistroOne"
-                    android:gravity="center"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:textSize="18sp"
-                    android:theme="@style/camposdeingreso" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -242,7 +160,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button_registroone"
+                android:id="@+id/button_registrotwo"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -262,22 +180,18 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="20dp" />
 
         <TextView
-            android:id="@+id/volverRegistro"
+            android:id="@+id/volvertwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="@font/lato"
-            android:gravity="center"
-            android:onClick="volver"
             android:text="@string/volverRecuperar"
-            android:textSize="14sp" />
+            android:fontFamily="@font/lato"
+            android:gravity ="center"/>
+
 
     </LinearLayout>
-
 
 
 </android.widget.RelativeLayout>

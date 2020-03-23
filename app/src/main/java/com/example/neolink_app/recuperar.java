@@ -32,9 +32,6 @@ public class recuperar extends AppCompatActivity {
 
     }
 
-    public static boolean eselemailvalido(CharSequence target) { //sacado de internet
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
-    }
 
     public void volver(View view){
         finish();

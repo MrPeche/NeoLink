@@ -20,5 +20,9 @@
         <item name="colorControlHighlight">#FFFFFF</item>
 
     </style>
+    <style name="CounterOverFlow" parent="TextAppearance.Design.Counter.Overflow">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#3C77AF</item>
+    </style>
 
 </resources>
