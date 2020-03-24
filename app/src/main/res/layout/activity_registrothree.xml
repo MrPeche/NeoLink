@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,191 @@
     tools:context=".registrothree"
     android:background="@drawable/greenfiedl2">
 
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="600dp"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/layoutredondeado">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="222dp"
+            android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/titulo1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center|end"
+                android:text="@string/titulo1"
+                android:textColor="#849AAF"
+                android:textColorLink="#849AAF"
+                android:textSize="36sp" />
+
+            <TextView
+                android:id="@+id/titulo2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/lato"
+                android:gravity="center|start"
+                android:text="@string/titulo2"
+                android:textColor="#73AA86"
+                android:textSize="36sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tituloregthree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="@string/TituloRegistroTwo"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tickettituloregistrothree"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="@string/TituloRegistroThree"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutcodigoregistrothree"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                app:hintEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ticketrecuperarthree"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:ems="10"
+                    android:fontFamily="@font/lato"
+                    android:gravity="center"
+                    android:hint="@string/TituloRegistroThree"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textSize="18sp"
+                    android:theme="@style/camposdeingreso" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/mensajeregistrothree"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily = "@font/lato"
+                android:textSize = "18sp"
+                android:gravity = "center"
+                android:text="@string/MensajeRegistroThree" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/button_registrothree"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/boton"
+                android:fontFamily="@font/lato"
+                android:onClick="siguiente"
+                android:text="@string/botonRegistroOne"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/volverthree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/volverRecuperar"
+            android:fontFamily="@font/lato"
+            android:gravity ="center"
+            android:clickable="true"
+            android:onClick="volver"
+            android:focusable = "true"/>
+
+    </LinearLayout>
+</android.widget.RelativeLayout>
