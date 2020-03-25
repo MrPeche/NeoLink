@@ -95,7 +95,7 @@
                 android:layout_height="match_parent"
                 app:hintEnabled="true"
                 app:errorEnabled="true"
-                app:errorTextAppearance="#DE1738">
+                app:errorTextAppearance="#FFDA2A2A">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/codigorecuperartwo"
