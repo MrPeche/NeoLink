@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,7 +23,30 @@ public class registrotwo extends AppCompatActivity {
         setContentView(R.layout.activity_registrotwo);
         codigo = findViewById(R.id.codigorecuperartwo);
         laycodigo = findViewById(R.id.layoutcodigoregistrotwo);
+        codigo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length()==6){
+                    laycodigo.setError(null);
+                }
+                else {
+                    laycodigo.setError("El código es de 6 caracteres");
+                }
+            }
+        });
     }
+
+
     public boolean verificarcodigo(String codigo){
         return true;
     }

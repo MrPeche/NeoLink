@@ -74,7 +74,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:text="@string/CodigoRegistroTwo"
-                android:textSize="18sp" />
+                android:textSize="14sp"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 
@@ -92,7 +93,9 @@
                 android:id="@+id/layoutcodigoregistrotwo"
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
-                app:hintEnabled="true">
+                app:hintEnabled="true"
+                app:errorEnabled="true"
+                app:errorTextAppearance="#DE1738">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/codigorecuperartwo"

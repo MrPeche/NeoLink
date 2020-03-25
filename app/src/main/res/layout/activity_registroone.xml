@@ -70,7 +70,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/CorreoRegistroOne"
                 android:fontFamily="@font/lato"
-                android:textSize="18sp"/>
+                android:textSize="14sp"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 
@@ -129,7 +130,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ContraseñaRegistroOne"
                 android:fontFamily="@font/lato"
-                android:textSize="18sp"/>
+                android:textSize="14sp"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 
@@ -192,7 +194,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/RepitaContraseñaRegistroOne"
                 android:fontFamily="@font/lato"
-                android:textSize="18sp"/>
+                android:textSize="14sp"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 
