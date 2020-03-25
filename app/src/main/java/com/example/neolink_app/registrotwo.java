@@ -52,10 +52,15 @@ public class registrotwo extends AppCompatActivity {
     }
 
     public void siguiente(View view){
-
         if(verificarcodigo(codigo.getText().toString())) {
-            Intent i = new Intent(this, registrothree.class);
-            startActivity(i);
+            Intent ione = getIntent();
+            Bundle extras = ione.getExtras();
+            Bundle paqueteregistro = new Bundle();
+            paqueteregistro.putString("correo",extras.getString("correo"));
+            paqueteregistro.putString("passw",extras.getString("passw"));
+            Intent itwo = new Intent(this, registrothree.class);
+            itwo.putExtras(paqueteregistro);
+            startActivity(itwo);
         } else Toast.makeText( this, "Codigo Invalido", Toast.LENGTH_SHORT).show();
     }
     public void volver(View view){

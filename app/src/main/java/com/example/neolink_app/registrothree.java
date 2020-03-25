@@ -48,6 +48,11 @@ public class registrothree extends AppCompatActivity {
     public void siguiente(View view){
         if(validarticket(ticket.getText().toString())){
             //Terminar mensaje y irnos al main
+            Intent itwo = getIntent();
+            Bundle extras = itwo.getExtras();
+            String correo = extras.getString("correo");
+            String passw = extras.getString("passw");
+            EnvioRegistro(correo,passw);
             Toast.makeText( this, "Registro completado", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, MainActivity.class);
             i.setFlags(i.FLAG_ACTIVITY_CLEAR_TOP);
@@ -56,6 +61,10 @@ public class registrothree extends AppCompatActivity {
 
         Intent i = new Intent(this,registrothree.class);
         startActivity(i);
+    }
+
+    public void EnvioRegistro(String correo, String password){
+        // Se envia por firebase
     }
 
     public void volver(View view){

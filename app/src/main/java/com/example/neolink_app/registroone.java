@@ -95,8 +95,9 @@ public class registroone extends AppCompatActivity {
                 Bundle paqueteregistro = new Bundle();
                 paqueteregistro.putString("correo",correo.getText().toString());
                 paqueteregistro.putString("passw",passwuno.getText().toString());
-                Intent i = new Intent(this, registrotwo.class);
-                i.putExtras(paqueteregistro);
+                Intent ione = new Intent(this, registrotwo.class);
+                ione.putExtras(paqueteregistro);
+                startActivity(ione);
             } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
         } else Toast.makeText( this, "Correo invalido", Toast.LENGTH_SHORT).show();
 
