@@ -80,7 +80,7 @@
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 app:errorEnabled="true"
-                app:hintEnabled="false">
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usuario"
@@ -140,7 +140,7 @@
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 app:errorEnabled="true"
-                app:hintEnabled="false">
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/contraseña"
