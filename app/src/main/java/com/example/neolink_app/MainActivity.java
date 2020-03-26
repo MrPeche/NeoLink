@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         rec = (CheckBox)findViewById(R.id.recordarme);
         layouteins = (TextInputLayout)findViewById(R.id.layout1);
 
-        String archivos[] = fileList(); // "NeoLinkid.txt"
+        String[] archivos = fileList(); // "NeoLinkid.txt"
         String Lineaguardada;
 
         if(archivoexiste(archivos,"NeoLinkid.txt")){
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 pass.setText(Lineaguardada.substring(Lineaguardada.indexOf(" "),Lineaguardada.indexOf('\n')));
                 rec.setChecked(true);
 
-            } catch (IOException e){
+            } catch (IOException ignored){
 
             }
         }

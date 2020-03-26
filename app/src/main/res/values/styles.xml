@@ -20,6 +20,7 @@
         <item name="colorControlActivated">#73AA86</item>
         <item name="colorControlHighlight">#73AA86</item>
         <item name="colorError">#73AA86</item>
+        <item name="colorOnError">#73AA86</item>
     </style>
 
     <style name="camposdecajas" parent="Theme.AppCompat.Light.DarkActionBar">

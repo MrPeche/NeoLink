@@ -46,8 +46,7 @@ public class registroone extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(eselemailvalido(s.toString())){
-                    cor.setErrorTextAppearance(R.style.camposdeingresoalterno);
-                    cor.setError("Correo valido");  // "Correo valido"
+                    cor.setError(null);  // "Correo valido"
 
                 } else {
                     cor.setErrorTextAppearance(R.style.camposdeingreso);
@@ -69,7 +68,7 @@ public class registroone extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length()>pasu.getCounterMaxLength()){
-                    pasu.setError("Contraseña valida");
+                    pasu.setError(null);
                 } else pasu.setError("Mínimo 6 caracteres o más");
             }
         });
@@ -88,7 +87,7 @@ public class registroone extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if((s.length()!=0)&&(passwuno.length()!=0)){
                     if(s.toString().equals(passwuno.getText().toString())) {
-                        pasd.setError("Contraseña valida");
+                        pasd.setError(null);
                     } else pasd.setError("Repita su contraseña");
                 } else pasd.setError("Repita su contraseña");
             }

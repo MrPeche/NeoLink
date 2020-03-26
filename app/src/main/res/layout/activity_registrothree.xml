@@ -93,7 +93,8 @@
                 android:id="@+id/layoutcodigoregistrothree"
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
-                app:hintEnabled="true">
+                app:hintEnabled="true"
+                app:errorTextColor="#73AA86">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ticketrecuperarthree"
