@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 id.close();
                 br.close();
                 user.setText(Lineaguardada.substring(0,Lineaguardada.indexOf(" ")));
-                pass.setText(Lineaguardada.substring(Lineaguardada.indexOf(" "),Lineaguardada.indexOf('\n')));
+                pass.setText(Lineaguardada.substring(Lineaguardada.indexOf(" ")));
                 rec.setChecked(true);
 
             } catch (IOException ignored){
