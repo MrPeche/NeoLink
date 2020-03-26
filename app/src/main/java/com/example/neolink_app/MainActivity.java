@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean verificarUser(String user){  //Verificacion de Usuario
-        return false;
+        return true;
     }
     public boolean verificarPass(String pass){  //Verificacion de password
-        return false;
+        return true;
     }
 
     public void registro(View view){  //Funcion para registrarse

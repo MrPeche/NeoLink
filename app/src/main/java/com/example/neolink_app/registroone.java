@@ -3,6 +3,8 @@ package com.example.neolink_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -44,8 +46,13 @@ public class registroone extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(eselemailvalido(s.toString())){
-                    cor.setError("Correo valido");
-                } else cor.setError("Correo invalido");
+                    cor.setErrorTextAppearance(R.style.camposdeingresoalterno);
+                    cor.setError("Correo valido");  // "Correo valido"
+
+                } else {
+                    cor.setErrorTextAppearance(R.style.camposdeingreso);
+                    cor.setError("Correo invalido");
+                }
             }
         });
         passwuno.addTextChangedListener(new TextWatcher() {
@@ -82,7 +89,7 @@ public class registroone extends AppCompatActivity {
                 if((s.length()!=0)&&(passwuno.length()!=0)){
                     if(s.toString().equals(passwuno.getText().toString())) {
                         pasd.setError("Contraseña valida");
-                    }
+                    } else pasd.setError("Repita su contraseña");
                 } else pasd.setError("Repita su contraseña");
             }
         });

@@ -55,7 +55,7 @@ public class registrothree extends AppCompatActivity {
             EnvioRegistro(correo,passw);
             Toast.makeText( this, "Registro completado", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, MainActivity.class);
-            i.setFlags(i.FLAG_ACTIVITY_CLEAR_TOP);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         } else Toast.makeText( this, "Ticket invalido", Toast.LENGTH_SHORT).show();
 
