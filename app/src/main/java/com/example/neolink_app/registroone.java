@@ -15,10 +15,12 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class registroone extends AppCompatActivity {
     private TextInputEditText correo,passwuno,passwdos;
     private TextInputLayout   cor,pasu,pasd;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     @Override
@@ -94,34 +96,30 @@ public class registroone extends AppCompatActivity {
         });
     }
 
-
     public void siguiente(View view){
-        if(eselemailvalido(correo.getText().toString())){
-            if(esacontrasenavale(passwuno.getText().toString(),passwdos.getText().toString())) {
-                Bundle paqueteregistro = new Bundle();
-                paqueteregistro.putString("correo",correo.getText().toString());
-                paqueteregistro.putString("passw",passwuno.getText().toString());
-                Intent ione = new Intent(this, registrotwo.class);
-                ione.putExtras(paqueteregistro);
-                startActivity(ione);
-            } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText( this, "Correo invalido", Toast.LENGTH_SHORT).show();
-
+        if (mAuth.isSignInWithEmailLink(correo.getText().toString())){
+            if(eselemailvalido(correo.getText().toString())){
+                if(esacontrasenavale(passwuno.getText().toString(),passwdos.getText().toString())) {
+                    Bundle paqueteregistro = new Bundle();
+                    paqueteregistro.putString("correo",correo.getText().toString());
+                    paqueteregistro.putString("passw",passwuno.getText().toString());
+                    Intent ione = new Intent(this, registrotwo.class);
+                    ione.putExtras(paqueteregistro);
+                    startActivity(ione);
+                } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
+            } else Toast.makeText( this, "Email invalido", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText( this, "El email ya existe", Toast.LENGTH_SHORT).show();
     }
 
-    public static boolean eselemailvalido(CharSequence target) { //sacado de internet
+    public boolean eselemailvalido(CharSequence target) { //sacado de internet
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
-        // Revisar si existe en firebase
-
     }
 
-    public static boolean esacontrasenavale(String contraein,String contraswei) { //sacado de internet
+    public boolean esacontrasenavale(String contraein,String contraswei) { //sacado de internet
         return (contraein.length() >= 6) && (contraswei.equals(contraein));
     }
-
 
     public void volver(View view){
         finish();
     }
-
 }

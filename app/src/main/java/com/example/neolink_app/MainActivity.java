@@ -1,16 +1,24 @@
 package com.example.neolink_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout layouteins,layoutswei;
     private TextInputEditText user,pass;
     private CheckBox rec;
+    private FirebaseAuth mAuth;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         pass = (TextInputEditText)findViewById(R.id.contraseña);
         rec = (CheckBox)findViewById(R.id.recordarme);
         layouteins = (TextInputLayout)findViewById(R.id.layout1);
+        mAuth = FirebaseAuth.getInstance();
+
 
         String[] archivos = fileList(); // "NeoLinkid.txt"
         String Lineaguardada;
@@ -66,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
         String guardado ="";
         //Verifico si el usuario o password es correcto
         if((user.length()!=0)&&(pass.length()!=0))
-            if(verificarUser(user.getText().toString()) || verificarPass(pass.getText().toString())){
+
+            if(verificarUserPass(user.getText().toString(),pass.getText().toString())){
                 if(rec.isChecked()){
                     //Se Guarda
                     guardado = user.getText().toString() + " " + pass.getText().toString() + '\n';
@@ -83,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 //Se manda a la activity
             }
             else Toast.makeText( this, "Usuario o contraseña Invalida", Toast.LENGTH_SHORT).show();
-
     }
 
     public boolean archivoexiste(String direccion[], String nombre){
@@ -95,17 +107,27 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public boolean verificarUser(String user){  //Verificacion de Usuario
-        return true;
-    }
-    public boolean verificarPass(String pass){  //Verificacion de password
-        return true;
+
+    public boolean verificarUserPass(String user,String pass){
+        final int[] v = {0};
+        mAuth.signInWithEmailAndPassword(user,pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG,"signInWithEmail:success");
+                    FirebaseUser user =mAuth.getCurrentUser();
+                    v[0] = 1;
+                } else v[0] = 0;
+            }
+        });
+        return v[0] == 1;
     }
 
-    public void registro(View view){  //Funcion para registrarse
+    public void registro(View view){ //Funcion para registrarse
         startActivity(new Intent(this,registroone.class));
     }
     public void recuperar(View view){ //Funcion de recuperar
         startActivity(new Intent(this,recuperar.class));
     }
+
 }
