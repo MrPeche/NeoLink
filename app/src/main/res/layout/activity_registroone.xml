@@ -150,7 +150,7 @@
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
                 app:hintEnabled="true"
-                app:counterEnabled="true"
+                app:counterEnabled="false"
                 app:counterMaxLength="6"
                 app:counterOverflowTextAppearance="@style/CounterOverFlow"
                 app:counterTextAppearance="@style/TextAppearance.Design.Counter."

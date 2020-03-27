@@ -6,7 +6,6 @@
         <item name="colorPrimary">#849AAF</item>
         <item name="colorPrimaryDark">#3C77AF</item>
         <item name="colorAccent">#73AA86</item>
-
     </style>
 
     <style name="camposdeingreso" parent="Theme.AppCompat.Light.DarkActionBar">

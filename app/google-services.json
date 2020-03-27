@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "622350290923",
+    "firebase_url": "https://neolink-934b4.firebaseio.com",
+    "project_id": "neolink-934b4",
+    "storage_bucket": "neolink-934b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622350290923:android:5a13ec71045935b95c93ae",
+        "android_client_info": {
+          "package_name": "com.example.neolink_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622350290923-mjrqi2o5eabt6f9aquivtf2u3l2874sh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.neolink_app",
+            "certificate_hash": "4700755eb9ef5b37776d3ef3027bc3bcbc80100d"
+          }
+        },
+        {
+          "client_id": "622350290923-9qvqtiq9rr8c56egt5pvrp8ghdot4gu7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXxrxQaJxPn67qwgoo1CYLNnfmKfNycwo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622350290923-9qvqtiq9rr8c56egt5pvrp8ghdot4gu7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
