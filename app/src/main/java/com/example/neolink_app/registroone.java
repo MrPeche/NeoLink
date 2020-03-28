@@ -97,7 +97,7 @@ public class registroone extends AppCompatActivity {
     }
 
     public void siguiente(View view){
-        if (mAuth.isSignInWithEmailLink(correo.getText().toString())){
+        if (!mAuth.isSignInWithEmailLink(correo.getText().toString())){
             if(eselemailvalido(correo.getText().toString())){
                 if(esacontrasenavale(passwuno.getText().toString(),passwdos.getText().toString())) {
                     Bundle paqueteregistro = new Bundle();

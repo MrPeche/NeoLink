@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,12 +19,15 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Random;
+
 public class registrotwo extends AppCompatActivity {
 
     private TextInputEditText codigo;
     private TextInputLayout laycodigo;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final String TAG = "registrotwo";
+    private int codigover = new Random().nextInt((999999-100000)-1) + 100000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +56,18 @@ public class registrotwo extends AppCompatActivity {
                 }
             }
         });
+        Intent ione =getIntent();
+        Bundle extras = ione.getExtras();
+        sendEmail(extras.getString("correo"),String.valueOf(codigover)); //*
     }
 
 
-    public boolean verificarcodigo(String codigo){
-        return true;
+    public boolean verificarcodigo(String codigo, String codigover){
+        return codigo.equals(codigover);
     }
 
     public void siguiente(View view){
-        if(verificarcodigo(codigo.getText().toString())) {
+        if(verificarcodigo(codigo.getText().toString(),String.valueOf(codigover))) {
             Intent ione = getIntent();
             Bundle extras = ione.getExtras();
             Bundle paqueteregistro = new Bundle();
@@ -91,4 +98,30 @@ public class registrotwo extends AppCompatActivity {
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
+
+    protected void sendEmail(String correo, String codigover) {
+        Log.i("Send email", "");
+
+        String[] TO = {correo};
+        String[] CC = {"neolink@gmail.com"};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Envio de código de autentificación");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Tu codigo es"+codigover);
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+            Log.i(TAG, "Finished sending email...");
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this,
+                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
