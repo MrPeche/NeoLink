@@ -11,11 +11,14 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class registrothree extends AppCompatActivity {
 
     private TextInputEditText ticket;
     private TextInputLayout layticket;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class registrothree extends AppCompatActivity {
         setContentView(R.layout.activity_registrothree);
         ticket = findViewById(R.id.ticketrecuperarthree);
         layticket = findViewById(R.id.layoutcodigoregistrothree);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         ticket.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -48,6 +52,9 @@ public class registrothree extends AppCompatActivity {
     }
 
     public boolean validarticket(String ticket){
+        mDatabase.child("Token").child(ticket).getKey();
+        
+
         return true;
     }
 
