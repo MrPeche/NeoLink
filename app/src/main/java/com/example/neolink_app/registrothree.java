@@ -1,5 +1,6 @@
 package com.example.neolink_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,8 +12,11 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class registrothree extends AppCompatActivity {
 
@@ -26,7 +30,7 @@ public class registrothree extends AppCompatActivity {
         setContentView(R.layout.activity_registrothree);
         ticket = findViewById(R.id.ticketrecuperarthree);
         layticket = findViewById(R.id.layoutcodigoregistrothree);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference("/Token");
         ticket.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -51,33 +55,47 @@ public class registrothree extends AppCompatActivity {
         });
     }
 
-    public boolean validarticket(String ticket){
-        mDatabase.child("Token").child(ticket).getKey();
-        
+    public boolean validarticket(final String ticket){
+        final int[] val = {0};
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if((dataSnapshot.child(ticket).exists())&&dataSnapshot.child(ticket).getValue().toString()=="nulo"){
+                    val[0] =1;
+                } else val[0]=0;
+            }
 
-        return true;
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return (val[0]==1);
+
     }
 
     public void siguiente(View view){
-        if(validarticket(ticket.getText().toString())){
-            //Terminar mensaje y irnos al main
-            Intent itwo = getIntent();
-            Bundle extras = itwo.getExtras();
-            String correo = extras.getString("correo");
-            String passw = extras.getString("passw");
-            EnvioRegistro(correo,passw);
-            Toast.makeText( this, "Registro completado", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this, MainActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-        } else Toast.makeText( this, "Ticket invalido", Toast.LENGTH_SHORT).show();
+        if(ticket.length()!=0){
+            if(validarticket(ticket.getText().toString())) {
+                //Terminar mensaje y irnos al main
+                Intent itwo = getIntent();
+                Bundle extras = itwo.getExtras();
+                String correo = extras.getString("correo");
+                String passw = extras.getString("passw");
+                EnvioRegistro(correo, ticket.getText().toString());
+                Toast.makeText(this, "Registro completado", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            } else Toast.makeText( this, "Ticket invalido", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText( this, "Escriba un ticket", Toast.LENGTH_SHORT).show();
 
         Intent i = new Intent(this,registrothree.class);
         startActivity(i);
     }
 
-    public void EnvioRegistro(String correo, String password){
-        // Se envia por firebase
+    public void EnvioRegistro(String correo, String ticket){
+        mDatabase.child(ticket).setValue(correo);
     }
 
     public void volver(View view){
