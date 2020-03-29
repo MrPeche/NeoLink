@@ -1,5 +1,6 @@
 package com.example.neolink_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,18 +10,23 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class registroone extends AppCompatActivity {
     private TextInputEditText correo,passwuno,passwdos;
     private TextInputLayout   cor,pasu,pasd;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static final String TAG = "LALA";
 
 
     @Override
@@ -103,12 +109,29 @@ public class registroone extends AppCompatActivity {
                     Bundle paqueteregistro = new Bundle();
                     paqueteregistro.putString("correo",correo.getText().toString());
                     paqueteregistro.putString("passw",passwuno.getText().toString());
-                    Intent ione = new Intent(this, registrotwo.class);
+
+                    //Intent ione = new Intent(this, registrotwo.class);
+                    Intent ione = new Intent(this, registrothree.class);
+                    crearenfirebase(correo.getText().toString(),passwuno.getText().toString());
                     ione.putExtras(paqueteregistro);
                     startActivity(ione);
                 } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
             } else Toast.makeText( this, "Email invalido", Toast.LENGTH_SHORT).show();
         } else Toast.makeText( this, "El email ya existe", Toast.LENGTH_SHORT).show();
+    }
+
+    public void crearenfirebase (String correo, String password){
+        mAuth.createUserWithEmailAndPassword(correo, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "createUserWithEmail:success");
+                        } else {
+                            Log.d(TAG, "createUserWithEmail:fail");
+                        }
+                    }
+                });
     }
 
     public boolean eselemailvalido(CharSequence target) { //sacado de internet
@@ -122,4 +145,5 @@ public class registroone extends AppCompatActivity {
     public void volver(View view){
         finish();
     }
+
 }
