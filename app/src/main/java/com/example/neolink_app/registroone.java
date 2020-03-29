@@ -110,9 +110,9 @@ public class registroone extends AppCompatActivity {
                     paqueteregistro.putString("correo",correo.getText().toString());
                     paqueteregistro.putString("passw",passwuno.getText().toString());
 
-                    //Intent ione = new Intent(this, registrotwo.class);
-                    Intent ione = new Intent(this, registrothree.class);
-                    crearenfirebase(correo.getText().toString(),passwuno.getText().toString());
+                    Intent ione = new Intent(this, registrotwo.class);
+                    //Intent ione = new Intent(this, registrothree.class);
+                    //crearenfirebase(correo.getText().toString(),passwuno.getText().toString());
                     ione.putExtras(paqueteregistro);
                     startActivity(ione);
                 } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();

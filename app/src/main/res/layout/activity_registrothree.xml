@@ -107,7 +107,8 @@
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:textSize="18sp"
-                    android:theme="@style/camposdeingreso" />
+                    android:theme="@style/camposdeingreso"
+                    android:maxLenght="17"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

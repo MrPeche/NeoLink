@@ -16,8 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Random;
 
@@ -56,14 +59,12 @@ public class registrotwo extends AppCompatActivity {
                 }
             }
         });
-        Intent ione =getIntent();
-        Bundle extras = ione.getExtras();
-        sendEmail(extras.getString("correo"),String.valueOf(codigover)); //*
     }
 
 
     public boolean verificarcodigo(String codigo, String codigover){
-        return codigo.equals(codigover);
+        //return codigo.equals(codigover);
+        return true;
     }
 
     public void siguiente(View view){
@@ -74,6 +75,17 @@ public class registrotwo extends AppCompatActivity {
             paqueteregistro.putString("correo",extras.getString("correo"));
             paqueteregistro.putString("passw",extras.getString("passw"));
             crearenfirebase(extras.getString("correo"),extras.getString("passw"));
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            AuthCredential credential = EmailAuthProvider.getCredential(extras.getString("correo"), extras.getString("passw"));
+            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.d(TAG, "User re-authenticated.");
+                }
+            });
+
+
             Intent itwo = new Intent(this, registrothree.class);
             itwo.putExtras(paqueteregistro);
             startActivity(itwo);
@@ -99,29 +111,5 @@ public class registrotwo extends AppCompatActivity {
         startActivity(i);
     }
 
-    protected void sendEmail(String correo, String codigover) {
-        Log.i("Send email", "");
-
-        String[] TO = {correo};
-        String[] CC = {"neolink@gmail.com"};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-
-
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Envio de código de autentificación");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Tu codigo es"+codigover);
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-            Log.i(TAG, "Finished sending email...");
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this,
-                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 }

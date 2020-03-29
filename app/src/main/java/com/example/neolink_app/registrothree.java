@@ -36,6 +36,12 @@ public class registrothree extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if(s.length()==3){
+                    s.append("-");
+                }
+                if(s.length()==12){
+                    s.append("-");
+                }
                 layticket.setError("Separe el ticket utilizando guiones -");
             }
         });
