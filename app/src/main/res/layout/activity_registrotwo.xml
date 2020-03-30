@@ -105,7 +105,7 @@
                     android:fontFamily="@font/lato"
                     android:gravity="center"
                     android:hint="@string/IngresoCodigoRegistroTwo"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
                     android:textSize="18sp"
                     android:theme="@style/camposdeingreso" />

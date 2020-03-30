@@ -77,6 +77,7 @@ public class registrotwo extends AppCompatActivity {
             crearenfirebase(extras.getString("correo"),extras.getString("passw"));
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if(user.isEmailVerified()) Toast.makeText( this, "Estaba autorizado antes", Toast.LENGTH_LONG).show();
             AuthCredential credential = EmailAuthProvider.getCredential(extras.getString("correo"), extras.getString("passw"));
             user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -84,7 +85,7 @@ public class registrotwo extends AppCompatActivity {
                     Log.d(TAG, "User re-authenticated.");
                 }
             });
-
+            if(user.isEmailVerified()) Toast.makeText( this, "Estaba autorizado despues", Toast.LENGTH_LONG).show();
 
             Intent itwo = new Intent(this, registrothree.class);
             itwo.putExtras(paqueteregistro);

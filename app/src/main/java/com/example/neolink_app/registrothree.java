@@ -63,7 +63,7 @@ public class registrothree extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if((dataSnapshot.child(ticket).exists())&&dataSnapshot.child(ticket).getValue().toString()=="nulo"){
+                if((dataSnapshot.child(ticket).exists())&&(dataSnapshot.child(ticket).getValue().toString().equals("nulo"))){
                     val[0] =1;
                 } else val[0]=0;
             }
