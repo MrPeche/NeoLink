@@ -75,7 +75,7 @@ public class registroone extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length()>pasu.getCounterMaxLength()){
+                if(s.length()>=6){
                     pasu.setError(null);
                 } else pasu.setError("Mínimo 6 caracteres o más");
             }

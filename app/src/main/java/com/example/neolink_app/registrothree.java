@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class registrothree extends AppCompatActivity {
     private TextInputEditText ticket;
     private TextInputLayout layticket;
     private DatabaseReference mDatabase;
+    private static final String TAG = "Leyendo el dato";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +32,12 @@ public class registrothree extends AppCompatActivity {
         setContentView(R.layout.activity_registrothree);
         ticket = findViewById(R.id.ticketrecuperarthree);
         layticket = findViewById(R.id.layoutcodigoregistrothree);
-        mDatabase = FirebaseDatabase.getInstance().getReference("/Token");
+        mDatabase = FirebaseDatabase.getInstance().getReference("Token");
+        final String[] antes = new String[1];
         ticket.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                antes[0] = s.toString();
             }
 
             @Override
@@ -44,7 +47,7 @@ public class registrothree extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length()==3){
+                if((s.length()==3)&&(!antes[0].contains("-"))){
                     s.append("-");
                 }
                 if(s.length()==12){
@@ -67,7 +70,7 @@ public class registrothree extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         });
         return (val[0]==1);
@@ -90,8 +93,6 @@ public class registrothree extends AppCompatActivity {
             } else Toast.makeText( this, "Ticket invalido", Toast.LENGTH_SHORT).show();
         } else Toast.makeText( this, "Escriba un ticket", Toast.LENGTH_SHORT).show();
 
-        Intent i = new Intent(this,registrothree.class);
-        startActivity(i);
     }
 
     public void EnvioRegistro(String correo, String ticket){
