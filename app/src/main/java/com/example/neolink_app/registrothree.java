@@ -47,7 +47,7 @@ public class registrothree extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if((s.length()==3)&&(!antes[0].contains("-"))){
+                if((s.length()==3)&&((!antes[0].contains("-")||antes[0].length()==3))){
                     s.append("-");
                 }
                 if(s.length()==12){
@@ -59,13 +59,13 @@ public class registrothree extends AppCompatActivity {
     }
 
     public boolean validarticket(final String ticket){
-        final int[] val = {0};
+        final boolean[] val = new boolean[0];
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if((dataSnapshot.child(ticket).exists())&&(dataSnapshot.child(ticket).getValue().toString().equals("nulo"))){
-                    val[0] =1;
-                } else val[0]=0;
+                    val[0] = true;
+                } else val[0] = false;
             }
 
             @Override
@@ -73,7 +73,7 @@ public class registrothree extends AppCompatActivity {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         });
-        return (val[0]==1);
+        return val[0];
 
     }
 
