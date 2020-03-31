@@ -77,19 +77,15 @@ public class registrotwo extends AppCompatActivity {
             crearenfirebase(extras.getString("correo"),extras.getString("passw"));
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if(user.isEmailVerified()) {
-                Toast.makeText( this, "Estaba autorizado antes", Toast.LENGTH_LONG).show();
-            } else Toast.makeText( this, "no lo estaba", Toast.LENGTH_LONG).show();
             AuthCredential credential = EmailAuthProvider.getCredential(extras.getString("correo"), extras.getString("passw"));
-            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            /*user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Log.d(TAG, "User re-authenticated.");
                 }
-            });
-            if(user.isEmailVerified()) {
-                Toast.makeText( this, "Estaba autorizado despues", Toast.LENGTH_LONG).show();
-            } else Toast.makeText( this, "sigue sin estarlo", Toast.LENGTH_LONG).show();
+            });*/
+
             Intent itwo = new Intent(this, registrothree.class);
             itwo.putExtras(paqueteregistro);
             startActivity(itwo);
@@ -103,6 +99,7 @@ public class registrotwo extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
+
                         } else {
                             Log.d(TAG, "createUserWithEmail:fail");
                         }
