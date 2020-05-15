@@ -190,14 +190,14 @@
             android:id="@+id/volverthree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/volverRecuperar"
-            android:fontFamily="@font/lato"
-            android:gravity ="center"
             android:clickable="true"
-            android:onClick="volver"
-            android:focusable = "true"
-            android:textSize = "14sp"
-            android:textColor="#000000"/>
+            android:focusable="true"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:onClick="volver3"
+            android:text="@string/volverRecuperar"
+            android:textColor="#000000"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </android.widget.RelativeLayout>

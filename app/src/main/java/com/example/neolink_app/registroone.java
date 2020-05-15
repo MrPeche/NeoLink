@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -21,6 +22,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
+
+import static com.google.android.gms.tasks.Tasks.await;
 
 public class registroone extends AppCompatActivity {
     private TextInputEditText correo,passwuno,passwdos;
@@ -109,10 +114,14 @@ public class registroone extends AppCompatActivity {
                     Bundle paqueteregistro = new Bundle();
                     paqueteregistro.putString("correo",correo.getText().toString());
                     paqueteregistro.putString("passw",passwuno.getText().toString());
+                    crearenfirebase(correo.getText().toString(), passwuno.getText().toString(), new CallBacks() {
+                        @Override
+                        public void readcallback(int Calli) {
+                        }
+                    });
+                    //Intent ione = new Intent(this, registrotwo.class);
+                    Intent ione = new Intent(this, registrothree.class);
 
-                    Intent ione = new Intent(this, registrotwo.class);
-                    //Intent ione = new Intent(this, registrothree.class);
-                    //crearenfirebase(correo.getText().toString(),passwuno.getText().toString());
                     ione.putExtras(paqueteregistro);
                     startActivity(ione);
                 } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
@@ -120,18 +129,34 @@ public class registroone extends AppCompatActivity {
         } else Toast.makeText( this, "El email ya existe", Toast.LENGTH_SHORT).show();
     }
 
-    public void crearenfirebase (String correo, String password){
-        mAuth.createUserWithEmailAndPassword(correo, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
-                        } else {
-                            Log.d(TAG, "createUserWithEmail:fail");
+    public void crearenfirebase (String correo, String password, final CallBacks calleo){
+        /*Task task = mAuth.createUserWithEmailAndPassword(correo, password);
+        task.addOnCompleteListener(this, new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if(task.isComplete()){
+                    Log.d(TAG, "createUserWithEmail:success");
+                }
+            }
+        });*/
+        try {
+            mAuth.createUserWithEmailAndPassword(correo, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "createUserWithEmail:success");
+                                calleo.readcallback(1);
+                            } else {
+                                Log.d(TAG, "createUserWithEmail:fail");
+                            }
                         }
-                    }
-                });
+                    }).wait();
+        } catch (InterruptedException ignored){ }
+    }
+
+    private interface CallBacks {
+        void readcallback(int Calli);
     }
 
     public boolean eselemailvalido(CharSequence target) { //sacado de internet
@@ -145,5 +170,7 @@ public class registroone extends AppCompatActivity {
     public void volver(View view){
         finish();
     }
+
+
 
 }
