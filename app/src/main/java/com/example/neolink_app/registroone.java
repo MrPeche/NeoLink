@@ -3,9 +3,11 @@ package com.example.neolink_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Editable;
@@ -24,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import static com.google.android.gms.tasks.Tasks.await;
 
@@ -107,6 +110,55 @@ public class registroone extends AppCompatActivity {
         });
     }
 
+    private class Validaciondecorreo extends AsyncTask<String,String,String> {
+        ProgressDialog cajitaintermedia1;
+        String val = "";
+        @Override
+        protected String doInBackground(String... params){
+            try {
+                Log.d(TAG, "StartcreateUserWithEmail:success");
+                mAuth.createUserWithEmailAndPassword(correo.getText().toString(), passwdos.getText().toString()).addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "createUserWithEmail:success");
+                            val = "1";
+                        } else {
+                            Log.d(TAG, "createUserWithEmail:fail");
+                            val = "2";
+                        }
+                    }
+                }).wait();
+
+            } catch (InterruptedException ignored){
+                val = "3";
+            }
+            return val;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s){
+
+            Bundle paqueteregistro = new Bundle();
+            paqueteregistro.putString("correo",correo.getText().toString());
+            paqueteregistro.putString("passw",passwuno.getText().toString());
+            Intent ione = new Intent(registroone.this, registrothree.class);
+            ione.putExtras(paqueteregistro);
+            startActivity(ione);
+            
+        }
+    }
+
     public void siguiente(View view){
         if (!mAuth.isSignInWithEmailLink(correo.getText().toString())){
             if(eselemailvalido(correo.getText().toString())){
@@ -114,11 +166,14 @@ public class registroone extends AppCompatActivity {
                     Bundle paqueteregistro = new Bundle();
                     paqueteregistro.putString("correo",correo.getText().toString());
                     paqueteregistro.putString("passw",passwuno.getText().toString());
+
                     crearenfirebase(correo.getText().toString(), passwuno.getText().toString(), new CallBacks() {
                         @Override
                         public void readcallback(int Calli) {
+
                         }
                     });
+
                     //Intent ione = new Intent(this, registrotwo.class);
                     Intent ione = new Intent(this, registrothree.class);
 
@@ -128,6 +183,7 @@ public class registroone extends AppCompatActivity {
             } else Toast.makeText( this, "Email invalido", Toast.LENGTH_SHORT).show();
         } else Toast.makeText( this, "El email ya existe", Toast.LENGTH_SHORT).show();
     }
+
 
     public void crearenfirebase (String correo, String password, final CallBacks calleo){
         /*Task task = mAuth.createUserWithEmailAndPassword(correo, password);
@@ -139,7 +195,9 @@ public class registroone extends AppCompatActivity {
                 }
             }
         });*/
+
         try {
+            Log.d(TAG, "StartcreateUserWithEmail:success");
             mAuth.createUserWithEmailAndPassword(correo, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
