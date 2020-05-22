@@ -110,8 +110,7 @@ public class registroone extends AppCompatActivity {
         });
     }
 
-    private class Validaciondecorreo extends AsyncTask<String,String,String> {
-        ProgressDialog cajitaintermedia1;
+    /*private class Validaciondecorreo extends AsyncTask<String,String,String> {
         String val = "";
         @Override
         protected String doInBackground(String... params){
@@ -129,7 +128,6 @@ public class registroone extends AppCompatActivity {
                         }
                     }
                 }).wait();
-
             } catch (InterruptedException ignored){
                 val = "3";
             }
@@ -138,7 +136,7 @@ public class registroone extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
+            Toast.makeText(registroone.this,"Espere", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -148,26 +146,53 @@ public class registroone extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s){
+            if(s == "1") {
+                Toast.makeText(registroone.this,"Usuario Registrado", Toast.LENGTH_SHORT).show();
+                Bundle paqueteregistro = new Bundle();
+                paqueteregistro.putString("correo", correo.getText().toString());
+                paqueteregistro.putString("passw", passwuno.getText().toString());
+                Intent ione = new Intent(registroone.this, registrothree.class);
+                ione.putExtras(paqueteregistro);
+                startActivity(ione);
+            }
 
-            Bundle paqueteregistro = new Bundle();
-            paqueteregistro.putString("correo",correo.getText().toString());
-            paqueteregistro.putString("passw",passwuno.getText().toString());
-            Intent ione = new Intent(registroone.this, registrothree.class);
-            ione.putExtras(paqueteregistro);
-            startActivity(ione);
-            
         }
-    }
+    }*/
 
     public void siguiente(View view){
         if (!mAuth.isSignInWithEmailLink(correo.getText().toString())){
             if(eselemailvalido(correo.getText().toString())){
                 if(esacontrasenavale(passwuno.getText().toString(),passwdos.getText().toString())) {
-                    Bundle paqueteregistro = new Bundle();
-                    paqueteregistro.putString("correo",correo.getText().toString());
-                    paqueteregistro.putString("passw",passwuno.getText().toString());
 
-                    crearenfirebase(correo.getText().toString(), passwuno.getText().toString(), new CallBacks() {
+
+                    /*Bundle paqueteregistro = new Bundle();
+                    paqueteregistro.putString("correo",correo.getText().toString());
+                    paqueteregistro.putString("passw",passwuno.getText().toString());*/
+
+                    mAuth.createUserWithEmailAndPassword(correo.getText().toString(), passwuno.getText().toString())
+                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "createUserWithEmail:success");
+                                        Bundle paqueteregistro = new Bundle();
+                                        paqueteregistro.putString("correo",correo.getText().toString());
+                                        paqueteregistro.putString("passw",passwuno.getText().toString());
+                                        Toast.makeText(registroone.this,"Usuario Creado", Toast.LENGTH_SHORT).show();
+                                        Intent ione = new Intent(registroone.this, registrothree.class);
+                                        ione.putExtras(paqueteregistro);
+                                        startActivity(ione);
+                                    } else {
+                                        Log.d(TAG, "createUserWithEmail:fail");
+                                        Toast.makeText(registroone.this,"Correo en uso", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                    /*Validaciondecorreo validameesta = new Validaciondecorreo();
+                    String manyas = "manyas";
+                    validameesta.execute(manyas);*/
+
+                    /*crearenfirebase(correo.getText().toString(), passwuno.getText().toString(), new CallBacks() {
                         @Override
                         public void readcallback(int Calli) {
 
@@ -179,13 +204,14 @@ public class registroone extends AppCompatActivity {
 
                     ione.putExtras(paqueteregistro);
                     startActivity(ione);
+                    */
                 } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
             } else Toast.makeText( this, "Email invalido", Toast.LENGTH_SHORT).show();
         } else Toast.makeText( this, "El email ya existe", Toast.LENGTH_SHORT).show();
     }
 
 
-    public void crearenfirebase (String correo, String password, final CallBacks calleo){
+    public void crearenfirebase (String correo, String password){
         /*Task task = mAuth.createUserWithEmailAndPassword(correo, password);
         task.addOnCompleteListener(this, new OnCompleteListener() {
             @Override
@@ -204,7 +230,6 @@ public class registroone extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "createUserWithEmail:success");
-                                calleo.readcallback(1);
                             } else {
                                 Log.d(TAG, "createUserWithEmail:fail");
                             }
@@ -213,9 +238,6 @@ public class registroone extends AppCompatActivity {
         } catch (InterruptedException ignored){ }
     }
 
-    private interface CallBacks {
-        void readcallback(int Calli);
-    }
 
     public boolean eselemailvalido(CharSequence target) { //sacado de internet
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
