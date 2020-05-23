@@ -16,6 +16,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +36,9 @@ import static com.google.android.gms.tasks.Tasks.await;
 public class registroone extends AppCompatActivity {
     private TextInputEditText correo,passwuno,passwdos;
     private TextInputLayout   cor,pasu,pasd;
+    private Button botonS;
+    private TextView botonA;
+    private ProgressBar load;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final String TAG = "LALA";
 
@@ -47,6 +53,9 @@ public class registroone extends AppCompatActivity {
         cor = findViewById(R.id.layoutcorreoregistroone);
         pasu = findViewById(R.id.layoutcontraseñaregistroone);
         pasd = findViewById(R.id.layoutcontraseñaregistrotwo);
+        botonS = findViewById(R.id.button_registroone);
+        botonA = findViewById(R.id.volverRegistro);
+        load = findViewById(R.id.Cargado);
 
         correo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -160,7 +169,7 @@ public class registroone extends AppCompatActivity {
     }*/
 
     public void siguiente(View view){
-        if (!mAuth.isSignInWithEmailLink(correo.getText().toString())){
+        //if (!mAuth.isSignInWithEmailLink(correo.getText().toString()))
             if(eselemailvalido(correo.getText().toString())){
                 if(esacontrasenavale(passwuno.getText().toString(),passwdos.getText().toString())) {
 
@@ -169,6 +178,12 @@ public class registroone extends AppCompatActivity {
                     paqueteregistro.putString("correo",correo.getText().toString());
                     paqueteregistro.putString("passw",passwuno.getText().toString());*/
 
+                    botonS.setEnabled(false);
+                    botonA.setEnabled(false);
+                    load.setVisibility(View.VISIBLE);
+                    correo.setFocusable(false);
+                    passwuno.setFocusable(false);
+                    passwdos.setFocusable(false);
                     mAuth.createUserWithEmailAndPassword(correo.getText().toString(), passwuno.getText().toString())
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -184,7 +199,13 @@ public class registroone extends AppCompatActivity {
                                         startActivity(ione);
                                     } else {
                                         Log.d(TAG, "createUserWithEmail:fail");
-                                        Toast.makeText(registroone.this,"Correo en uso", Toast.LENGTH_SHORT).show();
+                                        botonS.setEnabled(true);
+                                        botonA.setEnabled(true);
+                                        correo.setFocusable(true);
+                                        passwuno.setFocusable(true);
+                                        passwdos.setFocusable(true);
+                                        load.setVisibility(View.GONE);
+                                        Toast.makeText(registroone.this,"El email ya existe", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -207,7 +228,6 @@ public class registroone extends AppCompatActivity {
                     */
                 } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
             } else Toast.makeText( this, "Email invalido", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText( this, "El email ya existe", Toast.LENGTH_SHORT).show();
     }
 
 

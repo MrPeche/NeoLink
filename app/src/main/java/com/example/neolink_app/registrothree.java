@@ -222,17 +222,17 @@ public class registrothree extends AppCompatActivity {
         vali.onStart();
         user = FirebaseAuth.getInstance().getCurrentUser();
         AuthCredential credential = EmailAuthProvider.getCredential(correo, password);
-        try {
-            user.reauthenticate(credential).addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        //vali.valcallback(true);
-                        vali.onSucces(true);
-                    } else vali.onFail(false);
-                }
-            }).wait();
-        } catch (InterruptedException ignored){ }
+
+        user.reauthenticate(credential).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    //vali.valcallback(true);
+                    vali.onSucces(true);
+                } else vali.onFail(false);
+            }
+        });
+
 
         /*user.reauthenticate(credential).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
