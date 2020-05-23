@@ -69,40 +69,41 @@ public class registrothree extends AppCompatActivity {
         });
     }
 
-    public void validarticket(final String ticket, final CallBacks3 valcall){
+    private ValueEventListener orejitasTerminar = new ValueEventListener() {
+     String boleto=ticket.getText().toString();
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if((dataSnapshot.child(boleto).exists())&&(dataSnapshot.child(boleto).getValue().toString().equals("nulo"))){
+                //Terminar mensaje y irnos al main
+                Intent itwo = getIntent();
+                Bundle extras = itwo.getExtras();
+                String correo = extras.getString("correo");
+                String passw = extras.getString("passw");
+                mDatabase.child(boleto).setValue(correo);
+                Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(registrothree.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            } else Toast.makeText( registrothree.this, "Ticket invalido", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Toast.makeText( registrothree.this, "Problemas de Conexión", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    public void validarticket(){
         //validar = false;
-        valcall.onStart();
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boolean val;
-                if((dataSnapshot.child(ticket).exists())&&(dataSnapshot.child(ticket).getValue().toString().equals("nulo"))){
-                    //validar = true;
-                    val = true;
 
-                } else val = false; //validar = false;
-                //valcall.valcallback(val);
-                valcall.onSucces(val);
-            }
+        mDatabase.addListenerForSingleValueEvent(orejitasTerminar);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                valcall.onFail(false);
-            }
-        });
         //Task validacion = mDatabase.addListenerForSingleValueEvent();
 
 
 
     }
 
-    private interface CallBacks3 {
-        //void valcallback(boolean vali);
-        void onStart();
-        void onSucces(boolean vali);
-        void onFail(boolean vali);
-
-    }
 
     public void siguiente(View view){
          //final boolean[] validar = new boolean[1];
@@ -132,31 +133,13 @@ public class registrothree extends AppCompatActivity {
                 startActivity(i);
             }else Toast.makeText( this, "Ticket invalido", Toast.LENGTH_SHORT).show();
             */
-            validarticket(ticket.getText().toString(), new CallBacks3() {
-                @Override
-                public void onStart() {
-
-                }
-
-                @Override
-                public void onSucces(boolean vali) {
-                    validar=vali;
-                    Log.d(TAG, "si logro validar algo");
-                }
-
-                @Override
-                public void onFail(boolean vali) {
-                    Log.d(TAG, "fallo la validacion");
-                }
-            });
-
+            validarticket();
             if(validar) {
                 //Terminar mensaje y irnos al main
                 Intent itwo = getIntent();
                 Bundle extras = itwo.getExtras();
                 String correo = extras.getString("correo");
                 String passw = extras.getString("passw");
-                EnvioRegistro(correo, ticket.getText().toString());
 
                 Toast.makeText(this, "Registro completado", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(this, MainActivity.class);
@@ -168,9 +151,6 @@ public class registrothree extends AppCompatActivity {
 
     }
 
-    public void EnvioRegistro(String correo, String ticket){
-        mDatabase.child(ticket).setValue(correo);
-    }
 
     public void volver3(View view){
         //user = FirebaseAuth.getInstance().getCurrentUser();
@@ -191,22 +171,7 @@ public class registrothree extends AppCompatActivity {
                 }
             }
         });*/
-        borrar(extras.getString("correo"), extras.getString("passw"), new CallBacks3() {
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onSucces(boolean vali) {
-                Log.d(TAG, "borradaso");
-            }
-
-            @Override
-            public void onFail(boolean vali) {
-                Log.d(TAG, "TMR NAAA con el borrado");
-            }
-        });
+        borrar(extras.getString("correo"), extras.getString("passw"));
         /*borrar(extras.getString("correo"), extras.getString("passw"), new CallBacks3() {
             @Override
             public void valcallback(boolean vali) {
@@ -218,8 +183,7 @@ public class registrothree extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void borrar(String correo, String password, final CallBacks3 vali){
-        vali.onStart();
+    public void borrar(String correo, String password){
         user = FirebaseAuth.getInstance().getCurrentUser();
         AuthCredential credential = EmailAuthProvider.getCredential(correo, password);
 
@@ -228,8 +192,10 @@ public class registrothree extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     //vali.valcallback(true);
-                    vali.onSucces(true);
-                } else vali.onFail(false);
+
+                } else {
+
+                }
             }
         });
 
