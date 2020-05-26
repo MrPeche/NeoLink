@@ -68,7 +68,7 @@ public class registrothree extends AppCompatActivity {
             }
         });
     }
-
+    /*
     private ValueEventListener orejitasTerminar = new ValueEventListener() {
      String boleto=ticket.getText().toString();
         @Override
@@ -91,12 +91,12 @@ public class registrothree extends AppCompatActivity {
         public void onCancelled(@NonNull DatabaseError databaseError) {
             Toast.makeText( registrothree.this, "Problemas de Conexión", Toast.LENGTH_SHORT).show();
         }
-    };
+    };*/
 
     public void validarticket(){
         //validar = false;
 
-        mDatabase.addListenerForSingleValueEvent(orejitasTerminar);
+        //mDatabase.addListenerForSingleValueEvent(orejitasTerminar);
 
         //Task validacion = mDatabase.addListenerForSingleValueEvent();
 

@@ -27,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -188,25 +189,30 @@ public class registroone extends AppCompatActivity {
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d(TAG, "createUserWithEmail:success");
-                                        Bundle paqueteregistro = new Bundle();
-                                        paqueteregistro.putString("correo",correo.getText().toString());
-                                        paqueteregistro.putString("passw",passwuno.getText().toString());
-                                        Toast.makeText(registroone.this,"Usuario Creado", Toast.LENGTH_SHORT).show();
-                                        Intent ione = new Intent(registroone.this, registrothree.class);
-                                        ione.putExtras(paqueteregistro);
-                                        startActivity(ione);
-                                    } else {
-                                        Log.d(TAG, "createUserWithEmail:fail");
-                                        botonS.setEnabled(true);
-                                        botonA.setEnabled(true);
-                                        correo.setFocusable(true);
-                                        passwuno.setFocusable(true);
-                                        passwdos.setFocusable(true);
-                                        load.setVisibility(View.GONE);
-                                        Toast.makeText(registroone.this,"El email ya existe", Toast.LENGTH_SHORT).show();
-                                    }
+
+                                        if (task.isSuccessful()) {
+
+                                            Log.d(TAG, "createUserWithEmail:success");
+                                            Bundle paqueteregistro = new Bundle();
+                                            paqueteregistro.putString("correo", correo.getText().toString());
+                                            paqueteregistro.putString("passw", passwuno.getText().toString());
+                                            Toast.makeText(registroone.this, "Usuario Creado", Toast.LENGTH_SHORT).show();
+                                            Intent ione = new Intent(registroone.this, registrothree.class);
+                                            ione.putExtras(paqueteregistro);
+                                            startActivity(ione);
+                                        } else {
+                                            try {
+                                                throw task.getException();
+                                            } catch (FirebaseAuthUserCollisionException e) {
+                                                Toast.makeText(registroone.this, "El email ya existe", Toast.LENGTH_SHORT).show();
+
+                                            } catch(Exception e){
+                                                Toast.makeText(registroone.this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
+
+                                            }
+                                            Log.d(TAG, "createUserWithEmail:fail");
+                                            setitback();
+                                        }
                                 }
                             });
                     /*Validaciondecorreo validameesta = new Validaciondecorreo();
@@ -228,6 +234,15 @@ public class registroone extends AppCompatActivity {
                     */
                 } else Toast.makeText( this, "Contraseña invalida", Toast.LENGTH_SHORT).show();
             } else Toast.makeText( this, "Email invalido", Toast.LENGTH_SHORT).show();
+    }
+
+    void setitback (){
+        botonS.setEnabled(true);
+        botonA.setEnabled(true);
+        correo.setFocusableInTouchMode(true);
+        passwuno.setFocusableInTouchMode(true);
+        passwdos.setFocusableInTouchMode(true);
+        load.setVisibility(View.GONE);
     }
 
     //********* Esta funcion ya no es necesaria pero la dejo por si la necesito luego (IGNORAR) ***********
