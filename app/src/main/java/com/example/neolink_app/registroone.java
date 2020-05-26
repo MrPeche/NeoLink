@@ -230,7 +230,7 @@ public class registroone extends AppCompatActivity {
             } else Toast.makeText( this, "Email invalido", Toast.LENGTH_SHORT).show();
     }
 
-
+    //********* Esta funcion ya no es necesaria pero la dejo por si la necesito luego (IGNORAR) ***********
     public void crearenfirebase (String correo, String password){
         /*Task task = mAuth.createUserWithEmailAndPassword(correo, password);
         task.addOnCompleteListener(this, new OnCompleteListener() {

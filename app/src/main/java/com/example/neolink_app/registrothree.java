@@ -198,6 +198,28 @@ public class registrothree extends AppCompatActivity {
                 }
             }
         });
+        // REVISAR
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credencial = EmailAuthProvider
+                .getCredential("user@example.com", "password1234");
+        user.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "User re-authenticated.");
+                    }
+                });
+
+
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User account deleted.");
+                        }
+                    }
+                });
 
 
         /*user.reauthenticate(credential).addOnCompleteListener(this, new OnCompleteListener<Void>() {
