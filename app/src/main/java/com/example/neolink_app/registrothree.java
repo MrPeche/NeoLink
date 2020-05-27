@@ -117,7 +117,7 @@ public class registrothree extends AppCompatActivity {
                     mDatabase.child(boleto).setValue(correo);
                     Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(registrothree.this, MainActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                 } else {
                     Toast.makeText( registrothree.this, "Ticket invalido", Toast.LENGTH_SHORT).show();
