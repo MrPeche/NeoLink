@@ -9,7 +9,10 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +21,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.BufferedReader;
@@ -30,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout layouteins,layoutswei;
     private TextInputEditText user,pass;
     private CheckBox rec;
+    private Button botonM;
+    private TextView creaC,recuC;
+    private ProgressBar loadM;
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
 
@@ -37,10 +45,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        user = (TextInputEditText)findViewById(R.id.usuario); //La variable siempre se llama diferente que el id
-        pass = (TextInputEditText)findViewById(R.id.contraseña);
-        rec = (CheckBox)findViewById(R.id.recordarme);
-        layouteins = (TextInputLayout)findViewById(R.id.layout1);
+        user = findViewById(R.id.usuario); //La variable siempre se llama diferente que el id
+        pass = findViewById(R.id.contraseña);
+        rec = findViewById(R.id.recordarme);
+        layouteins = findViewById(R.id.layout1);
+        botonM =  findViewById(R.id.botoningreso);
+        creaC = findViewById(R.id.crearcuenta);
+        recuC= findViewById(R.id.recuperarcontraseña);
+        loadM = findViewById(R.id.CargadoMain);
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -75,11 +87,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logeo(View view){
-        String guardado ="";
+        setitMain();
         //Verifico si el usuario o password es correcto
         if((user.length()!=0)&&(pass.length()!=0))
 
-            if(verificarUserPass(user.getText().toString(),pass.getText().toString())){
+            mAuth.signInWithEmailAndPassword(user.getText().toString(),pass.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                String guardado ="";
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Log.d(TAG,"signInWithEmail:success");
+                        FirebaseUser usuarioF =mAuth.getCurrentUser();
+
+                        if(rec.isChecked()) {
+                            guardado = user.getText().toString() + " " + pass.getText().toString() + '\n';
+                            try {
+                                OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
+                                archivo.write(guardado);
+                                archivo.flush();
+                                archivo.close();
+                            } catch (IOException ignored) {
+
+                            }
+                        }
+
+                    } else {
+
+                        try{
+                            throw task.getException();
+                        } catch (FirebaseAuthInvalidUserException e){
+                            Toast.makeText(MainActivity.this, "El correo no existe", Toast.LENGTH_SHORT).show();
+                        } catch (FirebaseAuthInvalidCredentialsException e){
+                            Toast.makeText(MainActivity.this, "La contraseña es incorrecta", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e){
+                            Toast.makeText(MainActivity.this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
+                        }
+                        setitbackMain();
+                        Log.d(TAG,"signInWithEmail:fail");
+                    }
+                }
+            });
+
+
+            /*if(verificarUserPass(user.getText().toString(),pass.getText().toString())){
+
                 if(rec.isChecked()){
                     //Se Guarda
                     guardado = user.getText().toString() + " " + pass.getText().toString() + '\n';
@@ -95,7 +146,26 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //Se manda a la activity
             }
-            else Toast.makeText( this, "Usuario o contraseña Invalida", Toast.LENGTH_SHORT).show();
+            else Toast.makeText( this, "Usuario o contraseña Invalida", Toast.LENGTH_SHORT).show();*/
+    }
+
+    void setitMain(){
+        user.setFocusable(false);
+        pass.setFocusable(false);
+        rec.setFocusable(false);
+        botonM.setEnabled(false);
+        creaC.setEnabled(false);
+        recuC.setEnabled(false);
+        loadM.setVisibility(View.VISIBLE);
+    }
+    void setitbackMain(){
+        user.setFocusableInTouchMode(true);
+        pass.setFocusableInTouchMode(true);
+        rec.setFocusable(true);
+        botonM.setEnabled(true);
+        creaC.setEnabled(true);
+        recuC.setEnabled(true);
+        loadM.setVisibility(View.GONE);
     }
 
     public boolean archivoexiste(String direccion[], String nombre){
@@ -107,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
+    /*
     public boolean verificarUserPass(String user,String pass){
         final int[] v = {0};
         mAuth.signInWithEmailAndPassword(user,pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -116,12 +186,13 @@ public class MainActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Log.d(TAG,"signInWithEmail:success");
                     FirebaseUser user =mAuth.getCurrentUser();
-                    v[0] = 1;
-                } else v[0] = 0;
+
+                } else {
+
             }
         });
         return v[0] == 1;
-    }
+    }*/
 
     public void registro(View view){ //Funcion para registrarse
         startActivity(new Intent(this,registroone.class));

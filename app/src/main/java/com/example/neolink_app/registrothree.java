@@ -104,6 +104,7 @@ public class registrothree extends AppCompatActivity {
 
     public void validarticket(){
         //validar = false;
+
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -244,6 +245,7 @@ public class registrothree extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
+                                Toast.makeText(registrothree.this, "Se cancelo la operación", Toast.LENGTH_SHORT).show();
                                 Intent ithree = new Intent(registrothree.this, MainActivity.class);
                                 ithree.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(ithree);
