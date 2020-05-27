@@ -191,13 +191,13 @@
             android:id="@+id/volvertwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/volverRecuperar"
-            android:fontFamily="@font/lato"
-            android:gravity ="center"
             android:clickable="true"
-            android:focusable= "true"
-            android:onClick="volver"
-            android:textColor="#000000"/>
+            android:focusable="true"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:onClick="volver2"
+            android:text="@string/volverRecuperar"
+            android:textColor="#000000" />
 
 
     </LinearLayout>

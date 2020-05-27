@@ -234,7 +234,7 @@ public class registrothree extends AppCompatActivity {
     }
 
     public void borrar(String correo, String password){
-        //user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         AuthCredential credential = EmailAuthProvider.getCredential(correo, password);
         user.reauthenticate(credential).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
@@ -244,9 +244,9 @@ public class registrothree extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()) {
-                                Intent i = new Intent(registrothree.this, MainActivity.class);
-                                //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i);
+                                Intent ithree = new Intent(registrothree.this, MainActivity.class);
+                                ithree.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(ithree);
                             } else {
                                 try{
                                     throw task.getException();

@@ -106,7 +106,7 @@ public class registrotwo extends AppCompatActivity {
                     }
                 });
     }
-    public void volver(View view){
+    public void volver2(View view){
         Intent i = new Intent(this,MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
