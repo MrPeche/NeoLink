@@ -11,6 +11,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,9 +36,11 @@ public class registrothree extends AppCompatActivity {
     private TextInputEditText ticket;
     private TextInputLayout layticket;
     private DatabaseReference mDatabase;
+    private Button botonS3;
+    private TextView botonA3;
+    private ProgressBar load3;
     private FirebaseUser user;
     private static final String TAG = "Leyendo el dato";
-    private boolean validar = false;
     private String antes;
 
     @Override
@@ -44,6 +49,9 @@ public class registrothree extends AppCompatActivity {
         setContentView(R.layout.activity_registrothree);
         ticket = findViewById(R.id.ticketrecuperarthree);
         layticket = findViewById(R.id.layoutcodigoregistrothree);
+        botonS3 = findViewById(R.id.button_registrothree);
+        botonA3 = findViewById(R.id.volverthree);
+        load3 = findViewById(R.id.Cargado3);
         mDatabase = FirebaseDatabase.getInstance().getReference("Token");
         ticket.addTextChangedListener(new TextWatcher() {
             @Override
@@ -68,11 +76,12 @@ public class registrothree extends AppCompatActivity {
             }
         });
     }
-    /*
-    private ValueEventListener orejitasTerminar = new ValueEventListener() {
-     String boleto=ticket.getText().toString();
+
+    /*private ValueEventListener orejitasTerminar = new ValueEventListener() {
+     String boleto = "";
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            boleto = ticket.getText().toString();
             if((dataSnapshot.child(boleto).exists())&&(dataSnapshot.child(boleto).getValue().toString().equals("nulo"))){
                 //Terminar mensaje y irnos al main
                 Intent itwo = getIntent();
@@ -95,7 +104,33 @@ public class registrothree extends AppCompatActivity {
 
     public void validarticket(){
         //validar = false;
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String boleto = ticket.getText().toString();
+                if((dataSnapshot.child(boleto).exists())&&(dataSnapshot.child(boleto).getValue().toString().equals("nulo"))){
+                    //Terminar mensaje y irnos al main
+                    Intent itwo = getIntent();
+                    Bundle extras = itwo.getExtras();
+                    String correo = extras.getString("correo");
+                    String passw = extras.getString("passw");
+                    mDatabase.child(boleto).setValue(correo);
+                    Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(registrothree.this, MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                } else {
+                    Toast.makeText( registrothree.this, "Ticket invalido", Toast.LENGTH_SHORT).show();
+                    setitback3();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText( registrothree.this, "Problemas de Conexión", Toast.LENGTH_SHORT).show();
+                setitback3();
+            }
+        });
         //mDatabase.addListenerForSingleValueEvent(orejitasTerminar);
 
         //Task validacion = mDatabase.addListenerForSingleValueEvent();
@@ -107,7 +142,7 @@ public class registrothree extends AppCompatActivity {
 
     public void siguiente(View view){
          //final boolean[] validar = new boolean[1];
-        if(ticket.length()!=0){
+        if(ticket.length()!=0) {
             /*mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -133,8 +168,10 @@ public class registrothree extends AppCompatActivity {
                 startActivity(i);
             }else Toast.makeText( this, "Ticket invalido", Toast.LENGTH_SHORT).show();
             */
+            setit3();
             validarticket();
-            if(validar) {
+
+            /*if(validar) {
                 //Terminar mensaje y irnos al main
                 Intent itwo = getIntent();
                 Bundle extras = itwo.getExtras();
@@ -148,7 +185,21 @@ public class registrothree extends AppCompatActivity {
             } else Toast.makeText( this, "Ticket invalido", Toast.LENGTH_SHORT).show();
 
         } else Toast.makeText( this, "Escriba un ticket", Toast.LENGTH_SHORT).show();
+            */
+        }
+    }
+    void setitback3 (){
+        ticket.setFocusableInTouchMode(true);
+        botonS3.setEnabled(true);
+        botonA3.setEnabled(true);
+        load3.setVisibility(View.GONE);
+    }
 
+    void setit3 (){
+        ticket.setFocusable(false);
+        botonS3.setEnabled(false);
+        botonA3.setEnabled(false);
+        load3.setVisibility(View.VISIBLE);
     }
 
 
@@ -171,6 +222,7 @@ public class registrothree extends AppCompatActivity {
                 }
             }
         });*/
+        setit3();
         borrar(extras.getString("correo"), extras.getString("passw"));
         /*borrar(extras.getString("correo"), extras.getString("passw"), new CallBacks3() {
             @Override
@@ -178,49 +230,43 @@ public class registrothree extends AppCompatActivity {
                 Log.d(TAG, "User account deleted.");
             }
         });*/
-        Intent i = new Intent(this,MainActivity.class);
-        //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+
     }
 
     public void borrar(String correo, String password){
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        //user = FirebaseAuth.getInstance().getCurrentUser();
         AuthCredential credential = EmailAuthProvider.getCredential(correo, password);
-
         user.reauthenticate(credential).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    //vali.valcallback(true);
-
+                if(task.isSuccessful()) {
+                    user.delete().addOnCompleteListener(registrothree.this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()) {
+                                Intent i = new Intent(registrothree.this, MainActivity.class);
+                                //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
+                            } else {
+                                try{
+                                    throw task.getException();
+                                } catch (Exception e){
+                                    Toast.makeText(registrothree.this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
+                                }
+                                setitback3();
+                            }
+                        }
+                    });
                 } else {
-
+                    try{
+                        throw task.getException();
+                    } catch (Exception e){
+                        Toast.makeText(registrothree.this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
+                    }
+                    setitback3();
                 }
             }
         });
-        // REVISAR
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        AuthCredential credencial = EmailAuthProvider
-                .getCredential("user@example.com", "password1234");
-        user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "User re-authenticated.");
-                    }
-                });
-
-
-        user.delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User account deleted.");
-                        }
-                    }
-                });
-
 
         /*user.reauthenticate(credential).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
