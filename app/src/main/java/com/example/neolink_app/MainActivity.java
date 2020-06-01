@@ -67,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 id.close();
                 br.close();
                 user.setText(Lineaguardada.substring(0,Lineaguardada.indexOf(" ")));
-                pass.setText(Lineaguardada.substring(Lineaguardada.indexOf(" ")));
+                pass.setText(Lineaguardada.substring(Lineaguardada.indexOf(" ")+1));
                 rec.setChecked(true);
+                logthisshit();
 
             } catch (IOException ignored){
 
@@ -87,6 +88,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logeo(View view){
+
+        logthisshit();
+
+            /*if(verificarUserPass(user.getText().toString(),pass.getText().toString())){
+
+                if(rec.isChecked()){
+                    //Se Guarda
+                    guardado = user.getText().toString() + " " + pass.getText().toString() + '\n';
+                    try {
+                        OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
+                        archivo.write(guardado);
+                        archivo.flush();
+                        archivo.close();
+                    } catch (IOException e){
+
+                    }
+
+                }
+                //Se manda a la activity
+            }
+            else Toast.makeText( this, "Usuario o contraseña Invalida", Toast.LENGTH_SHORT).show();*/
+    }
+    void logthisshit(){
         setitMain();
         //Verifico si el usuario o password es correcto
         if((user.length()!=0)&&(pass.length()!=0))
@@ -127,26 +151,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-
-
-            /*if(verificarUserPass(user.getText().toString(),pass.getText().toString())){
-
-                if(rec.isChecked()){
-                    //Se Guarda
-                    guardado = user.getText().toString() + " " + pass.getText().toString() + '\n';
-                    try {
-                        OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
-                        archivo.write(guardado);
-                        archivo.flush();
-                        archivo.close();
-                    } catch (IOException e){
-
-                    }
-
-                }
-                //Se manda a la activity
-            }
-            else Toast.makeText( this, "Usuario o contraseña Invalida", Toast.LENGTH_SHORT).show();*/
     }
 
     void setitMain(){
