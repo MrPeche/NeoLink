@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 user.setText(Lineaguardada.substring(0,Lineaguardada.indexOf(" ")));
                 pass.setText(Lineaguardada.substring(Lineaguardada.indexOf(" ")+1));
                 rec.setChecked(true);
-                logthisshit();
+                //logthisshit();
 
             } catch (IOException ignored){
 
@@ -134,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         }
+                        //mandado del intent - necesita paquete
+                        Intent i = new Intent(MainActivity.this, actividadbase.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
 
                     } else {
 
