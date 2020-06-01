@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/nvdtop"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/mapita"
+            android:title="@string/mapa" />
+        <item
+            android:id="@+id/listita"
+            android:title="@string/lista" />
+        <item
+            android:id="@+id/grafiquitos"
+            android:title="@string/graficos" />
+        <item
+            android:id="@+id/notificacioncitas"
+            android:title="@string/notificaciones" />
+    </group>
+
+    <group
+        android:id="@+id/ndgruponeolinktit"
+        android:checkableBehavior="single">
+        <item
+            android:id = "@+id/Neolink_propetario"
+            android:title = "lol"/>
+    </group>
+
+    <group
+        android:id="@+id/ndgruponeolinkconect"
+        android:checkableBehavior="single">
+        <item
+            android:title = "@string/easyconnect"/>
+        <item
+            android:title = "@string/configuracion"/>
+    </group>
+
+    <group
+        android:id="@+id/ndgrupous"
+        android:checkableBehavior="single">
+        <item
+            android:title = "@string/llamanos"/>
+        <item
+            android:title = "@string/version"/>
+    </group>
+
+    <group
+        android:id="@+id/ndsalida"
+        android:checkableBehavior="single">
+        <item
+            android:title = "@string/salida"/>
+    </group>
+
+</menu>

@@ -42,5 +42,17 @@
 
     <string name="appname">NeoLink+</string>
 
+    //Navigation Drawer Menu
+    <string name="mapa">Mapa</string>
+    <string name="lista">Lista de Diapositivos</string>
+    <string name="graficos">Gráficos</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="easyconnect">Easy Connect</string>
+    <string name="configuracion">Configuración</string>
+    <string name="llamanos">Llámanos</string>
+    <string name="version">Versión</string>
+    <string name="neolinktit">NeoLink+</string>
+    <string name="salida">Salir</string>
+
 
 </resources>
