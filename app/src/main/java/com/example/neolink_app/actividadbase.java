@@ -28,7 +28,7 @@ public class actividadbase extends AppCompatActivity {
         setContentView(R.layout.activity_actividadbase);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        correoYO = findViewById(R.id.textocorreo);
+
         FloatingActionButton fab = findViewById(R.id.fab);
 
         /*fab.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +49,10 @@ public class actividadbase extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //navigationView.setNavigationItemSelectedListener(this);
+        View header= navigationView.getHeaderView(0);
+        correoYO = header.findViewById(R.id.textocorreo);
         String yo = getIntent().getExtras().getString("correo");
         correoYO.setText(yo);
     }
