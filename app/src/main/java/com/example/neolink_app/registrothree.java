@@ -52,7 +52,7 @@ public class registrothree extends AppCompatActivity {
         botonS3 = findViewById(R.id.button_registrothree);
         botonA3 = findViewById(R.id.volverthree);
         load3 = findViewById(R.id.Cargado3);
-        mDatabase = FirebaseDatabase.getInstance().getReference("Token");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         ticket.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -109,13 +109,14 @@ public class registrothree extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String boleto = ticket.getText().toString();
-                if((dataSnapshot.child(boleto).exists())&&(dataSnapshot.child(boleto).getValue().toString().equals("nulo"))){
+                if((dataSnapshot.child("NEWneolinks").child(boleto).exists())&&(dataSnapshot.child("NEWneolinks").child(boleto).getValue().toString().equals("nulo"))){
                     //Terminar mensaje y irnos al main
                     Intent itwo = getIntent();
                     Bundle extras = itwo.getExtras();
                     String correo = extras.getString("correo");
                     String passw = extras.getString("passw");
-                    mDatabase.child(boleto).setValue(correo);
+                    mDatabase.child("NEWneolinks").child(boleto).removeValue();
+                    //mDatabase.child("OLDneolinks").child(boleto).setValue();
                     Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(registrothree.this, MainActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);

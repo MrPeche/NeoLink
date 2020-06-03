@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 public class actividadbase extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView correoYO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class actividadbase extends AppCompatActivity {
         setContentView(R.layout.activity_actividadbase);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        correoYO = findViewById(R.id.textocorreo);
         FloatingActionButton fab = findViewById(R.id.fab);
 
         /*fab.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +49,8 @@ public class actividadbase extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        String yo = getIntent().getExtras().getString("correo");
+        correoYO.setText(yo);
     }
 
     @Override
