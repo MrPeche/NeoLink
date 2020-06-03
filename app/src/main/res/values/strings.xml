@@ -43,6 +43,7 @@
     <string name="appname">NeoLink+</string>
 
     //Navigation Drawer Menu
+    <string name="home">Principal</string>
     <string name="mapa">Mapa</string>
     <string name="lista">Lista de Diapositivos</string>
     <string name="graficos">Gráficos</string>
@@ -53,6 +54,8 @@
     <string name="version">Versión</string>
     <string name="neolinktit">NeoLink+</string>
     <string name="salida">Salir</string>
+
+    <string name="hello_blank_fragment">Funciono</string>
 
 
 </resources>
