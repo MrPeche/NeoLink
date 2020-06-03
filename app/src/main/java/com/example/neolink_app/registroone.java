@@ -186,6 +186,8 @@ public class registroone extends AppCompatActivity {
                                             Bundle paqueteregistro = new Bundle();
                                             paqueteregistro.putString("correo", correo.getText().toString());
                                             paqueteregistro.putString("passw", passwuno.getText().toString());
+                                            String tmr = mAuth.getCurrentUser().getUid();
+                                            paqueteregistro.putString("uid",tmr);
                                             Toast.makeText(registroone.this, "Usuario Creado", Toast.LENGTH_SHORT).show();
                                             Intent ione = new Intent(registroone.this, registrothree.class);
                                             ione.putExtras(paqueteregistro);
