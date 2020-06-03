@@ -31,6 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class registrothree extends AppCompatActivity {
 
     private TextInputEditText ticket;
@@ -116,7 +119,8 @@ public class registrothree extends AppCompatActivity {
                     String correo = extras.getString("correo");
                     String passw = extras.getString("passw");
                     mDatabase.child("NEWneolinks").child(boleto).removeValue();
-                    //mDatabase.child("OLDneolinks").child(boleto).setValue();
+                    OLDneolinksboleto paqueton = new OLDneolinksboleto(correo);
+                    mDatabase.child("OLDneolinks").child(boleto).setValue(paqueton);
                     Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(registrothree.this, MainActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
