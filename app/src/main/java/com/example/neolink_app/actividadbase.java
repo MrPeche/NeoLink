@@ -51,8 +51,8 @@ public class actividadbase extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //navigationView.setNavigationItemSelectedListener(this);
-        View header= navigationView.getHeaderView(0);
-        correoYO = header.findViewById(R.id.textocorreo);
+        View headerweather= navigationView.getHeaderView(0);
+        correoYO = headerweather.findViewById(R.id.textocorreo);
         String yo = getIntent().getExtras().getString("correo");
         correoYO.setText(yo);
     }
