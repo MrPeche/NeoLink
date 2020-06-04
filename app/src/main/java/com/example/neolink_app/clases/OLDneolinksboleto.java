@@ -1,4 +1,4 @@
-package com.example.neolink_app;
+package com.example.neolink_app.clases;
 
 import java.util.ArrayList;
 

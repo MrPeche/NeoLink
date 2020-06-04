@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         //mandado del intent - necesita paquete
 
                         Intent i = new Intent(MainActivity.this, actividadbase.class);
+                        i.putExtra("uid",usuarioF.getUid());
                         i.putExtra("correo",user.getText().toString());
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
