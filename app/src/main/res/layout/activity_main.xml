@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_bold"
                 android:gravity="center|end"
                 android:text="@string/titulo1"
                 android:textColor="#849AAF"

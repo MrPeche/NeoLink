@@ -55,7 +55,26 @@
     <string name="neolinktit">NeoLink +</string>
     <string name="salida">Salir</string>
 
-    <string name="hello_blank_fragment">Funciono</string>
+    //datos generales
+    <string name="tituloprincipal">S001 15cm</string>
+    <string name="primernombre">VWC</string>
+    <string name="segundonombre">Temperatura</string>
+    <string name="tercernombre">Conductividad EC</string>
+
+    <string name="tituloprincipal2">S002 15cm</string>
+    <string name="primernombre2">Potencial hidrico</string>
+    <string name="segundonombre2">Temperatura</string>
+
+    <string name="tituloprincipal3">S003 Atmos</string>
+    <string name="primernombre3">Radiación Solar</string>
+    <string name="segundonombre3">Precipitación</string>
+    <string name="cuartonombre3">Golpes de Luz</string>
+    <string name="quintonombre3">Prom. distancia de luz</string>
+    <string name="sextonombre3">Presion de vapor</string>
+    <string name="septimonombre3">Presion Atmosferica</string>
+    <string name="octavonombre3">Presion de vapor</string>
+
+
 
 
 </resources>

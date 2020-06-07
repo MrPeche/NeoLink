@@ -7,7 +7,7 @@
         android:id="@+id/nvdtop"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
+            android:id="@+id/datosgenerales"
             android:title="@string/home" />
         <item
             android:id="@+id/mapita"
