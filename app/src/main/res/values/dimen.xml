@@ -10,4 +10,7 @@
     <dimen name="Tamañotitulo">24sp</dimen>
     <dimen name="Tamañotexto">16sp</dimen>
 
+    <dimen name="cardRadio">10dp</dimen>
+    <dimen name="cardelevasion">4dp</dimen>
+
 </resources>
