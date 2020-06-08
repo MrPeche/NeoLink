@@ -11,4 +11,8 @@ public class OWNERitems {
     public OWNERitems( ArrayList<String> neolinks){
         this.neolinks = neolinks;
     }
+
+    public ArrayList<String> getlista(){
+        return neolinks;
+    }
 }
