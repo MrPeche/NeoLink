@@ -74,6 +74,9 @@
     <string name="septimonombre3">Presion Atmosferica</string>
     <string name="octavonombre3">Presion de vapor</string>
 
+    //cardview
+    <string name="cardtitle">NeoLink</string>
+
 
 
 

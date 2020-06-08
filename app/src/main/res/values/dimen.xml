@@ -12,5 +12,6 @@
 
     <dimen name="cardRadio">10dp</dimen>
     <dimen name="cardelevasion">4dp</dimen>
+    <dimen name="margencard">8dp</dimen>
 
 </resources>
