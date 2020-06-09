@@ -3,6 +3,7 @@ package com.example.neolink_app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,10 +23,13 @@ public class actividadbase extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView correoYO;
+    private MasterDrawerViewModel archi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        iniciarelView();
+
         setContentView(R.layout.activity_actividadbase);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,6 +67,10 @@ public class actividadbase extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    void iniciarelView(){
+        archi = new ViewModelProvider(this).get(MasterDrawerViewModel.class);
     }
 }
 

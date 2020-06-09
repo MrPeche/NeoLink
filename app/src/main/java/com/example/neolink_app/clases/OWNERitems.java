@@ -15,4 +15,5 @@ public class OWNERitems {
     public ArrayList<String> getlista(){
         return neolinks;
     }
+
 }

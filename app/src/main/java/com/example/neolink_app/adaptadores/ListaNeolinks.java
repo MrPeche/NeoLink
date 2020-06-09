@@ -39,7 +39,6 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
     class ListaNeolinksViewHolder extends RecyclerView.ViewHolder{
         TextView codigo;
 
-
         public ListaNeolinksViewHolder(View itemView) {
             super(itemView);
             codigo = itemView.findViewById(R.id.codigocard);
