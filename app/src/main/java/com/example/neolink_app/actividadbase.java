@@ -49,7 +49,7 @@ public class actividadbase extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.datosgenerales,R.id.listita)
-                .setDrawerLayout(drawer)
+                .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -58,7 +58,7 @@ public class actividadbase extends AppCompatActivity {
         //navigationView.setNavigationItemSelectedListener(this);
         View headerweather= navigationView.getHeaderView(0);
         correoYO = headerweather.findViewById(R.id.textocorreo);
-        String yo = getIntent().getExtras().getString("correo");
+        String yo = damecorreo();
         correoYO.setText(yo);
     }
 
@@ -71,6 +71,13 @@ public class actividadbase extends AppCompatActivity {
 
     void iniciarelView(){
         archi = new ViewModelProvider(this).get(MasterDrawerViewModel.class);
+        archi.poneruid(dameuid());
+    }
+    String dameuid(){
+        return getIntent().getExtras().getString("uid");
+    }
+    String damecorreo(){
+        return getIntent().getExtras().getString("correo");
     }
 }
 

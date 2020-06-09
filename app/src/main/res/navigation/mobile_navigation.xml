@@ -10,10 +10,8 @@
         android:name="com.example.neolink_app.datosgenerales"
         android:label="fragment_datosgenerales"
         tools:layout="@layout/fragment_datosgenerales" >
-        <action
-            android:id="@+id/action_datosgenerales_to_listita"
-            app:destination="@id/listita" />
     </fragment>
+
     <fragment
         android:id="@+id/listita"
         android:name="com.example.neolink_app.listita"

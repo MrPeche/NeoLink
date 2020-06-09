@@ -50,7 +50,7 @@ public class listita extends Fragment {
         rv = view.findViewById(R.id.lista_neolink);
         glm = new GridLayoutManager(getActivity(),2);
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
-        //adapter = new ListaNeolinks(archi.getLiveNL(uid));
+        adapter = new ListaNeolinks(archi.getLiveNL().getValue());
         rv.setAdapter(adapter);
     }
 }
