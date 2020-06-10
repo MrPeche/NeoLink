@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
@@ -11,12 +11,16 @@
     android:clickable="true"
     android:focusable="true"
     app:cardUseCompatPadding="true"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:theme="@style/cardview"
+    style="@style/Widget.MaterialComponents.CardView"
+    app:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:theme="@style/cardview"
         android:background="@drawable/cardviewshape">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -24,9 +28,10 @@
             android:orientation="horizontal"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_gravity="start">
+            android:layout_gravity="start"
+            android:theme="@style/cardview">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -43,7 +48,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/lato_bold"
                 android:textSize="@dimen/Tamañotitulo"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFFFFF"
+                android:theme="@style/cardview"/>
         </LinearLayout>
         <TextView
             android:id="@+id/cardtext"
@@ -53,7 +59,7 @@
             android:layout_gravity="end|top"
             android:text="@string/cardtitle"
             android:fontFamily="@font/lato_bold"
-            android:textSize="@dimen/Tamañotexto"/>
+            android:textSize="@dimen/Tamañotexto" />
     </LinearLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

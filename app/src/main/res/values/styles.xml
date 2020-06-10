@@ -8,6 +8,13 @@
         <item name="colorAccent">#73AA86</item>
     </style>
 
+    <style name="cardview" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#849AAF</item>
+        <item name="colorPrimaryDark">#3C77AF</item>
+        <item name="colorAccent">#73AA86</item>
+    </style>
+
     <style name="camposdeingreso" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">#849AAF</item>
         <item name="colorControlActivated">#73AA86</item>

@@ -60,8 +60,9 @@ public class listita extends Fragment {
             @Override
             public void onChanged(OWNERitems owneRitems) {
                 adapter = new ListaNeolinks(owneRitems);
+                rv.setAdapter(adapter);
             }
         });
-        rv.setAdapter(adapter);
+        //rv.setAdapter(adapter);
     }
 }
