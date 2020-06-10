@@ -52,6 +52,8 @@ public class listita extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         rv = view.findViewById(R.id.lista_neolink);
         glm = new GridLayoutManager(getActivity(),2);
+        rv.setLayoutManager(glm);
+
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
         archi.getLiveNL();
         archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {

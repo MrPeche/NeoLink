@@ -21,7 +21,7 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
 
     @Override
     public ListaNeolinksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ListaNeolinksViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neolink_cardview,parent,false));
+        return new ListaNeolinksViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neolink_cardview, parent, false));
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
         return data.getlista().size();
     }
 
-    class ListaNeolinksViewHolder extends RecyclerView.ViewHolder{
-        TextView codigo;
+    public static class ListaNeolinksViewHolder extends RecyclerView.ViewHolder{
+        public TextView codigo;
 
         public ListaNeolinksViewHolder(View itemView) {
             super(itemView);
