@@ -9,8 +9,8 @@ import androidx.lifecycle.LiveData;
 import com.example.neolink_app.clases.OWNERitems;
 
 public class MasterDrawerViewModel extends AndroidViewModel {
-    private LiveData<OWNERitems> Usuarioneolinks;
-    private UserInfoRepo appRepo;
+    public LiveData<OWNERitems> Usuarioneolinks;
+    public UserInfoRepo appRepo;
     private String uid;
 
     public MasterDrawerViewModel(@NonNull Application application) {

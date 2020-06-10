@@ -31,6 +31,7 @@ public class UserInfoRepo {
 
     public LiveData<OWNERitems> dameneolinks(String uid){
         String patio = "/OWNERitems/"+uid;
+        MutableLiveData<OWNERitems> hola = new MutableLiveData<>();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
         ownerdata.addSource(liveDataNL, new Observer<DataSnapshot>() {
@@ -45,7 +46,6 @@ public class UserInfoRepo {
                 }
             }
         });
-
         return ownerdata;
     }
 

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.neolink_app.adaptadores.ListaNeolinks;
+import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
 
@@ -50,7 +53,13 @@ public class listita extends Fragment {
         rv = view.findViewById(R.id.lista_neolink);
         glm = new GridLayoutManager(getActivity(),2);
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
-        adapter = new ListaNeolinks(archi.getLiveNL().getValue());
+        archi.getLiveNL();
+        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                adapter = new ListaNeolinks(owneRitems);
+            }
+        });
         rv.setAdapter(adapter);
     }
 }
