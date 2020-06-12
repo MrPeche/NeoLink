@@ -105,7 +105,7 @@
                     android:gravity="center"
                     android:hint="@string/TituloRegistroThree"
                     android:imeOptions="actionDone"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textCapCharacters"
                     android:textSize="18sp"
                     android:theme="@style/camposdeingreso" />
 

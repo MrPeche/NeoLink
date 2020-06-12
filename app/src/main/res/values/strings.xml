@@ -40,7 +40,7 @@
     <string name="MensajeRegistroThree">El ticket es un código único que viene incluido en la caja</string>
     <string name="MensajeRegistroErrorThree">Código invalido</string>
 
-    <string name="appname">NeoLink+</string>
+    <string name="appname">NeoLink +</string>
 
     //Navigation Drawer Menu
     <string name="home">Principal</string>
@@ -76,7 +76,6 @@
 
     //cardview
     <string name="cardtitle">NeoLink</string>
-
 
 
 

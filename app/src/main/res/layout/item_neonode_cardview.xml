@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/cardRadio"
+    app:cardElevation="@dimen/cardelevasion"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/stroke_color"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardUseCompatPadding="true"
+    android:layout_margin="8dp"
+    android:theme="@style/cardview"
+    style="@style/Widget.MaterialComponents.CardView"
+    app:cardPreventCornerOverlap="false">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:theme="@style/cardview"
+        android:background="@drawable/cardviewshape">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="start"
+            android:theme="@style/cardview">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/neolinkicon"
+                android:tint="#FFFFFF"
+                android:layout_gravity="center"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/codigocardnode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/lato_bold"
+                android:textSize="@dimen/Tamañotitulo"
+                android:textColor="#FFFFFF"
+                android:theme="@style/cardview"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/cardtext2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="end|top"
+            android:text="@string/cardtitle"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="@dimen/Tamañotexto" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

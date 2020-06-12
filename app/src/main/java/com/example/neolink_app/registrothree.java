@@ -66,6 +66,7 @@ public class registrothree extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if((s.length()==3)&&((!antes.contains("-")||antes.length()==3))){
                     s.append("-");
                 }
