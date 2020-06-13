@@ -18,12 +18,16 @@
         android:label="fragment_listita"
         tools:layout="@layout/fragment_listita" >
         <action
-            android:id="@+id/action_listita_to_listaneonodes"
+            android:id="@+id/action_listita_to_listaneonodes2"
             app:destination="@id/listaneonodes" />
     </fragment>
     <fragment
         android:id="@+id/listaneonodes"
         android:name="com.example.neolink_app.listaneonodes"
         android:label="fragment_listaneonodes"
-        tools:layout="@layout/fragment_listaneonodes" />
+        tools:layout="@layout/fragment_listaneonodes" >
+        <argument
+            android:name="neolink"
+            app:argType="string" />
+    </fragment>
 </navigation>

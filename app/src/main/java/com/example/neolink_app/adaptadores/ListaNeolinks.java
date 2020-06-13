@@ -45,4 +45,8 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
         }
     }
 
+    public interface OnclickListenerItem{
+        void Onclickitem(int position);
+    }
+
 }
