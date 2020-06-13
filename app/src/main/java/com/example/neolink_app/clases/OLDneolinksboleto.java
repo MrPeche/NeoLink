@@ -19,4 +19,7 @@ public class OLDneolinksboleto {
         nuevo.add("nulo");
         this.neonodos = nuevo;
     }
+    public String neolinksuid(){
+        return this.correo;
+    }
 }

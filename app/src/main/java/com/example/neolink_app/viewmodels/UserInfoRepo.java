@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.neolink_app.adaptadores.FirebaseQueryLiveData;
+import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.google.firebase.FirebaseExceptionMapper;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +24,11 @@ public class UserInfoRepo {
 
     //private final FirebaseQueryLiveData liveData = new FirebaseQueryLiveData(HOT_STOCK_REF);
     private final MediatorLiveData ownerdata = new MediatorLiveData();
+    private final MediatorLiveData oldneolinks = new MediatorLiveData();
+
 
     private OWNERitems userneolinks = new OWNERitems();
+    private OLDneolinksboleto neolinks = new OLDneolinksboleto();
     private DatabaseReference BaseDatos = FirebaseDatabase.getInstance().getReference();
 
     public UserInfoRepo() {
@@ -49,9 +53,26 @@ public class UserInfoRepo {
         return ownerdata;
     }
 
-    /*public LiveData<OWNERitems> damenodo(String uid, String neolink){
+    public LiveData<OLDneolinksboleto> damenodos(String uid, String neolink){
+        String patio = "/OWNERitems/" + neolink;
+        final String uid2 = uid;
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        oldneolinks.addSource(liveDataNL, new Observer<DataSnapshot>(){
 
-
-    }*/
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null) {
+                    neolinks = dataSnapshot.getValue(OLDneolinksboleto.class);
+                    if(uid2 == neolinks.neolinksuid()){
+                        oldneolinks.setValue(neolinks);
+                    }
+                } else {
+                    oldneolinks.setValue(null);
+                }
+            }
+        });
+        return oldneolinks;
+    }
 
 }
