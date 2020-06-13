@@ -14,14 +14,17 @@ import java.util.ArrayList;
 
 public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeolinksViewHolder> {
     private OWNERitems data;
+    private OnclickListenerItem onclicklisteneritem;
 
-    public ListaNeolinks(OWNERitems data) {
+    public ListaNeolinks(OWNERitems data, OnclickListenerItem onclicklisteneritem) {
         this.data = data;
+        this.onclicklisteneritem = onclicklisteneritem;
     }
 
     @Override
     public ListaNeolinksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ListaNeolinksViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neolink_cardview, parent, false));
+
+        return new ListaNeolinksViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neolink_cardview, parent, false),onclicklisteneritem);
     }
 
     @Override
@@ -36,12 +39,20 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
         return data.getlista().size();
     }
 
-    public static class ListaNeolinksViewHolder extends RecyclerView.ViewHolder{
+    public static class ListaNeolinksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView codigo;
+        OnclickListenerItem onclickitemlistener;
 
-        public ListaNeolinksViewHolder(View itemView) {
+        public ListaNeolinksViewHolder(View itemView, OnclickListenerItem onclickitemlistener) {
             super(itemView);
             codigo = itemView.findViewById(R.id.codigocard);
+            itemView.setOnClickListener(this);
+            this.onclickitemlistener = onclickitemlistener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            onclickitemlistener.Onclickitem(getAdapterPosition());
         }
     }
 

@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
 import java.util.ArrayList;
 
+import androidx.navigation.NavDirections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,7 +65,7 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
         archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
             @Override
             public void onChanged(OWNERitems owneRitems) {
-                adapter = new ListaNeolinks(owneRitems);
+                adapter = new ListaNeolinks(owneRitems, listita.this);
                 rv.setAdapter(adapter);
                 lista = owneRitems.getlista();
             }
@@ -75,7 +77,6 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
     @Override
     public void Onclickitem(int position) {
         String neolink = lista.get(position);
-        Navigation.findNavController(getView()).navigate(R.id.action_listita_to_listaneonodes2);
-
+        Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToListaneonodes2(neolink));
     }
 }
