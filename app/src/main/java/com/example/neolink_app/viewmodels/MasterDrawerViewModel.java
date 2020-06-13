@@ -24,4 +24,6 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         Usuarioneolinks = appRepo.dameneolinks(uid);
         return Usuarioneolinks;
     }
+
+
 }

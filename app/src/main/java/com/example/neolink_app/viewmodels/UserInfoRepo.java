@@ -27,26 +27,31 @@ public class UserInfoRepo {
     private OWNERitems userneolinks = new OWNERitems();
     private DatabaseReference BaseDatos = FirebaseDatabase.getInstance().getReference();
 
-    public UserInfoRepo(){}
+    public UserInfoRepo() {
+    }
 
-    public LiveData<OWNERitems> dameneolinks(String uid){
-        String patio = "/OWNERitems/"+uid;
-        MutableLiveData<OWNERitems> hola = new MutableLiveData<>();
+    public LiveData<OWNERitems> dameneolinks(String uid) {
+        String patio = "/OWNERitems/" + uid;
+
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
         ownerdata.addSource(liveDataNL, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(@Nullable final DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null) {
+                if (dataSnapshot != null) {
                     userneolinks = dataSnapshot.getValue(OWNERitems.class);
                     ownerdata.setValue(userneolinks);
-                }
-                else {
+                } else {
                     ownerdata.setValue(null);
                 }
             }
         });
         return ownerdata;
     }
+
+    /*public LiveData<OWNERitems> damenodo(String uid, String neolink){
+
+
+    }*/
 
 }
