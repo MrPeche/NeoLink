@@ -22,4 +22,7 @@ public class OLDneolinksboleto {
     public String neolinksuid(){
         return this.correo;
     }
+    public ArrayList<String> dameneonodos(){
+        return this.neonodos;
+    }
 }
