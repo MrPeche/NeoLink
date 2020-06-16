@@ -11,7 +11,7 @@ import com.example.neolink_app.clases.OWNERitems;
 
 public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<OWNERitems> Usuarioneolinks;
-    public LiveData<OLDneolinksboleto> neolinks;
+    public LiveData<OLDneolinksboleto> neonodos;
     public UserInfoRepo appRepo;
     private String uid;
 
@@ -29,8 +29,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
 
     public LiveData<OLDneolinksboleto> getLiveNN(String neolink){
-        neolinks = appRepo.damenodos(uid,neolink);
-        return neolinks;
+        neonodos = appRepo.damenodos(uid,neolink);
+        return neonodos;
     }
 
 }

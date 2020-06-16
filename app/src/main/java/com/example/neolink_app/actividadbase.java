@@ -35,7 +35,7 @@ public class actividadbase extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-
+        fab.hide();
         /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
