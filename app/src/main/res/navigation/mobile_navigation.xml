@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_listita_to_listaneonodes2"
             app:destination="@id/listaneonodes" />
+        <action
+            android:id="@+id/action_listita_to_dialogNeolink"
+            app:destination="@id/dialogNeolink" />
     </fragment>
     <fragment
         android:id="@+id/listaneonodes"
@@ -30,4 +33,12 @@
             android:name="neolink"
             app:argType="string" />
     </fragment>
+
+    <dialog
+        android:id="@+id/dialogNeolink"
+        android:name="com.example.neolink_app.adaptadores.DialogNeolink"
+        android:label="DialogNeolink"
+        tools:layout="@layout/dialogoneolink"/>
+
+
 </navigation>

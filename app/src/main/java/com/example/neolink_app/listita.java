@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.neolink_app.adaptadores.DialogNeolink;
 import com.example.neolink_app.adaptadores.ListaNeolinks;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
@@ -35,6 +36,7 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
     private ListaNeolinks adapter;
     private MasterDrawerViewModel archi;
     private ArrayList<String> lista;
+
 
     public listita() {
         // Required empty public constructor
@@ -56,6 +58,14 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+
+        ((actividadbase)getActivity()).fabaparecer();
+        ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Navigation.findNavController(getView()).navigate(listitaDirections.);
+            }
+        });
         rv = view.findViewById(R.id.lista_neolink);
         glm = new GridLayoutManager(getActivity(),2);
         rv.setLayoutManager(glm);
@@ -78,5 +88,15 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
     public void Onclickitem(int position) {
         String neolink = lista.get(position);
         Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToListaneonodes2(neolink));
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        ((actividadbase)getActivity()).fabdesparecer();
+    }
+    public void openDialog(){
+        DialogNeolink dialogaso = new DialogNeolink();
+        dialogaso.show(getParentFragmentManager(),"dialogo");
+
     }
 }

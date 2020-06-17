@@ -24,6 +24,7 @@ public class actividadbase extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private TextView correoYO;
     private MasterDrawerViewModel archi;
+    public FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,8 @@ public class actividadbase extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.hide();
+        fab = findViewById(R.id.fab);
+        fabdesparecer();
         /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +79,13 @@ public class actividadbase extends AppCompatActivity {
     }
     String damecorreo(){
         return getIntent().getExtras().getString("correo");
+    }
+
+    public void fabaparecer(){
+        fab.setVisibility(View.VISIBLE);
+    }
+    public void fabdesparecer(){
+        fab.setVisibility(View.INVISIBLE);
     }
 }
 

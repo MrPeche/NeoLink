@@ -52,6 +52,7 @@ public class listaneonodes extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+        ((actividadbase)getActivity()).fabaparecer();
         rv = view.findViewById(R.id.lista_neonode);
         glm = new GridLayoutManager(getActivity(),2);
         rv.setLayoutManager(glm);
@@ -68,5 +69,11 @@ public class listaneonodes extends Fragment {
         });
 
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((actividadbase)getActivity()).fabdesparecer();
     }
 }

@@ -77,6 +77,11 @@
     //cardview
     <string name="cardtitle">NeoLink</string>
 
+    //dialogo
+    <string name="dailogtitle">Agregue el código del NeoLink</string>
+    <string name="aceptardialog">Enviar</string>
+    <string name="cancelardialog">Cancelar</string>
+
 
 
 </resources>
