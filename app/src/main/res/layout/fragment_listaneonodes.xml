@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".listaneonodes">
+    tools:context=".listaneonodes"
+    android:background="@color/colorfondito">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista_neonode"

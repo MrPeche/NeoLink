@@ -39,6 +39,21 @@
         android:name="com.example.neolink_app.adaptadores.DialogNeolink"
         android:label="DialogNeolink"
         tools:layout="@layout/dialogoneolink"/>
+    <fragment
+        android:id="@+id/grafiquitos"
+        android:name="com.example.neolink_app.grafiquitos"
+        android:label="fragment_grafiquitos"
+        tools:layout="@layout/fragment_grafiquitos" >
+        <action
+            android:id="@+id/action_grafiquitos_to_panelesgrafiquito"
+            app:destination="@id/panelesgrafiquito" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/panelesgrafiquito"
+        android:name="com.example.neolink_app.panelesgrafiquito"
+        android:label="fragment_panelesgrafiquito"
+        tools:layout="@layout/fragment_panelesgrafiquito" />
 
 
 </navigation>

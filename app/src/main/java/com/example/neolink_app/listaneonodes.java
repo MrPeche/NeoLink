@@ -58,7 +58,7 @@ public class listaneonodes extends Fragment {
         rv.setLayoutManager(glm);
 
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
-        archi.getLiveNL();
+        archi.getLiveNN(neolinkname);
         archi.neonodos.observe(getViewLifecycleOwner(), new Observer<OLDneolinksboleto>() {
             @Override
             public void onChanged(OLDneolinksboleto olDneolinksboleto) {
