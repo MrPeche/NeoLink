@@ -52,7 +52,8 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
 
         @Override
         public void onClick(View v) {
-            onclickitemlistener.Onclickitem(getAdapterPosition());
+            onclickitemlistener.Onclickitem(getAbsoluteAdapterPosition());
+            //getAdapterPosition
         }
     }
 

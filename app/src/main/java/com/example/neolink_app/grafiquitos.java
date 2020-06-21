@@ -2,57 +2,38 @@ package com.example.neolink_app;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.neolink_app.adaptadores.grafiquitosneolinks;
+import com.example.neolink_app.clases.OWNERitems;
+import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link grafiquitos#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class grafiquitos extends Fragment {
+import java.util.ArrayList;
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class grafiquitos extends Fragment implements grafiquitosneolinks.clickprogramitaprimero{
 
+    private RecyclerView rv;
+    private GridLayoutManager glm;
+    private grafiquitosneolinks adapter;
+    private MasterDrawerViewModel archi;
+    private ArrayList<String> lista;
 
-    private String mParam1;
-    private String mParam2;
 
     public grafiquitos() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment grafiquitos.
-     */
-
-    public static grafiquitos newInstance(String param1, String param2) {
-        grafiquitos fragment = new grafiquitos();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -60,5 +41,28 @@ public class grafiquitos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_grafiquitos, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+        rv = view.findViewById(R.id.recyclergraficos);
+        glm = new GridLayoutManager(getActivity(),1);
+        rv.setLayoutManager(glm);
+
+        ArrayList<String> lol = new ArrayList<>();
+        lol.add("NL2006-0002");
+        lol.add("NL2006-0003");
+        lol.add("NL2006-0004");
+        OWNERitems loli = new OWNERitems(lol);
+        lista = lol;
+        adapter = new grafiquitosneolinks(loli,grafiquitos.this);
+        rv.setAdapter(adapter);
+    }
+
+    @Override
+    public void clickiprogramita(int position) {
+        String neolink = lista.get(position);
+        // adelntar
+        Navigation.findNavController(getView()).navigate(grafiquitosDirections.actionGrafiquitosToPanelesgrafiquito(neolink));
     }
 }

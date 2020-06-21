@@ -53,7 +53,11 @@
         android:id="@+id/panelesgrafiquito"
         android:name="com.example.neolink_app.panelesgrafiquito"
         android:label="fragment_panelesgrafiquito"
-        tools:layout="@layout/fragment_panelesgrafiquito" />
+        tools:layout="@layout/fragment_panelesgrafiquito" >
+        <argument
+            android:name="neolinkselected"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

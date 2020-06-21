@@ -66,6 +66,7 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
                 Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToDialogNeolink());
             }
         });
+
         rv = view.findViewById(R.id.lista_neolink);
         glm = new GridLayoutManager(getActivity(),2);
         rv.setLayoutManager(glm);
