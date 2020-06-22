@@ -38,7 +38,7 @@ public class listaneonodes extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            neolinkname = listaneonodesArgs.fromBundle(getArguments()).getNeolink();
+            this.neolinkname = listaneonodesArgs.fromBundle(getArguments()).getNeolink();
         }
     }
 
