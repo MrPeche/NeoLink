@@ -125,11 +125,26 @@ public class MainActivity extends AppCompatActivity {
 
                         if(rec.isChecked()) {
                             guardado = user.getText().toString() + " " + pass.getText().toString() + '\n';
+
                             try {
-                                OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
-                                archivo.write(guardado);
-                                archivo.flush();
-                                archivo.close();
+                                if(archivoexiste(fileList(),"NeoLinkid.txt")){
+                                    InputStreamReader id = new InputStreamReader(openFileInput("NeoLinkid.txt"));
+                                    BufferedReader br = new BufferedReader(id);
+                                    String Lineaguardada = br.readLine();
+                                    id.close();
+                                    br.close();
+                                    if(!Lineaguardada.equals(guardado)){
+                                        OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
+                                        archivo.write(guardado);
+                                        archivo.flush();
+                                        archivo.close();
+                                    }
+                                } else{
+                                    OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
+                                    archivo.write(guardado);
+                                    archivo.flush();
+                                    archivo.close();
+                                }
                             } catch (IOException ignored) {
 
                             }

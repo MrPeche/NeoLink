@@ -64,10 +64,10 @@ public class listaneonodes extends Fragment {
             @Override
             public void onChanged(OLDneolinksboleto olDneolinksboleto) {
                 LinkNodo nuevo = new LinkNodo(neolinkname,olDneolinksboleto);
-
-                adapter = new ListaNeonodesAdapter(olDneolinksboleto);
-                rv.setAdapter(adapter);
                 lista = olDneolinksboleto.dameneonodos();
+                adapter = new ListaNeonodesAdapter(nuevo);
+                rv.setAdapter(adapter);
+
             }
         });
 

@@ -64,7 +64,7 @@ public class UserInfoRepo {
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null) {
                     neolinks = dataSnapshot.getValue(OLDneolinksboleto.class);
-                    if(uid2 == neolinks.neolinksuid()){
+                    if(uid2.equals(neolinks.neolinksuid())){
                         oldneolinks.setValue(neolinks);
                     }
                 } else {

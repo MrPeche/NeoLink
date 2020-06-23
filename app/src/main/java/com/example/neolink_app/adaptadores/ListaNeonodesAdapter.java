@@ -15,13 +15,14 @@ import com.example.neolink_app.clases.OLDneolinksboleto;
 import java.util.ArrayList;
 
 public class ListaNeonodesAdapter extends RecyclerView.Adapter<ListaNeonodesAdapter.ListaNeonodesAdapterViewHolder> {
-    private ArrayList<String> data;
+    private ArrayList<String> data = new ArrayList<>();
 
 
 
     public ListaNeonodesAdapter(LinkNodo nodaso){
         this.data.add(nodaso.getneolink());
         this.data.addAll(nodaso.getoldnodo().dameneonodos());
+        //if(nodaso.getoldnodo().dameneonodos()!=null)
     }
     @Override
     public int getItemViewType(int position){
