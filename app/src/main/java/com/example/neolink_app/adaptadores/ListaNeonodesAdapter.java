@@ -21,7 +21,7 @@ public class ListaNeonodesAdapter extends RecyclerView.Adapter<ListaNeonodesAdap
 
     public ListaNeonodesAdapter(LinkNodo nodaso){
         this.data.add(nodaso.getneolink());
-        this.data.addAll(nodaso.getoldnodo().dameneonodos());
+        if(nodaso.getoldnodo().dameneonodos()!=null) this.data.addAll(nodaso.getoldnodo().dameneonodos());
         //if(nodaso.getoldnodo().dameneonodos()!=null)
     }
     @Override
