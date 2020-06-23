@@ -54,7 +54,7 @@ public class UserInfoRepo {
     }
 
     public LiveData<OLDneolinksboleto> damenodos(String uid, String neolink){
-        String patio = "/OWNERitems/" + neolink;
+        String patio = "/OLDneolinks/" + neolink;
         final String uid2 = uid;
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);

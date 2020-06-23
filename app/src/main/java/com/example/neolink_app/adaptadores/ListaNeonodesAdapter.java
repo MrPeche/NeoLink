@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neolink_app.R;
+import com.example.neolink_app.clases.LinkNodo;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 
 import java.util.ArrayList;
@@ -18,14 +19,26 @@ public class ListaNeonodesAdapter extends RecyclerView.Adapter<ListaNeonodesAdap
 
 
 
-    public ListaNeonodesAdapter(OLDneolinksboleto oldneonodos){
-        this.data = oldneonodos.dameneonodos();
+    public ListaNeonodesAdapter(LinkNodo nodaso){
+        this.data.add(nodaso.getneolink());
+        this.data.addAll(nodaso.getoldnodo().dameneonodos());
+    }
+    @Override
+    public int getItemViewType(int position){
+        if(position==0)
+            return 0;
+        else
+            return 1;
     }
 
     @NonNull
     @Override
     public ListaNeonodesAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ListaNeonodesAdapterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neonode_cardview,parent,false));
+        if(viewType==0){
+            return new  ListaNeonodesAdapterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neonode_cardview, parent, false));
+        } else {
+            return new ListaNeonodesAdapterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neonode_cardview, parent, false));
+        }
     }
 
     @Override
@@ -44,7 +57,7 @@ public class ListaNeonodesAdapter extends RecyclerView.Adapter<ListaNeonodesAdap
 
         public ListaNeonodesAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            codigo = itemView.findViewById(R.id.codigocardnode);
+            codigo = itemView.findViewById(R.id.codigocard);
         }
     }
 }

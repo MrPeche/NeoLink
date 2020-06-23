@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.neolink_app.adaptadores.ListaNeonodesAdapter;
+import com.example.neolink_app.clases.LinkNodo;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
@@ -62,6 +63,8 @@ public class listaneonodes extends Fragment {
         archi.neonodos.observe(getViewLifecycleOwner(), new Observer<OLDneolinksboleto>() {
             @Override
             public void onChanged(OLDneolinksboleto olDneolinksboleto) {
+                LinkNodo nuevo = new LinkNodo(neolinkname,olDneolinksboleto);
+
                 adapter = new ListaNeonodesAdapter(olDneolinksboleto);
                 rv.setAdapter(adapter);
                 lista = olDneolinksboleto.dameneonodos();

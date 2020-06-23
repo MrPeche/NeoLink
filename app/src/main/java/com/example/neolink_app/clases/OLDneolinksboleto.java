@@ -16,13 +16,16 @@ public class OLDneolinksboleto {
     public OLDneolinksboleto(String correo){
         this.correo = correo;
         ArrayList<String> nuevo = new ArrayList<>();
-        nuevo.add("nulo");
+        nuevo.add("NaN");
         this.neonodos = nuevo;
     }
     public String neolinksuid(){
         return this.correo;
     }
+
     public ArrayList<String> dameneonodos(){
-        return this.neonodos;
+        if(this.neonodos.get(0).equals("NaN")){
+            return null;
+        } else return this.neonodos;
     }
 }
