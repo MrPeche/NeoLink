@@ -1,8 +1,8 @@
 package com.example.neolink_app.clases;
 
 public class LinkNodo {
-    String neolink;
-    OLDneolinksboleto nodo;
+    private String neolink;
+    private OLDneolinksboleto nodo;
     public LinkNodo(String neolink, OLDneolinksboleto nodo){
         this.neolink = neolink;
         this.nodo = nodo;
