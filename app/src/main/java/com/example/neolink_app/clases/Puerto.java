@@ -7,7 +7,11 @@ public class Puerto {
     private ArrayList<dataPuerto> data = new ArrayList<>();
 
     public Puerto(){}
-    public Puerto(String Puerto,dataPuerto data){
+    public Puerto(ArrayList<String> Puerto, ArrayList<dataPuerto> data){
+        this.Puerto=Puerto;
+        this.data=data;
+    }
+    public void tomaPuerto(String Puerto,dataPuerto data){
         this.Puerto.add(Puerto);
         this.data.add(data);
     }

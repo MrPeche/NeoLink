@@ -6,7 +6,11 @@ public class Horas {
     private ArrayList<String> horas = new ArrayList<>();
     private ArrayList<Minutos> minutos = new ArrayList<>();
     public Horas(){}
-    public Horas(String hora, Minutos minuto){
+    public Horas(ArrayList<String> horas, ArrayList<Minutos> minutos){
+        this.horas=horas;
+        this.minutos=minutos;
+    }
+    public void tomaHoras(String hora, Minutos minuto){
         this.horas.add(hora);
         this.minutos.add(minuto);
     }

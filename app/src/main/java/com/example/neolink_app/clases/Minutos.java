@@ -7,7 +7,11 @@ public class Minutos {
     private ArrayList<Puerto> paquetes= new ArrayList<>();
 
     public Minutos(){}
-    public Minutos(String minuto, Puerto paquete){
+    public Minutos(ArrayList<String> minutos, ArrayList<Puerto> paquetes){
+        this.minutos=minutos;
+        this.paquetes=paquetes;
+    }
+    public void tomaMinutos(String minuto, Puerto paquete){
         this.minutos.add(minuto);
         this.paquetes.add(paquete);
     }
