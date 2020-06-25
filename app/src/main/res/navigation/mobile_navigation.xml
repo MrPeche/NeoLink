@@ -58,6 +58,11 @@
             android:name="neolinkselected"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/planografico"
+        android:name="com.example.neolink_app.planografico"
+        android:label="fragment_planografico"
+        tools:layout="@layout/fragment_planografico" />
 
 
 </navigation>

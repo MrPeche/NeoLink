@@ -82,7 +82,7 @@
     <string name="aceptardialog">Enviar</string>
     <string name="cancelardialog">Cancelar</string>
 
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

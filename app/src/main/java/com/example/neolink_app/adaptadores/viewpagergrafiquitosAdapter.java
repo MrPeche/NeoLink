@@ -5,21 +5,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.LinkNodo;
+import com.example.neolink_app.planografico;
+
+import java.util.ArrayList;
+
 public class viewpagergrafiquitosAdapter extends FragmentStateAdapter {
+    private ArrayList<String> data = new ArrayList<>();
 
-    public viewpagergrafiquitosAdapter(FragmentActivity fa){
+    public viewpagergrafiquitosAdapter(FragmentActivity fa, Horas horas, ArrayList<String> nodaso){
         super(fa);
-
+        this.data = nodaso;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return null;
+        Fragment plano = planografico.newInstance();
+        return plano;
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 }
