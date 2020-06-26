@@ -13,16 +13,18 @@ import java.util.ArrayList;
 
 public class viewpagergrafiquitosAdapter extends FragmentStateAdapter {
     private ArrayList<String> data = new ArrayList<>();
+    private Horas paquetehora;
 
     public viewpagergrafiquitosAdapter(FragmentActivity fa, Horas horas, ArrayList<String> nodaso){
         super(fa);
         this.data = nodaso;
+        this.paquetehora = horas;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment plano = planografico.newInstance();
+        Fragment plano = planografico.newInstance(this.paquetehora);
         return plano;
     }
 

@@ -20,5 +20,6 @@ public class Horas {
     public Minutos dameminutos(int posicion){
         return this.minutos.get(posicion);
     }
+    public int dametamano(){return this.horas.size();}
 
 }

@@ -21,4 +21,5 @@ public class Minutos {
     public Puerto damepaquete(int posicion){
         return this.paquetes.get(posicion);
     }
+    public int dametamano(){return minutos.size();}
 }
