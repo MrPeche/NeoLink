@@ -23,8 +23,11 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 
@@ -53,13 +56,10 @@ public class planografico extends Fragment {
     public static planografico newInstance(Horas paquete) {
         planografico fragment = new planografico();
 
-        //this.paquete = paquete;
-        /*Bundle args = new Bundle();
+        Bundle args = new Bundle();
         args.putParcelable("paquete",paquete);
-        args.putSerializable("paquete",paquete);
-        args.putAll("paquete",paquete);
-        args.putAll();
-        fragment.setArguments(args);*/
+
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -67,10 +67,9 @@ public class planografico extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        if (getArguments() != null) {
+            this.paquete = getArguments().getParcelable("paquete");
+        }
     }
 
     @Override
@@ -98,17 +97,18 @@ public class planografico extends Fragment {
         String sp = ":";
         String label;
         String label2;
+        float l = 0;
         for(int i = 0; i<paquete.dametamano();i++){
-            int l = 0;
             label = paquete.damehora(i);
             for(int j = 0; j<paquete.dameminutos(i).dametamano();j++){
                 label2 = label+sp+paquete.dameminutos(i).dameminuto(j);
                 String nombre = paquete.dameminutos(i).damepaquete(j).damePuerto(0);
-                l++;
-                Yaxis.add(new Entry(l,Integer.parseInt(paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1())));
+                Yaxis.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
                 Xlabels.add(label2);
+                l++;
             }
         }
+        Collections.sort(Yaxis, new EntryXComparator());
         LineDataSet set1 = new LineDataSet(Yaxis,"P1");
         LineData data = new LineData(set1);
         grafico1.setData(data);
