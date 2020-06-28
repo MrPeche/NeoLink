@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.neolink_app.clases.Horas;
 import com.github.mikephil.charting.charts.LineChart;
@@ -37,7 +38,8 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class planografico extends Fragment {
-
+    private TextView nombre;
+    private String name;
     private LineChart grafico1;
     private LineChart grafico2;
     private Horas paquete;
@@ -54,12 +56,12 @@ public class planografico extends Fragment {
         // Required empty public constructor
     }
 
-    public static planografico newInstance(Horas paquete) {
+    public static planografico newInstance(Horas paquete,String name) {
         planografico fragment = new planografico();
 
         Bundle args = new Bundle();
         args.putParcelable("paquete",paquete);
-
+        args.putString("nombre",name);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,6 +72,7 @@ public class planografico extends Fragment {
 
         if (getArguments() != null) {
             this.paquete = getArguments().getParcelable("paquete");
+            this.name = getArguments().getString("nombre");
         }
     }
 
@@ -82,6 +85,8 @@ public class planografico extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+        nombre = view.findViewById(R.id.Nombrepager);
+        nombre.setText(name);
         grafico1 = view.findViewById(R.id.graficochart1);
         grafico2= view.findViewById(R.id.graficochar2);
         propiedadesgraficoPM();
@@ -110,10 +115,13 @@ public class planografico extends Fragment {
         Collections.sort(YPM, new EntryXComparator());
         LineDataSet set1 = new LineDataSet(YPM,"P1");
         set1.setColor(Color.argb(100,255,99,71));
-        set1.setHighLightColor(Color.argb(100,255,99,71));
-        set1.setCircleRadius(2f);
+        //set1.setHighLightColor(Color.argb(100,255,99,71));
+        set1.setCircleColor(Color.argb(100,255,99,71));
+        set1.setCircleRadius(1f);
         set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set1.setCubicIntensity(0.5f);
+        set1.setDrawValues(false);
+        set1.setLineWidth(2f);
         LineData data = new LineData(set1);
         grafico1.setData(data);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -133,10 +141,12 @@ public class planografico extends Fragment {
         LineDataSet set2 = new LineDataSet(YTemp,"P1");
 
         set2.setColor(Color.argb(100,255,99,71));
-        set2.setHighLightColor(Color.argb(100,255,99,71));
-        set2.setCircleRadius(2f);
+        //set2.setHighLightColor(Color.argb(100,255,99,71));
+        set2.setCircleColor(Color.argb(100,255,99,71));
+        set2.setCircleRadius(1f);
         set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set2.setCubicIntensity(0.5f);
+        set2.setDrawValues(false);
         LineData data2 = new LineData(set2);
         grafico2.setData(data);
         set2.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -158,8 +168,8 @@ public class planografico extends Fragment {
         grafico1.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         grafico1.setDrawGridBackground(false);
-        grafico1.setDrawBorders(true);
-        grafico1.setBorderColor(Color.BLACK);
+        grafico1.setDrawBorders(false);
+        //grafico1.setBorderColor(Color.BLACK);
         //grafico1.setBorderWidth((float) 4);
         grafico1.getDescription().setEnabled(false);
         grafico1.setTouchEnabled(true);

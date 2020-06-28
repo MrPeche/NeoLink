@@ -24,7 +24,7 @@ public class viewpagergrafiquitosAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment plano = planografico.newInstance(this.paquetehora);
+        Fragment plano = planografico.newInstance(this.paquetehora,data.get(position));
         return plano;
     }
 
