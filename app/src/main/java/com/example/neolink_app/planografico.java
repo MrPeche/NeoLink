@@ -39,6 +39,7 @@ import java.util.Map;
 public class planografico extends Fragment {
 
     private LineChart grafico1;
+    private LineChart grafico2;
     private Horas paquete;
     private int colopuerto = Color.argb(150,250,128,114);
 
@@ -82,7 +83,9 @@ public class planografico extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         grafico1 = view.findViewById(R.id.graficochart1);
+        grafico2= view.findViewById(R.id.graficochar2);
         propiedadesgraficoPM();
+        propiedadesgraficoTem();
 
         ArrayList<Entry> YPM = new ArrayList<>();
         ArrayList<Entry> YTemp = new ArrayList<>();
@@ -106,6 +109,11 @@ public class planografico extends Fragment {
         }
         Collections.sort(YPM, new EntryXComparator());
         LineDataSet set1 = new LineDataSet(YPM,"P1");
+        set1.setColor(Color.argb(100,255,99,71));
+        set1.setHighLightColor(Color.argb(100,255,99,71));
+        set1.setCircleRadius(2f);
+        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set1.setCubicIntensity(0.5f);
         LineData data = new LineData(set1);
         grafico1.setData(data);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -120,12 +128,39 @@ public class planografico extends Fragment {
         };
         xaxis.setValueFormatter(formatter);
         grafico1.invalidate();
+
+        Collections.sort(YTemp, new EntryXComparator());
+        LineDataSet set2 = new LineDataSet(YTemp,"P1");
+
+        set2.setColor(Color.argb(100,255,99,71));
+        set2.setHighLightColor(Color.argb(100,255,99,71));
+        set2.setCircleRadius(2f);
+        set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set2.setCubicIntensity(0.5f);
+        LineData data2 = new LineData(set2);
+        grafico2.setData(data);
+        set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+        XAxis xaxis2= grafico2.getXAxis();
+        xaxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
+        final ArrayList<String> xlab2 = Xlabels;
+        ValueFormatter formatter2 = new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                return xlab2.get((int) value);
+            }
+        };
+        xaxis2.setValueFormatter(formatter);
+        grafico2.invalidate();
+
+
     }
     public void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         grafico1.setDrawGridBackground(false);
         grafico1.setDrawBorders(true);
+        grafico1.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
         grafico1.getDescription().setEnabled(false);
         grafico1.setTouchEnabled(true);
         grafico1.setDragEnabled(true);
@@ -135,5 +170,17 @@ public class planografico extends Fragment {
     public void setdataPM(){
 
     }
-
+    public void propiedadesgraficoTem(){
+        grafico2.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        grafico2.setDrawGridBackground(false);
+        grafico2.setDrawBorders(true);
+        grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        grafico2.getDescription().setEnabled(false);
+        grafico2.setTouchEnabled(true);
+        grafico2.setDragEnabled(true);
+        grafico2.setScaleEnabled(true);
+        Legend L = grafico2.getLegend();
+    }
 }
