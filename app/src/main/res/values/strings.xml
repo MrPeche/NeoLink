@@ -82,6 +82,9 @@
     <string name="aceptardialog">Enviar</string>
     <string name="cancelardialog">Cancelar</string>
 
+    //Grafico
+    <string name="sensorPotencialMatricial">Potencial Matricial</string>
+    <string name="sensorTemperatura">Temperatura</string>
 
 
 </resources>

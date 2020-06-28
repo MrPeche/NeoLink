@@ -82,17 +82,11 @@ public class planografico extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         grafico1 = view.findViewById(R.id.graficochart1);
-        grafico1.setBackgroundColor(Color.TRANSPARENT);
-        grafico1.setGridBackgroundColor(Color.BLACK);
-        grafico1.setDrawGridBackground(true);
-        grafico1.setDrawBorders(true);
-        grafico1.getDescription().setEnabled(false);
-        grafico1.setTouchEnabled(true);
-        grafico1.setDragEnabled(true);
-        grafico1.setScaleEnabled(true);
-        Legend L = grafico1.getLegend();
+        propiedadesgraficoPM();
 
-        ArrayList<Entry> Yaxis = new ArrayList<>();
+        ArrayList<Entry> YPM = new ArrayList<>();
+        ArrayList<Entry> YTemp = new ArrayList<>();
+        ArrayList<Double> DepthLabel = new ArrayList<>();
         final ArrayList<String> Xlabels = new ArrayList<>();
         String sp = ":";
         String label;
@@ -103,13 +97,15 @@ public class planografico extends Fragment {
             for(int j = 0; j<paquete.dameminutos(i).dametamano();j++){
                 label2 = label+sp+paquete.dameminutos(i).dameminuto(j);
                 String nombre = paquete.dameminutos(i).damepaquete(j).damePuerto(0);
-                Yaxis.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
+                YPM.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
+                YTemp.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV2().floatValue()));
+                DepthLabel.add(paquete.dameminutos(i).damepaquete(j).damedata(0).dameDepth());
                 Xlabels.add(label2);
                 l++;
             }
         }
-        Collections.sort(Yaxis, new EntryXComparator());
-        LineDataSet set1 = new LineDataSet(Yaxis,"P1");
+        Collections.sort(YPM, new EntryXComparator());
+        LineDataSet set1 = new LineDataSet(YPM,"P1");
         LineData data = new LineData(set1);
         grafico1.setData(data);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -124,6 +120,20 @@ public class planografico extends Fragment {
         };
         xaxis.setValueFormatter(formatter);
         grafico1.invalidate();
+    }
+    public void propiedadesgraficoPM(){
+        grafico1.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        grafico1.setDrawGridBackground(false);
+        grafico1.setDrawBorders(true);
+        grafico1.getDescription().setEnabled(false);
+        grafico1.setTouchEnabled(true);
+        grafico1.setDragEnabled(true);
+        grafico1.setScaleEnabled(true);
+        Legend L = grafico1.getLegend();
+    }
+    public void setdataPM(){
+
     }
 
 }

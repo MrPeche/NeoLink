@@ -39,5 +39,4 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         datahoy = appRepo.damedatahoy(neolink,año,mes,dia,sensor);
         return datahoy;
     }
-
 }
