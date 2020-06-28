@@ -44,6 +44,7 @@ public class planografico extends Fragment {
     private LineChart grafico2;
     private Horas paquete;
     private int colopuerto = Color.argb(150,250,128,114);
+    private float MAX_DATAVISIBLE = 48;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -117,12 +118,14 @@ public class planografico extends Fragment {
         set1.setColor(Color.argb(100,255,99,71));
         //set1.setHighLightColor(Color.argb(100,255,99,71));
         set1.setCircleColor(Color.argb(100,255,99,71));
-        set1.setCircleRadius(1f);
+        set1.setCircleRadius(3f);
+        set1.setCircleHoleColor(Color.WHITE);
         set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set1.setCubicIntensity(0.5f);
         set1.setDrawValues(false);
         set1.setLineWidth(2f);
         LineData data = new LineData(set1);
+        grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         grafico1.setData(data);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis = grafico1.getXAxis();
@@ -143,12 +146,14 @@ public class planografico extends Fragment {
         set2.setColor(Color.argb(100,255,99,71));
         //set2.setHighLightColor(Color.argb(100,255,99,71));
         set2.setCircleColor(Color.argb(100,255,99,71));
-        set2.setCircleRadius(1f);
+        set2.setCircleRadius(3f);
+        set2.setCircleHoleColor(Color.WHITE);
         set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set2.setCubicIntensity(0.5f);
         set2.setDrawValues(false);
         LineData data2 = new LineData(set2);
-        grafico2.setData(data);
+        grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico2.setData(data2);
         set2.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis2= grafico2.getXAxis();
         xaxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -184,7 +189,7 @@ public class planografico extends Fragment {
         grafico2.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         grafico2.setDrawGridBackground(false);
-        grafico2.setDrawBorders(true);
+        grafico2.setDrawBorders(false);
         grafico2.setBorderColor(Color.BLACK);
         //grafico1.setBorderWidth((float) 4);
         grafico2.getDescription().setEnabled(false);

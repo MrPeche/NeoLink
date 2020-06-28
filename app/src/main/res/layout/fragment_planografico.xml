@@ -51,7 +51,8 @@
                         android:text="@string/sensorPotencialMatricial"
                         android:fontFamily="@font/lato"
                         android:textSize="@dimen/Tamañotexto"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"/>
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficochart1"
@@ -80,7 +81,8 @@
                         android:text="@string/sensorTemperatura"
                         android:fontFamily="@font/lato"
                         android:textSize="@dimen/Tamañotexto"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"/>
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficochar2"
