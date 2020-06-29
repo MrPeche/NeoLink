@@ -49,8 +49,8 @@ public class panelesgrafiquito extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
-        int hoyaño = ahora.get(Calendar.YEAR);
-        int hoymes = ahora.get(Calendar.MONTH);
+        int hoyaño = ahora.get(Calendar.YEAR)%100;
+        int hoymes = ahora.get(Calendar.MONTH)+1;
         int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
 
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);

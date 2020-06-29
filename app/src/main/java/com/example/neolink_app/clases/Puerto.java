@@ -41,6 +41,7 @@ public class Puerto implements Parcelable {
     public dataPuerto damedata(int posicion){
         return this.data.get(posicion);
     }
+    public int dametamano(){return this.Puerto.size();}
 
     @Override
     public int describeContents() {

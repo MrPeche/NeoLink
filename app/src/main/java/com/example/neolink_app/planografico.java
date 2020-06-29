@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -32,11 +33,6 @@ import java.util.Collections;
 import java.util.Map;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link planografico#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class planografico extends Fragment {
     private TextView nombre;
     private String name;
@@ -93,8 +89,14 @@ public class planografico extends Fragment {
         propiedadesgraficoPM();
         propiedadesgraficoTem();
 
+        /*
+        paquetedatasetPuertos YPM = new paquetedatasetPuertos();
+        paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
+        */
+
         ArrayList<Entry> YPM = new ArrayList<>();
         ArrayList<Entry> YTemp = new ArrayList<>();
+
         ArrayList<Double> DepthLabel = new ArrayList<>();
         final ArrayList<String> Xlabels = new ArrayList<>();
         String sp = ":";
@@ -105,14 +107,55 @@ public class planografico extends Fragment {
             label = paquete.damehora(i);
             for(int j = 0; j<paquete.dameminutos(i).dametamano();j++){
                 label2 = label+sp+paquete.dameminutos(i).dameminuto(j);
+                Xlabels.add(label2);
+                /*for(int k = 0; k<paquete.dameminutos(i).damepaquete(j).dametamano();k++){
+                    String nombrePuerto = paquete.dameminutos(i).damepaquete(j).damePuerto(k);
+                    switch (nombrePuerto){
+                        case "P1":
+                            YPM.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            break;
+                        case "P2":
+                            YPM.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            break;
+                        case "P3":
+                            YPM.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            break;
+                    }
+                }*/
+
                 String nombre = paquete.dameminutos(i).damepaquete(j).damePuerto(0);
                 YPM.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
                 YTemp.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV2().floatValue()));
+
                 DepthLabel.add(paquete.dameminutos(i).damepaquete(j).damedata(0).dameDepth());
+
                 Xlabels.add(label2);
                 l++;
             }
         }
+
+        setdataPM(YPM,Xlabels);
+        setdataTemp(YTemp,Xlabels);
+
+
+    }
+    public void propiedadesgraficoPM(){
+        grafico1.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        grafico1.setDrawGridBackground(false);
+        grafico1.setDrawBorders(false);
+        //grafico1.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        grafico1.getDescription().setEnabled(false);
+        grafico1.setTouchEnabled(true);
+        grafico1.setDragEnabled(true);
+        grafico1.setScaleEnabled(true);
+        Legend L = grafico1.getLegend();
+    }
+    public void setdataPM(ArrayList<Entry> YPM,ArrayList<String> Xlabels){
         Collections.sort(YPM, new EntryXComparator());
         LineDataSet set1 = new LineDataSet(YPM,"P1");
         set1.setColor(Color.argb(255,255,99,71));
@@ -142,18 +185,34 @@ public class planografico extends Fragment {
         xaxis.setValueFormatter(formatter);
         grafico1.invalidate();
         grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+    }
+    public void propiedadesgraficoTem(){
+        grafico2.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        grafico2.setDrawGridBackground(false);
+        grafico2.setDrawBorders(false);
+        grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        grafico2.getDescription().setEnabled(false);
+        grafico2.setTouchEnabled(true);
+        grafico2.setDragEnabled(true);
+        grafico2.setScaleEnabled(true);
+        Legend L = grafico2.getLegend();
+    }
 
+    public void setdataTemp(ArrayList<Entry> YTemp,ArrayList<String> Xlabels){
         Collections.sort(YTemp, new EntryXComparator());
         LineDataSet set2 = new LineDataSet(YTemp,"P1");
 
         set2.setColor(Color.argb(255,255,99,71));
         //set2.setHighLightColor(Color.argb(100,255,99,71));
         set2.setCircleColor(Color.argb(255,255,99,71));
-        set2.setCircleRadius(3f);
+        set2.setCircleRadius(5f);
         set2.setCircleHoleColor(Color.WHITE);
         set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set2.setCubicIntensity(0.5f);
         set2.setDrawValues(false);
+        set2.setLineWidth(4f);
         LineData data2 = new LineData(set2);
         //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico2.setMaxVisibleValueCount(MAX_DATAVISIBLE);
@@ -169,39 +228,8 @@ public class planografico extends Fragment {
                 return xlab2.get((int) value);
             }
         };
-        xaxis2.setValueFormatter(formatter);
+        xaxis2.setValueFormatter(formatter2);
         grafico2.invalidate();
         grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-
-
-    }
-    public void propiedadesgraficoPM(){
-        grafico1.setBackgroundColor(Color.TRANSPARENT);
-        //grafico1.setGridBackgroundColor(Color.BLACK);
-        grafico1.setDrawGridBackground(false);
-        grafico1.setDrawBorders(false);
-        //grafico1.setBorderColor(Color.BLACK);
-        //grafico1.setBorderWidth((float) 4);
-        grafico1.getDescription().setEnabled(false);
-        grafico1.setTouchEnabled(true);
-        grafico1.setDragEnabled(true);
-        grafico1.setScaleEnabled(true);
-        Legend L = grafico1.getLegend();
-    }
-    public void setdataPM(){
-
-    }
-    public void propiedadesgraficoTem(){
-        grafico2.setBackgroundColor(Color.TRANSPARENT);
-        //grafico1.setGridBackgroundColor(Color.BLACK);
-        grafico2.setDrawGridBackground(false);
-        grafico2.setDrawBorders(false);
-        grafico2.setBorderColor(Color.BLACK);
-        //grafico1.setBorderWidth((float) 4);
-        grafico2.getDescription().setEnabled(false);
-        grafico2.setTouchEnabled(true);
-        grafico2.setDragEnabled(true);
-        grafico2.setScaleEnabled(true);
-        Legend L = grafico2.getLegend();
     }
 }
