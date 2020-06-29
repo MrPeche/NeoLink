@@ -42,8 +42,8 @@ public class planografico extends Fragment {
     private LineChart grafico2;
     private Horas paquete;
     //private MarkerLineChartAdapter adapter;
-    private int alpha = 125;
-    private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237)}; //salmon, medium sea green,corn flower blue https://www.rapidtables.com/web/color/RGB_Color.html
+    private int alpha = 170;
+    private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
     private float LINEWIDTH = 2.5f;
 
@@ -124,6 +124,11 @@ public class planografico extends Fragment {
                             YTemp.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
                             DepthP.addP3(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
                             break;
+                        case "P4":
+                            YPM.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP.addP4(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
                     }
                 }
                 /*
@@ -178,6 +183,12 @@ public class planografico extends Fragment {
             //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
             data.addDataSet(set1);
             orden.add("P3");
+        }
+        if(YPM.getP4().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YPM.getP4(), "P4", colores[3]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P4");
         }
         //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico1.setMaxVisibleValueCount(MAX_DATAVISIBLE);
@@ -236,6 +247,12 @@ public class planografico extends Fragment {
             data.addDataSet(set1);
             orden.add("P3");
         }
+        if(YTemp.getP4().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YTemp.getP4(), "P3", colores[2]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P4");
+        }
         //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico2.setMaxVisibleValueCount(MAX_DATAVISIBLE);
         grafico2.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
@@ -260,8 +277,8 @@ public class planografico extends Fragment {
     public LineDataSet CreaDataLine(ArrayList<Entry> data, String label,int color){
         LineDataSet pset = new LineDataSet(data,label);
         //set1.setHighLightColor(Color.argb(100,255,99,71));
-        pset.setDrawCircles(false);
         pset.setColor(color);
+        pset.setDrawCircles(false);
         /*
         pset.setCircleColor(color);
         pset.setCircleRadius(5f);

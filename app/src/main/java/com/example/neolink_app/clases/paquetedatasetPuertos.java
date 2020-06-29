@@ -8,6 +8,7 @@ public class paquetedatasetPuertos {
     ArrayList<Entry> P1 = new ArrayList<>();
     ArrayList<Entry> P2 = new ArrayList<>();
     ArrayList<Entry> P3 = new ArrayList<>();
+    ArrayList<Entry> P4 = new ArrayList<>();
 
     public paquetedatasetPuertos(){
     }
@@ -20,6 +21,9 @@ public class paquetedatasetPuertos {
     public void addP3(Entry data){
         P3.add(data);
     }
+    public void addP4(Entry data){
+        P4.add(data);
+    }
     public ArrayList<Entry> getP1(){
         return P1;
     }
@@ -28,5 +32,8 @@ public class paquetedatasetPuertos {
     }
     public ArrayList<Entry> getP3(){
         return P3;
+    }
+    public ArrayList<Entry> getP4(){
+        return P4;
     }
 }
