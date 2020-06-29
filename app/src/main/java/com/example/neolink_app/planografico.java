@@ -186,7 +186,7 @@ public class planografico extends Fragment {
         };
         xaxis.setValueFormatter(formatter);
 
-        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel);
+        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YPM);
         grafico1.setMarker(adapter);
 
         grafico1.invalidate();
@@ -236,7 +236,7 @@ public class planografico extends Fragment {
         };
         xaxis2.setValueFormatter(formatter2);
 
-        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel);
+        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YTemp);
         grafico2.setMarker(adapter);
         grafico2.invalidate();
         grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);

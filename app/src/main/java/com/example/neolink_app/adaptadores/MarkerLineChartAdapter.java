@@ -14,9 +14,11 @@ import java.util.ArrayList;
 public class MarkerLineChartAdapter extends MarkerView {
     private TextView tvContent;
     private ArrayList<Double> depth;
-    public MarkerLineChartAdapter(Context context, int layoutResource, ArrayList<Double> depth) {
+    private ArrayList<Entry> dataset;
+    public MarkerLineChartAdapter(Context context, int layoutResource, ArrayList<Double> depth,ArrayList<Entry> dataset) {
         super(context, layoutResource);
         this.depth = depth;
+        this.dataset = dataset;
         // find your layout components
         tvContent = findViewById(R.id.dataetiqueta);
     }
@@ -25,7 +27,8 @@ public class MarkerLineChartAdapter extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tvContent.setText("Profundidad"+depth.get(highlight.getDataSetIndex()));
+        int posicion = dataset.indexOf(e);
+        tvContent.setText("Profundidad"+depth.get(dataset.indexOf(e)));
 
         //tvContent.setText("" + e.getY());
 
