@@ -44,7 +44,7 @@ public class planografico extends Fragment {
     private LineChart grafico2;
     private Horas paquete;
     private int colopuerto = Color.argb(150,250,128,114);
-    private float MAX_DATAVISIBLE = 48;
+    private int MAX_DATAVISIBLE = 48;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -115,17 +115,19 @@ public class planografico extends Fragment {
         }
         Collections.sort(YPM, new EntryXComparator());
         LineDataSet set1 = new LineDataSet(YPM,"P1");
-        set1.setColor(Color.argb(100,255,99,71));
+        set1.setColor(Color.argb(255,255,99,71));
         //set1.setHighLightColor(Color.argb(100,255,99,71));
-        set1.setCircleColor(Color.argb(100,255,99,71));
-        set1.setCircleRadius(3f);
+        set1.setCircleColor(Color.argb(255,255,99,71));
+        set1.setCircleRadius(5f);
         set1.setCircleHoleColor(Color.WHITE);
         set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set1.setCubicIntensity(0.5f);
         set1.setDrawValues(false);
-        set1.setLineWidth(2f);
+        set1.setLineWidth(4f);
         LineData data = new LineData(set1);
-        grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico1.setMaxVisibleValueCount(MAX_DATAVISIBLE);
+        grafico1.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
         grafico1.setData(data);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis = grafico1.getXAxis();
@@ -139,20 +141,23 @@ public class planografico extends Fragment {
         };
         xaxis.setValueFormatter(formatter);
         grafico1.invalidate();
+        grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
 
         Collections.sort(YTemp, new EntryXComparator());
         LineDataSet set2 = new LineDataSet(YTemp,"P1");
 
-        set2.setColor(Color.argb(100,255,99,71));
+        set2.setColor(Color.argb(255,255,99,71));
         //set2.setHighLightColor(Color.argb(100,255,99,71));
-        set2.setCircleColor(Color.argb(100,255,99,71));
+        set2.setCircleColor(Color.argb(255,255,99,71));
         set2.setCircleRadius(3f);
         set2.setCircleHoleColor(Color.WHITE);
         set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set2.setCubicIntensity(0.5f);
         set2.setDrawValues(false);
         LineData data2 = new LineData(set2);
-        grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico2.setMaxVisibleValueCount(MAX_DATAVISIBLE);
+        //grafico2.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
         grafico2.setData(data2);
         set2.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis2= grafico2.getXAxis();
@@ -166,6 +171,7 @@ public class planografico extends Fragment {
         };
         xaxis2.setValueFormatter(formatter);
         grafico2.invalidate();
+        grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
 
 
     }
