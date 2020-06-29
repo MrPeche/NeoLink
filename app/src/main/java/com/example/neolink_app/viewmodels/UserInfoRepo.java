@@ -86,8 +86,8 @@ public class UserInfoRepo {
 
     public LiveData<Horas> damedatahoy(String neolink, int año, int mes, int dia, String sensor){
         String esp = "/";
-        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
-        //String patio = "/NeoLink/"+neolink+"/DataSet/k/20/06/26/";
+        //String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        String patio = "/NeoLink/"+neolink+"/DataSet/k/20/06/26/";
         Horas data = new Horas();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);

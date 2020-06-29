@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.github.mikephil.charting.charts.LineChart;
@@ -39,15 +40,10 @@ public class planografico extends Fragment {
     private LineChart grafico1;
     private LineChart grafico2;
     private Horas paquete;
+    //private MarkerLineChartAdapter adapter;
     private int colopuerto = Color.argb(150,250,128,114);
     private int MAX_DATAVISIBLE = 48;
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     public planografico() {
         // Required empty public constructor
@@ -137,6 +133,10 @@ public class planografico extends Fragment {
             }
         }
 
+        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel);
+        grafico2.setMarker(adapter);
+        grafico1.setMarker(adapter);
+
         setdataPM(YPM,Xlabels);
         setdataTemp(YTemp,Xlabels);
 
@@ -191,7 +191,7 @@ public class planografico extends Fragment {
         //grafico1.setGridBackgroundColor(Color.BLACK);
         grafico2.setDrawGridBackground(false);
         grafico2.setDrawBorders(false);
-        grafico2.setBorderColor(Color.BLACK);
+        //grafico2.setBorderColor(Color.BLACK);
         //grafico1.setBorderWidth((float) 4);
         grafico2.getDescription().setEnabled(false);
         grafico2.setTouchEnabled(true);

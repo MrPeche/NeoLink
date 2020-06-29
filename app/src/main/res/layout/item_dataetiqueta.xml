@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/triangleshape"
+    android:gravity="center|top">
+
+    <TextView
+        android:id="@+id/dataetiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="@font/lato"
+        android:textSize="@dimen/Tamañotexto"
+        android:padding="1dp" />
+</RelativeLayout>
