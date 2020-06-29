@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
+import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.github.mikephil.charting.charts.LineChart;
@@ -41,7 +42,7 @@ public class planografico extends Fragment {
     private LineChart grafico2;
     private Horas paquete;
     //private MarkerLineChartAdapter adapter;
-    private int colopuerto = Color.argb(150,250,128,114);
+    private int[] colores = {Color.argb(250,250,128,114),Color.argb(250,60,179,113),Color.argb(250,100,149,237)}; //salmon, medium sea green,corn flower blue https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
 
 
@@ -85,15 +86,14 @@ public class planografico extends Fragment {
         propiedadesgraficoPM();
         propiedadesgraficoTem();
 
-        /*
+
         paquetedatasetPuertos YPM = new paquetedatasetPuertos();
         paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
-        */
+        DepthPackage DepthP = new DepthPackage();
+        //ArrayList<Entry> YPM = new ArrayList<>();
+        //ArrayList<Entry> YTemp = new ArrayList<>();
+        //ArrayList<Double> DepthLabel = new ArrayList<>();
 
-        ArrayList<Entry> YPM = new ArrayList<>();
-        ArrayList<Entry> YTemp = new ArrayList<>();
-
-        ArrayList<Double> DepthLabel = new ArrayList<>();
         final ArrayList<String> Xlabels = new ArrayList<>();
         String sp = ":";
         String label;
@@ -104,39 +104,39 @@ public class planografico extends Fragment {
             for(int j = 0; j<paquete.dameminutos(i).dametamano();j++){
                 label2 = label+sp+paquete.dameminutos(i).dameminuto(j);
                 Xlabels.add(label2);
-                /*for(int k = 0; k<paquete.dameminutos(i).damepaquete(j).dametamano();k++){
+                for(int k = 0; k<paquete.dameminutos(i).damepaquete(j).dametamano();k++){
                     String nombrePuerto = paquete.dameminutos(i).damepaquete(j).damePuerto(k);
                     switch (nombrePuerto){
                         case "P1":
                             YPM.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
                             YTemp.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP.addP1(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
                             break;
                         case "P2":
                             YPM.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
                             YTemp.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP.addP2(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
                             break;
                         case "P3":
                             YPM.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
                             YTemp.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP.addP3(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
                             break;
                     }
-                }*/
-
+                }
+                /*
                 String nombre = paquete.dameminutos(i).damepaquete(j).damePuerto(0);
                 YPM.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
                 YTemp.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV2().floatValue()));
-
                 DepthLabel.add(paquete.dameminutos(i).damepaquete(j).damedata(0).dameDepth());
-
                 Xlabels.add(label2);
+                */
                 l++;
             }
         }
 
-
-
-        setdataPM(YPM,Xlabels,DepthLabel);
-        setdataTemp(YTemp,Xlabels,DepthLabel);
+        setdataPM(YPM,Xlabels,DepthP);
+        setdataTemp(YTemp,Xlabels,DepthP);
 
 
     }
@@ -153,28 +153,35 @@ public class planografico extends Fragment {
         grafico1.setScaleEnabled(true);
         Legend L = grafico1.getLegend();
     }
-    public void setdataPM(ArrayList<Entry> YPM,ArrayList<String> Xlabels,ArrayList<Double> DepthLabel){
-        Collections.sort(YPM, new EntryXComparator());
-        LineDataSet set1 = new LineDataSet(YPM,"P1");
-        set1.setColor(Color.argb(255,255,99,71));
-        //set1.setHighLightColor(Color.argb(100,255,99,71));
-        set1.setCircleColor(Color.argb(255,255,99,71));
-        set1.setCircleRadius(5f);
-        set1.setCircleHoleColor(Color.WHITE);
-        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set1.setCubicIntensity(0.5f);
-        set1.setDrawValues(false);
-        set1.setLineWidth(4f);
 
-        set1.setDrawHorizontalHighlightIndicator(false);
-        set1.setDrawVerticalHighlightIndicator(false);
-
-        LineData data = new LineData(set1);
+    public void setdataPM(paquetedatasetPuertos YPM,ArrayList<String> Xlabels, DepthPackage DepthLabel){
+        //Collections.sort(YPM, new EntryXComparator());
+        //LineDataSet set1 = new LineDataSet(YPM.getP1(),"P1");
+        ArrayList<String> orden = new ArrayList<>();
+        LineData data = new LineData();
+        if(YPM.getP1().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YPM.getP1(), "P1", colores[0]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P1");
+        }
+        if(YPM.getP2().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YPM.getP2(), "P2", colores[1]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P2");
+        }
+        if(YPM.getP3().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YPM.getP3(), "P3", colores[2]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P3");
+        }
         //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico1.setMaxVisibleValueCount(MAX_DATAVISIBLE);
         grafico1.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
         grafico1.setData(data);
-        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis = grafico1.getXAxis();
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         final ArrayList<String> xlab = Xlabels;
@@ -185,10 +192,8 @@ public class planografico extends Fragment {
             }
         };
         xaxis.setValueFormatter(formatter);
-
-        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YPM);
+        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YPM,orden);
         grafico1.setMarker(adapter);
-
         grafico1.invalidate();
         grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
@@ -206,25 +211,35 @@ public class planografico extends Fragment {
         Legend L = grafico2.getLegend();
     }
 
-    public void setdataTemp(ArrayList<Entry> YTemp,ArrayList<String> Xlabels,ArrayList<Double> DepthLabel){
-        Collections.sort(YTemp, new EntryXComparator());
-        LineDataSet set2 = new LineDataSet(YTemp,"P1");
-
-        set2.setColor(Color.argb(255,255,99,71));
-        //set2.setHighLightColor(Color.argb(100,255,99,71));
-        set2.setCircleColor(Color.argb(255,255,99,71));
-        set2.setCircleRadius(5f);
-        set2.setCircleHoleColor(Color.WHITE);
-        set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set2.setCubicIntensity(0.5f);
-        set2.setDrawValues(false);
-        set2.setLineWidth(4f);
-        LineData data2 = new LineData(set2);
+    public void setdataTemp(paquetedatasetPuertos YTemp,ArrayList<String> Xlabels,DepthPackage DepthLabel){
+        //Collections.sort(YTemp, new EntryXComparator());
+        //LineDataSet set2 = new LineDataSet(YTemp,"P1");
+        ArrayList<String> orden = new ArrayList<>();
+        LineData data = new LineData();
+        if(YTemp.getP1().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YTemp.getP1(), "P1", colores[0]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P1");
+        }
+        if(YTemp.getP2().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YTemp.getP2(), "P2", colores[1]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P2");
+        }
+        if(YTemp.getP3().size()!=0) {
+            LineDataSet set1 = CreaDataLine(YTemp.getP3(), "P3", colores[2]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P3");
+        }
         //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico2.setMaxVisibleValueCount(MAX_DATAVISIBLE);
-        //grafico2.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
-        grafico2.setData(data2);
-        set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+        grafico2.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
+        grafico2.setData(data);
+
+        //set2.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis2= grafico2.getXAxis();
         xaxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
         final ArrayList<String> xlab2 = Xlabels;
@@ -235,10 +250,24 @@ public class planografico extends Fragment {
             }
         };
         xaxis2.setValueFormatter(formatter2);
-
-        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YTemp);
+        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YTemp,orden);
         grafico2.setMarker(adapter);
         grafico2.invalidate();
         grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+    }
+    public LineDataSet CreaDataLine(ArrayList<Entry> data, String label,int color){
+        LineDataSet pset = new LineDataSet(data,label);
+        //set1.setHighLightColor(Color.argb(100,255,99,71));
+        pset.setColor(color);
+        pset.setCircleColor(color);
+        pset.setCircleRadius(5f);
+        pset.setCircleHoleColor(Color.WHITE);
+        pset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        pset.setCubicIntensity(0.5f);
+        pset.setDrawValues(false);
+        pset.setLineWidth(3f);
+        pset.setDrawHorizontalHighlightIndicator(false);
+        pset.setDrawVerticalHighlightIndicator(false);
+        return pset;
     }
 }
