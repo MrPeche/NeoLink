@@ -133,12 +133,10 @@ public class planografico extends Fragment {
             }
         }
 
-        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel);
-        grafico2.setMarker(adapter);
-        grafico1.setMarker(adapter);
 
-        setdataPM(YPM,Xlabels);
-        setdataTemp(YTemp,Xlabels);
+
+        setdataPM(YPM,Xlabels,DepthLabel);
+        setdataTemp(YTemp,Xlabels,DepthLabel);
 
 
     }
@@ -155,7 +153,7 @@ public class planografico extends Fragment {
         grafico1.setScaleEnabled(true);
         Legend L = grafico1.getLegend();
     }
-    public void setdataPM(ArrayList<Entry> YPM,ArrayList<String> Xlabels){
+    public void setdataPM(ArrayList<Entry> YPM,ArrayList<String> Xlabels,ArrayList<Double> DepthLabel){
         Collections.sort(YPM, new EntryXComparator());
         LineDataSet set1 = new LineDataSet(YPM,"P1");
         set1.setColor(Color.argb(255,255,99,71));
@@ -167,6 +165,10 @@ public class planografico extends Fragment {
         set1.setCubicIntensity(0.5f);
         set1.setDrawValues(false);
         set1.setLineWidth(4f);
+
+        set1.setDrawHorizontalHighlightIndicator(false);
+        set1.setDrawVerticalHighlightIndicator(false);
+
         LineData data = new LineData(set1);
         //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico1.setMaxVisibleValueCount(MAX_DATAVISIBLE);
@@ -183,6 +185,10 @@ public class planografico extends Fragment {
             }
         };
         xaxis.setValueFormatter(formatter);
+
+        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel);
+        grafico1.setMarker(adapter);
+
         grafico1.invalidate();
         grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
@@ -200,7 +206,7 @@ public class planografico extends Fragment {
         Legend L = grafico2.getLegend();
     }
 
-    public void setdataTemp(ArrayList<Entry> YTemp,ArrayList<String> Xlabels){
+    public void setdataTemp(ArrayList<Entry> YTemp,ArrayList<String> Xlabels,ArrayList<Double> DepthLabel){
         Collections.sort(YTemp, new EntryXComparator());
         LineDataSet set2 = new LineDataSet(YTemp,"P1");
 
@@ -229,6 +235,9 @@ public class planografico extends Fragment {
             }
         };
         xaxis2.setValueFormatter(formatter2);
+
+        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel);
+        grafico2.setMarker(adapter);
         grafico2.invalidate();
         grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }

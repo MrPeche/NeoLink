@@ -25,7 +25,7 @@ public class MarkerLineChartAdapter extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tvContent.setText(""+depth.get(highlight.getDataIndex()));
+        tvContent.setText("Profundidad"+depth.get(highlight.getDataSetIndex()));
 
         //tvContent.setText("" + e.getY());
 
