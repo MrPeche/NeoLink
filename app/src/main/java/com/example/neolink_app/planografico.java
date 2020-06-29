@@ -42,8 +42,10 @@ public class planografico extends Fragment {
     private LineChart grafico2;
     private Horas paquete;
     //private MarkerLineChartAdapter adapter;
-    private int[] colores = {Color.argb(250,250,128,114),Color.argb(250,60,179,113),Color.argb(250,100,149,237)}; //salmon, medium sea green,corn flower blue https://www.rapidtables.com/web/color/RGB_Color.html
+    private int alpha = 125;
+    private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237)}; //salmon, medium sea green,corn flower blue https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
+    private float LINEWIDTH = 2.5f;
 
 
     public planografico() {
@@ -258,14 +260,17 @@ public class planografico extends Fragment {
     public LineDataSet CreaDataLine(ArrayList<Entry> data, String label,int color){
         LineDataSet pset = new LineDataSet(data,label);
         //set1.setHighLightColor(Color.argb(100,255,99,71));
+        pset.setDrawCircles(false);
         pset.setColor(color);
+        /*
         pset.setCircleColor(color);
         pset.setCircleRadius(5f);
         pset.setCircleHoleColor(Color.WHITE);
+        */
         pset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         pset.setCubicIntensity(0.5f);
         pset.setDrawValues(false);
-        pset.setLineWidth(3f);
+        pset.setLineWidth(LINEWIDTH);
         pset.setDrawHorizontalHighlightIndicator(false);
         pset.setDrawVerticalHighlightIndicator(false);
         return pset;

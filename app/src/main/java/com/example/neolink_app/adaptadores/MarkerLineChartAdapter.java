@@ -32,7 +32,7 @@ public class MarkerLineChartAdapter extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         String texto = "";
-        String label = orden.get(highlight.getDataIndex());
+        String label = orden.get(highlight.getDataSetIndex());
         switch (label){
             case "P1":
                 texto = "Profundidad " + depth.getP1().get(dataset.getP1().indexOf(e));
