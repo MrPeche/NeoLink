@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class MarkerLineChartAdapter extends MarkerView {
     private TextView tvContent;
+    private TextView tvContentT;
     private DepthPackage depth;
     private paquetedatasetPuertos dataset;
     private ArrayList<String> orden;
@@ -25,26 +26,30 @@ public class MarkerLineChartAdapter extends MarkerView {
         this.orden = orden;
         // find your layout components
         tvContent = findViewById(R.id.dataetiqueta);
+        tvContentT = findViewById(R.id.datadata);
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        String texto = "";
+        String texto2 = "";
+        String texto1 = "";
         String label = orden.get(highlight.getDataSetIndex());
         switch (label){
             case "P1":
-                texto = "Profundidad " + depth.getP1().get(dataset.getP1().indexOf(e));
+                texto1 = "Profundidad " + depth.getP1().get(dataset.getP1().indexOf(e));
                 break;
             case "P2":
-                texto = "Profundidad " + depth.getP2().get(dataset.getP2().indexOf(e));
+                texto1 = "Profundidad " + depth.getP2().get(dataset.getP2().indexOf(e));
                 break;
             case "P3":
-                texto = "Profundidad " + depth.getP3().get(dataset.getP3().indexOf(e));
+                texto1 = "Profundidad " + depth.getP3().get(dataset.getP3().indexOf(e));
                 break;
         }
-        tvContent.setText(texto);
+        texto2 = label + ": "+ String.valueOf(e.getY());
+        tvContentT.setText(texto2);
+        tvContent.setText(texto1);
         //tvContent.setText("" + e.getY());
         // this will perform necessary layouting
         super.refreshContent(e, highlight);

@@ -6,12 +6,28 @@
     android:background="@drawable/triangleshape"
     android:gravity="center">
 
-    <TextView
-        android:id="@+id/dataetiqueta"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:fontFamily="@font/lato"
-        android:textSize="@dimen/Tamañotexto"
-        android:padding="1dp" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/datadata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:padding="1dp"
+            android:textSize="@dimen/Tamañotexto" />
+
+        <TextView
+            android:id="@+id/dataetiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:padding="1dp"
+            android:textSize="@dimen/Tamañotexto" />
+    </LinearLayout>
+
 </RelativeLayout>

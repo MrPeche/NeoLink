@@ -110,7 +110,9 @@ public class planografico extends Fragment {
                     String nombrePuerto = paquete.dameminutos(i).damepaquete(j).damePuerto(k);
                     switch (nombrePuerto){
                         case "P1":
+                            double loli = paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1();
                             YPM.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            double lola = paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2();
                             YTemp.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
                             DepthP.addP1(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
                             break;
@@ -157,7 +159,7 @@ public class planografico extends Fragment {
         grafico1.getDescription().setEnabled(false);
         grafico1.setTouchEnabled(true);
         grafico1.setDragEnabled(true);
-        grafico1.setScaleEnabled(true);
+        grafico1.setScaleEnabled(false);
         Legend L = grafico1.getLegend();
     }
 
