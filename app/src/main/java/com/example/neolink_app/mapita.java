@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.neolink_app.clases.GPS;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -62,7 +63,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mapita, container, false);
         mapView = v.findViewById(R.id.mapView);
-
+        InitGoogleMap(savedInstanceState);
         return v;
     }
 
@@ -113,13 +114,20 @@ public class mapita extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        // Set a preference for minimum and maximum zoom.
+        map.setMinZoomPreference(6.0f);
+        map.setMaxZoomPreference(14.0f);
+
         String neolink = "NL2006-0002";
-        archi.getLiveNN(neolink);
+        archi.getGPS(neolink);
         final String nombre = neolink;
         archi.GPSM.observe(getViewLifecycleOwner(), new Observer<GPS>() {
             @Override
             public void onChanged(GPS gps) {
-                map.addMarker(new MarkerOptions().position(new LatLng(gps.getLat(), gps.getLong())).title(nombre));
+                LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
+                map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 10));
             }
         });
     }

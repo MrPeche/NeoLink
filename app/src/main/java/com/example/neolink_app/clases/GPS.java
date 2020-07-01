@@ -1,17 +1,17 @@
 package com.example.neolink_app.clases;
 
 public class GPS {
-    private Double Lat;
-    private Double Long;
+    private Double LAT;
+    private Double LONG;
     public GPS(){}
-    public GPS(Double Lat, Double Long){
-        this.Lat = Lat;
-        this.Long = Long;
+    public GPS(Double LAT, Double LONG){
+        this.LAT = LAT;
+        this.LONG = LONG;
     }
     public Double getLat(){
-        return Lat;
+        return LAT;
     }
     public Double getLong(){
-        return Long;
+        return LONG;
     }
 }

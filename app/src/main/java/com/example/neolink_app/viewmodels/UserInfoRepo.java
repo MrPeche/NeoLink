@@ -40,6 +40,7 @@ public class UserInfoRepo {
 
     private OWNERitems userneolinks = new OWNERitems();
     private OLDneolinksboleto neolinks = new OLDneolinksboleto();
+    private GPS gps = new GPS();
     private DatabaseReference BaseDatos = FirebaseDatabase.getInstance().getReference();
 
     public UserInfoRepo() {
@@ -139,7 +140,8 @@ public class UserInfoRepo {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
-                    GPSM.setValue(dataSnapshot.getValue(GPS.class));
+                    gps = dataSnapshot.getValue(GPS.class);
+                    GPSM.setValue(gps);
                 } else {
                     GPSM.setValue(null);
                 }
