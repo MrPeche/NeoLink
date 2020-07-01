@@ -67,7 +67,6 @@ public class listaneonodes extends Fragment {
                 lista = olDneolinksboleto.dameneonodos();
                 adapter = new ListaNeonodesAdapter(nuevo);
                 rv.setAdapter(adapter);
-
             }
         });
 

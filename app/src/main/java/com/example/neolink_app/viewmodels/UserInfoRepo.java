@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.neolink_app.adaptadores.FirebaseQueryLiveData;
 import com.example.neolink_app.clases.Dias;
+import com.example.neolink_app.clases.GPS;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.Minutos;
 import com.example.neolink_app.clases.OLDneolinksboleto;
@@ -34,6 +35,7 @@ public class UserInfoRepo {
     private final MediatorLiveData ownerdata = new MediatorLiveData();
     private final MediatorLiveData oldneolinks = new MediatorLiveData();
     private final MediatorLiveData datahoy = new MediatorLiveData();
+    private final MediatorLiveData GPSM = new MediatorLiveData();
 
 
     private OWNERitems userneolinks = new OWNERitems();
@@ -126,5 +128,23 @@ public class UserInfoRepo {
             resultado = "0"+date;
         } else resultado = Integer.toString(date);
         return resultado;
+    }
+
+    public LiveData<GPS> dameGPS(String neolink){
+        String esp = "/";
+        String patio = "/NeoLink/"+neolink+"/DataSet/State/GPS";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        GPSM.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    GPSM.setValue(dataSnapshot.getValue(GPS.class));
+                } else {
+                    GPSM.setValue(null);
+                }
+            }
+        });
+        return GPSM;
     }
 }

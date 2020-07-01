@@ -18,8 +18,7 @@
             android:fontFamily="@font/lato"
             android:gravity="center"
             android:layout_marginTop="1dp"
-            android:textSize="@dimen/Tamañotexto"
-            android:text="A"/>
+            android:textSize="@dimen/Tamañotexto" />
 
         <TextView
             android:id="@+id/dataetiqueta"
@@ -28,8 +27,7 @@
             android:fontFamily="@font/lato"
             android:gravity="center"
             android:layout_marginBottom="1dp"
-            android:textSize="@dimen/Tamañotexto"
-            android:text="A"/>
+            android:textSize="@dimen/Tamañotexto" />
     </LinearLayout>
 
 </RelativeLayout>
