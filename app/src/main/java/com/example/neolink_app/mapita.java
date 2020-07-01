@@ -116,8 +116,8 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         // Set a preference for minimum and maximum zoom.
-        map.setMinZoomPreference(6.0f);
-        map.setMaxZoomPreference(14.0f);
+        map.setMinZoomPreference(8f);
+        map.setMaxZoomPreference(16f);
 
         String neolink = "NL2006-0002";
         archi.getGPS(neolink);
@@ -127,7 +127,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
             public void onChanged(GPS gps) {
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
                 map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre));
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 10));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
             }
         });
     }

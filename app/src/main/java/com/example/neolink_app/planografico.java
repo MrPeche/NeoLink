@@ -287,7 +287,7 @@ public class planografico extends Fragment {
         pset.setCircleHoleColor(Color.WHITE);
         */
         pset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        pset.setCubicIntensity(1f);
+        pset.setCubicIntensity(0.2f);
         pset.setDrawValues(false);
         pset.setLineWidth(LINEWIDTH);
         pset.setDrawHorizontalHighlightIndicator(false);
