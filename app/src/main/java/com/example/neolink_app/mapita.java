@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class mapita extends Fragment implements OnMapReadyCallback {
@@ -25,6 +26,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private GoogleMap map;
     private MasterDrawerViewModel archi;
+    private Marker marker;
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -125,8 +127,11 @@ public class mapita extends Fragment implements OnMapReadyCallback {
         archi.GPSM.observe(getViewLifecycleOwner(), new Observer<GPS>() {
             @Override
             public void onChanged(GPS gps) {
+                if(marker!=null){
+                    marker.remove();
+                }
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
-                map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre));
+                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
             }
         });
