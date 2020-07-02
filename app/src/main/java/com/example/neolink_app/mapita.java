@@ -135,19 +135,11 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                     marker.remove();
                 }
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
-                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("iconomapa",50,50))).anchor(25,45));
-                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.iconomapa));
-
+                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.iconomapa)).anchor(0f,90f));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
                 map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             }
         });
-    }
-
-    public Bitmap resizeMapIcons(String iconName, int width, int height){
-        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getActivity().getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
     }
 
     @Override
