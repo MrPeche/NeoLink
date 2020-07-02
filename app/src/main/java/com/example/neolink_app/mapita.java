@@ -1,5 +1,7 @@
 package com.example.neolink_app;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -131,10 +135,19 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                     marker.remove();
                 }
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
-                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre));
+                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("iconomapa",50,50))).anchor(25,45));
+                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.iconomapa));
+
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
+                map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             }
         });
+    }
+
+    public Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getActivity().getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
     }
 
     @Override
