@@ -121,6 +121,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         // Set a preference for minimum and maximum zoom.
         map.setMinZoomPreference(8f);
         map.setMaxZoomPreference(16f);
@@ -137,7 +138,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
                 marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.iconomapa)).anchor(0f,90f));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
-                map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
             }
         });
     }
