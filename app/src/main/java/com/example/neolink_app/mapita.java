@@ -122,6 +122,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
         // Set a preference for minimum and maximum zoom.
         map.setMinZoomPreference(8f);
         map.setMaxZoomPreference(16f);
