@@ -150,7 +150,8 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                 map.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
                     @Override
                     public void onInfoWindowLongClick(Marker marker) {
-
+                        String nombre = marker.getTitle();
+                        Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToGraficodelmapa(nombre));
                     }
                 });
             }
