@@ -36,6 +36,7 @@ public class graficodelmapa extends Fragment {
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-
+        titulo = view.findViewById(R.id.tituloGMapa);
+        titulo.setText(nombre);
     }
 }
