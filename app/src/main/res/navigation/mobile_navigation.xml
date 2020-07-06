@@ -74,6 +74,18 @@
         <action
             android:id="@+id/action_mapita_to_datosgenerales"
             app:destination="@id/datosgenerales" />
+        <action
+            android:id="@+id/action_mapita_to_graficodelmapa"
+            app:destination="@id/graficodelmapa" />
+    </fragment>
+    <fragment
+        android:id="@+id/graficodelmapa"
+        android:name="com.example.neolink_app.graficodelmapa"
+        android:label="fragment_graficodelmapa"
+        tools:layout="@layout/fragment_graficodelmapa" >
+        <argument
+            android:name="nombreNLG"
+            app:argType="string" />
     </fragment>
 
 
