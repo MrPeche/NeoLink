@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -139,7 +140,19 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
                 marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.iconomapa)));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
+                map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        String nombre = marker.getTitle();
+                        Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToDatosgenerales(nombre));
+                    }
+                });
+                map.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
+                    @Override
+                    public void onInfoWindowLongClick(Marker marker) {
 
+                    }
+                });
             }
         });
     }

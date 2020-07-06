@@ -3,13 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/datosgenerales">
+    app:startDestination="@id/mapita">
 
     <fragment
         android:id="@+id/datosgenerales"
         android:name="com.example.neolink_app.datosgenerales"
         android:label="fragment_datosgenerales"
         tools:layout="@layout/fragment_datosgenerales" >
+        <argument
+            android:name="nombreNL"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -67,7 +70,11 @@
         android:id="@+id/mapita"
         android:name="com.example.neolink_app.mapita"
         android:label="fragment_mapita"
-        tools:layout="@layout/fragment_mapita" />
+        tools:layout="@layout/fragment_mapita" >
+        <action
+            android:id="@+id/action_mapita_to_datosgenerales"
+            app:destination="@id/datosgenerales" />
+    </fragment>
 
 
 </navigation>
