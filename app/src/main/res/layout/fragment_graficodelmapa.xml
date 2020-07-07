@@ -33,13 +33,14 @@
                 android:textSize="@dimen/Tamañotitulo"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardVMP1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_weight="1.5"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,27 +51,28 @@
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/sensorPotencialMatricial"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard"/>
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensorPotencialMatricial"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoMP1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardVMP2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_weight="1.5"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -81,16 +83,16 @@
                         android:id="@+id/textView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/sensorTemperatura"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard"/>
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensorTemperatura"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoMP2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
