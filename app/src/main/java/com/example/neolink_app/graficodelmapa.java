@@ -93,7 +93,7 @@ public class graficodelmapa extends Fragment {
         archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
             @Override
             public void onChanged(Horas horas) {
-                if(horas!=null) {
+                if(horas.dametamano()!=0) {
                     cvgrf1.setVisibility(View.VISIBLE);
                     cvgrf2.setVisibility(View.VISIBLE);
                     setdatagrafK(horas);
@@ -102,7 +102,7 @@ public class graficodelmapa extends Fragment {
                 }
             }
         });
-        if(YPM==null){
+        if(Xlabels.size()==0){
             cvgrf1.setVisibility(View.INVISIBLE);
             cvgrf2.setVisibility(View.INVISIBLE);
         }

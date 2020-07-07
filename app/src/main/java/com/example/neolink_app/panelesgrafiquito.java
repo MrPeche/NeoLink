@@ -68,5 +68,19 @@ public class panelesgrafiquito extends Fragment {
                 vp.setAdapter(adapter);
             }
         });
+        ((actividadbase)getActivity()).fabcalendar();
+        ((actividadbase)getActivity()).fabaparecer();
+        ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+    public void onDestroy() {
+        super.onDestroy();
+        ((actividadbase)getActivity()).fabdesparecer();
+        ((actividadbase)getActivity()).fabplus();
     }
 }
