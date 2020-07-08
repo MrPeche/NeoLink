@@ -8,6 +8,10 @@
         <item name="colorAccent">#73AA86</item>
     </style>
 
+    <style name="materialtheme" parent="Theme.MaterialComponents.Light">
+
+    </style>
+
     <style name="cardview" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#849AAF</item>
