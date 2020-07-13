@@ -88,12 +88,14 @@ public class panelesgrafiquito extends Fragment {
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                materialdatepick.show(getParentFragmentManager(), "DATE PICKER");
+                MaterialDatePicker<?> picker = builder.build();
+                materialdatepick.show(((actividadbase)getContext()).getSupportFragmentManager(), picker.toString());
             }
         });
         materialdatepick.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
             @Override
             public void onPositiveButtonClick(Pair<Long, Long> selection) {
+
                 Calendar desde = traductordecalendario(selection.first);
                 Calendar hasta = traductordecalendario(selection.second);
                 int diaD = desde.get(Calendar.DAY_OF_MONTH);
@@ -109,6 +111,8 @@ public class panelesgrafiquito extends Fragment {
         ((actividadbase)getActivity()).fabdesparecer();
         ((actividadbase)getActivity()).fabplus();
     }
+
+
     private void setmycalendarbruh(){
         long today = MaterialDatePicker.todayInUtcMilliseconds();
         this.builder.setTheme(R.style.materialtheme);
@@ -119,7 +123,7 @@ public class panelesgrafiquito extends Fragment {
         CalendarConstraints.Builder constraing = new CalendarConstraints.Builder();
         constraing.setValidator(DateValidatorPointBackward.now());
         Calendar iniciocalendario = GregorianCalendar.getInstance();
-        iniciocalendario.set(2020,1,1);
+        iniciocalendario.set(2020,0,1);
         constraing.setStart(iniciocalendario.getTimeInMillis());
         return constraing;
     }

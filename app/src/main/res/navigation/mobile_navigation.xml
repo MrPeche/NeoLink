@@ -87,6 +87,11 @@
             android:name="nombreNLG"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/dialogfechagraf"
+        android:name="com.example.neolink_app.dialogfechagraf"
+        android:label="fragment_dialogfechagraf"
+        tools:layout="@layout/fragment_dialogfechagraf" />
 
 
 </navigation>

@@ -17,6 +17,10 @@ import com.google.android.material.textfield.TextInputEditText;
 public class DialogNeolink extends AppCompatDialogFragment {
     private TextInputEditText codigoneolinknuevo;
 
+    public DialogNeolink() {
+        // Required empty public constructor
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

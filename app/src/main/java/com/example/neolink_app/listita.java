@@ -95,9 +95,9 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
         super.onDestroy();
         ((actividadbase)getActivity()).fabdesparecer();
     }
+
     public void openDialog(){
         DialogNeolink dialogaso = new DialogNeolink();
         dialogaso.show(getParentFragmentManager(),"dialogo");
-
     }
 }

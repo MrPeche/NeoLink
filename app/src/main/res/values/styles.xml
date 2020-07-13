@@ -6,9 +6,18 @@
         <item name="colorPrimary">#849AAF</item>
         <item name="colorPrimaryDark">#3C77AF</item>
         <item name="colorAccent">#73AA86</item>
+
+
     </style>
 
-    <style name="materialtheme" parent="Theme.MaterialComponents.Light">
+    <style name="materialtheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="colorPrimary">#849AAF</item>
+        <item name="colorPrimaryDark">#3C77AF</item>
+        <item name="colorAccent">#73AA86</item>
+
+        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+        <item name="materialCalendarFullscreenTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>
 
     </style>
 
