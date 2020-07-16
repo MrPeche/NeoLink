@@ -19,12 +19,15 @@ import android.widget.CalendarView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 public class dialogfechagraf extends AppCompatDialogFragment implements AdapterView.OnItemSelectedListener {
     private Spinner parametros;
     private CalendarView calendario;
     private ArrayList<String> listaspinner = new ArrayList<>();
+    private Calendar horario = Calendar.getInstance();
 
 
     public dialogfechagraf() {
@@ -49,6 +52,22 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_dialogfechagraf,null);
         parametros = view.findViewById(R.id.spinnerdialogfecha);
+        calendario = view.findViewById(R.id.calendarViewdialogfecha);
+        setcalendarprop();
+        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                /*
+                String data = dayOfMonth +(month+1) +(year%100);
+
+                int hoyaño = ahora.get(Calendar.YEAR)%100;
+                int hoymes = ahora.get(Calendar.MONTH)+1;
+                int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
+
+
+                 */
+            }
+        });
         listaspinner = crearlalista();
         ArrayAdapter<String> adapterS = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, listaspinner);
         adapterS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -101,10 +120,26 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         resultado.add("Elige una fecha");
         return resultado;
     }
+    private void setcalendarprop(){
+        calendario.setVisibility(View.INVISIBLE);
+        Calendar iniciocalendario = GregorianCalendar.getInstance();
+        iniciocalendario.set(2020,0,1);
+        calendario.setMinDate(iniciocalendario.getTimeInMillis());
+    }
+    private void popupcalendar(){
+        calendario.setVisibility(View.VISIBLE);
+    }
+    private String traductordedia(int year, int month, int day){
+        year = year%100;
+        month = month+1;
+        return day +"/" + month + "/" +year;
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        if(position==3){
+            popupcalendar();
+        }
     }
 
     @Override

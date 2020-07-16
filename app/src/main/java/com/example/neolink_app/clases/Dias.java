@@ -16,4 +16,5 @@ public class Dias {
     public Horas damehora(int posicion){
         return this.horas.get(posicion);
     }
+    public int dametamano(){ return this.dias.size();}
 }

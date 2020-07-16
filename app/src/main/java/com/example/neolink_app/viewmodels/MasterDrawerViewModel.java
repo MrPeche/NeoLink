@@ -5,18 +5,23 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.neolink_app.clases.Dias;
 import com.example.neolink_app.clases.GPS;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
+import com.example.neolink_app.clases.database_state.horasstate;
 
 public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<OWNERitems> Usuarioneolinks;
     public LiveData<OLDneolinksboleto> neonodos;
     public LiveData<Horas> datahoy;
+    public LiveData<horasstate> datastatehoy;
     public LiveData<GPS> GPSM;
+    public MediatorLiveData datadiario = new MediatorLiveData<>();
     private UserInfoRepo appRepo;
     private String uid;
 
@@ -39,6 +44,14 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public LiveData<Horas> getLivedaylydata(String neolink, int año, int mes, int dia, String sensor){
         datahoy = appRepo.damedatahoy(neolink,año,mes,dia,sensor); //TENGO QUE ARREGLAR ESTO PARA MAS EQUIPOS!!!!
+        //datastatehoy = appRepo
+        datadiario.addSource(datahoy, new Observer() {
+            @Override
+            public void onChanged(Object o) {
+                datadiario.setValue(o);
+            }
+        });
+        //datadiario.addSource();
         return datahoy;
     }
     public LiveData<GPS> getGPS(String neolink){

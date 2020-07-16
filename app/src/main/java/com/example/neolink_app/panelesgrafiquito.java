@@ -7,6 +7,7 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -32,8 +33,9 @@ public class panelesgrafiquito extends Fragment {
     private MasterDrawerViewModel archi;
     private ViewPager2 vp;
     private viewpagergrafiquitosAdapter adapter;
+    /*
     private MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
-
+    */
     public panelesgrafiquito() {
         // Required empty public constructor
     }
@@ -67,11 +69,11 @@ public class panelesgrafiquito extends Fragment {
         String sensor = "k";
         ArrayList<String> nodaso = new ArrayList<>();
         nodaso.add(nombre);
-
+        /*
         setmycalendarbruh();
         builder.setCalendarConstraints(buildtheconstraint().build());
-
         final MaterialDatePicker materialdatepick = builder.build();
+        */
         final ArrayList<String> nodito = nodaso;
 
         archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
@@ -88,10 +90,10 @@ public class panelesgrafiquito extends Fragment {
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MaterialDatePicker<?> picker = builder.build();
-                materialdatepick.show(((actividadbase)getContext()).getSupportFragmentManager(), picker.toString());
+                Navigation.findNavController(getView()).navigate(panelesgrafiquitoDirections.actionPanelesgrafiquitoToDialogfechagraf());
             }
         });
+        /*
         materialdatepick.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
             @Override
             public void onPositiveButtonClick(Pair<Long, Long> selection) {
@@ -104,7 +106,7 @@ public class panelesgrafiquito extends Fragment {
                 int mont2 = hasta.get(Calendar.MONTH);
             }
         });
-
+        */
     }
     public void onDestroy() {
         super.onDestroy();
@@ -112,13 +114,14 @@ public class panelesgrafiquito extends Fragment {
         ((actividadbase)getActivity()).fabplus();
     }
 
-
+    /*
     private void setmycalendarbruh(){
         long today = MaterialDatePicker.todayInUtcMilliseconds();
         this.builder.setTheme(R.style.materialtheme);
         this.builder.setTitleText("Seleccione el rango de días que quiere visualizar");
         //this.builder.setSelection(today);
     }
+
     private CalendarConstraints.Builder buildtheconstraint(){
         CalendarConstraints.Builder constraing = new CalendarConstraints.Builder();
         constraing.setValidator(DateValidatorPointBackward.now());
@@ -127,6 +130,7 @@ public class panelesgrafiquito extends Fragment {
         constraing.setStart(iniciocalendario.getTimeInMillis());
         return constraing;
     }
+    */
     private Calendar traductordecalendario(long date){
         Calendar resultado = Calendar.getInstance();
         resultado.setTimeInMillis(date);

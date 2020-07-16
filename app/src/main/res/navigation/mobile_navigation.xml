@@ -60,6 +60,9 @@
         <argument
             android:name="neolinkselected"
             app:argType="string" />
+        <action
+            android:id="@+id/action_panelesgrafiquito_to_dialogfechagraf"
+            app:destination="@id/dialogfechagraf" />
     </fragment>
     <fragment
         android:id="@+id/planografico"
@@ -87,7 +90,7 @@
             android:name="nombreNLG"
             app:argType="string" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/dialogfechagraf"
         android:name="com.example.neolink_app.dialogfechagraf"
         android:label="fragment_dialogfechagraf"
