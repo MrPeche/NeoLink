@@ -21,4 +21,10 @@ public class DepthPackage {
     public ArrayList<Double> getP2(){ return P2;}
     public ArrayList<Double> getP3(){ return P3;}
     public ArrayList<Double> getP4(){ return P4;}
+    public void clean(){
+        P1.clear();
+        P2.clear();
+        P3.clear();
+        P4.clear();
+    }
 }

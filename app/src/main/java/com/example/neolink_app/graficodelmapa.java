@@ -181,6 +181,12 @@ public class graficodelmapa extends Fragment {
             }
         }
     }
+    private void cleanthisshit(){
+        Xlabels.clear();
+        YPM.clean();
+        YTemp.clean();
+        DepthP.clean();
+    }
     private void setdataPM(paquetedatasetPuertos YPM,ArrayList<String> Xlabels, DepthPackage DepthLabel){
         //Collections.sort(YPM, new EntryXComparator());
         //LineDataSet set1 = new LineDataSet(YPM.getP1(),"P1");
@@ -297,6 +303,11 @@ public class graficodelmapa extends Fragment {
         pset.setDrawHorizontalHighlightIndicator(false);
         pset.setDrawVerticalHighlightIndicator(false);
         return pset;
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        cleanthisshit();
     }
 
 }

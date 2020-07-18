@@ -19,6 +19,7 @@ import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.Puerto;
 import com.example.neolink_app.clases.dataPuerto;
+import com.example.neolink_app.clases.database_state.horasstate;
 import com.google.firebase.FirebaseExceptionMapper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +36,7 @@ public class UserInfoRepo {
     private final MediatorLiveData ownerdata = new MediatorLiveData();
     private final MediatorLiveData oldneolinks = new MediatorLiveData();
     private final MediatorLiveData datahoy = new MediatorLiveData();
+    private final MediatorLiveData datahoyState = new MediatorLiveData();
     private final MediatorLiveData GPSM = new MediatorLiveData();
 
 
@@ -87,10 +89,10 @@ public class UserInfoRepo {
         return oldneolinks;
     }
 
-    public LiveData<Horas> damedatahoy(String neolink, int año, int mes, int dia, String sensor){
+    public LiveData<Horas> damedatahoyK(String neolink, int año, int mes, int dia, String sensor){
         String esp = "/";
-        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
-        //patio = "/NeoLink/"+neolink+"/DataSet/k/20/06/26/";
+        //String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        String patio = "/NeoLink/"+neolink+"/DataSet/k/20/07/01/"; // esto es solo para debuggear un dia especifico por ahora
         Horas data = new Horas();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
@@ -123,6 +125,42 @@ public class UserInfoRepo {
         //String neolink, int año, int mes, int dia, String sensor
         return datahoy;
     }
+    public LiveData<horasstate> damedatahoyState(String neolink, int año, int mes, int dia, String sensor){
+        String esp = "/";
+        String patio = "/NeoLink/"+neolink+"/DataSet/State/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        //patio = "/NeoLink/"+neolink+"/DataSet/k/20/06/26/";
+        Horas data = new Horas();
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        datahoyState.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    Horas horas = new Horas();
+                    for(DataSnapshot childSnap:dataSnapshot.getChildren()){
+                        String horichi = childSnap.getKey(); //hora
+                        Minutos minutos = new Minutos();
+                        for(DataSnapshot chilchilSnap:childSnap.getChildren()){
+                            String min = chilchilSnap.getKey();//minutos
+                            Puerto puerto = new Puerto();
+                            for(DataSnapshot chilchilchilSnap:chilchilSnap.getChildren()){
+                                String a = chilchilchilSnap.getKey();//puerto
+                                dataPuerto b = chilchilchilSnap.getValue(dataPuerto.class);//data
+                                puerto.tomaPuerto(a,b);
+                            }
+                            minutos.tomaMinutos(min,puerto);
+                        }
+                        horas.tomaHoras(horichi,minutos);
+                    }
+                    datahoy.setValue(horas);
+                } else {
+                    datahoy.setValue(null);
+                }
+            }
+        });
+        return datahoyState;
+    }
+
     private String operacionfecha(int date){
         String resultado;
         if(date<10){

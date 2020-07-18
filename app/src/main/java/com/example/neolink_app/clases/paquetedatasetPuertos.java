@@ -36,4 +36,10 @@ public class paquetedatasetPuertos {
     public ArrayList<Entry> getP4(){
         return P4;
     }
+    public void clean(){
+        P1.clear();
+        P2.clear();
+        P3.clear();
+        P4.clear();
+    }
 }
