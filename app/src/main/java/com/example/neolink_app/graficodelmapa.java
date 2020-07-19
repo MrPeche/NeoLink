@@ -63,6 +63,16 @@ public class graficodelmapa extends Fragment {
         if (getArguments() != null) {
             this.nombre = graficodelmapaArgs.fromBundle(getArguments()).getNombreNLG();
         }
+        int hoyaño = ahora.get(Calendar.YEAR)%100;
+        int hoymes = ahora.get(Calendar.MONTH)+1;
+        int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
+        archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
+        String sensor = "k";
+        ArrayList<String> nodaso = new ArrayList<>();
+        nodaso.add(nombre);
+        final ArrayList<String> nodito = nodaso;
+        archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
+
     }
 
     @Override
@@ -81,6 +91,7 @@ public class graficodelmapa extends Fragment {
         cvgrf2 = view.findViewById(R.id.cardVMP2);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
+        /*
         int hoyaño = ahora.get(Calendar.YEAR)%100;
         int hoymes = ahora.get(Calendar.MONTH)+1;
         int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
@@ -90,18 +101,38 @@ public class graficodelmapa extends Fragment {
         nodaso.add(nombre);
         final ArrayList<String> nodito = nodaso;
         archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
+         */
+        if(!archi.datahoy.hasActiveObservers()){
+            archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
+                @Override
+                public void onChanged(Horas horas) {
+                    if(horas.dametamano()!=0) {
+                        cvgrf1.setVisibility(View.VISIBLE);
+                        cvgrf2.setVisibility(View.VISIBLE);
+                        cleanthisshit();
+                        setdatagrafK(horas);
+                        setdataPM(YPM, Xlabels, DepthP);
+                        setdataTemp(YTemp, Xlabels, DepthP);
+                    }
+                }
+            });
+        }
+        /*
         archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
             @Override
             public void onChanged(Horas horas) {
                 if(horas.dametamano()!=0) {
                     cvgrf1.setVisibility(View.VISIBLE);
                     cvgrf2.setVisibility(View.VISIBLE);
+                    cleanthisshit();
                     setdatagrafK(horas);
                     setdataPM(YPM, Xlabels, DepthP);
                     setdataTemp(YTemp, Xlabels, DepthP);
                 }
             }
         });
+
+         */
         if(Xlabels.size()==0){
             cvgrf1.setVisibility(View.INVISIBLE);
             cvgrf2.setVisibility(View.INVISIBLE);
@@ -117,6 +148,7 @@ public class graficodelmapa extends Fragment {
         grafico1.getDescription().setEnabled(false);
         grafico1.setTouchEnabled(true);
         grafico1.setDragEnabled(true);
+        grafico1.setScaleEnabled(true);
         grafico1.setScaleYEnabled(false);
         grafico1.setScaleXEnabled(true);
         Legend L = grafico1.getLegend();
@@ -131,6 +163,7 @@ public class graficodelmapa extends Fragment {
         grafico2.getDescription().setEnabled(false);
         grafico2.setTouchEnabled(true);
         grafico2.setDragEnabled(true);
+        grafico2.setScaleEnabled(true);
         grafico2.setScaleYEnabled(false);
         grafico2.setScaleXEnabled(true);
         Legend L = grafico2.getLegend();
@@ -186,6 +219,8 @@ public class graficodelmapa extends Fragment {
         YPM.clean();
         YTemp.clean();
         DepthP.clean();
+        grafico1.clear();
+        grafico2.clear();
     }
     private void setdataPM(paquetedatasetPuertos YPM,ArrayList<String> Xlabels, DepthPackage DepthLabel){
         //Collections.sort(YPM, new EntryXComparator());
@@ -218,7 +253,7 @@ public class graficodelmapa extends Fragment {
         }
         //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico1.setMaxVisibleValueCount(MAX_DATAVISIBLE);
-        grafico1.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
+        //grafico1.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT); // este era el problema pero talves sea necesario luego
         grafico1.setData(data);
         //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis = grafico1.getXAxis();
@@ -308,6 +343,8 @@ public class graficodelmapa extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         cleanthisshit();
+        grafico1.clear();
+        grafico2.clear();
     }
 
 }
