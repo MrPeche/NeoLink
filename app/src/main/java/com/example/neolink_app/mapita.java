@@ -138,7 +138,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                     marker.remove();
                 }
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
-                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.iconomp7)));
+                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
                 map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
@@ -147,11 +147,30 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                         Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToDatosgenerales(nombre));
                     }
                 });
+                /*
                 map.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
                     @Override
                     public void onInfoWindowLongClick(Marker marker) {
                         String nombre = marker.getTitle();
                         Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToGraficodelmapa(nombre));
+                    }
+                });
+                */
+                map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+                    @Override
+                    public void onMarkerDragStart(Marker marker) {
+                        String nombre = marker.getTitle();
+                        Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToGraficodelmapa(nombre));
+                    }
+
+                    @Override
+                    public void onMarkerDrag(Marker marker) {
+
+                    }
+
+                    @Override
+                    public void onMarkerDragEnd(Marker marker) {
+
                     }
                 });
             }
