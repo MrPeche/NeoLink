@@ -42,7 +42,7 @@ public class minutosstate implements Parcelable {
     public statePK damepaquete(int posicion){
         return this.paquete.get(posicion);
     }
-    public int tamano(){
+    public int dametamano(){
         return this.minutos.size();
     }
 

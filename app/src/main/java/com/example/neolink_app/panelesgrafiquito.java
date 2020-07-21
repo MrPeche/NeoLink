@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
 import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.database_state.horasstate;
+import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
@@ -75,7 +77,7 @@ public class panelesgrafiquito extends Fragment {
         final MaterialDatePicker materialdatepick = builder.build();
         */
         final ArrayList<String> nodito = nodaso;
-
+        /*
         archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
         archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
             @Override
@@ -84,7 +86,17 @@ public class panelesgrafiquito extends Fragment {
                 vp.setAdapter(adapter);
             }
         });
-
+        */
+        archi.livelydatafull(nombre,hoyaño,hoymes,hoydia,sensor);
+        archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas,horasstate>>() {
+            @Override
+            public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
+                if(archi.paquetesdedata.isitready()){
+                    adapter = new viewpagergrafiquitosAdapter(getActivity(),horashorasstatePair,nodito);
+                    vp.setAdapter(adapter);
+                }
+            }
+        });
         ((actividadbase)getActivity()).fabcalendar();
         ((actividadbase)getActivity()).fabaparecer();
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {

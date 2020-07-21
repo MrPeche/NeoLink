@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -47,11 +49,13 @@ public class planografico extends Fragment {
     private int MAX_DATAVISIBLE = 48;
     private float LINEWIDTH = 2.5f;
 
+    private horasstate state;
+
 
     public planografico() {
         // Required empty public constructor
     }
-
+    /*
     public static planografico newInstance(Horas paquete,String name) {
         planografico fragment = new planografico();
 
@@ -61,6 +65,18 @@ public class planografico extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    */
+    public static planografico newInstance(Pair<Horas, horasstate> paquete, String name) {
+        planografico fragment = new planografico();
+
+        Bundle args = new Bundle();
+        args.putParcelable("paquete",paquete.first);
+        args.putParcelable("state",paquete.second);
+        args.putString("nombre",name);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +85,7 @@ public class planografico extends Fragment {
         if (getArguments() != null) {
             this.paquete = getArguments().getParcelable("paquete");
             this.name = getArguments().getString("nombre");
+            this.state = getArguments().getParcelable("state");
         }
     }
 
@@ -141,7 +158,7 @@ public class planografico extends Fragment {
                 l++;
             }
         }
-
+        setStatedata(state);
         setdataPM(YPM,Xlabels,DepthP);
         setdataTemp(YTemp,Xlabels,DepthP);
 
@@ -293,5 +310,23 @@ public class planografico extends Fragment {
         pset.setDrawHorizontalHighlightIndicator(false);
         pset.setDrawVerticalHighlightIndicator(false);
         return pset;
+    }
+    public void setStatedata(horasstate state){
+        final ArrayList<String> XlabelsSTATE = new ArrayList<>();
+        ArrayList<Entry> linedata = new ArrayList<>();
+        String sp = ":";
+        String label;
+        String label2;
+        float l = 0;
+        for(int i = 0; i<state.dametamano();i++){
+            label = state.damehora(i);
+            for(int j = 0; j<state.dameminutos(i).dametamano();j++){
+                label2 = label+sp+state.dameminutos(i).dameminutos(j);
+                XlabelsSTATE.add(label2);
+                linedata.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BV));
+                l++;
+            }
+        }
+        int a = 2;
     }
 }

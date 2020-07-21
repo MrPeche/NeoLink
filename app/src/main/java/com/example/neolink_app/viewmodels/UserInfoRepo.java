@@ -20,6 +20,8 @@ import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.Puerto;
 import com.example.neolink_app.clases.dataPuerto;
 import com.example.neolink_app.clases.database_state.horasstate;
+import com.example.neolink_app.clases.database_state.minutosstate;
+import com.example.neolink_app.clases.database_state.statePK;
 import com.google.firebase.FirebaseExceptionMapper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -127,34 +129,30 @@ public class UserInfoRepo {
     }
     public LiveData<horasstate> damedatahoyState(String neolink, int año, int mes, int dia, String sensor){
         String esp = "/";
-        String patio = "/NeoLink/"+neolink+"/DataSet/State/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
-        //patio = "/NeoLink/"+neolink+"/DataSet/k/20/06/26/";
-        Horas data = new Horas();
+        //String patio = "/NeoLink/"+neolink+"/DataSet/State/"+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        String patio = "/NeoLink/"+neolink+"/DataSet/State/20/07/02/";
+        horasstate data = new horasstate();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
         datahoyState.addSource(liveDataNL, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
-                    Horas horas = new Horas();
+                    horasstate horas = new horasstate();
                     for(DataSnapshot childSnap:dataSnapshot.getChildren()){
                         String horichi = childSnap.getKey(); //hora
-                        Minutos minutos = new Minutos();
+                        minutosstate minutos = new minutosstate();
                         for(DataSnapshot chilchilSnap:childSnap.getChildren()){
                             String min = chilchilSnap.getKey();//minutos
-                            Puerto puerto = new Puerto();
-                            for(DataSnapshot chilchilchilSnap:chilchilSnap.getChildren()){
-                                String a = chilchilchilSnap.getKey();//puerto
-                                dataPuerto b = chilchilchilSnap.getValue(dataPuerto.class);//data
-                                puerto.tomaPuerto(a,b);
-                            }
-                            minutos.tomaMinutos(min,puerto);
+                            statePK puerto = new statePK();
+                            puerto = chilchilSnap.getValue(statePK.class);
+                            minutos.tomaminutos(min,puerto);
                         }
-                        horas.tomaHoras(horichi,minutos);
+                        horas.tomahoras(horichi,minutos);
                     }
-                    datahoy.setValue(horas);
+                    datahoyState.setValue(horas);
                 } else {
-                    datahoy.setValue(null);
+                    datahoyState.setValue(null);
                 }
             }
         });
@@ -187,4 +185,5 @@ public class UserInfoRepo {
         });
         return GPSM;
     }
+
 }

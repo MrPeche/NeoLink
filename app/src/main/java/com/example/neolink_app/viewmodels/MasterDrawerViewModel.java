@@ -14,12 +14,14 @@ import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.database_state.horasstate;
+import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 
 public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<OWNERitems> Usuarioneolinks;
     public LiveData<OLDneolinksboleto> neonodos;
     public LiveData<Horas> datahoy;
     public LiveData<horasstate> datastatehoy;
+    public livedaylydatapackage paquetesdedata = new livedaylydatapackage();
     public LiveData<GPS> GPSM;
     public MediatorLiveData datadiario = new MediatorLiveData<>();
     public boolean valua,valueb = false;
@@ -45,7 +47,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public LiveData<Horas> getLivedaylydata(String neolink, int año, int mes, int dia, String sensor){
         datahoy = appRepo.damedatahoyK(neolink,año,mes,dia,sensor); //TENGO QUE ARREGLAR ESTO PARA MAS EQUIPOS!!!!
-        //datastatehoy = appRepo
+        datastatehoy = appRepo.damedatahoyState(neolink,año,mes,dia,sensor);
         /*datadiario.addSource(datahoy, new Observer() {
             @Override
             public void onChanged(Object o) {
@@ -56,6 +58,14 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         //datadiario.addSource();
         //datadiario.addSource();
         return datahoy;
+    }
+    public void livelydatafull(String neolink, int año, int mes, int dia, String sensor){
+        datahoy = appRepo.damedatahoyK(neolink,año,mes,dia,sensor); //TENGO QUE ARREGLAR ESTO PARA MAS EQUIPOS!!!!
+        datastatehoy = appRepo.damedatahoyState(neolink,año,mes,dia,sensor);
+        paquetesdedata = new livedaylydatapackage<Horas,horasstate>(datahoy,datastatehoy);
+        //paquetesdedata = new livedaylydatapackage<Horas,horasstate>(datahoy,datastatehoy);
+        //datadiario.addSource();
+        //datadiario.addSource();
     }
     public LiveData<GPS> getGPS(String neolink){
         GPSM = appRepo.dameGPS(neolink);
