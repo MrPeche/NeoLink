@@ -42,6 +42,7 @@ public class planografico extends Fragment {
     private String name;
     private LineChart grafico1;
     private LineChart grafico2;
+    private LineChart grafico3;
     private Horas paquete;
     //private MarkerLineChartAdapter adapter;
     private int alpha = 170;
@@ -102,6 +103,7 @@ public class planografico extends Fragment {
         nombre.setText(name);
         grafico1 = view.findViewById(R.id.graficochart1);
         grafico2= view.findViewById(R.id.graficochar2);
+        grafico3= view.findViewById(R.id.graficoBat);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
 
@@ -327,6 +329,20 @@ public class planografico extends Fragment {
                 l++;
             }
         }
-        int a = 2;
+        LineDataSet LDS = CreaDataLine(linedata,"Bateria",colores[0]);
+        LineData data = new LineData();
+        data.addDataSet(LDS);
+        grafico3.setData(data);
+        XAxis xaxis3= grafico3.getXAxis();
+        xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
+        ValueFormatter formatter3 = new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                return XlabelsSTATE.get((int) value);
+            }
+        };
+        xaxis3.setValueFormatter(formatter3);
+        grafico3.invalidate();
+        grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
 }

@@ -85,8 +85,6 @@
     //Grafico
     <string name="sensorPotencialMatricial">Potencial Matricial</string>
     <string name="sensorTemperatura">Temperatura</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Bateria">Batería</string>
 
 </resources>
