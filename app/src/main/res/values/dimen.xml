@@ -14,4 +14,6 @@
     <dimen name="cardelevasion">4dp</dimen>
     <dimen name="margencard">8dp</dimen>
 
+    <dimen name="tamañoCardScroll">320dp</dimen>
+
 </resources>
