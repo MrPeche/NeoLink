@@ -121,7 +121,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         return resultado;
     }
     private void setcalendarprop(){
-        calendario.setVisibility(View.INVISIBLE);
+        calendario.setVisibility(View.GONE);
         Calendar iniciocalendario = GregorianCalendar.getInstance();
         iniciocalendario.set(2020,0,1);
         calendario.setMinDate(iniciocalendario.getTimeInMillis());

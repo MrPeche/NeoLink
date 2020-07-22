@@ -106,7 +106,7 @@ public class planografico extends Fragment {
         grafico3= view.findViewById(R.id.graficoBat);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
-
+        propiedadesgrafico3();
 
         paquetedatasetPuertos YPM = new paquetedatasetPuertos();
         paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
@@ -312,6 +312,20 @@ public class planografico extends Fragment {
         pset.setDrawHorizontalHighlightIndicator(false);
         pset.setDrawVerticalHighlightIndicator(false);
         return pset;
+    }
+    public void propiedadesgrafico3(){
+        grafico3.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        grafico3.setDrawGridBackground(false);
+        grafico3.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        grafico3.getDescription().setEnabled(false);
+        grafico3.setTouchEnabled(true);
+        grafico3.setDragEnabled(true);
+        grafico3.setScaleYEnabled(false);
+        grafico3.setScaleXEnabled(true);
+        Legend L = grafico3.getLegend();
     }
     public void setStatedata(horasstate state){
         final ArrayList<String> XlabelsSTATE = new ArrayList<>();
