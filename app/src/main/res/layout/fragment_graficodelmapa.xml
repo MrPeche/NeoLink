@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".graficodelmapa"
-    android:background="@color/colorfondito">
-
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    android:background="@color/colorfondito"
+    android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="3">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tituloGMapa"
@@ -35,10 +25,9 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardVMP1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/tamañoCardScroll"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_weight="1.5"
                 app:cardCornerRadius="@dimen/cardRadio"
                 app:cardElevation="@dimen/cardelevasion">
 
@@ -67,10 +56,9 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardVMP2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/tamañoCardScroll"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_weight="1.5"
                 app:cardCornerRadius="@dimen/cardRadio"
                 app:cardElevation="@dimen/cardelevasion">
 
@@ -96,7 +84,37 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardVMP3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
 
-    </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensorTemperatura"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/graficoMPBateria"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+</androidx.core.widget.NestedScrollView>

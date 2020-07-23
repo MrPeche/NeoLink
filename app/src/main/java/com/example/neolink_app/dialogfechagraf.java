@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +28,11 @@ import java.util.GregorianCalendar;
 public class dialogfechagraf extends AppCompatDialogFragment implements AdapterView.OnItemSelectedListener {
     private Spinner parametros;
     private CalendarView calendario;
-    private ArrayList<String> listaspinner = new ArrayList<>();
+    private ArrayAdapter<String> adapterS;
+    private String [] lista ={"Hoy","Este mes","Este año","Elige una fecha"};
     private Calendar horario = Calendar.getInstance();
+    private NavController navController = NavHostFragment.findNavController(this);
+    private String result ="";
 
 
     public dialogfechagraf() {
@@ -53,23 +58,10 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         View view = inflater.inflate(R.layout.fragment_dialogfechagraf,null);
         parametros = view.findViewById(R.id.spinnerdialogfecha);
         calendario = view.findViewById(R.id.calendarViewdialogfecha);
+
         setcalendarprop();
-        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                /*
-                String data = dayOfMonth +(month+1) +(year%100);
 
-                int hoyaño = ahora.get(Calendar.YEAR)%100;
-                int hoymes = ahora.get(Calendar.MONTH)+1;
-                int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
-
-
-                 */
-            }
-        });
-        listaspinner = crearlalista();
-        ArrayAdapter<String> adapterS = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, listaspinner);
+        adapterS = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, lista);
         adapterS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         parametros.setAdapter(adapterS);
         parametros.setSelection(0);
@@ -87,12 +79,27 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         }).setPositiveButton(R.string.aceptardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                navController.getPreviousBackStackEntry().getSavedStateHandle().set("date", result);
             }
         });
         //codigoneolinknuevo = view.findViewById(R.id.ticketdialog);
+        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String spc = "/";
+                String muestra = "";
+                muestra = dayOfMonth+spc+(month+1)+spc+(year%100);
+                lista[3] = muestra;
+                adapterS.notifyDataSetChanged();
+                String data = (year%100)+spc+(month+1)+spc+dayOfMonth;
+                result = data;
+
+
+            }
+        });
         return builder.create();
     }
+
     /*
     @Override
     public void onCreate(Bundle savedInstanceState) {

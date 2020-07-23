@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +19,7 @@ import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
 import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.charts.LineChart;
@@ -39,10 +41,12 @@ public class graficodelmapa extends Fragment {
     private TextView titulo;
     private CardView cvgrf1;
     private CardView cvgrf2;
+    private CardView cvgrf3;
     private Calendar ahora = Calendar.getInstance();
     private MasterDrawerViewModel archi;
     private LineChart grafico1;
     private LineChart grafico2;
+    private LineChart grafico3;
     private paquetedatasetPuertos YPM = new paquetedatasetPuertos();
     private paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
     private DepthPackage DepthP = new DepthPackage();
@@ -71,7 +75,7 @@ public class graficodelmapa extends Fragment {
         ArrayList<String> nodaso = new ArrayList<>();
         nodaso.add(nombre);
         final ArrayList<String> nodito = nodaso;
-        archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
+        archi.livelydatafull(nombre,hoyaño,hoymes,hoydia,sensor);
 
     }
 
@@ -89,8 +93,10 @@ public class graficodelmapa extends Fragment {
         grafico2= view.findViewById(R.id.graficoMP2);
         cvgrf1 = view.findViewById(R.id.cardVMP1);
         cvgrf2 = view.findViewById(R.id.cardVMP2);
+        cvgrf3 = view.findViewById(R.id.graficoMPBateria);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
+        startposition();
         /*
         int hoyaño = ahora.get(Calendar.YEAR)%100;
         int hoymes = ahora.get(Calendar.MONTH)+1;
@@ -103,16 +109,22 @@ public class graficodelmapa extends Fragment {
         archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
          */
         if(!archi.datahoy.hasActiveObservers()){
-            archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
+            archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
                 @Override
-                public void onChanged(Horas horas) {
-                    if(horas.dametamano()!=0) {
-                        cvgrf1.setVisibility(View.VISIBLE);
-                        cvgrf2.setVisibility(View.VISIBLE);
+                public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
+                    if(archi.paquetesdedata.isitready()){
                         cleanthisshit();
-                        setdatagrafK(horas);
-                        setdataPM(YPM, Xlabels, DepthP);
-                        setdataTemp(YTemp, Xlabels, DepthP);
+                        if(horashorasstatePair.first.dametamano()!=0) {
+                            cvgrf1.setVisibility(View.VISIBLE);
+                            cvgrf2.setVisibility(View.VISIBLE);
+                            setdatagrafK(horashorasstatePair.first);
+                            setdataPM(YPM, Xlabels, DepthP);
+                            setdataTemp(YTemp, Xlabels, DepthP);
+                        }
+                        if(horashorasstatePair.second.dametamano()!=0){
+                            cvgrf3.setVisibility(View.VISIBLE);
+                            setStatedata(horashorasstatePair.second);
+                        }
                     }
                 }
             });
@@ -131,12 +143,12 @@ public class graficodelmapa extends Fragment {
                 }
             }
         });
-
          */
-        if(Xlabels.size()==0){
-            cvgrf1.setVisibility(View.INVISIBLE);
-            cvgrf2.setVisibility(View.INVISIBLE);
-        }
+    }
+    private void startposition(){
+        cvgrf1.setVisibility(View.INVISIBLE);
+        cvgrf2.setVisibility(View.INVISIBLE);
+        cvgrf3.setVisibility(View.INVISIBLE);
     }
     private void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);
@@ -345,6 +357,39 @@ public class graficodelmapa extends Fragment {
         cleanthisshit();
         grafico1.clear();
         grafico2.clear();
+        grafico3.clear();
+    }
+    private void setStatedata(horasstate state){
+        final ArrayList<String> XlabelsSTATE = new ArrayList<>();
+        ArrayList<Entry> linedata = new ArrayList<>();
+        String sp = ":";
+        String label;
+        String label2;
+        float l = 0;
+        for(int i = 0; i<state.dametamano();i++){
+            label = state.damehora(i);
+            for(int j = 0; j<state.dameminutos(i).dametamano();j++){
+                label2 = label+sp+state.dameminutos(i).dameminutos(j);
+                XlabelsSTATE.add(label2);
+                linedata.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BV));
+                l++;
+            }
+        }
+        LineDataSet LDS = CreaDataLine(linedata,"Bateria",colores[0]);
+        LineData data = new LineData();
+        data.addDataSet(LDS);
+        grafico3.setData(data);
+        XAxis xaxis3= grafico3.getXAxis();
+        xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
+        ValueFormatter formatter3 = new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                return XlabelsSTATE.get((int) value);
+            }
+        };
+        xaxis3.setValueFormatter(formatter3);
+        grafico3.invalidate();
+        grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
 
 }
