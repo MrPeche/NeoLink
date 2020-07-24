@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -19,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.Spinner;
+
+import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +37,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
     private Calendar horario = Calendar.getInstance();
     //private NavController navController = NavHostFragment.findNavController(this);
     private String result ="";
+    private MasterDrawerViewModel archi;
 
 
     public dialogfechagraf() {
@@ -49,6 +54,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_dialogfechagraf,null);
         parametros = view.findViewById(R.id.spinnerdialogfecha);
@@ -56,7 +62,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
 
         setcalendarprop();
 
-        adapterS = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, lista);
+        adapterS = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, lista); // Aqui puedo editar el estilo
         adapterS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         parametros.setAdapter(adapterS);
         parametros.setSelection(0);
@@ -65,7 +71,12 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         //spinner.setAdapter(adapter);
-
+        archi.datechoosen.observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s!=null) lista[3] = s;
+            }
+        });
         builder.setView(view).setNegativeButton(R.string.cancelardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -74,7 +85,8 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         }).setPositiveButton(R.string.aceptardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                if(result!=null||result.length()!=0)
+                    archi.savedate(result);
             }
         });
         //codigoneolinknuevo = view.findViewById(R.id.ticketdialog);

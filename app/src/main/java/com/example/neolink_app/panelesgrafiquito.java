@@ -41,6 +41,7 @@ public class panelesgrafiquito extends Fragment {
     private MasterDrawerViewModel archi;
     private ViewPager2 vp;
     private viewpagergrafiquitosAdapter adapter;
+    private String dateselected;
     /*
     private MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
     */
@@ -74,7 +75,7 @@ public class panelesgrafiquito extends Fragment {
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
         vp = view.findViewById(R.id.viewpagergraficos);
         String nombre = "NL2006-0002";
-        String sensor = "k";
+        final String sensor = "k";
         ArrayList<String> nodaso = new ArrayList<>();
         nodaso.add(nombre);
         /*
@@ -94,6 +95,13 @@ public class panelesgrafiquito extends Fragment {
         });
         */
         archi.livelydatafull(nombre,hoyaño,hoymes,hoydia,sensor);
+        archi.retrivedate().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                dateselected = s;
+                archi.livelydatafull(nodito.get(0),managedate(s,1),managedate(s,2),managedate(s,3),sensor);
+            }
+        });
         archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas,horasstate>>() {
             @Override
             public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
@@ -152,6 +160,18 @@ public class panelesgrafiquito extends Fragment {
     private Calendar traductordecalendario(long date){
         Calendar resultado = Calendar.getInstance();
         resultado.setTimeInMillis(date);
+        return resultado;
+    }
+    private int managedate(String date, int whichone){
+        int resultado = 0;
+        switch(whichone){
+            case 1:
+                resultado= Integer.parseInt(date.substring(0,2));
+            case 2:
+                resultado= Integer.parseInt(date.substring(3,5));
+            case 3:
+                resultado= Integer.parseInt(date.substring(6));
+        }
         return resultado;
     }
 }

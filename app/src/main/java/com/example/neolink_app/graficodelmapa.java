@@ -91,9 +91,10 @@ public class graficodelmapa extends Fragment {
         titulo.setText(nombre);
         grafico1 = view.findViewById(R.id.graficoMP1);
         grafico2= view.findViewById(R.id.graficoMP2);
+        grafico3= view.findViewById(R.id.graficoMPBateria);
         cvgrf1 = view.findViewById(R.id.cardVMP1);
         cvgrf2 = view.findViewById(R.id.cardVMP2);
-        cvgrf3 = view.findViewById(R.id.graficoMPBateria);
+        cvgrf3 = view.findViewById(R.id.cardVMP3);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         startposition();

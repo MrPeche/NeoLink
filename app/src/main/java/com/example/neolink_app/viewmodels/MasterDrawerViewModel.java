@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.neolink_app.clases.Dias;
@@ -25,6 +26,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<GPS> GPSM;
     public MediatorLiveData datadiario = new MediatorLiveData<>();
     public boolean valua,valueb = false;
+    public final MutableLiveData<String> datechoosen = new MutableLiveData<>();
     private UserInfoRepo appRepo;
     private String uid;
 
@@ -70,5 +72,11 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<GPS> getGPS(String neolink){
         GPSM = appRepo.dameGPS(neolink);
         return GPSM;
+    }
+    public void savedate(String date){
+        datechoosen.setValue(date);
+    }
+    public LiveData<String> retrivedate(){
+        return datechoosen;
     }
 }
