@@ -125,38 +125,6 @@ public class panelesgrafiquito extends Fragment {
             }
         });
         */
-        //DIALOGO
-        NavController navController = NavHostFragment.findNavController(this);
-        // After a configuration change or process death, the currentBackStackEntry
-        // points to the dialog destination, so you must use getBackStackEntry()
-        // with the specific ID of your destination to ensure we always
-        // get the right NavBackStackEntry
-        final NavBackStackEntry navBackStackEntry = navController.getBackStackEntry(R.id.dialogfechagraf);
-
-        // Create our observer and add it to the NavBackStackEntry's lifecycle
-        final LifecycleEventObserver observer = new LifecycleEventObserver() {
-
-            @Override
-            public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-                if (event.equals(Lifecycle.Event.ON_RESUME) && navBackStackEntry.getSavedStateHandle().contains("date")) {
-                    String result = navBackStackEntry.getSavedStateHandle().get("date");
-                    int a = 1;
-                    // Do something with the result
-                }
-            }
-        };
-        navBackStackEntry.getLifecycle().addObserver(observer);
-
-        // As addObserver() does not automatically remove the observer, we
-        // call removeObserver() manually when the view lifecycle is destroyed
-        getViewLifecycleOwner().getLifecycle().addObserver(new LifecycleEventObserver() {
-            @Override
-            public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-                if (event.equals(Lifecycle.Event.ON_DESTROY)) {
-                    navBackStackEntry.getLifecycle().removeObserver(observer);
-                }
-            }
-        });
     }
     public void onDestroy() {
         super.onDestroy();

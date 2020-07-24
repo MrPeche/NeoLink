@@ -31,7 +31,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
     private ArrayAdapter<String> adapterS;
     private String [] lista ={"Hoy","Este mes","Este año","Elige una fecha"};
     private Calendar horario = Calendar.getInstance();
-    private NavController navController = NavHostFragment.findNavController(this);
+    //private NavController navController = NavHostFragment.findNavController(this);
     private String result ="";
 
 
@@ -39,16 +39,11 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         // Required empty public constructor
     }
 
-    /*
-    public static dialogfechagraf newInstance(String param1, String param2) {
+    public static dialogfechagraf newInstance() {
         dialogfechagraf fragment = new dialogfechagraf();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
-     */
+
 
     @NonNull
     @Override
@@ -79,7 +74,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         }).setPositiveButton(R.string.aceptardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                navController.getPreviousBackStackEntry().getSavedStateHandle().set("date", result);
+
             }
         });
         //codigoneolinknuevo = view.findViewById(R.id.ticketdialog);

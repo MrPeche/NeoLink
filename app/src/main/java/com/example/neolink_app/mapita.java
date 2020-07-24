@@ -34,35 +34,18 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     private Marker marker;
 
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     public mapita() {
         // Required empty public constructor
     }
-
-    public static mapita newInstance(String param1, String param2) {
-        mapita fragment = new mapita();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    /*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        //mapView.onCreate(savedInstanceState);
+
     }
+     */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,7 +80,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
             mapViewBundle = new Bundle();
             outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
         }
-
+        if(mapView!=null)
         mapView.onSaveInstanceState(mapViewBundle);
     }
 
@@ -185,9 +168,11 @@ public class mapita extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onDestroy() {
-        mapView.onDestroy();
         super.onDestroy();
+        if(mapView!=null)
+        mapView.onDestroy();
     }
+
 
     @Override
     public void onLowMemory() {
