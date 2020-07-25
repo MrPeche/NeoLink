@@ -98,8 +98,10 @@ public class panelesgrafiquito extends Fragment {
         archi.retrivedate().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                dateselected = s;
-                archi.livelydatafull(nodito.get(0),managedate(s,1),managedate(s,2),managedate(s,3),sensor);
+                if (s != null) {
+                    dateselected = s;
+                    archi.livelydatafull(nodito.get(0), managedate(s, 1), managedate(s, 2), managedate(s, 3), sensor);
+                }
             }
         });
         archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas,horasstate>>() {
@@ -164,13 +166,17 @@ public class panelesgrafiquito extends Fragment {
     }
     private int managedate(String date, int whichone){
         int resultado = 0;
+        String []split = date.split("/");
         switch(whichone){
             case 1:
-                resultado= Integer.parseInt(date.substring(0,2));
+                resultado= Integer.parseInt(split[0]);
+                break;
             case 2:
-                resultado= Integer.parseInt(date.substring(3,5));
+                resultado= Integer.parseInt(split[1]);
+                break;
             case 3:
-                resultado= Integer.parseInt(date.substring(6));
+                resultado= Integer.parseInt(split[2]);
+                break;
         }
         return resultado;
     }

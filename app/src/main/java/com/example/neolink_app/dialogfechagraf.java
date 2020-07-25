@@ -71,12 +71,15 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         //spinner.setAdapter(adapter);
+        if(archi.datechoosen.getValue()!=null) lista[3] = archi.datechoosen.getValue();
+        /*
         archi.datechoosen.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if(s!=null) lista[3] = s;
             }
         });
+        */
         builder.setView(view).setNegativeButton(R.string.cancelardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -95,16 +98,21 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 String spc = "/";
                 String muestra = "";
-                muestra = dayOfMonth+spc+(month+1)+spc+(year%100);
+                muestra = fixdate(dayOfMonth)+spc+fixdate(month+1)+spc+(year%100);
                 lista[3] = muestra;
                 adapterS.notifyDataSetChanged();
-                String data = (year%100)+spc+(month+1)+spc+dayOfMonth;
+                String data = (year%100)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
                 result = data;
-
-
             }
         });
         return builder.create();
+    }
+    private String fixdate(int numero){
+        String resultado;
+        if(numero<10){
+            resultado = "0"+numero;
+        } else resultado = Integer.toString(numero);
+        return resultado;
     }
 
     /*
