@@ -93,8 +93,8 @@ public class UserInfoRepo {
 
     public LiveData<Horas> damedatahoyK(String neolink, int año, int mes, int dia, String sensor){
         String esp = "/";
-        //String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
-        String patio = "/NeoLink/"+neolink+"/DataSet/k/20/07/01/"; // esto es solo para debuggear un dia especifico por ahora
+        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        //String patio = "/NeoLink/"+neolink+"/DataSet/k/20/07/01/"; // esto es solo para debuggear un dia especifico por ahora
         Horas data = new Horas();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
@@ -127,10 +127,10 @@ public class UserInfoRepo {
         //String neolink, int año, int mes, int dia, String sensor
         return datahoy;
     }
-    public LiveData<horasstate> damedatahoyState(String neolink, int año, int mes, int dia, String sensor){
+    public LiveData<horasstate> damedatahoyState(String neolink, int año, int mes, int dia){
         String esp = "/";
-        //String patio = "/NeoLink/"+neolink+"/DataSet/State/"+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
-        String patio = "/NeoLink/"+neolink+"/DataSet/State/20/07/02/";
+        String patio = "/NeoLink/"+neolink+"/DataSet/State/"+año+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        //String patio = "/NeoLink/"+neolink+"/DataSet/State/20/07/02/";
         horasstate data = new horasstate();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);

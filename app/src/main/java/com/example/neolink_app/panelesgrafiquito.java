@@ -94,25 +94,37 @@ public class panelesgrafiquito extends Fragment {
             }
         });
         */
-        archi.livelydatafull(nombre,hoyaño,hoymes,hoydia,sensor);
+
+        archi.retrivepaqueteDatos(nombre);
+
+        /*
+        if(!archi.paquetesdedata.hasObservers()) {
+            archi.livelydatafull(nombre, hoyaño, hoymes, hoydia, sensor);
+        }
+        */
         archi.retrivedate().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if (s != null) {
                     dateselected = s;
-                    archi.livelydatafull(nodito.get(0), managedate(s, 1), managedate(s, 2), managedate(s, 3), sensor);
+                    archi.updatedate(managedate(s,1),managedate(s,2),managedate(s,3));
                 }
             }
         });
+
         archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas,horasstate>>() {
             @Override
             public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
+                Boolean ver = archi.paquetesdedata.isitready();
                 if(archi.paquetesdedata.isitready()){
                     adapter = new viewpagergrafiquitosAdapter(getActivity(),horashorasstatePair,nodito);
                     vp.setAdapter(adapter);
                 }
             }
         });
+
+
+
         ((actividadbase)getActivity()).fabcalendar();
         ((actividadbase)getActivity()).fabaparecer();
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {

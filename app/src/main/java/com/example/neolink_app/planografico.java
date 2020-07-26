@@ -212,7 +212,7 @@ public class planografico extends Fragment {
         }
         //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico1.setMaxVisibleValueCount(MAX_DATAVISIBLE);
-        grafico1.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
+        //grafico1.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
         grafico1.setData(data);
         //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis = grafico1.getXAxis();
@@ -276,7 +276,7 @@ public class planografico extends Fragment {
         }
         //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         //grafico2.setMaxVisibleValueCount(MAX_DATAVISIBLE);
-        grafico2.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
+        //grafico2.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
         grafico2.setData(data);
 
         //set2.setAxisDependency(YAxis.AxisDependency.LEFT);

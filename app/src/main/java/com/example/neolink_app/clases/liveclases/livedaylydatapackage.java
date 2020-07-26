@@ -8,13 +8,15 @@ import androidx.lifecycle.Observer;
 public class livedaylydatapackage<A,B> extends MediatorLiveData<Pair<A,B>> {
     private A dataa;
     private B datab;
-    private boolean validateA = false;
-    private boolean validateB = false;
+    public boolean validateA = false;
+    public boolean validateB = false;
 
     public livedaylydatapackage(){}
 
     public livedaylydatapackage(LiveData<A> ld1, LiveData<B> ld2) {
         setValue(Pair.create(dataa, datab));
+        validateA = false;
+        validateB = false;
         addSource(ld1, new Observer<A>() {
             @Override
             public void onChanged(A a) {
@@ -36,5 +38,6 @@ public class livedaylydatapackage<A,B> extends MediatorLiveData<Pair<A,B>> {
             }
         });
     }
-    public boolean isitready(){return validateA&&validateB;}
+    public boolean isitready(){
+        return this.validateA&&this.validateB;}
 }
