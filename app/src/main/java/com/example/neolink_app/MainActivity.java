@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                         i.putExtra("correo",user.getText().toString());
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
+                        setitbackMain();
 
                     } else {
 
