@@ -21,6 +21,7 @@ import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MasterDrawerViewModel extends AndroidViewModel {
@@ -35,12 +36,13 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public final MutableLiveData<String> datechoosen = new MutableLiveData<>();
     private UserInfoRepo appRepo;
     private String uid;
+    private Calendar ahora = Calendar.getInstance();
     public MutableLiveData<ArrayList<Integer>> date = new MutableLiveData<>();
 
     public MasterDrawerViewModel(@NonNull Application application) {
         super(application);
         appRepo = new UserInfoRepo();
-        updatedate(20,7,25);
+        updatetoday();
 
     }
     public void poneruid(String uid){
@@ -98,5 +100,14 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         lista.add(mes);
         lista.add(dia);
         date.setValue(lista);
+    }
+    public void updatetoday(){
+        int hoyaño = ahora.get(Calendar.YEAR)%100;
+        int hoymes = ahora.get(Calendar.MONTH)+1;
+        int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
+        updatedate(hoyaño,hoymes,hoydia);
+    }
+    public Long getmillistoday(){
+        return ahora.getTimeInMillis();
     }
 }

@@ -37,7 +37,6 @@ import java.util.GregorianCalendar;
 
 public class panelesgrafiquito extends Fragment {
     private String neolinkname;
-    private Calendar ahora = Calendar.getInstance();
     private MasterDrawerViewModel archi;
     private ViewPager2 vp;
     private viewpagergrafiquitosAdapter adapter;
@@ -67,9 +66,6 @@ public class panelesgrafiquito extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
-        int hoyaño = ahora.get(Calendar.YEAR)%100;
-        int hoymes = ahora.get(Calendar.MONTH)+1;
-        int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
 
 
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
@@ -106,8 +102,13 @@ public class panelesgrafiquito extends Fragment {
             @Override
             public void onChanged(String s) {
                 if (s != null) {
-                    dateselected = s;
-                    archi.updatedate(managedate(s,1),managedate(s,2),managedate(s,3));
+
+                    if(s.equals("Hoy")) {
+                        archi.updatetoday();
+                    } else {
+                        dateselected = s;
+                        archi.updatedate(managedate(s, 1), managedate(s, 2), managedate(s, 3));
+                    }
                 }
             }
         });

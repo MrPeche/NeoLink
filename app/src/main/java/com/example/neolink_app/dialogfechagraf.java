@@ -1,5 +1,6 @@
 package com.example.neolink_app;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -24,8 +25,11 @@ import android.widget.Spinner;
 
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -37,6 +41,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
     private Calendar horario = Calendar.getInstance();
     //private NavController navController = NavHostFragment.findNavController(this);
     private String result ="";
+    private int wichone;
     private MasterDrawerViewModel archi;
 
 
@@ -71,15 +76,27 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         //spinner.setAdapter(adapter);
-        if(archi.datechoosen.getValue()!=null) lista[3] = archi.datechoosen.getValue();
-        /*
-        archi.datechoosen.observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(s!=null) lista[3] = s;
+        String valorinicial = archi.datechoosen.getValue();
+        if(valorinicial!=null) {
+            if(valorinicial.equals(lista[0])){
+                parametros.setSelection(0);
+            } else if(valorinicial.equals(lista[1])){
+                parametros.setSelection(1);
+            } else if(valorinicial.equals(lista[2])){
+                parametros.setSelection(2);
+            } else {
+                lista[3] = valorinicial;
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                try {
+                    Date day = sdf.parse("20"+valorinicial);
+                    calendario.setDate(day.getTime());
+                } catch (ParseException ignored) {
+
+                }
+                parametros.setSelection(3);
             }
-        });
-        */
+        }
+
         builder.setView(view).setNegativeButton(R.string.cancelardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -88,8 +105,13 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         }).setPositiveButton(R.string.aceptardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(result!=null||result.length()!=0)
-                    archi.savedate(result);
+                String opinion = parametros.getSelectedItem().toString();
+                if(!lista[3].equals(opinion)){
+                    archi.savedate(opinion);
+                }else {
+                    if (result != null)
+                        archi.savedate(result);
+                }
             }
         });
         //codigoneolinknuevo = view.findViewById(R.id.ticketdialog);
@@ -162,6 +184,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         if(position==3){
             popupcalendar();
         }
+
     }
 
     @Override
