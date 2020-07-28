@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -37,15 +38,20 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     public mapita() {
         // Required empty public constructor
     }
-    /*
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //mapView.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().moveTaskToBack(true);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
-     */
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
