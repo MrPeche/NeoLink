@@ -105,7 +105,7 @@
                         android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:padding="@dimen/margencard"
-                        android:text="@string/sensorTemperatura"
+                        android:text="@string/Bateria"
                         android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart

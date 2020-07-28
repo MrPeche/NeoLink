@@ -63,7 +63,6 @@ public class actividadbase extends AppCompatActivity {
         String yo = damecorreo();
         correoYO.setText(yo);
 
-
     }
 
     @Override
