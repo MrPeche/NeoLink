@@ -269,7 +269,7 @@ public class planografico extends Fragment {
             orden.add("P3");
         }
         if(YTemp.getP4().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YTemp.getP4(), "P3", colores[2]);
+            LineDataSet set1 = CreaDataLine(YTemp.getP4(), "P4", colores[3]);
             //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
             data.addDataSet(set1);
             orden.add("P4");
