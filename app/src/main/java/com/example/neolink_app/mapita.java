@@ -128,7 +128,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                 }
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
                 marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 12));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 14));
                 map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {

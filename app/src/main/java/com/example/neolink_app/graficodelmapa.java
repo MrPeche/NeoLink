@@ -97,6 +97,7 @@ public class graficodelmapa extends Fragment {
         cvgrf3 = view.findViewById(R.id.cardVMP3);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
+        propiedadesgrafico3();
         startposition();
         /*
         int hoyaño = ahora.get(Calendar.YEAR)%100;
@@ -180,6 +181,20 @@ public class graficodelmapa extends Fragment {
         grafico2.setScaleYEnabled(false);
         grafico2.setScaleXEnabled(true);
         Legend L = grafico2.getLegend();
+    }
+    public void propiedadesgrafico3(){
+        grafico3.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        grafico3.setDrawGridBackground(false);
+        grafico3.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        grafico3.getDescription().setEnabled(false);
+        grafico3.setTouchEnabled(true);
+        grafico3.setDragEnabled(true);
+        grafico3.setScaleYEnabled(false);
+        grafico3.setScaleXEnabled(true);
+        Legend L = grafico3.getLegend();
     }
     private void setdatagrafK(Horas paquete){
         String sp = ":";
