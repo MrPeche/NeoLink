@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(archivoexiste(archivos,"NeoLinkid.txt")){
             try {
+
                 InputStreamReader id = new InputStreamReader(openFileInput("NeoLinkid.txt"));
                 BufferedReader br = new BufferedReader(id);
                 Lineaguardada = br.readLine();
