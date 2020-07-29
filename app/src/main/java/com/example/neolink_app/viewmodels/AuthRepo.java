@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.concurrent.Executor;
 
 public class AuthRepo {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -35,12 +36,12 @@ public class AuthRepo {
     private final MediatorLiveData<UsuarioNeoL> neousuario = new MediatorLiveData<>();
     private final MediatorLiveData<PCUN> valid = new MediatorLiveData<>();
     private final MediatorLiveData<Boolean> fileexist = new MediatorLiveData<>();
-    private String Lineaguardada;
 
-    public LiveData<UsuarioNeoL> Login(final String usuario, final String password, final Boolean checkstatus, final Boolean exist, String actual, Application app){
+    public LiveData<UsuarioNeoL> Login(final String usuario, final String password, final Boolean checkstatus, final Boolean exist, String actual, Application app, Activity activity){
         final String ac = actual;
         final Application soft = app;
-        mAuth.signInWithEmailAndPassword(usuario,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        mAuth.signInWithEmailAndPassword(usuario,password).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -93,16 +94,15 @@ public class AuthRepo {
         for (String s : direccion) {
             if (nombre.equals(s)) {
                 fileexist.setValue(true);
-            }
+            } else fileexist.setValue(false);
         }
-        fileexist.setValue(false);
         return fileexist;
     }
     public LiveData<PCUN> archivoguardado(@NonNull Application application){
         try {
             InputStreamReader id = new InputStreamReader(application.openFileInput("NeoLinkid.txt"));
             BufferedReader br = new BufferedReader(id);
-            Lineaguardada = br.readLine();
+            String Lineaguardada = br.readLine();
             id.close();
             br.close();
             PCUN you = new PCUN(Lineaguardada.substring(0,Lineaguardada.indexOf(" ")),Lineaguardada.substring(Lineaguardada.indexOf(" ")+1));

@@ -1,5 +1,6 @@
 package com.example.neolink_app.viewmodels;
 
+import android.app.Activity;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -29,8 +30,8 @@ public class loginviewmodel extends AndroidViewModel {
     public LiveData<PCUN> info(){
         return repo.archivoguardado(app);
     }
-    public LiveData<UsuarioNeoL> Log(String usuario,String password,Boolean checkstatus,String actual){
-        return repo.Login(usuario,password,checkstatus,exist.getValue(),actual,app);
+    public LiveData<UsuarioNeoL> Log(String usuario, String password, Boolean checkstatus, String actual, Activity act){
+        return repo.Login(usuario,password,checkstatus,exist.getValue(),actual,app,act);
     }
 
 }

@@ -378,6 +378,7 @@ public class graficodelmapa extends Fragment {
     private void setStatedata(horasstate state){
         final ArrayList<String> XlabelsSTATE = new ArrayList<>();
         ArrayList<Entry> linedata = new ArrayList<>();
+        ArrayList<Entry> solar = new ArrayList<>();
         String sp = ":";
         String label;
         String label2;
@@ -388,12 +389,15 @@ public class graficodelmapa extends Fragment {
                 label2 = label+sp+state.dameminutos(i).dameminutos(j);
                 XlabelsSTATE.add(label2);
                 linedata.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BV));
+                solar.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).SV));
                 l++;
             }
         }
         LineDataSet LDS = CreaDataLine(linedata,"Bateria",colores[0]);
+        LineDataSet LDSV = CreaDataLine(solar,"Voltaje Solar", colores[1]);
         LineData data = new LineData();
         data.addDataSet(LDS);
+        data.addDataSet(LDSV);
         grafico3.setData(data);
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
