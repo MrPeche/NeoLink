@@ -10,12 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.neolink_app.R;
+import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class DialogNeolink extends AppCompatDialogFragment {
     private TextInputEditText codigoneolinknuevo;
+    private MasterDrawerViewModel archi;
 
     public DialogNeolink() {
         // Required empty public constructor
@@ -27,6 +30,8 @@ public class DialogNeolink extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialogoneolink,null);
+        codigoneolinknuevo = view.findViewById(R.id.ticketdialog);
+        archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
         builder.setView(view).setNegativeButton(R.string.cancelardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -35,7 +40,10 @@ public class DialogNeolink extends AppCompatDialogFragment {
         }).setPositiveButton(R.string.aceptardialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                if(codigoneolinknuevo.getText().toString().length()!=0) {
+                    //archi.agregarneolink(codigoneolinknuevo.getText().toString());
+                    archi.guardarneolinkdeldialogo(codigoneolinknuevo.getText().toString());
+                }
             }
         });
         codigoneolinknuevo = view.findViewById(R.id.ticketdialog);

@@ -14,6 +14,7 @@ import com.example.neolink_app.MainActivity;
 import com.example.neolink_app.actividadbase;
 import com.example.neolink_app.clases.LoginFirebase.PCUN;
 import com.example.neolink_app.clases.LoginFirebase.UsuarioNeoL;
+import com.example.neolink_app.recuperar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -36,6 +37,7 @@ public class AuthRepo {
     private final MediatorLiveData<UsuarioNeoL> neousuario = new MediatorLiveData<>();
     private final MediatorLiveData<PCUN> valid = new MediatorLiveData<>();
     private final MediatorLiveData<Boolean> fileexist = new MediatorLiveData<>();
+    private final MediatorLiveData<Boolean> Mailrecuperado = new MediatorLiveData<>();
 
     public LiveData<UsuarioNeoL> Login(final String usuario, final String password, final Boolean checkstatus, final Boolean exist, String actual, Application app, Activity activity){
         final String ac = actual;
@@ -120,6 +122,25 @@ public class AuthRepo {
         archivo.write(guardado);
         archivo.flush();
         archivo.close();
+    }
+    public LiveData<Boolean> recuperarcontraseña(String correo,Activity act){
+        mAuth.sendPasswordResetEmail(correo).addOnCompleteListener(act, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Mailrecuperado.setValue(true);
+                } else {
+                    try{
+                        throw task.getException();
+                    } catch (FirebaseAuthInvalidUserException e){
+                        Mailrecuperado.setValue(false);
+                    } catch (Exception e) {
+                        Mailrecuperado.setValue(null);
+                    }
+                }
+            }
+        });
+        return Mailrecuperado;
     }
 
 }

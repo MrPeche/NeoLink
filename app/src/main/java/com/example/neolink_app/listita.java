@@ -21,6 +21,8 @@ import com.example.neolink_app.adaptadores.DialogNeolink;
 import com.example.neolink_app.adaptadores.ListaNeolinks;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -58,7 +60,8 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
-
+        final Snackbar Avizoneolinklisto = Snackbar.make(view,"Neolink Guardado", BaseTransientBottomBar.LENGTH_SHORT);
+        final Snackbar Avizonelinkfallido = Snackbar.make(view,"Problemas al conectar con el servidor intentelo luego", BaseTransientBottomBar.LENGTH_SHORT);
         ((actividadbase)getActivity()).fabaparecer();
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +75,7 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
         rv.setLayoutManager(glm);
 
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
-        archi.getLiveNL();
+        //archi.getLiveNL();
         archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
             @Override
             public void onChanged(OWNERitems owneRitems) {
@@ -81,7 +84,38 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
                 lista = owneRitems.getlista();
             }
         });
+        archi.neolinkdeldialogo().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s!=null){
+                    archi.agregarneolink(s);
+                    archi.vacialneolinkdeldialogo();
 
+                    archi.segraboelneolink().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean aBoolean) {
+                            if(aBoolean!=null) {
+                                if (aBoolean) {
+                                    archi.neolinkguardadopositivo();
+                                    Avizoneolinklisto.show();
+                                } else Avizonelinkfallido.show();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        /*
+        archi.neolinkguardado.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    archi.neolinkguardadopositivo();
+                }
+            }
+        });
+        */
         //rv.setAdapter(adapter);
     }
 

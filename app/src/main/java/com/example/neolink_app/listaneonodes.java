@@ -59,14 +59,17 @@ public class listaneonodes extends Fragment {
         rv.setLayoutManager(glm);
 
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
-        archi.getLiveNN(neolinkname);
+        archi.updateneolinkF(neolinkname);
+        archi.getLiveNN();
         archi.neonodos.observe(getViewLifecycleOwner(), new Observer<OLDneolinksboleto>() {
             @Override
             public void onChanged(OLDneolinksboleto olDneolinksboleto) {
-                LinkNodo nuevo = new LinkNodo(neolinkname,olDneolinksboleto);
-                lista = olDneolinksboleto.dameneonodos();
-                adapter = new ListaNeonodesAdapter(nuevo);
-                rv.setAdapter(adapter);
+                if(olDneolinksboleto!=null){
+                    LinkNodo nuevo = new LinkNodo(neolinkname,olDneolinksboleto);
+                    lista = olDneolinksboleto.dameneonodos();
+                    adapter = new ListaNeonodesAdapter(nuevo);
+                    rv.setAdapter(adapter);
+                }
             }
         });
 

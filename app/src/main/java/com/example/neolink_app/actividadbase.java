@@ -4,6 +4,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.example.neolink_app.clases.OLDneolinksboleto;
+import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -75,6 +78,35 @@ public class actividadbase extends AppCompatActivity {
     void iniciarelView(){
         archi = new ViewModelProvider(this).get(MasterDrawerViewModel.class);
         archi.poneruid(dameuid());
+        archi.getLiveNL();
+        archi.Usuarioneolinks.observe(this, new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                if(owneRitems!=null){
+                    for(int i=0;i<owneRitems.gettamanolista();i++){
+                        archi.getneonodofromneolink(owneRitems.getitem(i)).observe(actividadbase.this, new Observer<OLDneolinksboleto>() {
+                            @Override
+                            public void onChanged(OLDneolinksboleto olDneolinksboleto) {
+                                if(olDneolinksboleto!=null)
+                                    archi.listacompleta.add(olDneolinksboleto);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+        /*
+        archi.segraboelneolink().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    archi.neolinkguardadopositivo();
+                }
+            }
+        });
+
+         */
+
     }
     String dameuid(){
         return getIntent().getExtras().getString("uid");

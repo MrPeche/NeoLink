@@ -28,4 +28,10 @@ public class OLDneolinksboleto {
             return null;
         } else return this.neonodos;
     }
+    public int dametamano(){
+        return this.neonodos.size();
+    }
+    public String damenodo(int posicion){
+        return neonodos.get(posicion);
+    }
 }

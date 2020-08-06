@@ -33,5 +33,8 @@ public class loginviewmodel extends AndroidViewModel {
     public LiveData<UsuarioNeoL> Log(String usuario, String password, Boolean checkstatus, String actual, Activity act){
         return repo.Login(usuario,password,checkstatus,exist.getValue(),actual,app,act);
     }
+    public LiveData<Boolean> recuperarcontraseña(String correo, Activity act){
+        return repo.recuperarcontraseña(correo,act);
+    }
 
 }

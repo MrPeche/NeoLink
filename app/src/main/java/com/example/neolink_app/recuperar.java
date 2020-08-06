@@ -2,6 +2,8 @@ package com.example.neolink_app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.neolink_app.viewmodels.loginviewmodel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -23,6 +26,7 @@ public class recuperar extends AppCompatActivity {
     private TextView botonVR;
     private ProgressBar loadR;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private loginviewmodel archi;
     //private Button recuboton;
 
     @Override
@@ -33,11 +37,26 @@ public class recuperar extends AppCompatActivity {
         botonR = findViewById(R.id.button_recuperar);
         botonVR = findViewById(R.id.volver);
         loadR = findViewById(R.id.CargadoR);
+        archi = new ViewModelProvider(this).get(loginviewmodel.class);
     }
     public void BotonRecuperar(View view){ //Funcion para recuperar
         //verificar escritirua
         if(correo.length() != 0) {
             setitR();
+            archi.recuperarcontraseña(correo.getText().toString(),this).observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean aBoolean) {
+                    if(aBoolean){
+                        logradaso();
+                        finish();
+                    } else if(aBoolean==null){
+                        falladaso2();
+                    } else
+                        falladaso();
+                    setitbackR();
+                }
+            });
+            /*
             auth.sendPasswordResetEmail(correo.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -54,7 +73,7 @@ public class recuperar extends AppCompatActivity {
                         setitbackR();
                     }
                 }
-            });
+            });*/
         }
         //Mandar a Correo
     }
@@ -78,6 +97,9 @@ public class recuperar extends AppCompatActivity {
 
     public void falladaso(){
         Toast.makeText( this, "Correo Invalido", Toast.LENGTH_SHORT).show();
+    }
+    public void falladaso2(){
+        Toast.makeText( this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
     }
     public void volver(View view){
         finish();

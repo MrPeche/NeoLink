@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.neolink_app.clases.GPS;
+import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +27,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class mapita extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
@@ -116,7 +119,17 @@ public class mapita extends Fragment implements OnMapReadyCallback {
         // Set a preference for minimum and maximum zoom.
         map.setMinZoomPreference(8f);
         map.setMaxZoomPreference(16f);
-
+        /*
+        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                ArrayList<String> listadeneolinks = new ArrayList<>();
+                for(int i = 0; i<owneRitems.gettamanolista(); i++) {
+                    listadeneolinks.add(owneRitems.getitem(i));
+                }
+            }
+        });
+        */
         String neolink = "NL2006-0002";
         archi.getGPS(neolink);
         final String nombre = neolink;
@@ -145,23 +158,24 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                     }
                 });
                 */
-                map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-                    @Override
-                    public void onMarkerDragStart(Marker marker) {
-                        String nombre = marker.getTitle();
-                        Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToGraficodelmapa(nombre));
-                    }
+            }
+        });
 
-                    @Override
-                    public void onMarkerDrag(Marker marker) {
+        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+                String nombre = marker.getTitle();
+                Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToGraficodelmapa(nombre));
+            }
 
-                    }
+            @Override
+            public void onMarkerDrag(Marker marker) {
 
-                    @Override
-                    public void onMarkerDragEnd(Marker marker) {
+            }
 
-                    }
-                });
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+
             }
         });
     }
@@ -184,5 +198,12 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    private void agregarmarkadores(ArrayList<String> listadedispositivos){
+        if(marker!=null) marker.remove();
+        for(int i=0;i<listadedispositivos.size();i++){
+            archi.updateGPS(listadedispositivos.get(i));
+        }
     }
 }

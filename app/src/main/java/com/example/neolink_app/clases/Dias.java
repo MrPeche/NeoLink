@@ -17,4 +17,8 @@ public class Dias {
         return this.horas.get(posicion);
     }
     public int dametamano(){ return this.dias.size();}
+    public void tomadias(String dia, Horas horitas){
+        this.dias.add(dia);
+        this.horas.add(horitas);
+    }
 }

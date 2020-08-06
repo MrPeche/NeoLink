@@ -112,13 +112,23 @@ public class panelesgrafiquito extends Fragment {
                 }
             }
         });
-
+        /*
         archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas,horasstate>>() {
             @Override
             public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
                 Boolean ver = archi.paquetesdedata.isitready();
                 if(archi.paquetesdedata.isitready()){
                     adapter = new viewpagergrafiquitosAdapter(getActivity(),horashorasstatePair,nodito);
+                    vp.setAdapter(adapter);
+                }
+            }
+        });
+        */
+        archi.paquetesdedata2dias.observe(getViewLifecycleOwner(), new Observer<Pair<Pair<Horas,horasstate>,Pair<Horas,horasstate>>>() {
+            @Override
+            public void onChanged(Pair<Pair<Horas, horasstate>, Pair<Horas, horasstate>> pairPairPair) {
+                if(archi.paquetesdedata2dias.isitready()){
+                    adapter = new viewpagergrafiquitosAdapter(getActivity(),pairPairPair.first,nodito);
                     vp.setAdapter(adapter);
                 }
             }

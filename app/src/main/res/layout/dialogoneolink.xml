@@ -28,7 +28,9 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
                 android:text="@string/dailogtitle"
-                android:textSize="@dimen/Tamañotitulo" />
+                android:textSize="@dimen/Tamañotitulo"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"/>
 
         </LinearLayout>
 
@@ -43,8 +45,10 @@
             android:hint="@string/TituloRegistroThree"
             android:imeOptions="actionDone"
             android:inputType="textCapCharacters"
-            android:textSize="@dimen/Tamañotexto"
-            android:theme="@style/camposdeingreso" />
+            android:textSize="@dimen/Tamañosubtitulo"
+            android:theme="@style/camposdeingreso"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

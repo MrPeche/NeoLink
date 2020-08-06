@@ -261,4 +261,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this,recuperar.class));
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        setitbackMain();
+    }
+
 }

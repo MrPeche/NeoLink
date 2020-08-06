@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +47,7 @@ public class grafiquitos extends Fragment implements grafiquitosneolinks.clickpr
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+        archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
         rv = view.findViewById(R.id.recyclergraficos);
         glm = new GridLayoutManager(getActivity(),1);
         rv.setLayoutManager(glm);
@@ -53,10 +56,23 @@ public class grafiquitos extends Fragment implements grafiquitosneolinks.clickpr
         lol.add("NL2006-0002");
         lol.add("NL2006-0003");
         lol.add("NL2006-0004");
+
+        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                if(owneRitems!=null) {
+                    lista = owneRitems.getlista();
+                    adapter = new grafiquitosneolinks(owneRitems, grafiquitos.this);
+                    rv.setAdapter(adapter);
+                }
+            }
+        });
+        /*
         OWNERitems loli = new OWNERitems(lol);
         lista = lol;
         adapter = new grafiquitosneolinks(loli,grafiquitos.this);
         rv.setAdapter(adapter);
+         */
     }
 
     @Override

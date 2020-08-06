@@ -15,5 +15,7 @@ public class OWNERitems {
     public ArrayList<String> getlista(){
         return neolinks;
     }
+    public int gettamanolista(){ return neolinks.size(); }
+    public String getitem(int position){ return neolinks.get(position);}
 
 }
