@@ -71,7 +71,7 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
         });
 
         rv = view.findViewById(R.id.lista_neolink);
-        glm = new GridLayoutManager(getActivity(),2);
+        glm = new GridLayoutManager(getActivity(),1);
         rv.setLayoutManager(glm);
 
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);

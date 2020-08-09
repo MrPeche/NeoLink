@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.neolink_app.clases.Horas;
@@ -28,11 +29,15 @@ public class viewpagergrafiquitosAdapter extends FragmentStateAdapter {
         this.data = nodaso;
         this.paquete = paquete;
     }
+    public viewpagergrafiquitosAdapter(FragmentActivity fa, ArrayList<String> nodaso){
+        super(fa);
+        this.data = nodaso;
+    }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        //Fragment plano = planografico.newInstance(this.paquetehora,data.get(position));
+        //Fragment plano = planografico.newInstance(data.get(position));
         Fragment plano = planografico.newInstance(this.paquete,data.get(position));
         return plano;
     }

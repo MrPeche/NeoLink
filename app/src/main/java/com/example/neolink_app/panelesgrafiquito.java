@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 
 import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
 import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
@@ -41,6 +42,7 @@ public class panelesgrafiquito extends Fragment {
     private ViewPager2 vp;
     private viewpagergrafiquitosAdapter adapter;
     private String dateselected;
+    private ArrayList<String> nodo;
     /*
     private MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
     */
@@ -74,6 +76,16 @@ public class panelesgrafiquito extends Fragment {
         final String sensor = "k";
         ArrayList<String> nodaso = new ArrayList<>();
         nodaso.add(nombre);
+        /*
+        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                nodo = owneRitems.damelista();
+                adapter = new viewpagergrafiquitosAdapter(getActivity(),nodo);
+                vp.setAdapter(adapter);
+            }
+        });
+         */
         /*
         setmycalendarbruh();
         builder.setCalendarConstraints(buildtheconstraint().build());

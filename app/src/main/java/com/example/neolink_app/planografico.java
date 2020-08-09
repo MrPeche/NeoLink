@@ -173,7 +173,6 @@ public class planografico extends Fragment {
         setdataPM(YPM,Xlabels,DepthP);
         setdataTemp(YTemp,Xlabels,DepthP);
 
-
     }
     public void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);
