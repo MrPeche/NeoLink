@@ -322,7 +322,7 @@ public class UserInfoRepo {
     }
     public LiveData<Boolean> agregarneolink(final String codigo, final ArrayList<String> actual, final String uid){
         String patio = "/NEWneolinks";
-        DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
 
@@ -332,12 +332,12 @@ public class UserInfoRepo {
                 if(dataSnapshot!=null){
                     ArrayList<String> lista = actual;
                     if(dataSnapshot.child(codigo).exists()){
-                        //basecompleta.child("NEWneolinks").child(codigo).removeValue();
                         lista.add(codigo);
-                        //basecompleta.child("OWNERitems").child(uid).child("neolinks").setValue(lista);
                         transferencia.setValue(true);
-                    } else transferencia.setValue(false);
-                } else transferencia.setValue(null);
+                        basecompleta.child("NEWneolinks").child(codigo).removeValue();
+                        //basecompleta.child("OWNERitems").child(uid).child("neolinks").setValue(lista);
+                    }
+                } else transferencia.setValue(false);
             }
         });
         return transferencia;

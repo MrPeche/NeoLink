@@ -130,9 +130,12 @@ public class mapita extends Fragment implements OnMapReadyCallback {
             }
         });
         */
+        /*
         String neolink = "NL2006-0002";
         archi.getGPS(neolink);
         final String nombre = neolink;
+        */
+        /*
         archi.GPSM.observe(getViewLifecycleOwner(), new Observer<GPS>() {
             @Override
             public void onChanged(GPS gps) {
@@ -142,25 +145,27 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                 LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
                 marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 14));
-                map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                    @Override
-                    public void onInfoWindowClick(Marker marker) {
-                        String nombre = marker.getTitle();
-                        Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToDatosgenerales(nombre));
-                    }
-                });
-                /*
-                map.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
-                    @Override
-                    public void onInfoWindowLongClick(Marker marker) {
-                        String nombre = marker.getTitle();
-                        Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToGraficodelmapa(nombre));
-                    }
-                });
-                */
+
+            }
+        });*/
+        archi.getGPS2();
+        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                ArrayList<String> lista = owneRitems.getlista();
+                ArrayList<String> lista2 = new ArrayList<>();
+                lista2.add("NL2006-0002");
+                agregarmarkadores(lista2);
+
             }
         });
-
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String nombre = marker.getTitle();
+                Navigation.findNavController(getView()).navigate(mapitaDirections.actionMapitaToDatosgenerales(nombre));
+            }
+        });
         map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
@@ -178,6 +183,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
 
             }
         });
+
     }
 
     @Override
@@ -204,6 +210,16 @@ public class mapita extends Fragment implements OnMapReadyCallback {
         if(marker!=null) marker.remove();
         for(int i=0;i<listadedispositivos.size();i++){
             archi.updateGPS(listadedispositivos.get(i));
+            final String nombre = listadedispositivos.get(i);
+            archi.GPSM.observe(getViewLifecycleOwner(), new Observer<GPS>() {
+                @Override
+                public void onChanged(GPS gps) {
+                    LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
+                    marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 14));
+
+                }
+            });
         }
     }
 }

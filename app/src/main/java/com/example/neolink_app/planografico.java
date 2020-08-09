@@ -43,6 +43,9 @@ public class planografico extends Fragment {
     private LineChart grafico1;
     private LineChart grafico2;
     private LineChart grafico3;
+    private LineChart graficopresionbarometrica;
+    private LineChart graficohumedadrelativa;
+    private LineChart graficotemperaturavulvoseco;
     private Horas paquete;
     //private MarkerLineChartAdapter adapter;
     private int alpha = 170;
@@ -104,9 +107,15 @@ public class planografico extends Fragment {
         grafico1 = view.findViewById(R.id.graficochart1);
         grafico2= view.findViewById(R.id.graficochar2);
         grafico3= view.findViewById(R.id.graficoBat);
+        graficohumedadrelativa= view.findViewById(R.id.graficoHumedadRelativa);
+        graficopresionbarometrica= view.findViewById(R.id.graficoPresionBarometrica);
+        graficotemperaturavulvoseco= view.findViewById(R.id.graficotemperaturavulvoseco);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         propiedadesgrafico3();
+        propiedadesgraficohumedadrelativa();
+        propiedadesgraficopresionbarometrica();
+        propiedadesgraficotemperaturavulvoseco();
 
         paquetedatasetPuertos YPM = new paquetedatasetPuertos();
         paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
@@ -327,10 +336,55 @@ public class planografico extends Fragment {
         grafico3.setScaleXEnabled(true);
         Legend L = grafico3.getLegend();
     }
+    public void propiedadesgraficohumedadrelativa(){
+        graficohumedadrelativa.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficohumedadrelativa.setDrawGridBackground(false);
+        graficohumedadrelativa.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficohumedadrelativa.getDescription().setEnabled(false);
+        graficohumedadrelativa.setTouchEnabled(true);
+        graficohumedadrelativa.setDragEnabled(true);
+        graficohumedadrelativa.setScaleYEnabled(false);
+        graficohumedadrelativa.setScaleXEnabled(true);
+        Legend L = graficohumedadrelativa.getLegend();
+    }
+    public void propiedadesgraficopresionbarometrica(){
+        graficopresionbarometrica.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficopresionbarometrica.setDrawGridBackground(false);
+        graficopresionbarometrica.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficopresionbarometrica.getDescription().setEnabled(false);
+        graficopresionbarometrica.setTouchEnabled(true);
+        graficopresionbarometrica.setDragEnabled(true);
+        graficopresionbarometrica.setScaleYEnabled(false);
+        graficopresionbarometrica.setScaleXEnabled(true);
+        Legend L = graficopresionbarometrica.getLegend();
+    }
+    public void propiedadesgraficotemperaturavulvoseco(){
+        graficotemperaturavulvoseco.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficotemperaturavulvoseco.setDrawGridBackground(false);
+        graficotemperaturavulvoseco.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficotemperaturavulvoseco.getDescription().setEnabled(false);
+        graficotemperaturavulvoseco.setTouchEnabled(true);
+        graficotemperaturavulvoseco.setDragEnabled(true);
+        graficotemperaturavulvoseco.setScaleYEnabled(false);
+        graficotemperaturavulvoseco.setScaleXEnabled(true);
+        Legend L = graficotemperaturavulvoseco.getLegend();
+    }
     public void setStatedata(horasstate state){
         final ArrayList<String> XlabelsSTATE = new ArrayList<>();
         ArrayList<Entry> bateria = new ArrayList<>();
         ArrayList<Entry> solar = new ArrayList<>();
+        ArrayList<Entry> presionbaro = new ArrayList<>();
+        ArrayList<Entry> humedadrelativa = new ArrayList<>();
+        ArrayList<Entry> temperaturavulvoseco = new ArrayList<>();
         String sp = ":";
         String label;
         String label2;
@@ -342,6 +396,9 @@ public class planografico extends Fragment {
                 XlabelsSTATE.add(label2);
                 bateria.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BV));
                 solar.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).SV));
+                presionbaro.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BP));
+                humedadrelativa.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).RH));
+                temperaturavulvoseco.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).dT));
                 l++;
             }
         }
@@ -351,6 +408,9 @@ public class planografico extends Fragment {
         data.addDataSet(LDS);
         data.addDataSet(LDSV);
         grafico3.setData(data);
+        LineDataSet LDhumedadrelativa= CreaDataLine(humedadrelativa,"Humedad Relativa",colores[0]);
+        LineDataSet LDpresionbarometrica= CreaDataLine(presionbaro,"Presion Barométrica",colores[0]);
+        LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
         ValueFormatter formatter3 = new ValueFormatter() {
@@ -362,5 +422,51 @@ public class planografico extends Fragment {
         xaxis3.setValueFormatter(formatter3);
         grafico3.invalidate();
         grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        adddatatostates(1,LDhumedadrelativa,XlabelsSTATE);
+        adddatatostates(2,LDpresionbarometrica,XlabelsSTATE);
+        adddatatostates(3,LDtemperaturavulvoseco,XlabelsSTATE);
+
+    }
+    private void adddatatostates(int tipo,LineDataSet A, final ArrayList<String> B){
+        LineData data = new LineData();
+        data.addDataSet(A);
+        if(tipo==1){
+            graficohumedadrelativa.setData(data);
+            XAxis Xaxis = graficohumedadrelativa.getXAxis();
+            ValueFormatter formatter = new ValueFormatter() {
+                @Override
+                public String getAxisLabel(float value, AxisBase axis) {
+                    return B.get((int) value);
+                }
+            };
+            Xaxis.setValueFormatter(formatter);
+            graficohumedadrelativa.invalidate();
+            graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        } else if(tipo==2){
+            graficopresionbarometrica.setData(data);
+            XAxis Xaxis = graficopresionbarometrica.getXAxis();
+            ValueFormatter formatter = new ValueFormatter() {
+                @Override
+                public String getAxisLabel(float value, AxisBase axis) {
+                    return B.get((int) value);
+                }
+            };
+            Xaxis.setValueFormatter(formatter);
+            graficopresionbarometrica.invalidate();
+            graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        } else if(tipo==3){
+            graficotemperaturavulvoseco.setData(data);
+            XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
+            ValueFormatter formatter = new ValueFormatter() {
+                @Override
+                public String getAxisLabel(float value, AxisBase axis) {
+                    return B.get((int) value);
+                }
+            };
+            Xaxis.setValueFormatter(formatter);
+            graficotemperaturavulvoseco.invalidate();
+            graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        }
+
     }
 }

@@ -151,6 +151,15 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         });*/
         return GPSM;
     }
+    public LiveData<GPS> getGPS2(){
+        GPSM = Transformations.switchMap(neolinkGPS, new Function<String, LiveData<GPS>>() {
+            @Override
+            public LiveData<GPS> apply(String input) {
+                return appRepo.dameGPS(input);
+            }
+        });
+        return GPSM;
+    }
     public void updateGPS(String neolink){
         neolinkGPS.setValue(neolink);
     }
@@ -207,7 +216,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
 
     public void neolinkguardadopositivo(){
         MediatorLiveData<Boolean> transaccion = new MediatorLiveData<>();
-        transaccion.setValue(false);
+        transaccion.setValue(null);
         neolinkguardado = transaccion;
     }
     public void guardarneolinkdeldialogo(String neolink){

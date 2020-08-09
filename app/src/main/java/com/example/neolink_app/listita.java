@@ -89,19 +89,22 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
             public void onChanged(String s) {
                 if(s!=null){
                     archi.agregarneolink(s);
-                    archi.vacialneolinkdeldialogo();
 
                     archi.segraboelneolink().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
                         @Override
                         public void onChanged(Boolean aBoolean) {
                             if(aBoolean!=null) {
                                 if (aBoolean) {
-                                    archi.neolinkguardadopositivo();
                                     Avizoneolinklisto.show();
-                                } else Avizonelinkfallido.show();
+                                    //archi.neolinkguardadopositivo();
+                                } else {
+                                    Avizonelinkfallido.show();
+                                    //archi.neolinkguardadopositivo();
+                                }
                             }
                         }
                     });
+                    archi.vacialneolinkdeldialogo();
                 }
             }
         });
