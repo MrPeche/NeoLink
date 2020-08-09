@@ -78,9 +78,6 @@ public class graficodelmapa extends Fragment {
         int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
         String sensor = "k";
-        ArrayList<String> nodaso = new ArrayList<>();
-        nodaso.add(nombre);
-        final ArrayList<String> nodito = nodaso;
         archi.livelydatafull(nombre,hoyaño,hoymes,hoydia,sensor);
 
     }

@@ -76,16 +76,7 @@ public class panelesgrafiquito extends Fragment {
         final String sensor = "k";
         ArrayList<String> nodaso = new ArrayList<>();
         nodaso.add(nombre);
-        /*
-        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
-            @Override
-            public void onChanged(OWNERitems owneRitems) {
-                nodo = owneRitems.damelista();
-                adapter = new viewpagergrafiquitosAdapter(getActivity(),nodo);
-                vp.setAdapter(adapter);
-            }
-        });
-         */
+
         /*
         setmycalendarbruh();
         builder.setCalendarConstraints(buildtheconstraint().build());
@@ -136,6 +127,7 @@ public class panelesgrafiquito extends Fragment {
             }
         });
         */
+        /*
         archi.paquetesdedata2dias.observe(getViewLifecycleOwner(), new Observer<Pair<Pair<Horas,horasstate>,Pair<Horas,horasstate>>>() {
             @Override
             public void onChanged(Pair<Pair<Horas, horasstate>, Pair<Horas, horasstate>> pairPairPair) {
@@ -145,7 +137,15 @@ public class panelesgrafiquito extends Fragment {
                 }
             }
         });
-
+        */
+        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                nodo = owneRitems.damelista();
+                adapter = new viewpagergrafiquitosAdapter(getActivity(),nodo);
+                vp.setAdapter(adapter);
+            }
+        });
 
 
         ((actividadbase)getActivity()).fabcalendar();

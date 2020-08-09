@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
+import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -46,6 +49,11 @@ public class planografico extends Fragment {
     private LineChart graficopresionbarometrica;
     private LineChart graficohumedadrelativa;
     private LineChart graficotemperaturavulvoseco;
+    private MasterDrawerViewModel archi;
+    private paquetedatasetPuertos YPM2 = new paquetedatasetPuertos();
+    private paquetedatasetPuertos YTemp2 = new paquetedatasetPuertos();
+    private DepthPackage DepthP2 = new DepthPackage();
+    private final ArrayList<String> Xlabels2 = new ArrayList<>();
     private Horas paquete;
     //private MarkerLineChartAdapter adapter;
     private int alpha = 170;
@@ -59,17 +67,16 @@ public class planografico extends Fragment {
     public planografico() {
         // Required empty public constructor
     }
-    /*
-    public static planografico newInstance(Horas paquete,String name) {
-        planografico fragment = new planografico();
 
+    public static planografico newInstance(String name) {
+        planografico fragment = new planografico();
         Bundle args = new Bundle();
-        args.putParcelable("paquete",paquete);
+        //args.putParcelable("paquete",paquete);
         args.putString("nombre",name);
         fragment.setArguments(args);
         return fragment;
     }
-    */
+
     public static planografico newInstance(Pair<Horas, horasstate> paquete, String name) {
         planografico fragment = new planografico();
 
@@ -87,10 +94,11 @@ public class planografico extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            this.paquete = getArguments().getParcelable("paquete");
+            //this.paquete = getArguments().getParcelable("paquete");
             this.name = getArguments().getString("nombre");
-            this.state = getArguments().getParcelable("state");
+            //this.state = getArguments().getParcelable("state");
         }
+        archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
     }
 
     @Override
@@ -123,7 +131,25 @@ public class planografico extends Fragment {
         //ArrayList<Entry> YPM = new ArrayList<>();
         //ArrayList<Entry> YTemp = new ArrayList<>();
         //ArrayList<Double> DepthLabel = new ArrayList<>();
-
+        if(!archi.datahoy.hasActiveObservers()){
+            archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
+                @Override
+                public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
+                    if(archi.paquetesdedata.isitready()){
+                        //cleanthisshit();
+                        if(horashorasstatePair.first.dametamano()!=0) {
+                            setdatagrafK(horashorasstatePair.first);
+                            setdataPM(YPM2, Xlabels2, DepthP2);
+                            setdataTemp(YTemp2, Xlabels2, DepthP2);
+                        }
+                        if(horashorasstatePair.second.dametamano()!=0){
+                            setStatedata(horashorasstatePair.second);
+                        }
+                    }
+                }
+            });
+        }
+        /*
         final ArrayList<String> Xlabels = new ArrayList<>();
         String sp = ":";
         String label;
@@ -159,20 +185,13 @@ public class planografico extends Fragment {
                             break;
                     }
                 }
-                /*
-                String nombre = paquete.dameminutos(i).damepaquete(j).damePuerto(0);
-                YPM.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
-                YTemp.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV2().floatValue()));
-                DepthLabel.add(paquete.dameminutos(i).damepaquete(j).damedata(0).dameDepth());
-                Xlabels.add(label2);
-                */
                 l++;
             }
         }
         setStatedata(state);
         setdataPM(YPM,Xlabels,DepthP);
         setdataTemp(YTemp,Xlabels,DepthP);
-
+         */
     }
     public void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);
@@ -187,6 +206,52 @@ public class planografico extends Fragment {
         grafico1.setScaleYEnabled(false);
         grafico1.setScaleXEnabled(true);
         Legend L = grafico1.getLegend();
+    }
+    private void setdatagrafK(Horas paquete){
+        String sp = ":";
+        String label;
+        String label2;
+        float l = 0;
+        for(int i = 0; i<paquete.dametamano();i++){
+            label = paquete.damehora(i);
+            for(int j = 0; j<paquete.dameminutos(i).dametamano();j++){
+                label2 = label+sp+paquete.dameminutos(i).dameminuto(j);
+                Xlabels2.add(label2);
+                for(int k = 0; k<paquete.dameminutos(i).damepaquete(j).dametamano();k++){
+                    String nombrePuerto = paquete.dameminutos(i).damepaquete(j).damePuerto(k);
+                    switch (nombrePuerto){
+                        case "P1":
+                            YPM2.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp2.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP2.addP1(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                        case "P2":
+                            YPM2.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp2.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP2.addP2(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                        case "P3":
+                            YPM2.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp2.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP2.addP3(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                        case "P4":
+                            YPM2.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            YTemp2.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            DepthP2.addP4(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                    }
+                }
+                /*
+                String nombre = paquete.dameminutos(i).damepaquete(j).damePuerto(0);
+                YPM.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
+                YTemp.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV2().floatValue()));
+                DepthLabel.add(paquete.dameminutos(i).damepaquete(j).damedata(0).dameDepth());
+                Xlabels.add(label2);
+                */
+                l++;
+            }
+        }
     }
 
     public void setdataPM(paquetedatasetPuertos YPM,ArrayList<String> Xlabels, DepthPackage DepthLabel){
