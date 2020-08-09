@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
     private loginviewmodel archi;
+    private PCUN usuarioguardadoanteriormente;
+    private String actual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean){
                     PCUN us = archi.info().getValue();
+                    usuarioguardadoanteriormente = us;
                     if(us!=null) {
                         user.setText(us.getus());
                         pass.setText(us.getcn());
@@ -116,7 +119,11 @@ public class MainActivity extends AppCompatActivity {
         //Verifico si el usuario o password es correcto
         if((user.length()!=0)&&(pass.length()!=0)) {
             setitMain();
-            String actual = user.getText().toString() + " " + pass.getText().toString() + '\n';
+            if(usuarioguardadoanteriormente!=null){
+                actual = usuarioguardadoanteriormente.getus() + " " + usuarioguardadoanteriormente.getcn() + '\n';
+            } else {
+                actual = " ";
+            }
             archi.Log(user.getText().toString(), pass.getText().toString(), rec.isChecked(), actual, this).observe(this, new Observer<UsuarioNeoL>() {
                 @Override
                 public void onChanged(UsuarioNeoL usuarioNeoL) {

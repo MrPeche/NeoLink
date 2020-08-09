@@ -81,7 +81,7 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
             public void onChanged(OWNERitems owneRitems) {
                 adapter = new ListaNeolinks(owneRitems, listita.this);
                 rv.setAdapter(adapter);
-                lista = owneRitems.getlista();
+                lista = owneRitems.damelista();
             }
         });
         archi.neolinkdeldialogo().observe(getViewLifecycleOwner(), new Observer<String>() {

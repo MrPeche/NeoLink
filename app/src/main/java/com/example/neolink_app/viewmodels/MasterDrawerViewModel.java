@@ -207,7 +207,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public void agregarneolink(String codigo){
         if(Usuarioneolinks!=null){
-            neolinkguardado=appRepo.agregarneolink(codigo,Usuarioneolinks.getValue().getlista(),this.uid);
+            neolinkguardado=appRepo.agregarneolink(codigo,Usuarioneolinks.getValue().damelista(),this.uid);
         }
     }
     public LiveData<Boolean> segraboelneolink(){

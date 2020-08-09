@@ -83,7 +83,7 @@ public class actividadbase extends AppCompatActivity {
             @Override
             public void onChanged(OWNERitems owneRitems) {
                 if(owneRitems!=null){
-                    for(int i=0;i<owneRitems.gettamanolista();i++){
+                    for(int i=0;i<owneRitems.dametamanolista();i++){
                         archi.getneonodofromneolink(owneRitems.getitem(i)).observe(actividadbase.this, new Observer<OLDneolinksboleto>() {
                             @Override
                             public void onChanged(OLDneolinksboleto olDneolinksboleto) {

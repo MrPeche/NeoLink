@@ -66,7 +66,7 @@ public class registrothree extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                /*
                 if((s.length()==3)&&((!antes.contains("-")||antes.length()==3))){
                     s.append("-");
                 }
@@ -74,6 +74,8 @@ public class registrothree extends AppCompatActivity {
                     s.append("-");
                 }
                 layticket.setError("Separe el ticket utilizando guiones -");
+
+                 */
             }
         });
     }
@@ -110,7 +112,7 @@ public class registrothree extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String boleto = ticket.getText().toString();
-                if((dataSnapshot.child("NEWneolinks").child(boleto).exists())&&(dataSnapshot.child("NEWneolinks").child(boleto).getValue().toString().equals("nulo"))){
+                if((dataSnapshot.child("NEWneolinks").child(boleto).exists())){
                     //Terminar mensaje y irnos al main
                     Intent itwo = getIntent();
                     Bundle extras = itwo.getExtras();

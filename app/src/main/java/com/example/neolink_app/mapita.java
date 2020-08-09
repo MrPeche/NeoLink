@@ -152,7 +152,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
         archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
             @Override
             public void onChanged(OWNERitems owneRitems) {
-                ArrayList<String> lista = owneRitems.getlista();
+                ArrayList<String> lista = owneRitems.damelista();
                 ArrayList<String> lista2 = new ArrayList<>();
                 lista2.add("NL2006-0002");
                 agregarmarkadores(lista);

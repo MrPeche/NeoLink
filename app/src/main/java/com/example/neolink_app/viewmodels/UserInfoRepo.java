@@ -335,7 +335,9 @@ public class UserInfoRepo {
                         lista.add(codigo);
                         transferencia.setValue(true);
                         basecompleta.child("NEWneolinks").child(codigo).removeValue();
-                        //basecompleta.child("OWNERitems").child(uid).child("neolinks").setValue(lista);
+                        basecompleta.child("OWNERitems").child(uid).child("neolinks").setValue(lista);
+                        OLDneolinksboleto paqueton = new OLDneolinksboleto(uid);
+                        basecompleta.child("OLDneolinks").child(codigo).setValue(paqueton);
                     }
                 } else transferencia.setValue(false);
             }

@@ -29,13 +29,13 @@ public class grafiquitosneolinks extends RecyclerView.Adapter<grafiquitosneolink
 
     @Override
     public void onBindViewHolder(@NonNull grafiquitosneolinksViewHolder holder, int position) {
-        String owner = data.getlista().get(position);
+        String owner = data.damelista().get(position);
         holder.codigo.setText(owner);
     }
 
     @Override
     public int getItemCount() {
-        return data.getlista().size();
+        return data.damelista().size();
     }
 
     public static class grafiquitosneolinksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

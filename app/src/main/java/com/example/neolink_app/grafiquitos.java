@@ -61,7 +61,7 @@ public class grafiquitos extends Fragment implements grafiquitosneolinks.clickpr
             @Override
             public void onChanged(OWNERitems owneRitems) {
                 if(owneRitems!=null) {
-                    lista = owneRitems.getlista();
+                    lista = owneRitems.damelista();
                     adapter = new grafiquitosneolinks(owneRitems, grafiquitos.this);
                     rv.setAdapter(adapter);
                 }

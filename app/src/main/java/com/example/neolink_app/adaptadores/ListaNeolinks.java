@@ -29,14 +29,14 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
 
     @Override
     public void onBindViewHolder(ListaNeolinksViewHolder holder, int position) {
-        String owner = data.getlista().get(position);
+        String owner = data.damelista().get(position);
         holder.codigo.setText(owner);
 
     }
 
     @Override
     public int getItemCount() {
-        return data.getlista().size();
+        return data.damelista().size();
     }
 
     public static class ListaNeolinksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
