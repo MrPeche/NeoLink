@@ -155,7 +155,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                 ArrayList<String> lista = owneRitems.getlista();
                 ArrayList<String> lista2 = new ArrayList<>();
                 lista2.add("NL2006-0002");
-                agregarmarkadores(lista2);
+                agregarmarkadores(lista);
 
             }
         });
