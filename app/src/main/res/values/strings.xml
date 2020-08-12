@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">neolink_app</string>
+    <string name="app_name">NeoLink</string>
 
     //MainActivity
     <string name="titulo1">Neo</string>
