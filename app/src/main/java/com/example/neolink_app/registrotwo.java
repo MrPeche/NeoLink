@@ -98,10 +98,10 @@ public class registrotwo extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
+                            //Log.d(TAG, "createUserWithEmail:success");
 
                         } else {
-                            Log.d(TAG, "createUserWithEmail:fail");
+                            //Log.d(TAG, "createUserWithEmail:fail");
                         }
                     }
                 });

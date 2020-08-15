@@ -26,13 +26,13 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
 
     @Override
     protected void onActive() {
-        Log.d(LOG_TAG, "onActive");
+        //Log.d(LOG_TAG, "onActive");
         query.addValueEventListener(listener);
     }
 
     @Override
     protected void onInactive() {
-        Log.d(LOG_TAG, "onInactive");
+        //Log.d(LOG_TAG, "onInactive");
         query.removeEventListener(listener);
     }
 
@@ -44,7 +44,7 @@ public class FirebaseQueryLiveData extends LiveData<DataSnapshot> {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Log.e(LOG_TAG, "Can't listen to query " + query, databaseError.toException());
+            //Log.e(LOG_TAG, "Can't listen to query " + query, databaseError.toException());
         }
     }
 }

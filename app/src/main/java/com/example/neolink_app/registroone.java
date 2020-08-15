@@ -182,7 +182,7 @@ public class registroone extends AppCompatActivity {
 
                                         if (task.isSuccessful()) {
 
-                                            Log.d(TAG, "createUserWithEmail:success");
+                                            //Log.d(TAG, "createUserWithEmail:success");
                                             Bundle paqueteregistro = new Bundle();
                                             paqueteregistro.putString("correo", correo.getText().toString());
                                             paqueteregistro.putString("passw", passwuno.getText().toString());
@@ -202,7 +202,7 @@ public class registroone extends AppCompatActivity {
                                                 Toast.makeText(registroone.this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
 
                                             }
-                                            Log.d(TAG, "createUserWithEmail:fail");
+                                            //Log.d(TAG, "createUserWithEmail:fail");
                                             setitback();
                                         }
                                 }
@@ -250,15 +250,15 @@ public class registroone extends AppCompatActivity {
         });*/
 
         try {
-            Log.d(TAG, "StartcreateUserWithEmail:success");
+            //Log.d(TAG, "StartcreateUserWithEmail:success");
             mAuth.createUserWithEmailAndPassword(correo, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Log.d(TAG, "createUserWithEmail:success");
+                                //Log.d(TAG, "createUserWithEmail:success");
                             } else {
-                                Log.d(TAG, "createUserWithEmail:fail");
+                                //Log.d(TAG, "createUserWithEmail:fail");
                             }
                         }
                     }).wait();
