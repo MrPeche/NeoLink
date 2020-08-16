@@ -107,6 +107,9 @@ public class graficodelmapa extends Fragment {
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         propiedadesgrafico3();
+        propiedadesgraficohumedadrelativa();
+        propiedadesgraficopresionbarometrica();
+        propiedadesgraficotemperaturavulvoseco();
         startposition();
         /*
         int hoyaño = ahora.get(Calendar.YEAR)%100;
@@ -119,30 +122,30 @@ public class graficodelmapa extends Fragment {
         final ArrayList<String> nodito = nodaso;
         archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
          */
-        if(!archi.datahoy.hasActiveObservers()){
-            archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
-                @Override
-                public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
-                    if(archi.paquetesdedata.isitready()){
-                        cleanthisshit();
-                        if(horashorasstatePair.first.dametamano()!=0) {
-                            cvgrf1.setVisibility(View.VISIBLE);
-                            cvgrf2.setVisibility(View.VISIBLE);
-                            setdatagrafK(horashorasstatePair.first);
-                            setdataPM(YPM, Xlabels, DepthP);
-                            setdataTemp(YTemp, Xlabels, DepthP);
-                        }
-                        if(horashorasstatePair.second.dametamano()!=0){
-                            cvgrf3.setVisibility(View.VISIBLE);
-                            cvgrHumedadrelativa.setVisibility(View.VISIBLE);
-                            cvgrpresionbarometrica.setVisibility(View.VISIBLE);
-                            cvgrtemperaturabulboseco.setVisibility(View.VISIBLE);
-                            setStatedata(horashorasstatePair.second);
-                        }
+        archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
+            @Override
+            public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
+                if(archi.paquetesdedata.isitready()){
+                    cleanthisshit();
+                    if(horashorasstatePair.first.dametamano()!=0) {
+                        cvgrf1.setVisibility(View.VISIBLE);
+                        cvgrf2.setVisibility(View.VISIBLE);
+                        setdatagrafK(horashorasstatePair.first);
+                        setdataPM(YPM, Xlabels, DepthP);
+                        setdataTemp(YTemp, Xlabels, DepthP);
+                    }
+                    if(horashorasstatePair.second.dametamano()!=0){
+                        cvgrf3.setVisibility(View.VISIBLE);
+                        cvgrHumedadrelativa.setVisibility(View.VISIBLE);
+                        cvgrpresionbarometrica.setVisibility(View.VISIBLE);
+                        cvgrtemperaturabulboseco.setVisibility(View.VISIBLE);
+                        setStatedata(horashorasstatePair.second);
                     }
                 }
-            });
-        }
+            }
+        });
+
+        //if(!archi.datahoy.hasActiveObservers()){ }
         /*
         archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
             @Override
@@ -210,6 +213,48 @@ public class graficodelmapa extends Fragment {
         grafico3.setScaleYEnabled(false);
         grafico3.setScaleXEnabled(true);
         Legend L = grafico3.getLegend();
+    }
+    public void propiedadesgraficohumedadrelativa(){
+        graficohumedadrelativa.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficohumedadrelativa.setDrawGridBackground(false);
+        graficohumedadrelativa.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficohumedadrelativa.getDescription().setEnabled(false);
+        graficohumedadrelativa.setTouchEnabled(true);
+        graficohumedadrelativa.setDragEnabled(true);
+        graficohumedadrelativa.setScaleYEnabled(false);
+        graficohumedadrelativa.setScaleXEnabled(true);
+        Legend L = graficohumedadrelativa.getLegend();
+    }
+    public void propiedadesgraficopresionbarometrica(){
+        graficopresionbarometrica.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficopresionbarometrica.setDrawGridBackground(false);
+        graficopresionbarometrica.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficopresionbarometrica.getDescription().setEnabled(false);
+        graficopresionbarometrica.setTouchEnabled(true);
+        graficopresionbarometrica.setDragEnabled(true);
+        graficopresionbarometrica.setScaleYEnabled(false);
+        graficopresionbarometrica.setScaleXEnabled(true);
+        Legend L = graficopresionbarometrica.getLegend();
+    }
+    public void propiedadesgraficotemperaturavulvoseco(){
+        graficotemperaturavulvoseco.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficotemperaturavulvoseco.setDrawGridBackground(false);
+        graficotemperaturavulvoseco.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficotemperaturavulvoseco.getDescription().setEnabled(false);
+        graficotemperaturavulvoseco.setTouchEnabled(true);
+        graficotemperaturavulvoseco.setDragEnabled(true);
+        graficotemperaturavulvoseco.setScaleYEnabled(false);
+        graficotemperaturavulvoseco.setScaleXEnabled(true);
+        Legend L = graficotemperaturavulvoseco.getLegend();
     }
     private void setdatagrafK(Horas paquete){
         String sp = ":";

@@ -145,7 +145,7 @@ public class planografico extends Fragment {
                 @Override
                 public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
                     if(archi.paquetesdedata.isitready()){
-                        //cleanthisshit();
+                        cleanthisshit();
                         if(horashorasstatePair.first.dametamano()!=0) {
                             setdatagrafK(horashorasstatePair.first);
                             setdataPM(YPM2, Xlabels2, DepthP2);
@@ -201,6 +201,15 @@ public class planografico extends Fragment {
         setdataPM(YPM,Xlabels,DepthP);
         setdataTemp(YTemp,Xlabels,DepthP);
          */
+    }
+    private void cleanthisshit(){
+        Xlabels2.clear();
+        YPM2.clean();
+        YTemp2.clean();
+        DepthP2.clean();
+        grafico1.clear();
+        grafico2.clear();
+        grafico3.clear();
     }
     public void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);

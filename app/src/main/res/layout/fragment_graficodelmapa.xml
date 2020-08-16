@@ -88,9 +88,10 @@
                 android:id="@+id/cardpresionbarometrica"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -117,6 +118,7 @@
                 android:id="@+id/cardhumedadrelativa"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
                 app:cardElevation="@dimen/cardelevasion">
@@ -146,6 +148,7 @@
                 android:id="@+id/cardtemperaturavulvoseco"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
                 app:cardElevation="@dimen/cardelevasion">
