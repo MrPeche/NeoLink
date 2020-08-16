@@ -35,6 +35,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -60,6 +61,7 @@ public class planografico extends Fragment {
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
     private float LINEWIDTH = 2.5f;
+    private Calendar ahora = Calendar.getInstance();
 
     private horasstate state;
 
@@ -99,6 +101,7 @@ public class planografico extends Fragment {
             //this.state = getArguments().getParcelable("state");
         }
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
+
     }
 
     @Override
@@ -131,7 +134,13 @@ public class planografico extends Fragment {
         //ArrayList<Entry> YPM = new ArrayList<>();
         //ArrayList<Entry> YTemp = new ArrayList<>();
         //ArrayList<Double> DepthLabel = new ArrayList<>();
+        int hoyaño = ahora.get(Calendar.YEAR)%100;
+        int hoymes = ahora.get(Calendar.MONTH)+1;
+        int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
+        String sensor = "k";
+
         if(!archi.datahoy.hasActiveObservers()){
+            archi.livelydatafull(name,hoyaño,hoymes,hoydia,sensor);
             archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
                 @Override
                 public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
