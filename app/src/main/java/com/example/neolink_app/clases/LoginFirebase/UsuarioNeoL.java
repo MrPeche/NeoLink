@@ -7,6 +7,7 @@ public class UsuarioNeoL {
     public UsuarioNeoL(String uid,String correo){
         this.uid = uid;
         this.correo = correo;
+        this.errorslot = 0;
     }
     public UsuarioNeoL(int errorslot){
         this.uid = null;
