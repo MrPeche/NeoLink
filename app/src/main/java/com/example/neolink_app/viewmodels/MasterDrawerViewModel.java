@@ -19,6 +19,7 @@ import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.LoginFirebase.UsuarioNeoL;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
+import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackagetwoday;
@@ -37,6 +38,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<Horas> dataayer;
     public LiveData<horasstate> datastatehoy;
     public LiveData<horasstate> datastateayer;
+    public LiveData<HorasG> datahoyG;
+    public LiveData<HorasG> dataayerG;
     public livedaylydatapackage paquetesdedata = new livedaylydatapackage();
     public livedaylydatapackage paquetesdedataayer= new livedaylydatapackage();
     public livedaylydatapackagetwoday paquetesdedata2dias= new livedaylydatapackagetwoday();
@@ -104,9 +107,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         datahoy = appRepo.damedatahoyK(neolink,año,mes,dia,sensor); //TENGO QUE ARREGLAR ESTO PARA MAS EQUIPOS!!!!
         datastatehoy = appRepo.damedatahoyState(neolink,año,mes,dia);
         paquetesdedata = new livedaylydatapackage<Horas,horasstate>(datahoy,datastatehoy);
-        //paquetesdedata = new livedaylydatapackage<Horas,horasstate>(datahoy,datastatehoy);
-        //datadiario.addSource();
-        //datadiario.addSource();
+
     }
     public void retrivepaqueteDatos(String neolink){
         final String neo = neolink;
@@ -139,6 +140,15 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         });
 
         paquetesdedata2dias = new livedaylydatapackagetwoday<Horas,horasstate,Horas,horasstate>(datahoy,datastatehoy,dataayer,datastateayer);
+    }
+    public void retrivedatag(String neolink){
+        final String neo = neolink;
+        datahoyG = Transformations.switchMap(date, new Function<ArrayList<Integer>, LiveData<HorasG>>() {
+            @Override
+            public LiveData<HorasG> apply(ArrayList<Integer> input) {
+                return appRepo.damedatahoyG(neo,input.get(0),input.get(1),input.get(2));
+            }
+        });
     }
 
     public LiveData<GPS> getGPS(String neolink){

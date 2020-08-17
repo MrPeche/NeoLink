@@ -89,6 +89,9 @@
     <string name="Presionbarometrica">Presión Barométrica</string>
     <string name="Humedadrelativa">Humedad Relativa</string>
     <string name="Temperaturadevulvoseco">Temperatura de bulbo seco</string>
+    <string name="Humedaddelsuelo">Humedad del Suelo</string>
+    <string name="Temperaturadelsuelo">Temperatura del Suelo</string>
+    <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo</string>
 
 
 </resources>
