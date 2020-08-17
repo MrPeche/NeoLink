@@ -515,6 +515,7 @@ public class planografico extends Fragment {
         if(tipo==1){
             graficohumedadrelativa.setData(data);
             XAxis Xaxis = graficohumedadrelativa.getXAxis();
+            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             ValueFormatter formatter = new ValueFormatter() {
                 @Override
                 public String getAxisLabel(float value, AxisBase axis) {
@@ -527,6 +528,7 @@ public class planografico extends Fragment {
         } else if(tipo==2){
             graficopresionbarometrica.setData(data);
             XAxis Xaxis = graficopresionbarometrica.getXAxis();
+            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             ValueFormatter formatter = new ValueFormatter() {
                 @Override
                 public String getAxisLabel(float value, AxisBase axis) {
@@ -539,6 +541,7 @@ public class planografico extends Fragment {
         } else if(tipo==3){
             graficotemperaturavulvoseco.setData(data);
             XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
+            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             ValueFormatter formatter = new ValueFormatter() {
                 @Override
                 public String getAxisLabel(float value, AxisBase axis) {

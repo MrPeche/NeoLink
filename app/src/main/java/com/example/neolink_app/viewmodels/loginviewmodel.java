@@ -25,7 +25,6 @@ public class loginviewmodel extends AndroidViewModel {
         String[] archivos = application.fileList(); // "NeoLinkid.txt"
         exist = repo.archivoexiste(archivos,"NeoLinkid.txt");
 
-
     }
     public LiveData<PCUN> info(){
         return repo.archivoguardado(app);
