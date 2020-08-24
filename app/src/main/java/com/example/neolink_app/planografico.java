@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
+import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.SensorG.HorasG;
@@ -186,51 +187,6 @@ public class planografico extends Fragment {
             });
         }
 
-
-
-        /*
-        final ArrayList<String> Xlabels = new ArrayList<>();
-        String sp = ":";
-        String label;
-        String label2;
-        float l = 0;
-        for(int i = 0; i<paquete.dametamano();i++){
-            label = paquete.damehora(i);
-            for(int j = 0; j<paquete.dameminutos(i).dametamano();j++){
-                label2 = label+sp+paquete.dameminutos(i).dameminuto(j);
-                Xlabels.add(label2);
-                for(int k = 0; k<paquete.dameminutos(i).damepaquete(j).dametamano();k++){
-                    String nombrePuerto = paquete.dameminutos(i).damepaquete(j).damePuerto(k);
-                    switch (nombrePuerto){
-                        case "P1":
-                            YPM.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP.addP1(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P2":
-                            YPM.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP.addP2(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P3":
-                            YPM.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP.addP3(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P4":
-                            YPM.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP.addP4(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                    }
-                }
-                l++;
-            }
-        }
-        setStatedata(state);
-        setdataPM(YPM,Xlabels,DepthP);
-        setdataTemp(YTemp,Xlabels,DepthP);
-         */
     }
     private void cleanthisshit(){
         Xlabels2.clear();
@@ -295,13 +251,6 @@ public class planografico extends Fragment {
                             break;
                     }
                 }
-                /*
-                String nombre = paquete.dameminutos(i).damepaquete(j).damePuerto(0);
-                YPM.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV1().floatValue()));
-                YTemp.add(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(0).dameV2().floatValue()));
-                DepthLabel.add(paquete.dameminutos(i).damepaquete(j).damedata(0).dameDepth());
-                Xlabels.add(label2);
-                */
                 l++;
             }
         }
@@ -495,7 +444,7 @@ public class planografico extends Fragment {
         graficotemperaturavulvoseco.setScaleXEnabled(true);
         Legend L = graficotemperaturavulvoseco.getLegend();
     }
-    public void propiedadesgraficohumedaddeldelsuelo(){
+    private void propiedadesgraficohumedaddeldelsuelo(){
         graficohumedaddelsuelo.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         graficohumedaddelsuelo.setDrawGridBackground(false);
@@ -509,7 +458,7 @@ public class planografico extends Fragment {
         graficohumedaddelsuelo.setScaleXEnabled(true);
         Legend L = graficohumedaddelsuelo.getLegend();
     }
-    public void propiedadesgraficotemperaturadeldelsuelo(){
+    private void propiedadesgraficotemperaturadeldelsuelo(){
         graficotemperaturadelsuelo.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         graficotemperaturadelsuelo.setDrawGridBackground(false);
@@ -523,7 +472,7 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo.setScaleXEnabled(true);
         Legend L = graficotemperaturadelsuelo.getLegend();
     }
-    public void propiedadesgraficoconductividaddeldelsuelo(){
+    private void propiedadesgraficoconductividaddeldelsuelo(){
         graficoconductividaddelsuelo.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         graficoconductividaddelsuelo.setDrawGridBackground(false);
@@ -572,13 +521,7 @@ public class planografico extends Fragment {
         LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
-        ValueFormatter formatter3 = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return XlabelsSTATE.get((int) value);
-            }
-        };
-        xaxis3.setValueFormatter(formatter3);
+        xaxis3.setValueFormatter(new graficolabelgenerator(XlabelsSTATE));
         grafico3.invalidate();
         grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         adddatatostates(1,LDhumedadrelativa,XlabelsSTATE);
@@ -593,45 +536,27 @@ public class planografico extends Fragment {
             graficohumedadrelativa.setData(data);
             XAxis Xaxis = graficohumedadrelativa.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return B.get((int) value);
-                }
-            };
-            Xaxis.setValueFormatter(formatter);
+            Xaxis.setValueFormatter(new graficolabelgenerator(B));
             graficohumedadrelativa.invalidate();
             graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo==2){
             graficopresionbarometrica.setData(data);
             XAxis Xaxis = graficopresionbarometrica.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return B.get((int) value);
-                }
-            };
-            Xaxis.setValueFormatter(formatter);
+            Xaxis.setValueFormatter(new graficolabelgenerator(B));
             graficopresionbarometrica.invalidate();
             graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo==3){
             graficotemperaturavulvoseco.setData(data);
             XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return B.get((int) value);
-                }
-            };
-            Xaxis.setValueFormatter(formatter);
+            Xaxis.setValueFormatter(new graficolabelgenerator(B));
             graficotemperaturavulvoseco.invalidate();
             graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }
 
     }
-    public void setdataG(HorasG data){
+    private void setdataG(HorasG data){
         paquetedatasetPuertos humS = new paquetedatasetPuertos();
         paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
         paquetedatasetPuertos condE = new paquetedatasetPuertos();
@@ -715,57 +640,27 @@ public class planografico extends Fragment {
             graficohumedaddelsuelo.setData(data);
             XAxis xaxis = graficohumedaddelsuelo.getXAxis();
             xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    try {
-                        int index = (int) value;
-                        return labelinuse.get(index);
-                    } catch (Exception e) {
-                        return "";
-                    }
-                }
-            };
-            xaxis.setValueFormatter(formatter);
+            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
             MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
+            graficohumedaddelsuelo.setMarker(adapter);
             graficohumedaddelsuelo.invalidate();
             graficohumedaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo==2){
             graficotemperaturadelsuelo.setData(data);
             XAxis xaxis = graficotemperaturadelsuelo.getXAxis();
             xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    try {
-                        int index = (int) value;
-                        return labelinuse.get(index);
-                    } catch (Exception e) {
-                        return "";
-                    }
-                }
-            };
-            xaxis.setValueFormatter(formatter);
+            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
             MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
+            graficotemperaturadelsuelo.setMarker(adapter);
             graficotemperaturadelsuelo.invalidate();
             graficotemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo ==3){
             graficoconductividaddelsuelo.setData(data);
             XAxis xaxis = graficoconductividaddelsuelo.getXAxis();
             xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    try {
-                        int index = (int) value;
-                        return labelinuse.get(index);
-                    } catch (Exception e) {
-                        return "";
-                    }
-                }
-            };
-            xaxis.setValueFormatter(formatter);
+            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
             MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
+            graficoconductividaddelsuelo.setMarker(adapter);
             graficoconductividaddelsuelo.invalidate();
             graficoconductividaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }

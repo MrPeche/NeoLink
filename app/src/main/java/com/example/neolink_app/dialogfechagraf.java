@@ -21,7 +21,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
@@ -36,11 +38,17 @@ import java.util.GregorianCalendar;
 public class dialogfechagraf extends AppCompatDialogFragment implements AdapterView.OnItemSelectedListener {
     private Spinner parametros;
     private CalendarView calendario;
+    private CalendarView calendario2;
+    private LinearLayout lineadesde;
+    private LinearLayout lineahasta;
+    private TextView textoHasta;
+    private TextView textoDesde;
     private ArrayAdapter<String> adapterS;
     private String [] lista ={"Hoy","Este mes","Este año","Elige una fecha"};
     private Calendar horario = Calendar.getInstance();
     //private NavController navController = NavHostFragment.findNavController(this);
-    private String result ="";
+    private String hasta ="";
+    private String desde ="";
     private int wichone;
     private MasterDrawerViewModel archi;
 
@@ -63,8 +71,13 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_dialogfechagraf,null);
         parametros = view.findViewById(R.id.spinnerdialogfecha);
-        calendario = view.findViewById(R.id.calendarViewdialogfecha);
-
+        calendario = view.findViewById(R.id.calendarViewdialogfechadesde);
+        calendario2 = view.findViewById(R.id.calendarViewdialoghasta);
+        lineadesde = view.findViewById(R.id.lineardesde);
+        lineahasta = view.findViewById(R.id.linearhasta);
+        textoDesde = view.findViewById(R.id.desdetext);
+        textoHasta = view.findViewById(R.id.hastatext);
+        setTexts();
         setcalendarprop();
 
         adapterS = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, lista); // Aqui puedo editar el estilo
@@ -109,8 +122,8 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 if(!lista[3].equals(opinion)){
                     archi.savedate(opinion);
                 }else {
-                    if (result != null)
-                        archi.savedate(result);
+                    if (desde != null)
+                        archi.savedate(desde);
                 }
             }
         });
@@ -124,7 +137,21 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 lista[3] = muestra;
                 adapterS.notifyDataSetChanged();
                 String data = (year%100)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
-                result = data;
+                setoneText(data,0);
+                desde = data;
+            }
+        });
+        calendario2.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String spc = "/";
+                String muestra = "";
+                muestra = fixdate(dayOfMonth)+spc+fixdate(month+1)+spc+(year%100);
+                lista[3] = muestra;
+                adapterS.notifyDataSetChanged();
+                String data = (year%100)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
+                setoneText(data,1);
+                hasta = data;
             }
         });
         return builder.create();
@@ -169,22 +196,40 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         Calendar iniciocalendario = GregorianCalendar.getInstance();
         iniciocalendario.set(2020,0,1);
         calendario.setMinDate(iniciocalendario.getTimeInMillis());
+        calendario2.setVisibility(View.GONE);
+        calendario2.setMinDate(iniciocalendario.getTimeInMillis());
+    }
+    private void setTexts(){
+        lineahasta.setVisibility(View.GONE);
+        lineadesde.setVisibility(View.GONE);
     }
     private void popupcalendar(){
         calendario.setVisibility(View.VISIBLE);
+        calendario2.setVisibility(View.VISIBLE);
+    }
+    private void popupTexts(){
+        lineadesde.setVisibility(View.VISIBLE);
+        lineahasta.setVisibility(View.VISIBLE);
     }
     private String traductordedia(int year, int month, int day){
         year = year%100;
         month = month+1;
         return day +"/" + month + "/" +year;
     }
+    private void setoneText(String texto,int opcion){
+        if(opcion==0){
+            textoDesde.setText(texto);
+        } else {
+            textoHasta.setText(texto);
+        }
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(position==3){
+            popupTexts();
             popupcalendar();
         }
-
     }
 
     @Override

@@ -81,6 +81,8 @@
     <string name="dailogtitle">Agregue el código del NeoLink</string>
     <string name="aceptardialog">Enviar</string>
     <string name="cancelardialog">Cancelar</string>
+    <string name="desde">Desde: </string>
+    <string name="hasta">Hasta: </string>
 
     //Grafico
     <string name="sensorPotencialMatricial">Potencial Matricial</string>
@@ -92,6 +94,8 @@
     <string name="Humedaddelsuelo">Humedad del Suelo</string>
     <string name="Temperaturadelsuelo">Temperatura del Suelo</string>
     <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo</string>
+
+
 
 
 </resources>

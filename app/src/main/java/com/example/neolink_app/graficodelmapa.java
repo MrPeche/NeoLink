@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
+import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
@@ -42,6 +44,9 @@ public class graficodelmapa extends Fragment {
     private CardView cvgrf1;
     private CardView cvgrf2;
     private CardView cvgrf3;
+    private CardView cvgrhumedaddelsuelo;
+    private CardView cvgrtemperaturadelsuelo;
+    private CardView cvgrconductividadelectrica;
     private CardView cvgrHumedadrelativa;
     private CardView cvgrpresionbarometrica;
     private CardView cvgrtemperaturabulboseco;
@@ -53,6 +58,9 @@ public class graficodelmapa extends Fragment {
     private LineChart graficopresionbarometrica;
     private LineChart graficohumedadrelativa;
     private LineChart graficotemperaturavulvoseco;
+    private LineChart graficoMPhumedaddelsuelo;
+    private LineChart graficoMPtemperaturadelsuelo;
+    private LineChart graficoMPconductividadelectrica;
     private paquetedatasetPuertos YPM = new paquetedatasetPuertos();
     private paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
     private DepthPackage DepthP = new DepthPackage();
@@ -98,18 +106,28 @@ public class graficodelmapa extends Fragment {
         graficohumedadrelativa= view.findViewById(R.id.graficoMPHumedadRelativa);
         graficopresionbarometrica= view.findViewById(R.id.graficoMPPresionBarometrica);
         graficotemperaturavulvoseco= view.findViewById(R.id.graficoMPtemperaturavulvoseco);
+        graficoMPhumedaddelsuelo = view.findViewById(R.id.graficoMPhumedaddelsuelo);
+        graficoMPtemperaturadelsuelo = view.findViewById(R.id.graficoMPtemperaturadelsuelo);
+        graficoMPconductividadelectrica = view.findViewById(R.id.graficoMPconductividadelectrica);
         cvgrf1 = view.findViewById(R.id.cardVMP1);
         cvgrf2 = view.findViewById(R.id.cardVMP2);
         cvgrf3 = view.findViewById(R.id.cardVMP3);
+        cvgrhumedaddelsuelo = view.findViewById(R.id.cardMPhumedaddelsuelo);
+        cvgrtemperaturadelsuelo = view.findViewById(R.id.cardMPtemperaturadelsuelo);
+        cvgrconductividadelectrica = view.findViewById(R.id.cardMPconductividadelectrica);
         cvgrHumedadrelativa = view.findViewById(R.id.cardhumedadrelativa);
         cvgrpresionbarometrica = view.findViewById(R.id.cardpresionbarometrica);
         cvgrtemperaturabulboseco = view.findViewById(R.id.cardtemperaturavulvoseco);
+
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         propiedadesgrafico3();
         propiedadesgraficohumedadrelativa();
         propiedadesgraficopresionbarometrica();
         propiedadesgraficotemperaturavulvoseco();
+        propiedadesgraficohumedaddeldelsuelo();
+        propiedadesgraficotemperaturadeldelsuelo();
+        propiedadesgraficoconductividaddeldelsuelo();
         startposition();
         /*
         int hoyaño = ahora.get(Calendar.YEAR)%100;
@@ -144,7 +162,23 @@ public class graficodelmapa extends Fragment {
                 }
             }
         });
-
+        if(archi.datahoyG==null){
+            archi.retrivedatag(nombre);
+        }
+        if(!archi.datahoyG.hasActiveObservers()){
+            archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
+                @Override
+                public void onChanged(HorasG horasG) {
+                    if(horasG!=null){
+                        cleanG();
+                        cvgrconductividadelectrica.setVisibility(View.VISIBLE);
+                        cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
+                        cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                        setdataG(horasG);
+                    }
+                }
+            });
+        }
         //if(!archi.datahoy.hasActiveObservers()){ }
         /*
         archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
@@ -169,6 +203,14 @@ public class graficodelmapa extends Fragment {
         cvgrHumedadrelativa.setVisibility(View.INVISIBLE);
         cvgrpresionbarometrica.setVisibility(View.INVISIBLE);
         cvgrtemperaturabulboseco.setVisibility(View.INVISIBLE);
+        cvgrconductividadelectrica.setVisibility(View.INVISIBLE);
+        cvgrhumedaddelsuelo.setVisibility(View.INVISIBLE);
+        cvgrtemperaturadelsuelo.setVisibility(View.INVISIBLE);
+    }
+    private void cleanG(){
+        graficoMPtemperaturadelsuelo.clear();
+        graficoMPhumedaddelsuelo.clear();
+        graficoMPconductividadelectrica.clear();
     }
     private void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);
@@ -200,7 +242,7 @@ public class graficodelmapa extends Fragment {
         grafico2.setScaleXEnabled(true);
         Legend L = grafico2.getLegend();
     }
-    public void propiedadesgrafico3(){
+    private void propiedadesgrafico3(){
         grafico3.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         grafico3.setDrawGridBackground(false);
@@ -214,7 +256,7 @@ public class graficodelmapa extends Fragment {
         grafico3.setScaleXEnabled(true);
         Legend L = grafico3.getLegend();
     }
-    public void propiedadesgraficohumedadrelativa(){
+    private void propiedadesgraficohumedadrelativa(){
         graficohumedadrelativa.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         graficohumedadrelativa.setDrawGridBackground(false);
@@ -228,7 +270,7 @@ public class graficodelmapa extends Fragment {
         graficohumedadrelativa.setScaleXEnabled(true);
         Legend L = graficohumedadrelativa.getLegend();
     }
-    public void propiedadesgraficopresionbarometrica(){
+    private void propiedadesgraficopresionbarometrica(){
         graficopresionbarometrica.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         graficopresionbarometrica.setDrawGridBackground(false);
@@ -242,7 +284,7 @@ public class graficodelmapa extends Fragment {
         graficopresionbarometrica.setScaleXEnabled(true);
         Legend L = graficopresionbarometrica.getLegend();
     }
-    public void propiedadesgraficotemperaturavulvoseco(){
+    private void propiedadesgraficotemperaturavulvoseco(){
         graficotemperaturavulvoseco.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
         graficotemperaturavulvoseco.setDrawGridBackground(false);
@@ -255,6 +297,48 @@ public class graficodelmapa extends Fragment {
         graficotemperaturavulvoseco.setScaleYEnabled(false);
         graficotemperaturavulvoseco.setScaleXEnabled(true);
         Legend L = graficotemperaturavulvoseco.getLegend();
+    }
+    private void propiedadesgraficohumedaddeldelsuelo(){
+        graficoMPhumedaddelsuelo.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficoMPhumedaddelsuelo.setDrawGridBackground(false);
+        graficoMPhumedaddelsuelo.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficoMPhumedaddelsuelo.getDescription().setEnabled(false);
+        graficoMPhumedaddelsuelo.setTouchEnabled(true);
+        graficoMPhumedaddelsuelo.setDragEnabled(true);
+        graficoMPhumedaddelsuelo.setScaleYEnabled(false);
+        graficoMPhumedaddelsuelo.setScaleXEnabled(true);
+        Legend L = graficoMPhumedaddelsuelo.getLegend();
+    }
+    private void propiedadesgraficotemperaturadeldelsuelo(){
+        graficoMPtemperaturadelsuelo.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficoMPtemperaturadelsuelo.setDrawGridBackground(false);
+        graficoMPtemperaturadelsuelo.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficoMPtemperaturadelsuelo.getDescription().setEnabled(false);
+        graficoMPtemperaturadelsuelo.setTouchEnabled(true);
+        graficoMPtemperaturadelsuelo.setDragEnabled(true);
+        graficoMPtemperaturadelsuelo.setScaleYEnabled(false);
+        graficoMPtemperaturadelsuelo.setScaleXEnabled(true);
+        Legend L = graficoMPtemperaturadelsuelo.getLegend();
+    }
+    private void propiedadesgraficoconductividaddeldelsuelo(){
+        graficoMPconductividadelectrica.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficoMPconductividadelectrica.setDrawGridBackground(false);
+        graficoMPconductividadelectrica.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficoMPconductividadelectrica.getDescription().setEnabled(false);
+        graficoMPconductividadelectrica.setTouchEnabled(true);
+        graficoMPconductividadelectrica.setDragEnabled(true);
+        graficoMPconductividadelectrica.setScaleYEnabled(false);
+        graficoMPconductividadelectrica.setScaleXEnabled(true);
+        Legend L = graficoMPconductividadelectrica.getLegend();
     }
     private void setdatagrafK(Horas paquete){
         String sp = ":";
@@ -489,6 +573,7 @@ public class graficodelmapa extends Fragment {
         if(tipo==1){
             graficohumedadrelativa.setData(data);
             XAxis Xaxis = graficohumedadrelativa.getXAxis();
+            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             ValueFormatter formatter = new ValueFormatter() {
                 @Override
                 public String getAxisLabel(float value, AxisBase axis) {
@@ -501,6 +586,7 @@ public class graficodelmapa extends Fragment {
         } else if(tipo==2){
             graficopresionbarometrica.setData(data);
             XAxis Xaxis = graficopresionbarometrica.getXAxis();
+            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             ValueFormatter formatter = new ValueFormatter() {
                 @Override
                 public String getAxisLabel(float value, AxisBase axis) {
@@ -513,6 +599,7 @@ public class graficodelmapa extends Fragment {
         } else if(tipo==3){
             graficotemperaturavulvoseco.setData(data);
             XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
+            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             ValueFormatter formatter = new ValueFormatter() {
                 @Override
                 public String getAxisLabel(float value, AxisBase axis) {
@@ -524,5 +611,112 @@ public class graficodelmapa extends Fragment {
             graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }
 
+    }
+    private void setdataG(HorasG data){
+        paquetedatasetPuertos humS = new paquetedatasetPuertos();
+        paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
+        paquetedatasetPuertos condE = new paquetedatasetPuertos();
+        DepthPackage Depth = new DepthPackage();
+        String sp = ":";
+        String label;
+        String label2;
+        ArrayList<String> XlabelsG = new ArrayList<>();
+        float l = 0;
+        for(int i = 0; i<data.dametamanoG();i++){
+            label = data.damehora(i);
+            for(int j = 0; j<data.dameminutos(i).dametamanoG();j++){
+                label2 = label+sp+data.dameminutos(i).dameminuto(j);
+                XlabelsG.add(label2);
+                for(int k = 0; k<data.dameminutos(i).damepaquete(j).dametamanoG();k++){
+                    String nombrePuerto = data.dameminutos(i).damepaquete(j).damePuerto(k);
+                    switch (nombrePuerto){
+                        case "P1":
+                            humS.addP1(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            tempeS.addP1(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            condE.addP1(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
+                            Depth.addP1(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                        case "P2":
+                            humS.addP2(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            tempeS.addP2(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            condE.addP2(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
+                            Depth.addP2(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                        case "P3":
+                            humS.addP3(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            tempeS.addP3(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            condE.addP3(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
+                            Depth.addP3(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                        case "P4":
+                            humS.addP4(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
+                            tempeS.addP4(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
+                            condE.addP4(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
+                            Depth.addP4(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
+                            break;
+                    }
+                }
+                l++;
+            }
+        }
+        setsensorG(humS,1,XlabelsG,Depth);
+        setsensorG(tempeS,2,XlabelsG,Depth);
+        setsensorG(condE,3,XlabelsG,Depth);
+    }
+    private void setsensorG(paquetedatasetPuertos firedata, int tipo, ArrayList<String> XlabelsG,DepthPackage depth){
+        ArrayList<String> orden = new ArrayList<>();
+        LineData data = new LineData();
+        if(firedata.getP1().size()!=0) {
+            LineDataSet set1 = CreaDataLine(firedata.getP1(), "P1", colores[0]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P1");
+        }
+        if(firedata.getP2().size()!=0) {
+            LineDataSet set1 = CreaDataLine(firedata.getP2(), "P2", colores[1]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P2");
+        }
+        if(firedata.getP3().size()!=0) {
+            LineDataSet set1 = CreaDataLine(firedata.getP3(), "P3", colores[2]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P3");
+        }
+        if(firedata.getP4().size()!=0) {
+            LineDataSet set1 = CreaDataLine(firedata.getP4(), "P4", colores[3]);
+            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            data.addDataSet(set1);
+            orden.add("P4");
+        }
+        if(tipo == 1){
+            graficoMPhumedaddelsuelo.setData(data);
+            XAxis xaxis = graficoMPhumedaddelsuelo.getXAxis();
+            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
+            MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
+            graficoMPhumedaddelsuelo.setMarker(adapter);
+            graficoMPhumedaddelsuelo.invalidate();
+            graficoMPhumedaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        } else if(tipo==2){
+            graficoMPtemperaturadelsuelo.setData(data);
+            XAxis xaxis = graficoMPtemperaturadelsuelo.getXAxis();
+            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
+            MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
+            graficoMPtemperaturadelsuelo.setMarker(adapter);
+            graficoMPtemperaturadelsuelo.invalidate();
+            graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        } else if(tipo ==3){
+            graficoMPconductividadelectrica.setData(data);
+            XAxis xaxis = graficoMPconductividadelectrica.getXAxis();
+            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
+            MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
+            graficoMPconductividadelectrica.setMarker(adapter);
+            graficoMPconductividadelectrica.invalidate();
+            graficoMPconductividadelectrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        }
     }
 }
