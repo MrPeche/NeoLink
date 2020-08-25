@@ -45,6 +45,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
     private TextView textoDesde;
     private ArrayAdapter<String> adapterS;
     private String [] lista ={"Hoy","Este mes","Este año","Elige una fecha"};
+    private String [] fechaelegida = {"","-",""};
     private Calendar horario = Calendar.getInstance();
     //private NavController navController = NavHostFragment.findNavController(this);
     private String hasta ="";
@@ -90,6 +91,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         // Apply the adapter to the spinner
         //spinner.setAdapter(adapter);
         String valorinicial = archi.datechoosen.getValue();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         if(valorinicial!=null) {
             if(valorinicial.equals(lista[0])){
                 parametros.setSelection(0);
@@ -99,13 +101,12 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 parametros.setSelection(2);
             } else {
                 lista[3] = valorinicial;
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 try {
-                    Date day = sdf.parse("20"+valorinicial);
-                    calendario.setDate(day.getTime());
-                } catch (ParseException ignored) {
-
-                }
+                    Date day = sdf.parse(desde);
+                    updatecalendars(desde,0);
+                    Date day2 = sdf.parse(hasta);
+                    updatecalendars(hasta,1);
+                } catch (ParseException ignored) { }
                 parametros.setSelection(3);
             }
         }
@@ -134,11 +135,16 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 String spc = "/";
                 String muestra = "";
                 muestra = fixdate(dayOfMonth)+spc+fixdate(month+1)+spc+(year%100);
-                lista[3] = muestra;
                 adapterS.notifyDataSetChanged();
-                String data = (year%100)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
-                setoneText(data,0);
+                //String data = (year%100)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
+                String data = (year)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
+                setoneText(muestra,0);
                 desde = data;
+                //fechaelegida[0] = muestra;
+                try {
+                    updatefechaelegida(muestra,0);
+                } catch (ParseException ignored) {}
+                updatethelist();
             }
         });
         calendario2.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -147,11 +153,16 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 String spc = "/";
                 String muestra = "";
                 muestra = fixdate(dayOfMonth)+spc+fixdate(month+1)+spc+(year%100);
-                lista[3] = muestra;
                 adapterS.notifyDataSetChanged();
-                String data = (year%100)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
-                setoneText(data,1);
+                //String data = (year%100)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
+                String data = (year)+spc+fixdate(month+1)+spc+fixdate(dayOfMonth);
+                setoneText(muestra,1);
                 hasta = data;
+                //fechaelegida[2]=muestra;
+                try {
+                    updatefechaelegida(muestra,1);
+                } catch (ParseException ignored) {}
+                updatethelist();
             }
         });
         return builder.create();
@@ -163,25 +174,21 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         } else resultado = Integer.toString(numero);
         return resultado;
     }
+    private void updatecalendars(String A,int calendar){
+        Calendar cal = Calendar.getInstance();
+        int[] fecha = crearparametros(A);
+        cal.set(fecha[0],fecha[1],fecha[2]);
+        if(calendar==0){
+            calendario.setDate(cal.getTimeInMillis());
+        } else {
+            calendario2.setDate(cal.getTimeInMillis());
 
-    /*
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        }
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dialogfechagraf, container, false);
+    private int[] crearparametros(String date){
+        String[] lista = date.split("/");
+        return new int[]{Integer.parseInt(lista[0]),Integer.parseInt(lista[1]),Integer.parseInt(lista[2])};
     }
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
-        parametros = view.findViewById(R.id.spinnerdialogfecha);
-    }
-
-     */
 
     private ArrayList<String> crearlalista(){
         ArrayList<String> resultado = new ArrayList<>();
@@ -223,12 +230,69 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
             textoHasta.setText(texto);
         }
     }
+    private void updatethelist(){
+        String code = "";
+        String spc = " ";
+        if(!fechaelegida[0].equals("")&&!fechaelegida[2].equals("")){
+            code = fechaelegida[0]+spc+fechaelegida[1]+spc+fechaelegida[2];
+        } else{
+            if(!fechaelegida[0].equals("")){
+                code = fechaelegida[0];
+            } else if(!fechaelegida[2].equals("")){
+                code = fechaelegida[2];
+            }
+        }
+        lista[3] = code;
+    }
+    private void updatefechaelegida(String a, int type) throws ParseException {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date A = sdf.parse(a);
+        if(type==0){
+          if(!fechaelegida[2].equals("")){
+              Date B = sdf.parse(fechaelegida[2]);
+              String b = fechaelegida[2];
+              if(A.before(B)){
+                  fechaelegida[0] = a;
+              } else {
+                  fechaelegida[0] = fechaelegida[2];
+                  updatecalendars(b,0);
+                  fechaelegida[2] = a;
+                  updatecalendars(a,1);
+              }
+          } else {
+              fechaelegida[0] = a;
+          }
+        } else {
+            if(!fechaelegida[0].equals("")){
+                Date B = sdf.parse(fechaelegida[0]);
+                String b = fechaelegida[2];
+                if(A.after(B)){
+                    fechaelegida[2] = a;
+                } else {
+                    fechaelegida[2] = fechaelegida[0];
+                    updatecalendars(b,1);
+                    fechaelegida[0] = a;
+                    updatecalendars(a,0);
+                }
+            }
+        }
+    }
+    private void depopup(){
+        if(calendario.getVisibility()!=View.GONE){
+            calendario.setVisibility(View.GONE);
+            calendario2.setVisibility(View.GONE);
+            lineadesde.setVisibility(View.GONE);
+            lineahasta.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(position==3){
             popupTexts();
             popupcalendar();
+        } else {
+            depopup();
         }
     }
 
