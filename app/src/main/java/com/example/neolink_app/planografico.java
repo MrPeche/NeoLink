@@ -512,6 +512,8 @@ public class planografico extends Fragment {
         }
         LineDataSet LDS = CreaDataLine(bateria,"Bateria",colores[0]);
         LineDataSet LDSV = CreaDataLine(solar,"Voltaje Solar", colores[1]);
+        LDSV.setAxisDependency(YAxis.AxisDependency.LEFT); //
+        LDS.setAxisDependency(YAxis.AxisDependency.RIGHT); //
         LineData data = new LineData();
         data.addDataSet(LDS);
         data.addDataSet(LDSV);
@@ -519,6 +521,14 @@ public class planografico extends Fragment {
         LineDataSet LDhumedadrelativa= CreaDataLine(humedadrelativa,"Humedad Relativa",colores[0]);
         LineDataSet LDpresionbarometrica= CreaDataLine(presionbaro,"Presion Barométrica",colores[0]);
         LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
+        YAxis yaxisl = grafico3.getAxisLeft(); //
+        //yaxisl.setAxisMinimum(0f);
+        //yaxisl.setAxisMaximum(8f); //7.5
+        yaxisl.setTextColor(colores[1]);
+        YAxis yaxisr = grafico3.getAxisRight();
+        yaxisr.setAxisMinimum(3.5f);
+        yaxisr.setAxisMaximum(5f); //4.5
+        yaxisr.setTextColor(colores[0]);//
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis3.setValueFormatter(new graficolabelgenerator(XlabelsSTATE));

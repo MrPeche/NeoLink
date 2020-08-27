@@ -425,4 +425,46 @@ public class UserInfoRepo {
         return transferencia;
     }
 
+    public LiveData<Dias> fecthdatapordiaG(String neolink, int ano, int mes, int dia){
+        final MediatorLiveData<Dias> datahoyG2 = new MediatorLiveData<>();
+        String sensor = "g";
+        String esp = "/";
+        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+ano+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        //String patio = "/NeoLink/"+neolink+"/DataSet/k/20/07/01/"; // esto es solo para debuggear un dia especifico por ahora
+        Horas data = new Horas();
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        datahoyG2.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    Dias dias = new Dias();
+                    for(DataSnapshot diasF:dataSnapshot.getChildren()) {
+                        String dia = diasF.getKey();
+                        Horas horichis = new Horas();
+                        for (DataSnapshot childchildsnap : diasF.getChildren()) {
+                            String nombrehoras = childchildsnap.getKey();
+                            Minutos minutichis = new Minutos();
+                            for (DataSnapshot childchildchilsnap : childchildsnap.getChildren()) {
+                                String minutos = childchildchilsnap.getKey();
+                                Puerto puerto = new Puerto();
+                                for (DataSnapshot childchildchildchildsnap : childchildchilsnap.getChildren()) {
+                                    String a = childchildchildchildsnap.getKey();
+                                    dataPuerto b = childchildchildchildsnap.getValue(dataPuerto.class);
+                                    puerto.tomaPuerto(a, b);
+                                }
+                                minutichis.tomaMinutos(minutos, puerto);
+                            }
+                            horichis.tomaHoras(nombrehoras,minutichis);
+                        }
+                        dias.tomadias(dia,horichis);
+                    }
+                    datahoyG2.setValue(dias);
+                } else datahoyG2.setValue(null);
+            }
+        });
+        //String neolink, int año, int mes, int dia, String sensor
+        return datahoyG2;
+    }
+
 }

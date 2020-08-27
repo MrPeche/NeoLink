@@ -44,7 +44,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
     private TextView textoHasta;
     private TextView textoDesde;
     private ArrayAdapter<String> adapterS;
-    private String [] lista ={"Hoy","Este mes","Este año","Elige una fecha"};
+    private String [] lista ={"Ayer - Hoy","Este mes","Este año","Elige una fecha"};
     private String [] fechaelegida = {"","-",""};
     private Calendar horario = Calendar.getInstance();
     //private NavController navController = NavHostFragment.findNavController(this);
@@ -103,9 +103,9 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 lista[3] = valorinicial;
                 try {
                     Date day = sdf.parse(desde);
-                    updatecalendars(desde,0);
+                    updatecalendars(day,0);
                     Date day2 = sdf.parse(hasta);
-                    updatecalendars(hasta,1);
+                    updatecalendars(day2,1);
                 } catch (ParseException ignored) { }
                 parametros.setSelection(3);
             }
@@ -142,7 +142,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 desde = data;
                 //fechaelegida[0] = muestra;
                 try {
-                    updatefechaelegida(muestra,0);
+                    updatefechaelegida(data,0,muestra);
                 } catch (ParseException ignored) {}
                 updatethelist();
             }
@@ -160,7 +160,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 hasta = data;
                 //fechaelegida[2]=muestra;
                 try {
-                    updatefechaelegida(muestra,1);
+                    updatefechaelegida(data,1,muestra);
                 } catch (ParseException ignored) {}
                 updatethelist();
             }
@@ -174,15 +174,14 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         } else resultado = Integer.toString(numero);
         return resultado;
     }
-    private void updatecalendars(String A,int calendar){
-        Calendar cal = Calendar.getInstance();
-        int[] fecha = crearparametros(A);
-        cal.set(fecha[0],fecha[1],fecha[2]);
+    private void updatecalendars(Date A,int calendar){
+        //Calendar cal = Calendar.getInstance();
+        //int[] fecha = crearparametros(A);
+        //cal.set(fecha[0],fecha[1],fecha[2]);
         if(calendar==0){
-            calendario.setDate(cal.getTimeInMillis());
+            calendario.setDate(A.getTime());
         } else {
-            calendario2.setDate(cal.getTimeInMillis());
-
+            calendario2.setDate(A.getTime());
         }
     }
     private int[] crearparametros(String date){
@@ -244,20 +243,24 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         }
         lista[3] = code;
     }
-    private void updatefechaelegida(String a, int type) throws ParseException {
+    private void updatefechaelegida(String a, int type, String fechanormal) throws ParseException {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date A = sdf.parse(a);
         if(type==0){
           if(!fechaelegida[2].equals("")){
               Date B = sdf.parse(fechaelegida[2]);
-              String b = fechaelegida[2];
               if(A.before(B)){
                   fechaelegida[0] = a;
+                  setoneText(fechanormal,0);
               } else {
                   fechaelegida[0] = fechaelegida[2];
-                  updatecalendars(b,0);
+                  updatecalendars(B,0);
+                  int[] fechaalrevez = crearparametros(fechaelegida[2]);
+                  String fechareconstruida = fechaalrevez[2]+"/"+fechaalrevez[1]+"/"+fechaalrevez[0];
+                  setoneText(fechareconstruida,0);
                   fechaelegida[2] = a;
-                  updatecalendars(a,1);
+                  updatecalendars(A,1);
+                  setoneText(fechanormal,1);
               }
           } else {
               fechaelegida[0] = a;
@@ -265,14 +268,17 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
         } else {
             if(!fechaelegida[0].equals("")){
                 Date B = sdf.parse(fechaelegida[0]);
-                String b = fechaelegida[2];
                 if(A.after(B)){
                     fechaelegida[2] = a;
+                    setoneText(fechanormal,1);
                 } else {
                     fechaelegida[2] = fechaelegida[0];
-                    updatecalendars(b,1);
+                    updatecalendars(A,1);
+                    int[] fechaalrevez = crearparametros(fechaelegida[0]);
+                    String fechareconstruida = fechaalrevez[2]+"/"+fechaalrevez[1]+"/"+fechaalrevez[0];
+                    setoneText(fechareconstruida,0);
                     fechaelegida[0] = a;
-                    updatecalendars(a,0);
+                    updatecalendars(B,0);
                 }
             }
         }

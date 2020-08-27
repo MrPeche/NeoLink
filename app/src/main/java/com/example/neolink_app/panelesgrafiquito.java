@@ -109,8 +109,8 @@ public class panelesgrafiquito extends Fragment {
                     if(s.equals("Hoy")) {
                         archi.updatetoday();
                     } else {
-                        dateselected = s;
-                        archi.updatedate(managedate(s, 1), managedate(s, 2), managedate(s, 3));
+                        //dateselected = s;
+                        //archi.updatedate(managedate(s, 1), managedate(s, 2), managedate(s, 3));
                     }
                 }
             }

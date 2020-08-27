@@ -123,7 +123,6 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 return appRepo.damedatahoyState2(neo,input.get(0),input.get(1),input.get(2));
             }
         });
-        //paquetesdedata = new livedaylydatapackage<Horas,horasstate>(datahoy,datastatehoy);
 
         dataayer = Transformations.switchMap(datebefore, new Function<ArrayList<Integer>, LiveData<Horas>>() {
             @Override
