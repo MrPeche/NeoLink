@@ -197,15 +197,15 @@ public class graficodelmapa extends Fragment {
          */
     }
     private void startposition(){
-        cvgrf1.setVisibility(View.INVISIBLE);
-        cvgrf2.setVisibility(View.INVISIBLE);
-        cvgrf3.setVisibility(View.INVISIBLE);
-        cvgrHumedadrelativa.setVisibility(View.INVISIBLE);
-        cvgrpresionbarometrica.setVisibility(View.INVISIBLE);
-        cvgrtemperaturabulboseco.setVisibility(View.INVISIBLE);
-        cvgrconductividadelectrica.setVisibility(View.INVISIBLE);
-        cvgrhumedaddelsuelo.setVisibility(View.INVISIBLE);
-        cvgrtemperaturadelsuelo.setVisibility(View.INVISIBLE);
+        cvgrf1.setVisibility(View.GONE);
+        cvgrf2.setVisibility(View.GONE);
+        cvgrf3.setVisibility(View.GONE);
+        cvgrHumedadrelativa.setVisibility(View.GONE);
+        cvgrpresionbarometrica.setVisibility(View.GONE);
+        cvgrtemperaturabulboseco.setVisibility(View.GONE);
+        cvgrconductividadelectrica.setVisibility(View.GONE);
+        cvgrhumedaddelsuelo.setVisibility(View.GONE);
+        cvgrtemperaturadelsuelo.setVisibility(View.GONE);
     }
     private void cleanG(){
         graficoMPtemperaturadelsuelo.clear();
@@ -430,14 +430,7 @@ public class graficodelmapa extends Fragment {
         //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis = grafico1.getXAxis();
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        final ArrayList<String> xlab = Xlabels;
-        ValueFormatter formatter = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return xlab.get((int) value);
-            }
-        };
-        xaxis.setValueFormatter(formatter);
+        xaxis.setValueFormatter(new graficolabelgenerator(Xlabels));
         MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YPM,orden);
         grafico1.setMarker(adapter);
         grafico1.invalidate();
@@ -480,14 +473,7 @@ public class graficodelmapa extends Fragment {
         //set2.setAxisDependency(YAxis.AxisDependency.LEFT);
         XAxis xaxis2= grafico2.getXAxis();
         xaxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
-        final ArrayList<String> xlab2 = Xlabels;
-        ValueFormatter formatter2 = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return xlab2.get((int) value);
-            }
-        };
-        xaxis2.setValueFormatter(formatter2);
+        xaxis2.setValueFormatter(new graficolabelgenerator(Xlabels));
         MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YTemp,orden);
         grafico2.setMarker(adapter);
         grafico2.invalidate();
@@ -545,22 +531,24 @@ public class graficodelmapa extends Fragment {
         }
         LineDataSet LDS = CreaDataLine(linedata,"Bateria",colores[0]);
         LineDataSet LDSV = CreaDataLine(solar,"Voltaje Solar", colores[1]);
+        LDSV.setAxisDependency(YAxis.AxisDependency.LEFT); //
+        LDS.setAxisDependency(YAxis.AxisDependency.RIGHT); //
         LineData data = new LineData();
         data.addDataSet(LDS);
         data.addDataSet(LDSV);
+        YAxis yaxisl = grafico3.getAxisLeft(); //
+        yaxisl.setTextColor(colores[1]);
+        YAxis yaxisr = grafico3.getAxisRight();
+        yaxisr.setAxisMinimum(3.5f);
+        yaxisr.setAxisMaximum(5f); //4.5
+        yaxisr.setTextColor(colores[0]);//
         grafico3.setData(data);
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
-        ValueFormatter formatter3 = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return XlabelsSTATE.get((int) value);
-            }
-        };
+        xaxis3.setValueFormatter(new graficolabelgenerator(XlabelsSTATE));
         LineDataSet LDhumedadrelativa= CreaDataLine(humedadrelativa,"Humedad Relativa",colores[0]);
         LineDataSet LDpresionbarometrica= CreaDataLine(presionbaro,"Presion Barométrica",colores[0]);
         LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
-        xaxis3.setValueFormatter(formatter3);
         grafico3.invalidate();
         grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         adddatatostates(1,LDhumedadrelativa,XlabelsSTATE);
@@ -574,39 +562,21 @@ public class graficodelmapa extends Fragment {
             graficohumedadrelativa.setData(data);
             XAxis Xaxis = graficohumedadrelativa.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return B.get((int) value);
-                }
-            };
-            Xaxis.setValueFormatter(formatter);
+            Xaxis.setValueFormatter(new graficolabelgenerator(B));
             graficohumedadrelativa.invalidate();
             graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo==2){
             graficopresionbarometrica.setData(data);
             XAxis Xaxis = graficopresionbarometrica.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return B.get((int) value);
-                }
-            };
-            Xaxis.setValueFormatter(formatter);
+            Xaxis.setValueFormatter(new graficolabelgenerator(B));
             graficopresionbarometrica.invalidate();
             graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo==3){
             graficotemperaturavulvoseco.setData(data);
             XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return B.get((int) value);
-                }
-            };
-            Xaxis.setValueFormatter(formatter);
+            Xaxis.setValueFormatter(new graficolabelgenerator(B));
             graficotemperaturavulvoseco.invalidate();
             graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }

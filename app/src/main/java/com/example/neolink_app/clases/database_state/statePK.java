@@ -7,16 +7,18 @@ public class statePK implements Parcelable {
     public double AL;
     public double BP;
     public double BV;
+    public double OP_TIME;
     public double RH;
     public double dT;
     public double SV;
     public double iT;
 
     public statePK(){}
-    public statePK(double AL,double BP,double BV,double RH,double dT,double SV,double iT){
+    public statePK(double AL,double BP,double BV,double OP_TIME,double RH,double dT,double SV,double iT){
         this.AL = AL;
         this.BP = BP;
         this.BV = BV;
+        this.OP_TIME = OP_TIME;
         this.RH = RH;
         this.dT = dT;
         this.SV = SV;
@@ -27,6 +29,7 @@ public class statePK implements Parcelable {
         AL = in.readDouble();
         BP = in.readDouble();
         BV = in.readDouble();
+        OP_TIME = in.readDouble();
         RH = in.readDouble();
         dT = in.readDouble();
         SV = in.readDouble();
@@ -54,6 +57,7 @@ public class statePK implements Parcelable {
     public double giveBV(){
         return this.BV;
     }
+    public double giveOPTIME(){ return this.OP_TIME;}
     public double giveRH(){
         return this.RH;
     }
@@ -77,6 +81,7 @@ public class statePK implements Parcelable {
         dest.writeDouble(AL);
         dest.writeDouble(BP);
         dest.writeDouble(BV);
+        dest.writeDouble(OP_TIME);
         dest.writeDouble(RH);
         dest.writeDouble(dT);
         dest.writeDouble(SV);

@@ -28,9 +28,7 @@ import java.util.ArrayList;
 
 import androidx.navigation.NavDirections;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class listita extends Fragment implements ListaNeolinks.OnclickListenerItem {
 
     private RecyclerView rv;

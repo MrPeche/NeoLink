@@ -277,6 +277,10 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/Margen_inferior_graficopaneles" />
+
         </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

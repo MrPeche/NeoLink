@@ -95,7 +95,23 @@
     <string name="Temperaturadelsuelo">Temperatura del Suelo</string>
     <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo</string>
 
+    //Menu de configuraciones
+    <string name="minutos">min</string>
+    <string name="Titutloconfiguraciones">Configuraciones</string>
+    <string name="Generales">Configuraciones Generales</string>
+    <string name="sonido">Beep del sistema</string>
+    <string name="tiempoentredatos">Tiempo entre toma de datos (min)</string>
+    <string name="portRQ">Pedir actualización de los Puertos</string>
+    <string name="gpsRQ">Pedir actualización del GPS</string>
+    <string name="ConfiguracionesEspecificas">Información del Dispositivo</string>
+    <string name="Wifi_pss">Password del WIFI</string>
+    <string name="Wifi_SSID">Nombre del WIFI</string>
+    <string name="firmware">Firmware del equipo</string>
+    <string name="GPS">Localización</string>
+    <string name="LastUpload">Última toma de datos</string>
+    <string name="Limites">Límites</string>
 
-
+    //Registro
+    <string name="tituloregistro">Registro</string>
 
 </resources>

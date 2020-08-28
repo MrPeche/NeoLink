@@ -3,9 +3,11 @@ package com.example.neolink_app;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +23,7 @@ import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import java.util.ArrayList;
 
 
-public class listaneonodes extends Fragment {
+public class listaneonodes extends Fragment implements ListaNeonodesAdapter.OnclickListenerItem{
     private String neolinkname;
     private RecyclerView rv;
     private GridLayoutManager glm;
@@ -52,10 +54,11 @@ public class listaneonodes extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
         ((actividadbase)getActivity()).fabaparecer();
         rv = view.findViewById(R.id.lista_neonode);
-        glm = new GridLayoutManager(getActivity(),2);
+        glm = new GridLayoutManager(getActivity(),1);
         rv.setLayoutManager(glm);
 
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
@@ -67,7 +70,7 @@ public class listaneonodes extends Fragment {
                 if(olDneolinksboleto!=null){
                     LinkNodo nuevo = new LinkNodo(neolinkname,olDneolinksboleto);
                     lista = olDneolinksboleto.dameneonodos();
-                    adapter = new ListaNeonodesAdapter(nuevo);
+                    adapter = new ListaNeonodesAdapter(nuevo,listaneonodes.this);
                     rv.setAdapter(adapter);
                 }
             }
@@ -80,5 +83,14 @@ public class listaneonodes extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         ((actividadbase)getActivity()).fabdesparecer();
+    }
+
+    @Override
+    public void Onclickitem(int position) {
+        String neolink = "";
+        if(position==0){
+            neolink = neolinkname;
+        } else neolink = lista.get(position-1);
+        Navigation.findNavController(getView()).navigate(listaneonodesDirections.actionListaneonodesToConfiguracionesmodelo(neolink));
     }
 }

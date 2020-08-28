@@ -35,6 +35,9 @@
         <argument
             android:name="neolink"
             app:argType="string" />
+        <action
+            android:id="@+id/action_listaneonodes_to_configuracionesmodelo"
+            app:destination="@id/configuracionesmodelo" />
     </fragment>
 
     <dialog
@@ -95,6 +98,19 @@
         android:name="com.example.neolink_app.dialogfechagraf"
         android:label="fragment_dialogfechagraf"
         tools:layout="@layout/fragment_dialogfechagraf" />
-
+    <fragment
+        android:id="@+id/configuracionesmodelo"
+        android:name="com.greenbird.neolink_app.configuracionesmodelo"
+        android:label="fragment_configuracionesmodelo"
+        tools:layout="@layout/fragment_configuracionesmodelo" >
+        <argument
+            android:name="neonode"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrodealertas"
+        android:name="com.greenbird.neolink_app.registrodealertas"
+        android:label="fragment_registrodealertas"
+        tools:layout="@layout/fragment_registrodealertas" />
 
 </navigation>

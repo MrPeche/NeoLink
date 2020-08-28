@@ -16,11 +16,13 @@ import java.util.ArrayList;
 
 public class ListaNeonodesAdapter extends RecyclerView.Adapter<ListaNeonodesAdapter.ListaNeonodesAdapterViewHolder> {
     private ArrayList<String> data = new ArrayList<>();
+    private OnclickListenerItem onclickListenerItem;
 
 
 
-    public ListaNeonodesAdapter(LinkNodo nodaso){
+    public ListaNeonodesAdapter(LinkNodo nodaso,  OnclickListenerItem onclickListenerItem){
         this.data.add(nodaso.getneolink());
+        this.onclickListenerItem = onclickListenerItem;
         if(nodaso.getoldnodo().dameneonodos()!=null) this.data.addAll(nodaso.getoldnodo().dameneonodos());
         //if(nodaso.getoldnodo().dameneonodos()!=null)
     }
@@ -36,9 +38,9 @@ public class ListaNeonodesAdapter extends RecyclerView.Adapter<ListaNeonodesAdap
     @Override
     public ListaNeonodesAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType==0){
-            return new  ListaNeonodesAdapterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neonode_cardview, parent, false));
+            return new  ListaNeonodesAdapterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neolink_cardview, parent, false),onclickListenerItem);
         } else {
-            return new ListaNeonodesAdapterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neonode_cardview, parent, false));
+            return new ListaNeonodesAdapterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_neonode_cardview, parent, false),onclickListenerItem);
         }
     }
 
@@ -53,12 +55,24 @@ public class ListaNeonodesAdapter extends RecyclerView.Adapter<ListaNeonodesAdap
         return data.size();
     }
 
-    public static class ListaNeonodesAdapterViewHolder extends RecyclerView.ViewHolder{
+    public static class ListaNeonodesAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView codigo;
+        OnclickListenerItem onclickitemlistener;
 
-        public ListaNeonodesAdapterViewHolder(@NonNull View itemView) {
+        public ListaNeonodesAdapterViewHolder(@NonNull View itemView,  OnclickListenerItem onclickitemlistener) {
             super(itemView);
             codigo = itemView.findViewById(R.id.codigocard);
+            itemView.setOnClickListener(this);
+            this.onclickitemlistener = onclickitemlistener;
         }
+
+        @Override
+        public void onClick(View v) {
+            onclickitemlistener.Onclickitem(getAbsoluteAdapterPosition());
+        }
+    }
+
+    public interface OnclickListenerItem{
+        void Onclickitem(int position);
     }
 }

@@ -21,11 +21,11 @@
     </group>
 
     <group
-        android:id="@+id/ndgruponeolinktit"
+        android:id="@+id/ndgregistrodealertas"
         android:checkableBehavior="single">
         <item
-            android:id = "@+id/Neolink_propetario"
-            android:title = "lol"/>
+            android:id = "@+id/registrodealertas"
+            android:title = "@string/tituloregistro"/>
     </group>
 
     <group
