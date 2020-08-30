@@ -91,10 +91,23 @@ public class configuracionesmodelo extends Fragment {
                     arrangedataState(stateConfvaluesPair.first);
                 }
                 if(stateConfvaluesPair.second!=null){
-
+                    arrangedataconfvalues(stateConfvaluesPair.second);
                 }
             }
         });
+    }
+    private void arrangedataconfvalues(Confvalues object){
+        if(object.BEEP_EN!=0){
+            beepdelsistema.setChecked(true);
+        } else beepdelsistema.setChecked(false);
+        nombredelwifi.setText(object.WIFI_SSID_DEFAULT);
+        tiempoentredatos.setText(String.valueOf(object.SLEEP_TIME));
+        if(object.PORT_RQ!=0){
+            portRQ.setChecked(true);
+        } else portRQ.setChecked(false);
+        if(object.GPS_RQ!=0){
+            gpsRQ.setChecked(true);
+        } else gpsRQ.setChecked(false);
     }
     private void arrangedataState(state object){
         firmware.setText(String.valueOf(object.Firmware));
