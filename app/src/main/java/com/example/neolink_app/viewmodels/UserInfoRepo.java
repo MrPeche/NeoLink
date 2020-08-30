@@ -23,6 +23,8 @@ import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.SensorG.MinutosG;
 import com.example.neolink_app.clases.SensorG.PuertoG;
 import com.example.neolink_app.clases.SensorG.dataPuertoG;
+import com.example.neolink_app.clases.configuracion.Confvalues;
+import com.example.neolink_app.clases.configuracion.state;
 import com.example.neolink_app.clases.dataPuerto;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.database_state.minutosstate;
@@ -466,5 +468,34 @@ public class UserInfoRepo {
         //String neolink, int año, int mes, int dia, String sensor
         return datahoyG2;
     }
-
+    public LiveData<state> fetchdataconfigracionstate(String neolink){
+        final MediatorLiveData<state> configuracionstate = new MediatorLiveData<>();
+        String patio = "/NeoLink/"+neolink+"/State/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        configuracionstate.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    configuracionstate.setValue(dataSnapshot.getValue(state.class));
+                } else configuracionstate.setValue(null);
+            }
+        });
+        return configuracionstate;
+    }
+    public LiveData<Confvalues> fetchdataconfigracionconfvalue(String neolink){
+        final MediatorLiveData<Confvalues> configuracionconfvalue = new MediatorLiveData<>();
+        String patio = "/NeoLink/"+neolink+"/State/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        configuracionconfvalue.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    configuracionconfvalue.setValue(dataSnapshot.getValue(Confvalues.class));
+                } else configuracionconfvalue.setValue(null);
+            }
+        });
+        return configuracionconfvalue;
+    }
 }

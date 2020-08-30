@@ -20,7 +20,10 @@ import com.example.neolink_app.clases.LoginFirebase.UsuarioNeoL;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.SensorG.HorasG;
+import com.example.neolink_app.clases.configuracion.Confvalues;
+import com.example.neolink_app.clases.configuracion.state;
 import com.example.neolink_app.clases.database_state.horasstate;
+import com.example.neolink_app.clases.liveclases.datadeconfiguracion;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackagetwoday;
 
@@ -236,5 +239,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public LiveData<String> neolinkdeldialogo(){
         return nuevoNeolink;
+    }
+    public LiveData<Pair<state, Confvalues>> crearpaquetedeconfiguraciones(String neolink){
+        return new datadeconfiguracion<>(appRepo.fetchdataconfigracionstate(neolink),appRepo.fetchdataconfigracionconfvalue(neolink));
     }
 }
