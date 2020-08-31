@@ -92,15 +92,15 @@
     <string name="hasta">Hasta: </string>
 
     //Grafico
-    <string name="sensorPotencialMatricial">Potencial Matricial</string>
-    <string name="sensorTemperatura">Temperatura</string>
-    <string name="Bateria">Batería</string>
-    <string name="Presionbarometrica">Presión Barométrica</string>
-    <string name="Humedadrelativa">Humedad Relativa</string>
-    <string name="Temperaturadevulvoseco">Temperatura de bulbo seco</string>
-    <string name="Humedaddelsuelo">Humedad del Suelo</string>
-    <string name="Temperaturadelsuelo">Temperatura del Suelo</string>
-    <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo</string>
+    <string name="sensorPotencialMatricial">Potencial Matricial (KPa)</string>
+    <string name="sensorTemperatura">Temperatura (°C)</string>
+    <string name="Bateria">Energía (v)</string>
+    <string name="Presionbarometrica">Presión Barométrica (kPa)</string>
+    <string name="Humedadrelativa">Humedad Relativa (%)</string>
+    <string name="Temperaturadevulvoseco">Temperatura de bulbo seco (°C)</string>
+    <string name="Humedaddelsuelo">Humedad del Suelo (m3/m3)</string>
+    <string name="Temperaturadelsuelo">Temperatura del Suelo (°C)</string>
+    <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo (MS/cm)</string>
 
     //Menu de configuraciones
     <string name="minutos">min</string>

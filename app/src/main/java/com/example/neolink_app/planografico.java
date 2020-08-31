@@ -31,6 +31,7 @@ import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.LineRadarDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
@@ -493,6 +494,7 @@ public class planografico extends Fragment {
         ArrayList<Entry> presionbaro = new ArrayList<>();
         ArrayList<Entry> humedadrelativa = new ArrayList<>();
         ArrayList<Entry> temperaturavulvoseco = new ArrayList<>();
+        ArrayList<Entry> temperaturainterna = new ArrayList<>();
         String sp = ":";
         String label;
         String label2;
@@ -507,6 +509,7 @@ public class planografico extends Fragment {
                 presionbaro.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BP));
                 humedadrelativa.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).RH));
                 temperaturavulvoseco.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).dT));
+                temperaturainterna.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).iT));
                 l++;
             }
         }
@@ -514,30 +517,46 @@ public class planografico extends Fragment {
         LineDataSet LDSV = CreaDataLine(solar,"Voltaje Solar", colores[1]);
         LDSV.setAxisDependency(YAxis.AxisDependency.LEFT); //
         LDS.setAxisDependency(YAxis.AxisDependency.RIGHT); //
-        LineData data = new LineData();
-        data.addDataSet(LDS);
-        data.addDataSet(LDSV);
-        grafico3.setData(data);
+
         LineDataSet LDhumedadrelativa= CreaDataLine(humedadrelativa,"Humedad Relativa",colores[0]);
         LineDataSet LDpresionbarometrica= CreaDataLine(presionbaro,"Presion Barométrica",colores[0]);
         LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
-        YAxis yaxisl = grafico3.getAxisLeft(); //
-        //yaxisl.setAxisMinimum(0f);
-        //yaxisl.setAxisMaximum(8f); //7.5
-        yaxisl.setTextColor(colores[1]);
-        YAxis yaxisr = grafico3.getAxisRight();
-        yaxisr.setAxisMinimum(3.5f);
-        yaxisr.setAxisMaximum(5f); //4.5
-        yaxisr.setTextColor(colores[0]);//
-        XAxis xaxis3= grafico3.getXAxis();
-        xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xaxis3.setValueFormatter(new graficolabelgenerator(XlabelsSTATE));
-        grafico3.invalidate();
-        grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        LineDataSet LDtemperaturainterna = CreaDataLine(temperaturainterna, "Temperatura interna",colores[1]);
+        LDtemperaturainterna.enableDashedLine(30,10,10);
+
         adddatatostates(1,LDhumedadrelativa,XlabelsSTATE);
         adddatatostates(2,LDpresionbarometrica,XlabelsSTATE);
-        adddatatostates(3,LDtemperaturavulvoseco,XlabelsSTATE);
+        adddatatostates2(1,LDS,LDSV,XlabelsSTATE);
+        adddatatostates2(2,LDtemperaturavulvoseco,LDtemperaturainterna,XlabelsSTATE);
 
+    }
+    private void adddatatostates2(int tipo, LineDataSet A,LineDataSet B, ArrayList<String> C){
+        LineData data = new LineData();
+        data.addDataSet(A);
+        data.addDataSet(B);
+        if(tipo==1){
+            grafico3.setData(data);
+            YAxis yaxisl = grafico3.getAxisLeft(); //
+            //yaxisl.setAxisMinimum(0f);
+            //yaxisl.setAxisMaximum(8f); //7.5
+            yaxisl.setTextColor(colores[1]);
+            YAxis yaxisr = grafico3.getAxisRight();
+            yaxisr.setAxisMinimum(3.5f);
+            yaxisr.setAxisMaximum(4.3f); //4.5
+            yaxisr.setTextColor(colores[0]);//
+            XAxis xaxis3= grafico3.getXAxis();
+            xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xaxis3.setValueFormatter(new graficolabelgenerator(C));
+            grafico3.invalidate();
+            grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        } else if(tipo==2){
+            graficotemperaturavulvoseco.setData(data);
+            XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
+            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            Xaxis.setValueFormatter(new graficolabelgenerator(C));
+            graficotemperaturavulvoseco.invalidate();
+            graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        }
     }
     private void adddatatostates(int tipo,LineDataSet A, final ArrayList<String> B){
         LineData data = new LineData();
@@ -556,15 +575,7 @@ public class planografico extends Fragment {
             Xaxis.setValueFormatter(new graficolabelgenerator(B));
             graficopresionbarometrica.invalidate();
             graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        } else if(tipo==3){
-            graficotemperaturavulvoseco.setData(data);
-            XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
-            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            Xaxis.setValueFormatter(new graficolabelgenerator(B));
-            graficotemperaturavulvoseco.invalidate();
-            graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }
-
     }
     private void setdataG(HorasG data){
         paquetedatasetPuertos humS = new paquetedatasetPuertos();
