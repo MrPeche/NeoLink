@@ -48,6 +48,25 @@ public class configuracionesmodelo extends Fragment {
     private LinearLayout limitP1TEMPlimiteinferior;
     private EditText limitP1TEMLS;
     private EditText limitP1TEMLI;
+    private LinearLayout limitP1sensorg;
+    private SwitchCompat limitP1humedaddelsuelo;
+    private LinearLayout limitP1HSlimitesuperior;
+    private LinearLayout limitP1HSlimiteinferior;
+    private EditText limitP1HSLS;
+    private EditText limitP1HSLI;
+
+    private SwitchCompat limitP1temperaturadelsuelo;
+    private LinearLayout limitP1TEMPSlimitesuperior;
+    private LinearLayout limitP1TEMPSlimiteinferior;
+    private EditText limitP1TMSLS;
+    private EditText limitP1TMSLI;
+
+    private SwitchCompat limitP1conductividadelectrica;
+    private LinearLayout limitP1CElimitesuperior;
+    private LinearLayout limitP1CElimiteinferior;
+    private EditText limitP1CELS;
+    private EditText limitP1CELI;
+
     private TextView port1active;
     private TextView port2active;
     private TextView port3active;
@@ -108,6 +127,30 @@ public class configuracionesmodelo extends Fragment {
         limitP1TEMPlimiteinferior = view.findViewById(R.id.limitP1limiteinferiorTEMP);
         limitP1TEMLS = view.findViewById(R.id.port1kTEMPlimitesuperior);
         limitP1TEMLI = view.findViewById(R.id.port1kTEMPlimiteinferior);
+        limitP1sensorg = view.findViewById(R.id.puerto1sensorG);
+        limitP1humedaddelsuelo = view.findViewById(R.id.puerto1Humedaddelsuelo);
+        limitP1HSlimitesuperior = view.findViewById(R.id.limitP1limitesuperioHS);
+        limitP1HSlimiteinferior = view.findViewById(R.id.limitP1limiteinferiorHS);
+        limitP1HSLS = view.findViewById(R.id.port1gHSlimitesuperior);
+        limitP1HSLI = view.findViewById(R.id.port1gHSlimiteinferior);
+        limitP1temperaturadelsuelo = view.findViewById(R.id.puerto1temperaturadelsuelo);
+        limitP1TEMPSlimitesuperior = view.findViewById(R.id.limitP1limitesuperiorTEMPS);
+        limitP1TEMPSlimiteinferior = view.findViewById(R.id.limitP1limiteinferiorTEMPS);
+        limitP1TMSLS = view.findViewById(R.id.port1gTEMPSlimitesuperior);
+        limitP1TMSLI = view.findViewById(R.id.port1gTEMPSlimiteinferior);
+
+        limitP1temperaturadelsuelo = view.findViewById(R.id.puerto1temperaturadelsuelo);
+        limitP1TEMPSlimitesuperior = view.findViewById(R.id.limitP1limitesuperiorTEMPS);
+        limitP1TEMPSlimiteinferior = view.findViewById(R.id.limitP1limiteinferiorTEMPS);
+        limitP1TMSLS = view.findViewById(R.id.port1gTEMPSlimitesuperior);
+        limitP1TMSLI = view.findViewById(R.id.port1gTEMPSlimiteinferior);
+
+        limitP1conductividadelectrica = view.findViewById(R.id.puerto1conductividadelectricadelsuelo);
+        limitP1CElimitesuperior = view.findViewById(R.id.limitP1limitesuperiorCS);
+        limitP1CElimiteinferior = view.findViewById(R.id.limitP1limiteinferiorCS);
+        limitP1CELS = view.findViewById(R.id.port1gCSlimitesuperior);
+        limitP1CELI = view.findViewById(R.id.port1gCSlimiteinferior);
+
         port1active = view.findViewById(R.id.Puertoactivo1);
         port2active = view.findViewById(R.id.Puertoactivo2);
         port3active = view.findViewById(R.id.Puertoactivo3);
@@ -146,6 +189,42 @@ public class configuracionesmodelo extends Fragment {
                 } else {
                     limitP1TEMPlimitesuperior.setVisibility(View.GONE);
                     limitP1TEMPlimiteinferior.setVisibility(View.GONE);
+                }
+            }
+        });
+        limitP1temperaturadelsuelo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    limitP1TEMPSlimitesuperior.setVisibility(View.VISIBLE);
+                    limitP1TEMPSlimiteinferior.setVisibility(View.VISIBLE);
+                } else {
+                    limitP1TEMPSlimitesuperior.setVisibility(View.GONE);
+                    limitP1TEMPSlimiteinferior.setVisibility(View.GONE);
+                }
+            }
+        });
+        limitP1conductividadelectrica.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    limitP1CElimitesuperior.setVisibility(View.VISIBLE);
+                    limitP1CElimiteinferior.setVisibility(View.VISIBLE);
+                } else {
+                    limitP1CElimitesuperior.setVisibility(View.GONE);
+                    limitP1CElimiteinferior.setVisibility(View.GONE);
+                }
+            }
+        });
+        limitP1humedaddelsuelo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    limitP1HSlimitesuperior.setVisibility(View.VISIBLE);
+                    limitP1HSlimiteinferior.setVisibility(View.VISIBLE);
+                } else {
+                    limitP1HSlimitesuperior.setVisibility(View.GONE);
+                    limitP1HSlimiteinferior.setVisibility(View.GONE);
                 }
             }
         });
@@ -210,6 +289,26 @@ public class configuracionesmodelo extends Fragment {
                     limitP1TEMLS.setText(String.valueOf(limits.dameP1().damek().V2.dameMAX()));
                 } else desapareceP1TEMP();
             } else limitP1sensork.setVisibility(View.GONE);
+
+            if(limits.dameP1().dameG()!=null){
+                if(limits.dameP1().dameG().dameV1().damebool()!=0){
+                    limitP1humedaddelsuelo.setChecked(true);
+                    limitP1HSLI.setText(String.valueOf(limits.dameP1().damek().V1.dameMin()));
+                    limitP1HSLS.setText(String.valueOf(limits.dameP1().damek().V1.dameMAX()));
+                } else desapareceP1HS();
+                if(limits.dameP1().dameG().dameV2().damebool()!=0){
+                    limitP1temperaturadelsuelo.setChecked(true);
+                    limitP1TMSLI.setText(String.valueOf(limits.dameP1().damek().V2.dameMin()));
+                    limitP1TMSLS.setText(String.valueOf(limits.dameP1().damek().V2.dameMAX()));
+                } else desapareceP1TEMS();
+                if(limits.dameP1().dameG().dameV3().damebool()!=0){
+                    limitP1conductividadelectrica.setChecked(true);
+                    limitP1CELI.setText(String.valueOf(limits.dameP1().damek().V2.dameMin()));
+                    limitP1CELS.setText(String.valueOf(limits.dameP1().damek().V2.dameMAX()));
+                } else desapareceP1CS();
+
+            } else limitP1sensorg.setVisibility(View.GONE);
+
         } else limitP1layout.setVisibility(View.GONE);
         /*
         if(limits.dameP1()!=null){
@@ -234,6 +333,21 @@ public class configuracionesmodelo extends Fragment {
         limitP1temperatura.setChecked(false);
         limitP1TEMPlimitesuperior.setVisibility(View.GONE);
         limitP1TEMPlimiteinferior.setVisibility(View.GONE);
+    }
+    private void desapareceP1HS(){
+        limitP1humedaddelsuelo.setChecked(false);
+        limitP1HSlimitesuperior.setVisibility(View.GONE);
+        limitP1HSlimiteinferior.setVisibility(View.GONE);
+    }
+    private void desapareceP1TEMS(){
+        limitP1temperaturadelsuelo.setChecked(false);
+        limitP1TEMPSlimitesuperior.setVisibility(View.GONE);
+        limitP1TEMPSlimiteinferior.setVisibility(View.GONE);
+    }
+    private void desapareceP1CS(){
+        limitP1conductividadelectrica.setChecked(false);
+        limitP1CElimitesuperior.setVisibility(View.GONE);
+        limitP1CElimiteinferior.setVisibility(View.GONE);
     }
 
 }

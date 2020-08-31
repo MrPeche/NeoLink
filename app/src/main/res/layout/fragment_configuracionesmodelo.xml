@@ -355,7 +355,7 @@
                                     android:fontFamily="@font/lato"
                                     android:textColor="@color/colorTextoGris"
                                     android:textSize="@dimen/Tamañotexto"
-                                    android:text="@string/Sensorkpotencialmatricial" />
+                                    android:text="@string/sensorPotencialMatricial" />
 
                             </LinearLayout>
 
@@ -444,6 +444,7 @@
                                 <Space
                                     android:layout_width="@dimen/Margendeconfiguracionconsensores"
                                     android:layout_height="match_parent"/>
+
                                 <androidx.appcompat.widget.SwitchCompat
                                     android:id="@+id/puerto1temperatura"
                                     android:layout_width="match_parent"
@@ -451,7 +452,7 @@
                                     android:fontFamily="@font/lato"
                                     android:textColor="@color/colorTextoGris"
                                     android:textSize="@dimen/Tamañotexto"
-                                    android:text="@string/Sensorktemperatura" />
+                                    android:text="@string/sensorTemperatura" />
 
                             </LinearLayout>
 
@@ -530,6 +531,312 @@
                                     android:textSize="@dimen/Tamañotexto" />
 
                             </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/puerto1sensorG"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato"
+                                android:textColor="@color/colorTextoGris"
+                                android:textSize="@dimen/Tamañotexto"
+                                android:text="@string/Sensorg" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/Margendeconfiguracionconsensores"
+                                android:orientation="horizontal">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores"
+                                    android:layout_height="match_parent"/>
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/puerto1Humedaddelsuelo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto"
+                                    android:text="@string/Humedaddelsuelo" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/limitP1limitesuperioHS"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limitesuperior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                                <EditText
+                                    android:id="@+id/port1gHSlimitesuperior"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_weight="1"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/limitP1limiteinferiorHS"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limiteinferior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                                <EditText
+                                    android:id="@+id/port1gHSlimiteinferior"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_weight="1"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/Margendeconfiguracionconsensores"
+                                android:orientation="horizontal">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores"
+                                    android:layout_height="match_parent"/>
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/puerto1temperaturadelsuelo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto"
+                                    android:text="@string/Temperaturadelsuelo" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/limitP1limitesuperiorTEMPS"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limitesuperior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                                <EditText
+                                    android:id="@+id/port1gTEMPSlimitesuperior"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_weight="1"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/limitP1limiteinferiorTEMPS"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limiteinferior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                                <EditText
+                                    android:id="@+id/port1gTEMPSlimiteinferior"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_weight="1"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/Margendeconfiguracionconsensores"
+                                android:orientation="horizontal">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores"
+                                    android:layout_height="match_parent"/>
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/puerto1conductividadelectricadelsuelo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/lato"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto"
+                                    android:text="@string/Conductividaddelsuelo" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/limitP1limitesuperiorCS"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limitesuperior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                                <EditText
+                                    android:id="@+id/port1gCSlimitesuperior"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_weight="1"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/limitP1limiteinferiorCS"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="5">
+
+                                <Space
+                                    android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limiteinferior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                                <EditText
+                                    android:id="@+id/port1gCSlimiteinferior"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_weight="1"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
+
+                            </LinearLayout>
+
                         </LinearLayout>
 
                     </LinearLayout>

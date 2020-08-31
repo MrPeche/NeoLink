@@ -94,7 +94,7 @@
     //Grafico
     <string name="sensorPotencialMatricial">Potencial Matricial (KPa)</string>
     <string name="sensorTemperatura">Temperatura (°C)</string>
-    <string name="Bateria">Energía (v)</string>
+    <string name="Bateria">Energía (V)</string>
     <string name="Presionbarometrica">Presión Barométrica (kPa)</string>
     <string name="Humedadrelativa">Humedad Relativa (%)</string>
     <string name="Temperaturadevulvoseco">Temperatura de bulbo seco (°C)</string>

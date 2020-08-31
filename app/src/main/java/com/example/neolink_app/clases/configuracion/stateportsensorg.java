@@ -11,5 +11,8 @@ public class stateportsensorg {
         this.V2 = V2;
         this.V3 = V3;
     }
+    public statesinglelimitvalues dameV1(){return V1;}
+    public statesinglelimitvalues dameV2(){return V2;}
+    public statesinglelimitvalues dameV3(){return V3;}
 
 }

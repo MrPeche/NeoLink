@@ -541,6 +541,7 @@ public class graficodelmapa extends Fragment {
         LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
         LineDataSet LDtemperaturainterna = CreaDataLine(temperaturainterna, "Temperatura interna",colores[1]);
         LDtemperaturainterna.enableDashedLine(30,10,10);
+        LDtemperaturainterna.setLineWidth(0.8f);
 
         adddatatostates(1,LDhumedadrelativa,XlabelsSTATE);
         adddatatostates(2,LDpresionbarometrica,XlabelsSTATE);
