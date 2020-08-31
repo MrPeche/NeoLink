@@ -5,6 +5,13 @@
     <string name="titulo1">Neo</string>
     <string name="titulo2">Link</string>
     <string name="usuario">Email</string>
+    //Notificaciones
+    <string name="channel_name">NeoLink</string>
+    <string name="channel_description">Alertas acerca de su equipo "NeoLink"</string>
+    <string name="CHANNEL_ID">487</string>
+    <string name="notificationID">0</string>
+
+
     //Correo Electrónico
     <string name="contraseña">Contraseña</string>
     //Contraseña

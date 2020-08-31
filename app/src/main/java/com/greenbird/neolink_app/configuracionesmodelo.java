@@ -13,13 +13,16 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.neolink_app.R;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
 import com.example.neolink_app.clases.configuracion.statePortsactive;
+import com.example.neolink_app.clases.configuracion.statelimitsport;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 
 public class configuracionesmodelo extends Fragment {
@@ -33,6 +36,18 @@ public class configuracionesmodelo extends Fragment {
     private TextView firmware;
     private TextView Gps;
     private TextView lastupdate;
+    private LinearLayout limitP1layout;
+    private LinearLayout limitP1sensork;
+    private SwitchCompat limitP1potencialmatricial;
+    private LinearLayout limitP1PMlimitesuperior;
+    private LinearLayout limitP1PMlimiteinferior;
+    private EditText limitP1PMLS;
+    private EditText limitP1PMLI;
+    private SwitchCompat limitP1temperatura;
+    private LinearLayout limitP1TEMPlimitesuperior;
+    private LinearLayout limitP1TEMPlimiteinferior;
+    private EditText limitP1TEMLS;
+    private EditText limitP1TEMLI;
     private TextView port1active;
     private TextView port2active;
     private TextView port3active;
@@ -44,13 +59,15 @@ public class configuracionesmodelo extends Fragment {
     public configuracionesmodelo() {
         // Required empty public constructor
     }
-
+    /*
     public static configuracionesmodelo newInstance(String param1, String param2) {
         configuracionesmodelo fragment = new configuracionesmodelo();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
+
+     */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,10 +96,23 @@ public class configuracionesmodelo extends Fragment {
         firmware = view.findViewById(R.id.firmware);
         Gps = view.findViewById(R.id.gps);
         lastupdate = view.findViewById(R.id.lastupdate);
+        limitP1layout = view.findViewById(R.id.puerto1layout);
+        limitP1sensork = view.findViewById(R.id.puerto1sensork);
+        limitP1potencialmatricial = view.findViewById(R.id.puerto1potencialmatricial);
+        limitP1PMlimitesuperior = view.findViewById(R.id.limitP1limitesuperioPM);
+        limitP1PMlimiteinferior = view.findViewById(R.id.limitP1limiteinferiorPM);
+        limitP1PMLS = view.findViewById(R.id.port1kPMlimitesuperior);
+        limitP1PMLI = view.findViewById(R.id.port1kPMlimiteinferior);
+        limitP1temperatura = view.findViewById(R.id.puerto1temperatura);
+        limitP1TEMPlimitesuperior = view.findViewById(R.id.limitP1limitesuperiorTEMP);
+        limitP1TEMPlimiteinferior = view.findViewById(R.id.limitP1limiteinferiorTEMP);
+        limitP1TEMLS = view.findViewById(R.id.port1kTEMPlimitesuperior);
+        limitP1TEMLI = view.findViewById(R.id.port1kTEMPlimiteinferior);
         port1active = view.findViewById(R.id.Puertoactivo1);
         port2active = view.findViewById(R.id.Puertoactivo2);
         port3active = view.findViewById(R.id.Puertoactivo3);
         port4active = view.findViewById(R.id.Puertoactivo4);
+
 
         archi.crearpaquetedeconfiguraciones(neolinkname).observe(getViewLifecycleOwner(), new Observer<Pair<state, Confvalues>>() {
             @Override
@@ -95,13 +125,38 @@ public class configuracionesmodelo extends Fragment {
                 }
             }
         });
+        limitP1potencialmatricial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    limitP1PMlimitesuperior.setVisibility(View.VISIBLE);
+                    limitP1PMlimiteinferior.setVisibility(View.VISIBLE);
+                } else {
+                    limitP1PMlimitesuperior.setVisibility(View.GONE);
+                    limitP1PMlimiteinferior.setVisibility(View.GONE);
+                }
+            }
+        });
+        limitP1temperatura.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    limitP1TEMPlimitesuperior.setVisibility(View.VISIBLE);
+                    limitP1TEMPlimiteinferior.setVisibility(View.VISIBLE);
+                } else {
+                    limitP1TEMPlimitesuperior.setVisibility(View.GONE);
+                    limitP1TEMPlimiteinferior.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
     private void arrangedataconfvalues(Confvalues object){
         if(object.BEEP_EN!=0){
             beepdelsistema.setChecked(true);
         } else beepdelsistema.setChecked(false);
         nombredelwifi.setText(object.WIFI_SSID_DEFAULT);
-        tiempoentredatos.setText(String.valueOf(object.SLEEP_TIME));
+        tiempoentredatos.setText(desegundosaminutos(object.SLEEP_TIME));
         if(object.PORT_RQ!=0){
             portRQ.setChecked(true);
         } else portRQ.setChecked(false);
@@ -115,10 +170,11 @@ public class configuracionesmodelo extends Fragment {
         Gps.setText(gps);
         lastupdate.setText(arrangelastupload(object.LastUpload));
         arrangeportsactive(object.Port);
+        arrangelimits(object.Limits);
     }
     private String arrangelastupload(String A){
         String[] list = A.split("\\.");
-        return list[2] + "/" + list[1] + "/"+ list[0] + " " + list[3] + ":" + list[4];
+        return list[2] + "/" + list[1] + "/"+ list[0] + "  " + list[3] + ":" + list[4];
     }
     private void arrangeportsactive(statePortsactive stuff){
         if(!stuff.Port1_Active.equals("NaN")){
@@ -134,4 +190,50 @@ public class configuracionesmodelo extends Fragment {
             port4active.setVisibility(View.VISIBLE);
         } else port4active.setVisibility(View.GONE);
     }
+    private String desegundosaminutos(int sec){
+        return String.valueOf(sec/60);
+    }
+    private int deminutosasegundos(String min){
+        return Integer.parseInt(min)*60;
+    }
+    private void arrangelimits(statelimitsport limits){
+        if(limits.dameP1()!=null){
+            if(limits.dameP1().damek()!=null){
+                if(limits.dameP1().damek().dameV1().damebool()!=0){
+                    limitP1potencialmatricial.setChecked(true);
+                    limitP1PMLI.setText(String.valueOf(limits.dameP1().damek().V1.dameMin()));
+                    limitP1PMLS.setText(String.valueOf(limits.dameP1().damek().V1.dameMAX()));
+                } else desapareceP1potencialmatricial();
+                if(limits.dameP1().damek().dameV2().damebool()!=0){
+                    limitP1temperatura.setChecked(true);
+                    limitP1TEMLI.setText(String.valueOf(limits.dameP1().damek().V2.dameMin()));
+                    limitP1TEMLS.setText(String.valueOf(limits.dameP1().damek().V2.dameMAX()));
+                } else desapareceP1TEMP();
+            } else limitP1sensork.setVisibility(View.GONE);
+        } else limitP1layout.setVisibility(View.GONE);
+        /*
+        if(limits.dameP1()!=null){
+
+        }
+        if(limits.dameP1()!=null){
+
+        }
+        if(limits.dameP1()!=null){
+
+        }
+
+         */
+
+    }
+    private void desapareceP1potencialmatricial(){
+        limitP1potencialmatricial.setChecked(false);
+        limitP1PMlimitesuperior.setVisibility(View.GONE);
+        limitP1PMlimiteinferior.setVisibility(View.GONE);
+    }
+    private void desapareceP1TEMP(){
+        limitP1temperatura.setChecked(false);
+        limitP1TEMPlimitesuperior.setVisibility(View.GONE);
+        limitP1TEMPlimiteinferior.setVisibility(View.GONE);
+    }
+
 }

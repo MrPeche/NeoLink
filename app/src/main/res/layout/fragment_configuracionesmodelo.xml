@@ -172,7 +172,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:weightSum="2"
+                        android:weightSum="3"
                         android:layout_marginVertical="@dimen/nav_header_vertical_spacing"
                         android:orientation="horizontal">
 
@@ -189,7 +189,7 @@
                         <TextView
                             android:id="@+id/nombredelwifi"
                             android:gravity="end"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lato"
@@ -248,7 +248,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="start"
+                            android:gravity="end"
                             android:fontFamily="@font/lato"
                             android:textColor="@color/colorTextoGris"
                             android:textSize="@dimen/Tamañotexto" />
@@ -276,7 +276,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="start"
+                            android:gravity="end"
                             android:fontFamily="@font/lato"
                             android:textColor="@color/colorTextoGris"
                             android:textSize="@dimen/Tamañotexto" />
@@ -358,75 +358,80 @@
                                     android:text="@string/Sensorkpotencialmatricial" />
 
                             </LinearLayout>
+
                             <LinearLayout
+                                android:id="@+id/limitP1limitesuperioPM"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:weightSum="5"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:weightSum="5">
 
                                 <Space
                                     android:layout_width="@dimen/Margendeconfiguracionconsensores2"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/colorTextoGris"
-                                    android:textSize="@dimen/Tamañotexto"
                                     android:layout_weight="4"
-                                    android:text="@string/Limitesuperior"/>
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limitesuperior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                                 <EditText
                                     android:id="@+id/port1kPMlimitesuperior"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:layout_gravity="end"
-                                    android:fontFamily="@font/lato"
-                                    android:inputType="numberSigned"
-                                    android:ems="3"
                                     android:layout_weight="1"
-                                    android:textSize="@dimen/Tamañotexto"
-                                    android:textColor="@color/colorTextoGris"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
                                     android:importantForAutofill="no"
-                                    android:hint="@string/lim" />
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/limitP1limiteinferiorPM"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:weightSum="5"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:weightSum="5">
 
                                 <Space
                                     android:layout_width="@dimen/Margendeconfiguracionconsensores2"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/colorTextoGris"
-                                    android:textSize="@dimen/Tamañotexto"
                                     android:layout_weight="4"
-                                    android:text="@string/Limiteinferior"/>
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limiteinferior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                                 <EditText
                                     android:id="@+id/port1kPMlimiteinferior"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:layout_gravity="end"
-                                    android:fontFamily="@font/lato"
-                                    android:inputType="numberSigned"
-                                    android:ems="3"
                                     android:layout_weight="1"
-                                    android:textSize="@dimen/Tamañotexto"
-                                    android:textColor="@color/colorTextoGris"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
                                     android:importantForAutofill="no"
-                                    android:hint="@string/lim" />
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                             </LinearLayout>
 
@@ -449,75 +454,80 @@
                                     android:text="@string/Sensorktemperatura" />
 
                             </LinearLayout>
+
                             <LinearLayout
+                                android:id="@+id/limitP1limitesuperiorTEMP"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:weightSum="5"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:weightSum="5">
 
                                 <Space
                                     android:layout_width="@dimen/Margendeconfiguracionconsensores2"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/colorTextoGris"
-                                    android:textSize="@dimen/Tamañotexto"
                                     android:layout_weight="4"
-                                    android:text="@string/Limitesuperior"/>
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limitesuperior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                                 <EditText
                                     android:id="@+id/port1kTEMPlimitesuperior"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:layout_gravity="end"
-                                    android:fontFamily="@font/lato"
-                                    android:inputType="numberSigned"
-                                    android:ems="3"
                                     android:layout_weight="1"
-                                    android:textSize="@dimen/Tamañotexto"
-                                    android:textColor="@color/colorTextoGris"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
                                     android:importantForAutofill="no"
-                                    android:hint="@string/lim" />
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/limitP1limiteinferiorTEMP"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:weightSum="5"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:weightSum="5">
 
                                 <Space
                                     android:layout_width="@dimen/Margendeconfiguracionconsensores2"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
                                     android:layout_gravity="center"
-                                    android:textColor="@color/colorTextoGris"
-                                    android:textSize="@dimen/Tamañotexto"
                                     android:layout_weight="4"
-                                    android:text="@string/Limiteinferior"/>
+                                    android:fontFamily="@font/lato"
+                                    android:text="@string/Limiteinferior"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                                 <EditText
                                     android:id="@+id/port1kTEMPlimiteinferior"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:layout_gravity="end"
-                                    android:fontFamily="@font/lato"
-                                    android:inputType="numberSigned"
-                                    android:ems="3"
                                     android:layout_weight="1"
-                                    android:textSize="@dimen/Tamañotexto"
-                                    android:textColor="@color/colorTextoGris"
+                                    android:ems="3"
+                                    android:fontFamily="@font/lato"
+                                    android:gravity="center"
+                                    android:hint="@string/lim"
                                     android:importantForAutofill="no"
-                                    android:hint="@string/lim" />
+                                    android:inputType="numberSigned"
+                                    android:textColor="@color/colorTextoGris"
+                                    android:textSize="@dimen/Tamañotexto" />
 
                             </LinearLayout>
                         </LinearLayout>

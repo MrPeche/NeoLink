@@ -125,9 +125,9 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
         String neolink = lista.get(position);
         Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToListaneonodes2(neolink));
     }
-
-    public void onDestroy() {
-        super.onDestroy();
+    @Override
+    public void onPause() {
+        super.onPause();
         ((actividadbase)getActivity()).fabdesparecer();
     }
 

@@ -6,6 +6,7 @@
     <color name="colorfondito">#E0E0DA</color>
     <color name="colorTextoNegro">#000000</color>
     <color name="colorTextoGris">#9a9a9a</color>
+    <color name="notificacion" >#3e7098</color>
 
     <color name="stroke_color">
         <selector xmlns:android="http://schemas.android.com/apk/res/android">

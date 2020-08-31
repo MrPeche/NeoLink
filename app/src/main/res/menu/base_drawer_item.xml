@@ -16,16 +16,8 @@
             android:id="@+id/grafiquitos"
             android:title="@string/graficos" />
         <item
-            android:id="@+id/notificacioncitas"
+            android:id="@+id/registrodealertas"
             android:title="@string/notificaciones" />
-    </group>
-
-    <group
-        android:id="@+id/ndgregistrodealertas"
-        android:checkableBehavior="single">
-        <item
-            android:id = "@+id/registrodealertas"
-            android:title = "@string/tituloregistro"/>
     </group>
 
     <group

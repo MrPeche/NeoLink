@@ -485,7 +485,7 @@ public class UserInfoRepo {
     }
     public LiveData<Confvalues> fetchdataconfigracionconfvalue(String neolink){
         final MediatorLiveData<Confvalues> configuracionconfvalue = new MediatorLiveData<>();
-        String patio = "/NeoLink/"+neolink+"/State/";
+        String patio = "/NeoLink/"+neolink+"/Conf_values/";
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
         configuracionconfvalue.addSource(liveDataNL, new Observer<DataSnapshot>() {

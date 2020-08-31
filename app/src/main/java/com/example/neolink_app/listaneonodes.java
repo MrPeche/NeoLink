@@ -80,10 +80,11 @@ public class listaneonodes extends Fragment implements ListaNeonodesAdapter.Oncl
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         ((actividadbase)getActivity()).fabdesparecer();
     }
+
 
     @Override
     public void Onclickitem(int position) {
