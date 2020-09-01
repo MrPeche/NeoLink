@@ -23,11 +23,12 @@
                 android:textSize="@dimen/Tamañotitulo" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvpotencialMatricial"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -38,11 +39,11 @@
                         android:id="@+id/titulografico1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/sensorPotencialMatricial"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard"/>
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensorPotencialMatricial"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficochart1"
@@ -52,11 +53,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvtemperatura"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -67,25 +69,26 @@
                         android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/sensorTemperatura"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard"/>
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensorTemperatura"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficochar2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvhumedaddelsuelo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,25 +98,26 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Humedaddelsuelo"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard"/>
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Humedaddelsuelo"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficohumedaddelsuelo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvtemperaturadelsuelo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,25 +127,26 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Temperaturadelsuelo"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard"/>
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Temperaturadelsuelo"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficotemperaturadelsuelo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvconductividadelectrica"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -151,25 +156,26 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Conductividaddelsuelo"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard"/>
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Conductividaddelsuelo"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoConductividadSuelo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvpresionbarometrica"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -179,11 +185,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Presionbarometrica"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard" />
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Presionbarometrica"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoPresionBarometrica"
@@ -193,11 +199,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvHumedadrelativa"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -207,11 +214,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Humedadrelativa"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard" />
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Humedadrelativa"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoHumedadRelativa"
@@ -221,11 +228,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvtemperaturabulboseco"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -235,11 +243,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Temperaturadevulvoseco"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard" />
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Temperaturadevulvoseco"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficotemperaturavulvoseco"
@@ -249,11 +257,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvEnergia"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                app:cardElevation="@dimen/cardelevasion">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -264,11 +273,11 @@
                         android:id="@+id/bateriaGrF"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Bateria"
                         android:fontFamily="@font/lato"
-                        android:textSize="@dimen/Tamañotexto"
                         android:gravity="center"
-                        android:padding="@dimen/margencard" />
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Bateria"
+                        android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoBat"

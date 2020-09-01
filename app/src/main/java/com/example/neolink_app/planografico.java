@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -56,6 +57,17 @@ public class planografico extends Fragment {
     private LineChart graficohumedaddelsuelo;
     private LineChart graficotemperaturadelsuelo;
     private LineChart graficoconductividaddelsuelo;
+
+    private CardView cvpotencialMatricial;
+    private CardView cvtemperatura;
+    private CardView cvEnergia;
+    private CardView cvhumedaddelsuelo;
+    private CardView cvtemperaturadelsuelo;
+    private CardView cvconductividadelectrica;
+    private CardView cvHumedadrelativa;
+    private CardView cvpresionbarometrica;
+    private CardView cvtemperaturabulboseco;
+
     private MasterDrawerViewModel archi;
     private paquetedatasetPuertos YPM2 = new paquetedatasetPuertos();
     private paquetedatasetPuertos YTemp2 = new paquetedatasetPuertos();
@@ -130,7 +142,15 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo= view.findViewById(R.id.graficotemperaturadelsuelo);
         graficohumedaddelsuelo = view.findViewById(R.id.graficohumedaddelsuelo);
         graficoconductividaddelsuelo = view.findViewById(R.id.graficoConductividadSuelo);
-
+        cvpotencialMatricial = view.findViewById(R.id.cvpotencialMatricial);
+        cvtemperatura = view.findViewById(R.id.cvtemperatura);
+        cvEnergia = view.findViewById(R.id.cvEnergia);
+        cvhumedaddelsuelo = view.findViewById(R.id.cvhumedaddelsuelo);
+        cvtemperaturadelsuelo = view.findViewById(R.id.cvtemperaturadelsuelo);
+        cvconductividadelectrica = view.findViewById(R.id.cvconductividadelectrica);
+        cvHumedadrelativa = view.findViewById(R.id.cvHumedadrelativa);
+        cvpresionbarometrica = view.findViewById(R.id.cvpresionbarometrica);
+        cvtemperaturabulboseco = view.findViewById(R.id.cvtemperaturabulboseco);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         propiedadesgrafico3();
@@ -142,12 +162,8 @@ public class planografico extends Fragment {
         propiedadesgraficotemperaturadeldelsuelo();
         propiedadesgraficoconductividaddeldelsuelo();
 
-        paquetedatasetPuertos YPM = new paquetedatasetPuertos();
-        paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
-        DepthPackage DepthP = new DepthPackage();
-        //ArrayList<Entry> YPM = new ArrayList<>();
-        //ArrayList<Entry> YTemp = new ArrayList<>();
-        //ArrayList<Double> DepthLabel = new ArrayList<>();
+        startposition();
+
         int hoyaño = ahora.get(Calendar.YEAR)%100;
         int hoymes = ahora.get(Calendar.MONTH)+1;
         int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
@@ -161,8 +177,13 @@ public class planografico extends Fragment {
                 @Override
                 public void onChanged(HorasG horasG) {
                     if(horasG!=null){
-                        cleanG();
-                        setdataG(horasG);
+                        if(horasG.dametamanoG()!=0){
+                            cleanG();
+                            cvconductividadelectrica.setVisibility(View.VISIBLE);
+                            cvhumedaddelsuelo.setVisibility(View.VISIBLE);
+                            cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                            setdataG(horasG);
+                        }
                     }
                 }
             });
@@ -176,11 +197,17 @@ public class planografico extends Fragment {
                     if(archi.paquetesdedata.isitready()){
                         cleanthisshit();
                         if(horashorasstatePair.first.dametamano()!=0) {
+                            cvpotencialMatricial.setVisibility(View.VISIBLE);
+                            cvtemperatura.setVisibility(View.VISIBLE);
                             setdatagrafK(horashorasstatePair.first);
                             setdataPM(YPM2, Xlabels2, DepthP2);
                             setdataTemp(YTemp2, Xlabels2, DepthP2);
                         }
                         if(horashorasstatePair.second.dametamano()!=0){
+                            cvEnergia.setVisibility(View.VISIBLE);
+                            cvHumedadrelativa.setVisibility(View.VISIBLE);
+                            cvpresionbarometrica.setVisibility(View.VISIBLE);
+                            cvtemperaturabulboseco.setVisibility(View.VISIBLE);
                             setStatedata(horashorasstatePair.second);
                         }
                     }
@@ -202,6 +229,17 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo.clear();
         graficohumedaddelsuelo.clear();
         graficoconductividaddelsuelo.clear();
+    }
+    private void startposition(){
+        cvpotencialMatricial.setVisibility(View.GONE);
+        cvtemperatura.setVisibility(View.GONE);
+        cvEnergia.setVisibility(View.GONE);
+        cvhumedaddelsuelo.setVisibility(View.GONE);
+        cvtemperaturadelsuelo.setVisibility(View.GONE);
+        cvconductividadelectrica.setVisibility(View.GONE);
+        cvHumedadrelativa.setVisibility(View.GONE);
+        cvpresionbarometrica.setVisibility(View.GONE);
+        cvtemperaturabulboseco.setVisibility(View.GONE);
     }
     public void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);

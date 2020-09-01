@@ -93,10 +93,11 @@ public class AuthRepo {
         return neousuario;
     }
     public LiveData<Boolean> archivoexiste(String direccion[], String nombre){
+        fileexist.setValue(false);
         for (String s : direccion) {
             if (nombre.equals(s)) {
                 fileexist.setValue(true);
-            } else fileexist.setValue(false);
+            }
         }
         return fileexist;
     }

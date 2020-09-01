@@ -60,13 +60,6 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         final Snackbar Avizoneolinklisto = Snackbar.make(view,"Neolink Guardado", BaseTransientBottomBar.LENGTH_SHORT);
         final Snackbar Avizonelinkfallido = Snackbar.make(view,"Problemas al conectar con el servidor intentelo luego", BaseTransientBottomBar.LENGTH_SHORT);
-        ((actividadbase)getActivity()).fabaparecer();
-        ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToDialogNeolink());
-            }
-        });
 
         rv = view.findViewById(R.id.lista_neolink);
         glm = new GridLayoutManager(getActivity(),1);
@@ -118,6 +111,18 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
         });
         */
         //rv.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((actividadbase)getActivity()).fabaparecer();
+        ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToDialogNeolink());
+            }
+        });
     }
 
     @Override

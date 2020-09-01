@@ -123,5 +123,6 @@ public class actividadbase extends AppCompatActivity {
     }
     public void fabcalendar() {fab.setImageResource(R.drawable.ic_calendar_fab);}
     public void fabplus(){fab.setImageResource(R.drawable.ic_stat_fab);}
+    public void fabcheck(){fab.setImageResource(R.drawable.listosign);}
 }
 

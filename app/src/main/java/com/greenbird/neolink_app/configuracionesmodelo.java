@@ -9,6 +9,7 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.neolink_app.R;
+import com.example.neolink_app.actividadbase;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
 import com.example.neolink_app.clases.configuracion.statePortsactive;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
+import com.example.neolink_app.listitaDirections;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class configuracionesmodelo extends Fragment {
     private String neolinkname;
@@ -71,6 +76,9 @@ public class configuracionesmodelo extends Fragment {
     private TextView port2active;
     private TextView port3active;
     private TextView port4active;
+
+    private state stateobj;
+    private Confvalues confvobj;
 
 
 
@@ -156,15 +164,16 @@ public class configuracionesmodelo extends Fragment {
         port3active = view.findViewById(R.id.Puertoactivo3);
         port4active = view.findViewById(R.id.Puertoactivo4);
 
-
         archi.crearpaquetedeconfiguraciones(neolinkname).observe(getViewLifecycleOwner(), new Observer<Pair<state, Confvalues>>() {
             @Override
             public void onChanged(Pair<state, Confvalues> stateConfvaluesPair) {
                 if(stateConfvaluesPair.first!=null){
                     arrangedataState(stateConfvaluesPair.first);
+                    stateobj = stateConfvaluesPair.first;
                 }
                 if(stateConfvaluesPair.second!=null){
                     arrangedataconfvalues(stateConfvaluesPair.second);
+                    confvobj = stateConfvaluesPair.second;
                 }
             }
         });
@@ -230,6 +239,30 @@ public class configuracionesmodelo extends Fragment {
         });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((actividadbase)getActivity()).fabcheck();
+        ((actividadbase)getActivity()).fabaparecer();
+        ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Snackbar Avizoguardado = Snackbar.make(v,"Configuración Guardada", BaseTransientBottomBar.LENGTH_SHORT);
+                final Snackbar Avizonoguardo = Snackbar.make(v,"No hay cambio detectado", BaseTransientBottomBar.LENGTH_SHORT);
+                if(doineedtosave()){
+                    Avizoguardado.show();
+                } else Avizonoguardo.show();
+            }
+        });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((actividadbase)getActivity()).fabdesparecer();
+    }
+
     private void arrangedataconfvalues(Confvalues object){
         if(object.BEEP_EN!=0){
             beepdelsistema.setChecked(true);
@@ -280,31 +313,31 @@ public class configuracionesmodelo extends Fragment {
             if(limits.dameP1().damek()!=null){
                 if(limits.dameP1().damek().dameV1().damebool()!=0){
                     limitP1potencialmatricial.setChecked(true);
-                    limitP1PMLI.setText(String.valueOf(limits.dameP1().damek().V1.dameMin()));
-                    limitP1PMLS.setText(String.valueOf(limits.dameP1().damek().V1.dameMAX()));
+                    limitP1PMLI.setText(String.valueOf(limits.dameP1().damek().dameV1().dameMin()));
+                    limitP1PMLS.setText(String.valueOf(limits.dameP1().damek().dameV1().dameMAX()));
                 } else desapareceP1potencialmatricial();
                 if(limits.dameP1().damek().dameV2().damebool()!=0){
                     limitP1temperatura.setChecked(true);
-                    limitP1TEMLI.setText(String.valueOf(limits.dameP1().damek().V2.dameMin()));
-                    limitP1TEMLS.setText(String.valueOf(limits.dameP1().damek().V2.dameMAX()));
+                    limitP1TEMLI.setText(String.valueOf(limits.dameP1().damek().dameV2().dameMin()));
+                    limitP1TEMLS.setText(String.valueOf(limits.dameP1().damek().dameV2().dameMAX()));
                 } else desapareceP1TEMP();
             } else limitP1sensork.setVisibility(View.GONE);
 
             if(limits.dameP1().dameG()!=null){
                 if(limits.dameP1().dameG().dameV1().damebool()!=0){
                     limitP1humedaddelsuelo.setChecked(true);
-                    limitP1HSLI.setText(String.valueOf(limits.dameP1().damek().V1.dameMin()));
-                    limitP1HSLS.setText(String.valueOf(limits.dameP1().damek().V1.dameMAX()));
+                    limitP1HSLI.setText(String.valueOf(limits.dameP1().dameG().dameV1().dameMin()));
+                    limitP1HSLS.setText(String.valueOf(limits.dameP1().dameG().dameV1().dameMAX()));
                 } else desapareceP1HS();
                 if(limits.dameP1().dameG().dameV2().damebool()!=0){
                     limitP1temperaturadelsuelo.setChecked(true);
-                    limitP1TMSLI.setText(String.valueOf(limits.dameP1().damek().V2.dameMin()));
-                    limitP1TMSLS.setText(String.valueOf(limits.dameP1().damek().V2.dameMAX()));
+                    limitP1TMSLI.setText(String.valueOf(limits.dameP1().dameG().dameV2().dameMin()));
+                    limitP1TMSLS.setText(String.valueOf(limits.dameP1().dameG().dameV2().dameMAX()));
                 } else desapareceP1TEMS();
                 if(limits.dameP1().dameG().dameV3().damebool()!=0){
                     limitP1conductividadelectrica.setChecked(true);
-                    limitP1CELI.setText(String.valueOf(limits.dameP1().damek().V2.dameMin()));
-                    limitP1CELS.setText(String.valueOf(limits.dameP1().damek().V2.dameMAX()));
+                    limitP1CELI.setText(String.valueOf(limits.dameP1().dameG().dameV3().dameMin()));
+                    limitP1CELS.setText(String.valueOf(limits.dameP1().dameG().dameV3().dameMAX()));
                 } else desapareceP1CS();
 
             } else limitP1sensorg.setVisibility(View.GONE);
@@ -349,5 +382,49 @@ public class configuracionesmodelo extends Fragment {
         limitP1CElimitesuperior.setVisibility(View.GONE);
         limitP1CElimiteinferior.setVisibility(View.GONE);
     }
+    private Boolean doineedtosave(){
+        Boolean a = beepdelsistema.isChecked() == translatebool(confvobj.BEEP_EN);
+        Boolean b = tiempoentredatos.getText().toString().equals(desegundosaminutos(confvobj.SLEEP_TIME));
+        Boolean c = portRQ.isChecked() == translatebool(confvobj.PORT_RQ);
+        Boolean d = gpsRQ.isChecked() == translatebool(confvobj.GPS_RQ);
+        Boolean e = checklimits(stateobj.Limits);
+        return !(a&&b&&c&&d&&e);
+        /*
+        return  !((beepdelsistema.isChecked() == translatebool(confvobj.BEEP_EN)) &&
+                (tiempoentredatos.getText().equals(desegundosaminutos(confvobj.SLEEP_TIME))) &&
+                (portRQ.isChecked() == translatebool(confvobj.PORT_RQ)) &&
+                (gpsRQ.isChecked() == translatebool(confvobj.GPS_RQ)) && checklimits(stateobj.Limits));
+
+         */
+    }
+    private Boolean translatebool(int o){
+        if(o!=0){
+            return true;
+        } else return false;
+    }
+    private Boolean checklimits(statelimitsport port){
+        Boolean a = (limitP1humedaddelsuelo.isChecked()==translatebool(port.dameP1().dameG().dameV1().damebool()));
+        Boolean b = limitP1HSLI.getText().toString().equals(String.valueOf(port.dameP1().dameG().dameV1().dameMin()));
+        Boolean c = limitP1HSLS.getText().toString().equals(String.valueOf(port.dameP1().dameG().dameV1().dameMAX()));
+
+        Boolean d = (limitP1temperaturadelsuelo.isChecked()==translatebool(port.dameP1().dameG().dameV2().damebool()));
+        Boolean e = limitP1TMSLI.getText().toString().equals(String.valueOf(port.dameP1().dameG().dameV2().dameMin()));
+        Boolean f = limitP1TMSLS.getText().toString().equals(String.valueOf(port.dameP1().dameG().dameV2().dameMAX()));
+
+        Boolean g = (limitP1conductividadelectrica.isChecked()==translatebool(port.dameP1().dameG().dameV3().damebool()));
+        Boolean h = limitP1CELI.getText().toString().equals(String.valueOf(port.dameP1().dameG().dameV3().dameMin()));
+        Boolean k = limitP1CELS.getText().toString().equals(String.valueOf(port.dameP1().dameG().dameV3().dameMAX()));
+
+        Boolean l = (limitP1potencialmatricial.isChecked()==translatebool(port.dameP1().damek().dameV1().damebool()));
+        Boolean m = limitP1PMLI.getText().toString().equals(String.valueOf(port.dameP1().damek().dameV1().dameMin()));
+        Boolean n = limitP1PMLS.getText().toString().equals(String.valueOf(port.dameP1().damek().dameV1().dameMAX()));
+
+        Boolean o = (limitP1temperatura.isChecked()==translatebool(port.dameP1().damek().dameV2().damebool()));
+        Boolean p = limitP1TEMLI.getText().toString().equals(String.valueOf(port.dameP1().damek().dameV2().dameMin()));
+        Boolean q = limitP1TEMLS.getText().toString().equals(String.valueOf(port.dameP1().damek().dameV2().dameMAX()));
+        return a&&d&&g&&l&&o;
+        //return a&&b&&c&&d&&e&&f&&g&&h&&k&&o&&p&&q;
+    }
+
 
 }

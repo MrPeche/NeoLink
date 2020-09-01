@@ -19,6 +19,8 @@ import com.example.neolink_app.adaptadores.ListaNeonodesAdapter;
 import com.example.neolink_app.clases.LinkNodo;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -56,7 +58,8 @@ public class listaneonodes extends Fragment implements ListaNeonodesAdapter.Oncl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        ((actividadbase)getActivity()).fabaparecer();
+
+
         rv = view.findViewById(R.id.lista_neonode);
         glm = new GridLayoutManager(getActivity(),1);
         rv.setLayoutManager(glm);
@@ -77,6 +80,13 @@ public class listaneonodes extends Fragment implements ListaNeonodesAdapter.Oncl
         });
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((actividadbase)getActivity()).fabplus();
+        ((actividadbase)getActivity()).fabaparecer();
     }
 
     @Override

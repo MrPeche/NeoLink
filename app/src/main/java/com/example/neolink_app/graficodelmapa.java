@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
+import com.example.neolink_app.adaptadores.MarkerLineChartDefault;
 import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
 import com.example.neolink_app.clases.DepthPackage;
@@ -111,7 +112,7 @@ public class graficodelmapa extends Fragment {
         graficoMPconductividadelectrica = view.findViewById(R.id.graficoMPconductividadelectrica);
         cvgrf1 = view.findViewById(R.id.cardVMP1);
         cvgrf2 = view.findViewById(R.id.cardVMP2);
-        cvgrf3 = view.findViewById(R.id.cardVMP3);
+        cvgrf3 = view.findViewById(R.id.cardVMP3); //esta es energia por alguna razon que no quiero ver en este momento ORDENAR LUEGO
         cvgrhumedaddelsuelo = view.findViewById(R.id.cardMPhumedaddelsuelo);
         cvgrtemperaturadelsuelo = view.findViewById(R.id.cardMPtemperaturadelsuelo);
         cvgrconductividadelectrica = view.findViewById(R.id.cardMPconductividadelectrica);
@@ -170,11 +171,13 @@ public class graficodelmapa extends Fragment {
                 @Override
                 public void onChanged(HorasG horasG) {
                     if(horasG!=null){
-                        cleanG();
-                        cvgrconductividadelectrica.setVisibility(View.VISIBLE);
-                        cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
-                        cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
-                        setdataG(horasG);
+                        if(horasG.dametamanoG()!=0){
+                            cleanG();
+                            cvgrconductividadelectrica.setVisibility(View.VISIBLE);
+                            cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
+                            cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                            setdataG(horasG);
+                        }
                     }
                 }
             });
@@ -584,6 +587,8 @@ public class graficodelmapa extends Fragment {
             XAxis Xaxis = graficohumedadrelativa.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             Xaxis.setValueFormatter(new graficolabelgenerator(B));
+            MarkerLineChartDefault adapter = new MarkerLineChartDefault(getContext(),R.layout.item_dataetiqueta); //******************
+            graficohumedadrelativa.setMarker(adapter); //********************
             graficohumedadrelativa.invalidate();
             graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo==2){
@@ -591,6 +596,8 @@ public class graficodelmapa extends Fragment {
             XAxis Xaxis = graficopresionbarometrica.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             Xaxis.setValueFormatter(new graficolabelgenerator(B));
+            MarkerLineChartDefault adapter = new MarkerLineChartDefault(getContext(),R.layout.item_dataetiqueta); //******************
+            graficopresionbarometrica.setMarker(adapter); //********************
             graficopresionbarometrica.invalidate();
             graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }
