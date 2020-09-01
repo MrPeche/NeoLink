@@ -243,4 +243,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<Pair<state, Confvalues>> crearpaquetedeconfiguraciones(String neolink){
         return new datadeconfiguracion<>(appRepo.fetchdataconfigracionstate(neolink),appRepo.fetchdataconfigracionconfvalue(neolink));
     }
+    public void savebeep(String neolink, int value){
+        
+    }
 }

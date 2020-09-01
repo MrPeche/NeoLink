@@ -587,8 +587,8 @@ public class graficodelmapa extends Fragment {
             XAxis Xaxis = graficohumedadrelativa.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             Xaxis.setValueFormatter(new graficolabelgenerator(B));
-            MarkerLineChartDefault adapter = new MarkerLineChartDefault(getContext(),R.layout.item_dataetiqueta); //******************
-            graficohumedadrelativa.setMarker(adapter); //********************
+            MarkerLineChartDefault adapter = new MarkerLineChartDefault(getContext(),R.layout.item_dataetiqueta); //********
+            graficohumedadrelativa.setMarker(adapter); //*********
             graficohumedadrelativa.invalidate();
             graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         } else if(tipo==2){
@@ -596,8 +596,8 @@ public class graficodelmapa extends Fragment {
             XAxis Xaxis = graficopresionbarometrica.getXAxis();
             Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             Xaxis.setValueFormatter(new graficolabelgenerator(B));
-            MarkerLineChartDefault adapter = new MarkerLineChartDefault(getContext(),R.layout.item_dataetiqueta); //******************
-            graficopresionbarometrica.setMarker(adapter); //********************
+            //MarkerLineChartDefault adapter = new MarkerLineChartDefault(getContext(),R.layout.item_dataetiqueta); //********
+            //graficopresionbarometrica.setMarker(adapter); //********
             graficopresionbarometrica.invalidate();
             graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }

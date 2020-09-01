@@ -386,7 +386,7 @@ public class UserInfoRepo {
 
     public LiveData<GPS> dameGPS(String neolink){
         String esp = "/";
-        String patio = "/NeoLink/"+neolink+"/DataSet/State/GPS";
+        String patio = "/NeoLink/"+neolink+"/State/GPS";
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
         GPSM.addSource(liveDataNL, new Observer<DataSnapshot>() {
@@ -497,5 +497,10 @@ public class UserInfoRepo {
             }
         });
         return configuracionconfvalue;
+    }
+    public void saveBeepconfiguration(String neolink,int value){
+        String patio = "/NeoLink/"+neolink+"/Conf_values/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        BaseDatosNL.child("BEEP_EN").setValue(value);
     }
 }

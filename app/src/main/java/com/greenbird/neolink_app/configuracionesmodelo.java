@@ -83,6 +83,7 @@ public class configuracionesmodelo extends Fragment {
 
 
 
+
     public configuracionesmodelo() {
         // Required empty public constructor
     }
@@ -251,6 +252,7 @@ public class configuracionesmodelo extends Fragment {
                 final Snackbar Avizoguardado = Snackbar.make(v,"Configuración Guardada", BaseTransientBottomBar.LENGTH_SHORT);
                 final Snackbar Avizonoguardo = Snackbar.make(v,"No hay cambio detectado", BaseTransientBottomBar.LENGTH_SHORT);
                 if(doineedtosave()){
+
                     Avizoguardado.show();
                 } else Avizonoguardo.show();
             }
@@ -388,7 +390,8 @@ public class configuracionesmodelo extends Fragment {
         Boolean c = portRQ.isChecked() == translatebool(confvobj.PORT_RQ);
         Boolean d = gpsRQ.isChecked() == translatebool(confvobj.GPS_RQ);
         Boolean e = checklimits(stateobj.Limits);
-        return !(a&&b&&c&&d&&e);
+        return !a;
+        //return !(a&&b&&c&&d&&e);
         /*
         return  !((beepdelsistema.isChecked() == translatebool(confvobj.BEEP_EN)) &&
                 (tiempoentredatos.getText().equals(desegundosaminutos(confvobj.SLEEP_TIME))) &&
