@@ -8,13 +8,13 @@ public class state {
     public double LastOP_TIME;
     public String LastUpload;
     public statelimitsport Limits;
-    public double MODE_PRG;
+    public boolean MODE_PRG;
     public double NewConf;
     public statenotification Notification;
     public statePortsactive Port;
-    public double WiFi_rssi;
+    public String WiFi_rssi;
     public state(){}
-    public state(int Firmware, stateGPS GPS, String Hardware_ver, String IP, double LastOP_TIME, String LastUpload, statelimitsport Limits, double MODE_PRG, double NewConf, statenotification Notification, statePortsactive Port, double WiFi_rssi){
+    public state(int Firmware, stateGPS GPS, String Hardware_ver, String IP, double LastOP_TIME, String LastUpload, statelimitsport Limits, boolean MODE_PRG, double NewConf, statenotification Notification, statePortsactive Port, String WiFi_rssi){
         this.Firmware = Firmware;
         this.GPS = GPS;
         this.Hardware_ver = Hardware_ver;
@@ -35,9 +35,9 @@ public class state {
     public double dameLastOP_TIME(){return LastOP_TIME;}
     public String dameLastUpload(){return LastUpload;}
     //public statelimitsport dameLimits(){return Limits;}
-    public double dameMODE_PRG(){return MODE_PRG;}
+    public boolean dameMODE_PRG(){return MODE_PRG;}
     public double dameNewConf(){return NewConf;}
     public statenotification dameNotification(){return Notification;}
     public statePortsactive damePort(){return Port;}
-    public double dameWiFirssi(){return WiFi_rssi;}
+    public String dameWiFirssi(){return WiFi_rssi;}
 }

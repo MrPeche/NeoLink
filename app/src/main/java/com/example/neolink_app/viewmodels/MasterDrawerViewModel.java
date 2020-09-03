@@ -10,29 +10,25 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
-import com.example.neolink_app.clases.Dias;
 import com.example.neolink_app.clases.GPS;
 import com.example.neolink_app.clases.Horas;
-import com.example.neolink_app.clases.LoginFirebase.UsuarioNeoL;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
+import com.example.neolink_app.clases.configuracion.statelimitsport;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.datadeconfiguracion;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackagetwoday;
 
-import java.security.acl.Owner;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<OWNERitems> Usuarioneolinks;
@@ -243,7 +239,11 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<Pair<state, Confvalues>> crearpaquetedeconfiguraciones(String neolink){
         return new datadeconfiguracion<>(appRepo.fetchdataconfigracionstate(neolink),appRepo.fetchdataconfigracionconfvalue(neolink));
     }
-    public void savebeep(String neolink, int value){
-        
+    public LiveData<statelimitsport> fecthlimits(String neolink){
+        return appRepo.fetchlimites(neolink);
     }
+    public void saveconfiguracion(String neolink,boolean beep,int beepv,boolean port, int portv, boolean gps, int gpsv, boolean tiempoentreplazos, int tiempoentreplazosv,boolean[] switchs,boolean[] switchsactuales,boolean[] superior,boolean[] inferior,String[] superiorl,String[] inferiorl,double[] valorsuperior,double[] valorinferior){
+        appRepo.saveconfiguration(neolink,beep,beepv,port,portv,gps,gpsv,tiempoentreplazos,tiempoentreplazosv,switchs,switchsactuales,superior,inferior,superiorl,inferiorl,valorsuperior,valorinferior);
+    }
+
 }

@@ -11,12 +11,11 @@ public class Confvalues {
     public double N_START_HOUR;
     public int PORT_RQ;
     public int SLEEP_TIME;
-    public String WIFI_PSSWD_DEFAULT;
-    public String WIFI_SSID_DEFAULT;
-    public double aux;
+    public String WIFI_PSSWD;
+    public String WIFI_SSID;
 
     public void confvalues(){}
-    public void confvalues(double BAT_H, double BAT_L, int BEEP_EN, int GPS_RQ, double NO_WIFI, double N_END_HOUR, double N_SLEEP_TIME, double N_START_HOUR, int PORT_RQ, int SLEEP_TIME, String WIFI_PSSWD_DEFAULT, String WIFI_SSID_DEFAULT,double aux){
+    public void confvalues(double BAT_H, double BAT_L, int BEEP_EN, int GPS_RQ, double NO_WIFI, double N_END_HOUR, double N_SLEEP_TIME, double N_START_HOUR, int PORT_RQ, int SLEEP_TIME, String WIFI_PSSWD, String WIFI_SSID,double aux){
         this.BAT_H = BAT_H;
         this.BAT_L = BAT_L;
         this.BEEP_EN = BEEP_EN;
@@ -27,9 +26,8 @@ public class Confvalues {
         this.N_START_HOUR = N_START_HOUR;
         this.PORT_RQ = PORT_RQ;
         this.SLEEP_TIME = SLEEP_TIME;
-        this.WIFI_PSSWD_DEFAULT = WIFI_PSSWD_DEFAULT;
-        this.WIFI_SSID_DEFAULT = WIFI_SSID_DEFAULT;
-        this.aux = aux;
+        this.WIFI_PSSWD = WIFI_PSSWD;
+        this.WIFI_SSID = WIFI_SSID;
     }
 
 

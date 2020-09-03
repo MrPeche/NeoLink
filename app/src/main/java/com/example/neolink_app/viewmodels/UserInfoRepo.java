@@ -1,13 +1,8 @@
 package com.example.neolink_app.viewmodels;
 
-import android.provider.ContactsContract;
-import android.view.ViewDebug;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.neolink_app.adaptadores.FirebaseQueryLiveData;
@@ -25,19 +20,19 @@ import com.example.neolink_app.clases.SensorG.PuertoG;
 import com.example.neolink_app.clases.SensorG.dataPuertoG;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
+import com.example.neolink_app.clases.configuracion.statelimitsport;
+import com.example.neolink_app.clases.configuracion.statesinglelimitvalues;
 import com.example.neolink_app.clases.dataPuerto;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.database_state.minutosstate;
 import com.example.neolink_app.clases.database_state.statePK;
-import com.google.firebase.FirebaseExceptionMapper;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserInfoRepo {
 
@@ -498,9 +493,56 @@ public class UserInfoRepo {
         });
         return configuracionconfvalue;
     }
+
     public void saveBeepconfiguration(String neolink,int value){
         String patio = "/NeoLink/"+neolink+"/Conf_values/";
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         BaseDatosNL.child("BEEP_EN").setValue(value);
+    }
+    public void saveconfiguration(String neolink,boolean beep,int beepv,boolean port, int portv, boolean gps, int gpsv, boolean tiempoentreplazos, int tiempoentreplazosv,boolean[] switchs,boolean[] switchsactuales,boolean[] superior,boolean[] inferior,String[] superiorl,String[] inferiorl,double[] valorsuperior,double[] valorinferior){
+        String patio = "/NeoLink/"+neolink;
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        Map<String, Object> childUpdates  = new HashMap<>();
+        if(beep) childUpdates.put("/Conf_values/BEEP_EN/",beepv);
+        if(port) childUpdates.put("/Conf_values/PORT_RQ/",portv);
+        if(gps) childUpdates.put("/Conf_values/GPS_RQ/",gpsv);
+        if(tiempoentreplazos) childUpdates.put("/Conf_values/SLEEP_TIME/",tiempoentreplazosv);
+        for(int i =0;i<switchs.length;i++){
+            if(!switchs[i]){
+                int a;
+                if(switchsactuales[i]){
+                    a = 1;
+                } else a = 0;
+                double b = generarlimite(superior[i],superiorl[i],valorsuperior[i]);
+                double c = generarlimite(inferior[i],inferiorl[i],valorinferior[i]);
+                statesinglelimitvalues paquetedesubida = new statesinglelimitvalues(b,c,a);
+                if(i<3){
+                    childUpdates.put("/State/Limits/Port1/g/V"+(i+1)+"/",paquetedesubida);
+                } else childUpdates.put("/State/Limits/Port1/k/V"+(i-2)+"/",paquetedesubida);
+            }
+        }
+        BaseDatosNL.updateChildren(childUpdates);
+    }
+    private double generarlimite(boolean limiteb,String valor,double valororiginal){
+        if(limiteb){
+            if(valor.equals("")){
+                return 0;
+            } else return valororiginal;
+        } else return Double.parseDouble(valor);
+    }
+    public LiveData<statelimitsport> fetchlimites(String neolink){
+        final MediatorLiveData<statelimitsport> limites = new MediatorLiveData<>();
+        String patio = "/NeoLink/"+neolink+"/State/Limits/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        limites.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    limites.setValue(dataSnapshot.getValue(statelimitsport.class));
+                } else limites.setValue(null);
+            }
+        });
+        return limites;
     }
 }
