@@ -49,6 +49,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public final MutableLiveData<String> datechoosen = new MutableLiveData<>();
     public final MutableLiveData<String> nuevoNeolink = new MutableLiveData<>();
     private UserInfoRepo appRepo;
+    private manejadordedispositivo FCM;
     private String uid;
     private Calendar ahora = Calendar.getInstance();
     public MutableLiveData<ArrayList<Integer>> date = new MutableLiveData<>();
@@ -60,6 +61,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public MasterDrawerViewModel(@NonNull Application application) {
         super(application);
         appRepo = new UserInfoRepo();
+        FCM = new manejadordedispositivo();
         updatetoday();
         setayer();
         //neolinkguardadopositivo();
@@ -67,6 +69,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public void poneruid(String uid){
         this.uid = uid;
+        FCM.guardardispositivo(uid);
     }
     public void getLiveNL(){
         Usuarioneolinks = appRepo.dameneolinks(uid);
