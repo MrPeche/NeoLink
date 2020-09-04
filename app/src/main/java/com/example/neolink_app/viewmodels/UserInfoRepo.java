@@ -508,7 +508,7 @@ public class UserInfoRepo {
         if(gps) childUpdates.put("/Conf_values/GPS_RQ/",gpsv);
         if(tiempoentreplazos) childUpdates.put("/Conf_values/SLEEP_TIME/",tiempoentreplazosv);
         for(int i =0;i<switchs.length;i++){
-            if(!switchs[i]){
+            if(!(switchs[i]&&superior[i]&&inferior[i])){
                 int a;
                 if(switchsactuales[i]){
                     a = 1;
