@@ -63,9 +63,8 @@
     <string name="salida">Salir</string>
 
     //datos generales
-    <string name="tituloprincipal">S001 15cm</string>
-    <string name="primernombre">VWC</string>
-    <string name="segundonombre">Temperatura</string>
+    <string name="primernombre">Humedad del suelo</string>
+    <string name="segundonombre">Temperatura del suelo</string>
     <string name="tercernombre">Conductividad EC</string>
 
     <string name="tituloprincipal2">S002 15cm</string>
@@ -73,13 +72,13 @@
     <string name="segundonombre2">Temperatura</string>
 
     <string name="tituloprincipal3">S003 Atmos</string>
-    <string name="primernombre3">Radiación Solar</string>
-    <string name="segundonombre3">Precipitación</string>
-    <string name="cuartonombre3">Golpes de Luz</string>
-    <string name="quintonombre3">Prom. distancia de luz</string>
-    <string name="sextonombre3">Presion de vapor</string>
-    <string name="septimonombre3">Presion Atmosferica</string>
-    <string name="octavonombre3">Presion de vapor</string>
+    <string name="primernombre3">Presión barométrica</string>
+    <string name="segundonombre3">Humedad relativa</string>
+    <string name="cuartonombre3">Temperatura de vulvo seco</string>
+    <string name="quintonombre3">Voltaje solar</string>
+    <string name="sextonombre3">Batería</string>
+    <string name="septimonombre3">Temperatura interna</string>
+    <string name="octavonombre3">Altitud</string>
 
     //cardview
     <string name="cardtitle">NeoLink</string>

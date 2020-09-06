@@ -746,7 +746,6 @@ public class graficodelmapa extends Fragment {
                 arriba.enableDashedLine(10,10,10);
                 abajo.setLineColor(colores[0]);
                 agregarloslimites(arriba,abajo,i);
-
             }
         }
     }

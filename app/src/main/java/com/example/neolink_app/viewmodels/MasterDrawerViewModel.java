@@ -248,5 +248,14 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public void saveconfiguracion(String neolink,boolean beep,int beepv,boolean port, int portv, boolean gps, int gpsv, boolean tiempoentreplazos, int tiempoentreplazosv,boolean[] switchs,boolean[] switchsactuales,boolean[] superior,boolean[] inferior,String[] superiorl,String[] inferiorl,double[] valorsuperior,double[] valorinferior){
         appRepo.saveconfiguration(neolink,beep,beepv,port,portv,gps,gpsv,tiempoentreplazos,tiempoentreplazosv,switchs,switchsactuales,superior,inferior,superiorl,inferiorl,valorsuperior,valorinferior);
     }
+    public LiveData<Horas> funciondedatosgeneralesk(String name,int hoyano,int hoymes, int hoydia){
+        return appRepo.damedatahoyK2(name,hoyano,hoymes,hoydia,"k");
+    }
+    public LiveData<HorasG> funciondedatosgeneralesg(String name,int hoyano,int hoymes, int hoydia){
+        return appRepo.damedatahoyG2(name,hoyano,hoymes,hoydia);
+    }
+    public LiveData<horasstate> funciondedatosgeneralesstate(String name,int hoyano,int hoymes, int hoydia){
+        return appRepo.damedatahoyState2(name,hoyano,hoymes,hoydia);
+    }
 
 }

@@ -20,12 +20,14 @@ import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.SensorG.HorasG;
+import com.example.neolink_app.clases.configuracion.statelimitsport;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.DataSet;
@@ -214,6 +216,14 @@ public class planografico extends Fragment {
                 }
             });
         }
+        archi.fecthlimits(name).observe(getViewLifecycleOwner(), new Observer<statelimitsport>() {
+            @Override
+            public void onChanged(statelimitsport statelimitsport) {
+                if(statelimitsport!=null){
+                    arrangelimitlines(statelimitsport);
+                }
+            }
+        });
 
     }
     private void cleanthisshit(){
@@ -724,5 +734,68 @@ public class planografico extends Fragment {
             graficoconductividaddelsuelo.invalidate();
             graficoconductividaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         }
+    }
+    private void arrangelimitlines(statelimitsport obj){
+        boolean[] switchs = {deintaboolean(obj.dameP1().damek().dameV1().damebool()),
+                deintaboolean(obj.dameP1().damek().dameV2().damebool()),
+                deintaboolean(obj.dameP1().dameG().dameV1().damebool()),
+                deintaboolean(obj.dameP1().dameG().dameV2().damebool()),
+                deintaboolean(obj.dameP1().dameG().dameV3().damebool())};
+        double[] superior = {obj.dameP1().damek().dameV1().dameMAX(),
+                obj.dameP1().damek().dameV2().dameMAX(),
+                obj.dameP1().dameG().dameV1().dameMAX(),
+                obj.dameP1().dameG().dameV2().dameMAX(),
+                obj.dameP1().dameG().dameV3().dameMAX()};
+        double[] inferior = {obj.dameP1().damek().dameV1().dameMin(),
+                obj.dameP1().damek().dameV2().dameMin(),
+                obj.dameP1().dameG().dameV1().dameMin(),
+                obj.dameP1().dameG().dameV2().dameMin(),
+                obj.dameP1().dameG().dameV3().dameMin()};
+        for(int i=0;i<switchs.length;i++){
+            if(switchs[i]){
+                LimitLine arriba = new LimitLine((float)superior[i]);
+                arriba.setLineColor(colores[0]);
+                arriba.setLineWidth(0.9f);
+                arriba.enableDashedLine(30,10,10);
+                LimitLine abajo = new LimitLine((float)inferior[i]);
+                arriba.setLineWidth(0.9f);
+                arriba.enableDashedLine(10,10,10);
+                abajo.setLineColor(colores[0]);
+                agregarloslimites(arriba,abajo,i);
+            }
+        }
+    }
+    private boolean deintaboolean(int data){
+        return data==1;
+    }
+    private void agregarloslimites(LimitLine superior, LimitLine inferior,int caso){
+        YAxis yAxis = dameelaxiselegido(caso);
+        yAxis.setDrawLimitLinesBehindData(true);
+        yAxis.addLimitLine(superior);
+        yAxis.addLimitLine(inferior);
+        invalidation(caso);
+    }
+
+    private void invalidation(int caso){
+        if(caso==0){
+            grafico1.invalidate();
+        } else if(caso==1){
+            grafico2.invalidate();
+        } else if(caso==2){
+            graficohumedaddelsuelo.invalidate();
+        } else if(caso==3){
+            graficotemperaturadelsuelo.invalidate();
+        } else{graficoconductividaddelsuelo.invalidate();}
+    }
+    private YAxis dameelaxiselegido(int caso){
+        if(caso==0){
+            return grafico1.getAxisLeft();
+        } else if(caso==1){
+            return grafico2.getAxisLeft();
+        } else if(caso==2){
+            return graficohumedaddelsuelo.getAxisLeft();
+        } else if(caso==3){
+            return graficotemperaturadelsuelo.getAxisLeft();
+        } else{return graficoconductividaddelsuelo.getAxisLeft();}
     }
 }

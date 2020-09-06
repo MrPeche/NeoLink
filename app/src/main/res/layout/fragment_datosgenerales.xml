@@ -57,13 +57,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tituloprincipal"
+                    android:id="@+id/titulosensor1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_bold"
-                    android:text="@string/tituloprincipal"
                     android:textSize="@dimen/Tamañotitulo" />
             </LinearLayout>
 
@@ -89,7 +88,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="39,4%"
+
                     android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
 
@@ -115,7 +114,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="26.4°C"
                     android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
 
@@ -142,7 +140,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="0,82 dS/m"
                     android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
 
@@ -180,7 +177,6 @@
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_bold"
-                    android:text="@string/tituloprincipal2"
                     android:textSize="@dimen/Tamañotitulo" />
             </LinearLayout>
 
@@ -206,7 +202,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="-15.3 kPa"
                     android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
 
@@ -233,7 +228,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="26.4°C"
                     android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
         </LinearLayout>
@@ -292,12 +286,11 @@
                 <TextView
                     android:id="@+id/primer3dato"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="2 W/m"
-                    android:textSize="@dimen/Tamañotexto"/>
+                    android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
 
             <LinearLayout
@@ -322,7 +315,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="0.000 mm"
                     android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
 
@@ -348,7 +340,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="0"
                     android:textSize="@dimen/Tamañotexto" />
             </LinearLayout>
 
@@ -374,7 +365,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end|center"
-                    android:text="0 km"
                     android:textSize="@dimen/Tamañotexto"/>
             </LinearLayout>
 
@@ -400,7 +390,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="0,17 RH"
                     android:textSize="@dimen/Tamañotexto"/>
             </LinearLayout>
 
@@ -426,7 +415,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="94,35 kPa"
                     android:textSize="@dimen/Tamañotexto"/>
             </LinearLayout>
 
@@ -443,7 +431,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
-                    android:text="Direccion del viento"
+                    android:text="@string/octavonombre3"
                     android:textSize="@dimen/Tamañotexto"/>
 
                 <TextView
@@ -453,7 +441,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/lato"
                     android:gravity="end"
-                    android:text="175°"
                     android:textSize="@dimen/Tamañotexto"/>
             </LinearLayout>
 

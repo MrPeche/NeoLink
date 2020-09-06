@@ -291,29 +291,27 @@ public class UserInfoRepo {
         //String neolink, int año, int mes, int dia, String sensor
         return datahoyG;
     }
-    public LiveData<Horas> damedatahoyG2(String neolink, int ano, int mes, int dia){
-        final MediatorLiveData datahoyG2 = new MediatorLiveData();
-        String sensor = "g";
+    public LiveData<HorasG> damedatahoyG2(String neolink, int ano, int mes, int dia){
+        final MediatorLiveData<HorasG> datahoyG2 = new MediatorLiveData();
         String esp = "/";
+        String sensor = "g";
         String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+ano+esp+operacionfecha(mes)+esp+operacionfecha(dia);
-        //String patio = "/NeoLink/"+neolink+"/DataSet/k/20/07/01/"; // esto es solo para debuggear un dia especifico por ahora
-        Horas data = new Horas();
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
         datahoyG2.addSource(liveDataNL, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
-                    Horas horas = new Horas();
+                    HorasG horas = new HorasG();
                     for(DataSnapshot childSnap:dataSnapshot.getChildren()){
                         String horichi = childSnap.getKey(); //hora
-                        Minutos minutos = new Minutos();
+                        MinutosG minutos = new MinutosG();
                         for(DataSnapshot chilchilSnap:childSnap.getChildren()){
                             String min = chilchilSnap.getKey();//minutos
-                            Puerto puerto = new Puerto();
+                            PuertoG puerto = new PuertoG();
                             for(DataSnapshot chilchilchilSnap:chilchilSnap.getChildren()){
                                 String a = chilchilchilSnap.getKey();//puerto
-                                dataPuerto b = chilchilchilSnap.getValue(dataPuerto.class);//data
+                                dataPuertoG b = chilchilchilSnap.getValue(dataPuertoG.class);//data
                                 puerto.tomaPuerto(a,b);
                             }
                             minutos.tomaMinutos(min,puerto);
