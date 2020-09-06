@@ -95,13 +95,13 @@ public class datosgenerales extends Fragment {
         potencialmatricial = view.findViewById(R.id.primer2dato);
         temperatura = view.findViewById(R.id.segundo2dato);
         CVsensor3 = view.findViewById(R.id.cardView3);
-        voltajesolar = view.findViewById(R.id.cuarto3dato);;
-        temperaturainterna = view.findViewById(R.id.sexto3dato);;
-        temperaturavulvoseco = view.findViewById(R.id.tercer3dato);;
-        humedadrelativa = view.findViewById(R.id.segundo3dato);;
-        voltajebateria = view.findViewById(R.id.quinto3dato);;
+        voltajesolar = view.findViewById(R.id.cuarto3dato);
+        temperaturainterna = view.findViewById(R.id.sexto3dato);
+        temperaturavulvoseco = view.findViewById(R.id.tercer3dato);
+        humedadrelativa = view.findViewById(R.id.segundo3dato);
+        voltajebateria = view.findViewById(R.id.quinto3dato);
         presionbarometrica = view.findViewById(R.id.primer3dato);
-        altitud = view.findViewById(R.id.septimo3dato);;
+        altitud = view.findViewById(R.id.septimo3dato);
 
         titulo.setText(nombre);
         startupstate();
