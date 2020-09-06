@@ -53,6 +53,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal">
 
@@ -60,7 +61,6 @@
                     android:id="@+id/titulosensor1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_bold"
                     android:textSize="@dimen/Tamañotitulo" />
@@ -167,6 +167,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal">
 
@@ -174,7 +175,6 @@
                     android:id="@+id/titulo2principal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_bold"
                     android:textSize="@dimen/Tamañotitulo" />
@@ -248,12 +248,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal">
 
@@ -261,7 +263,6 @@
                     android:id="@+id/titulo3principal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
                     android:fontFamily="@font/lato_bold"
                     android:text="@string/tituloprincipal3"

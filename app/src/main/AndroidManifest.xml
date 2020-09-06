@@ -10,11 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".actividadbase"></activity>
-        <activity android:name=".registrothree" />
-        <activity android:name=".registrotwo" />
-        <activity android:name=".registroone" />
-        <activity android:name=".recuperar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".registrothree"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".registrotwo"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".registroone"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".recuperar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -149,11 +149,11 @@ public class datosgenerales extends Fragment {
         CVsensor1.setVisibility(View.VISIBLE);
         String tit = "Sensor "+data.dameDepth();
         titulosensor.setText(tit);
-        String humedad = data.dameV1() + "m3/m3";
+        String humedad = (Math.floor(data.dameV1()*100)/100) + "m3/m3";
         humedaddelsuelo.setText(humedad);
-        String temperatura = data.dameV2() + "°C";
+        String temperatura = (Math.floor(data.dameV2()*100)/100) + "°C";
         temperaturadelsuelo.setText(temperatura);
-        String conductivida = data.dameV3() + "mS/cm";
+        String conductivida = (Math.floor(data.dameV3()*100)/100) + "mS/cm";
         ConductividadEC.setText(conductivida);
     }
     private dataPuertoG dameelultimodato(HorasG obj){
@@ -166,9 +166,9 @@ public class datosgenerales extends Fragment {
         CVsensor2.setVisibility(View.VISIBLE);
         String tit = "Sensor "+data.Depth;
         titulosensor2.setText(tit);
-        String PM = data.dameV1() + "kPa";
+        String PM = (Math.floor(data.dameV1()*100)/100) + "kPa";
         potencialmatricial.setText(PM);
-        String temp = data.dameV2() + "°C";
+        String temp = (Math.floor(data.dameV2()*100)/100) + "°C";
         temperatura.setText(temp);
     }
     private dataPuerto dameultimodatoK(Horas obj){
@@ -179,19 +179,19 @@ public class datosgenerales extends Fragment {
     private void arrangestate(horasstate obj){
         statePK data = dameultimodatostate(obj);
         CVsensor3.setVisibility(View.VISIBLE);
-        String PB = data.giveBP()+"kPa";
+        String PB = (Math.floor(data.giveBP()*100)/100)+"kPa";
         presionbarometrica.setText(PB);
-        String HR = data.giveRH()+"%";
+        String HR = (Math.floor(data.giveRH()*100)/100)+"%";
         humedadrelativa.setText(HR);
-        String TVS = data.givedT()+"°C";
+        String TVS = (Math.floor(data.givedT()*100)/100)+"°C";
         temperaturavulvoseco.setText(TVS);
-        String VS = data.giveSV()+"V";
+        String VS = (Math.floor(data.giveSV()*100)/100)+"V";
         voltajesolar.setText(VS);
-        String Bat = data.giveBV()+"V";
+        String Bat = (Math.floor(data.giveBV()*100)/100)+"V";
         voltajebateria.setText(Bat);
-        String tempint = data.giveiT()+"°C";
+        String tempint = (Math.floor(data.giveiT()*100)/100)+"°C";
         temperaturainterna.setText(tempint);
-        String alti = data.giveAL()+"";
+        String alti = (Math.floor(data.giveAL()*100)/100)+"";
         altitud.setText(alti);
     }
     private statePK dameultimodatostate(horasstate obj){

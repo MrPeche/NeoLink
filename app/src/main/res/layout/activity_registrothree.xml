@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".registrothree"
-    android:background="@drawable/greenfiedl2">
+    android:background="@drawable/sexta">
 
     <LinearLayout
         android:layout_width="320dp"
