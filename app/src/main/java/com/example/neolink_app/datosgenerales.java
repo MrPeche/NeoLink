@@ -179,7 +179,7 @@ public class datosgenerales extends Fragment {
     private void arrangestate(horasstate obj){
         statePK data = dameultimodatostate(obj);
         CVsensor3.setVisibility(View.VISIBLE);
-        String PB = (Math.floor(data.giveBP()*100)/100)+"kPa";
+        String PB = (Math.floor(data.giveBP()*100)/100)+"Pa";
         presionbarometrica.setText(PB);
         String HR = (Math.floor(data.giveRH()*100)/100)+"%";
         humedadrelativa.setText(HR);
@@ -191,7 +191,7 @@ public class datosgenerales extends Fragment {
         voltajebateria.setText(Bat);
         String tempint = (Math.floor(data.giveiT()*100)/100)+"°C";
         temperaturainterna.setText(tempint);
-        String alti = (Math.floor(data.giveAL()*100)/100)+"";
+        String alti = (Math.floor(data.giveAL()*100)/100)+"m  s.n.m";
         altitud.setText(alti);
     }
     private statePK dameultimodatostate(horasstate obj){
