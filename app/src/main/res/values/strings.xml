@@ -74,7 +74,7 @@
     <string name="tituloprincipal3">S003 Atmos</string>
     <string name="primernombre3">Presión barométrica</string>
     <string name="segundonombre3">Humedad relativa</string>
-    <string name="cuartonombre3">Temperatura de vulvo seco</string>
+    <string name="cuartonombre3">Temperatura de bulbo seco</string>
     <string name="quintonombre3">Voltaje solar</string>
     <string name="sextonombre3">Batería</string>
     <string name="septimonombre3">Temperatura interna</string>
