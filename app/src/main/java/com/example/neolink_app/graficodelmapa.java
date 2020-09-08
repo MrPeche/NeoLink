@@ -168,6 +168,7 @@ public class graficodelmapa extends Fragment {
         if(archi.datahoyG==null){
             archi.retrivedatag(nombre);
         }
+        /*
         if(!archi.datahoyG.hasActiveObservers()){
             archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
                 @Override
@@ -184,6 +185,21 @@ public class graficodelmapa extends Fragment {
                 }
             });
         }
+         */
+        archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
+            @Override
+            public void onChanged(HorasG horasG) {
+                if(horasG!=null){
+                    if(horasG.dametamanoG()!=0){
+                        cleanG();
+                        cvgrconductividadelectrica.setVisibility(View.VISIBLE);
+                        cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
+                        cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                        setdataG(horasG);
+                    }
+                }
+            }
+        });
         archi.fecthlimits(nombre).observe(getViewLifecycleOwner(), new Observer<statelimitsport>() {
             @Override
             public void onChanged(statelimitsport statelimitsport) {

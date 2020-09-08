@@ -174,6 +174,7 @@ public class planografico extends Fragment {
         if(archi.datahoyG==null){
             archi.retrivedatag(name);
         }
+        /*
         if(!archi.datahoyG.hasActiveObservers()){
             archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
                 @Override
@@ -190,7 +191,22 @@ public class planografico extends Fragment {
                 }
             });
         }
+         */
 
+        archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
+            @Override
+            public void onChanged(HorasG horasG) {
+                if(horasG!=null){
+                    if(horasG.dametamanoG()!=0){
+                        cleanG();
+                        cvconductividadelectrica.setVisibility(View.VISIBLE);
+                        cvhumedaddelsuelo.setVisibility(View.VISIBLE);
+                        cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                        setdataG(horasG);
+                    }
+                }
+            }
+        });
         if(!archi.datahoy.hasActiveObservers()){
             archi.livelydatafull(name,hoyaño,hoymes,hoydia,sensor);
             archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
