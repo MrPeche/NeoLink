@@ -97,9 +97,9 @@
     <string name="Presionbarometrica">Presión Barométrica (kPa)</string>
     <string name="Humedadrelativa">Humedad Relativa (%)</string>
     <string name="Temperaturadevulvoseco">Temperatura de bulbo seco (°C)</string>
-    <string name="Humedaddelsuelo">Humedad del Suelo (m3/m3)</string>
+    <string name="Humedaddelsuelo">Humedad del Suelo (raw)</string>
     <string name="Temperaturadelsuelo">Temperatura del Suelo (°C)</string>
-    <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo (mS/cm)</string>
+    <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo (uS/cm)</string>
 
     //Menu de configuraciones
     <string name="minutos">min</string>

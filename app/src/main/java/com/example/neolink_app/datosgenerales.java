@@ -149,11 +149,11 @@ public class datosgenerales extends Fragment {
         CVsensor1.setVisibility(View.VISIBLE);
         String tit = "Sensor "+data.dameDepth();
         titulosensor.setText(tit);
-        String humedad = (Math.floor(data.dameV1()*100)/100) + "m3/m3";
+        String humedad = (Math.floor(data.dameV1()*100)/100) + "raw";
         humedaddelsuelo.setText(humedad);
         String temperatura = (Math.floor(data.dameV2()*100)/100) + "°C";
         temperaturadelsuelo.setText(temperatura);
-        String conductivida = (Math.floor(data.dameV3()*100)/100) + "mS/cm";
+        String conductivida = (Math.floor(data.dameV3()*100)/100) + "uS/cm";
         ConductividadEC.setText(conductivida);
     }
     private dataPuertoG dameelultimodato(HorasG obj){
