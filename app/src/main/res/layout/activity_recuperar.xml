@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sexta"
+    android:background="@drawable/bgfinal"
     tools:context=".recuperar">
 
     <LinearLayout
@@ -37,10 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_bold"
                 android:gravity="center|start"
                 android:text="@string/titulo2"
-                android:textColor="#73AA86"
+                android:textColor="#849AAF"
                 android:textSize="36sp" />
         </LinearLayout>
 
