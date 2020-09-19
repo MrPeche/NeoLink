@@ -17,6 +17,7 @@ import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.SensorG.HorasG;
+import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
@@ -53,8 +54,10 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     private String uid;
     private Calendar ahora = Calendar.getInstance();
     public MutableLiveData<ArrayList<Integer>> date = new MutableLiveData<>();
+    public MutableLiveData<Integer> datemode = new MutableLiveData<>();
     public MutableLiveData<String> neolinkF = new MutableLiveData<>();
     public MutableLiveData<String> neolinkGPS = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<Integer>> datetoday = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Integer>> datebefore = new MutableLiveData<>();
     public ArrayList<OLDneolinksboleto> listacompleta = new ArrayList<>();
 
@@ -64,6 +67,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         FCM = new manejadordedispositivo();
         updatetoday();
         setayer();
+        settoday();
         //neolinkguardadopositivo();
 
     }
@@ -200,6 +204,37 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         int hoymes = ahora.get(Calendar.MONTH)+1;
         int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
         updatedate(hoyaño,hoymes,hoydia);
+    }
+    public void settoday(){
+        ArrayList<Integer> today = new ArrayList<>();
+        today.add(ahora.get(Calendar.YEAR)%100);
+        today.add(ahora.get(Calendar.MONTH)+1);
+        today.add(ahora.get(Calendar.DAY_OF_MONTH));
+        datetoday.setValue(today);
+    }
+    public void setdatemode(){
+        datemode.setValue(0);
+    }
+    public void changemode(int modo){
+        datemode.setValue(modo);
+    }
+    public LiveData<InfoParaGraficos> masterdatedatapackage(String neolink){
+        return Transformations.switchMap(datemode, new Function<Integer, LiveData<InfoParaGraficos>>() {
+            @Override
+            public LiveData<InfoParaGraficos> apply(Integer input) {
+                if(input==0){
+                    return appRepo.fetchhoyayer(neolink,datetoday.getValue(),datebefore.getValue());
+                } else if(input==1){
+                    return appRepo.fetchestasemana();
+                } else if(input==2){
+                    return appRepo.fetchestemes();
+                } else if(input==3){
+                    return appRepo.fetchesteano();
+                } else {
+                    return appRepo.fetchdiasrandom();
+                }
+            }
+        });
     }
     private void setayer(){
         ArrayList<Integer> resultado = new ArrayList<>();

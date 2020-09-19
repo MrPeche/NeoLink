@@ -6,9 +6,9 @@ public class DiasG {
     private ArrayList<String> dias = new ArrayList<>();
     private ArrayList<HorasG> horas = new ArrayList<>();
     public DiasG(){}
-    public DiasG(String dia, HorasG hora){
-        this.dias.add(dia);
-        this.horas.add(hora);
+    public DiasG(ArrayList<String> dias, ArrayList<HorasG> horas){
+        this.dias = dias;
+        this.horas = horas;
     }
     public String damedia(int posicion){
         return this.dias.get(posicion);

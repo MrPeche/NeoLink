@@ -689,10 +689,10 @@ public class planografico extends Fragment {
                 l++;
             }
         }
-        final ArrayList<String> labels = XlabelsG;
-        setsensorG(humS,1,labels,Depth);
-        setsensorG(tempeS,2,labels,Depth);
-        setsensorG(condE,3,labels,Depth);
+
+        setsensorG(humS,1,XlabelsG,Depth);
+        setsensorG(tempeS,2,XlabelsG,Depth);
+        setsensorG(condE,3,XlabelsG,Depth);
     }
     private void setsensorG(paquetedatasetPuertos firedata, int tipo, final ArrayList<String> XlabelsG,DepthPackage depth){
         ArrayList<String> orden = new ArrayList<>();

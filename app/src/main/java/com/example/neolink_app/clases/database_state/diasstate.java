@@ -13,4 +13,8 @@ public class diasstate {
     public String damedia(int posicion){ return this.dias.get(posicion);}
     public horasstate damehoras(int posicion){ return this.horas.get(posicion);}
     public int dametamano(){ return this.dias.size();}
+    public void tomadata(String dia,horasstate hora){
+        this.dias.add(dia);
+        this.horas.add(hora);
+    }
 }

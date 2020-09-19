@@ -6,9 +6,9 @@ public class Dias {
     private ArrayList<String> dias = new ArrayList<>();
     private ArrayList<Horas> horas = new ArrayList<>();
     public Dias(){}
-    public Dias(String dia, Horas hora){
-        this.dias.add(dia);
-        this.horas.add(hora);
+    public Dias(ArrayList<String> dia, ArrayList<Horas> hora){
+        this.dias=dia;
+        this.horas=hora;
     }
     public String damedia(int posicion){
         return this.dias.get(posicion);

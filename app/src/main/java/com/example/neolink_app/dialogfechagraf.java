@@ -44,7 +44,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
     private TextView textoHasta;
     private TextView textoDesde;
     private ArrayAdapter<String> adapterS;
-    private String [] lista ={"Ayer - Hoy","Este mes","Este año","Elige una fecha"};
+    private String [] lista ={"Ayer - Hoy","Esta semana","Este mes","Este año","Elige una fecha"}; //"Ayer - Hoy","Este mes","Este año","Elige una fecha"
     private String [] fechaelegida = {"","-",""};
     private Calendar horario = Calendar.getInstance();
     //private NavController navController = NavHostFragment.findNavController(this);
@@ -99,15 +99,17 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 parametros.setSelection(1);
             } else if(valorinicial.equals(lista[2])){
                 parametros.setSelection(2);
+            } else if(valorinicial.equals(lista[3])){
+            parametros.setSelection(3);
             } else {
-                lista[3] = valorinicial;
+                lista[4] = valorinicial;
                 try {
                     Date day = sdf.parse(desde);
                     updatecalendars(day,0);
                     Date day2 = sdf.parse(hasta);
                     updatecalendars(day2,1);
                 } catch (ParseException ignored) { }
-                parametros.setSelection(3);
+                parametros.setSelection(4);
             }
         }
 
@@ -120,11 +122,10 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String opinion = parametros.getSelectedItem().toString();
-                if(!lista[3].equals(opinion)){
+                if(!lista[4].equals(opinion)){
                     archi.savedate(opinion);
-                }else {
-                    if (desde != null)
-                        archi.savedate(desde);
+                }else if((!fechaelegida[0].equals(""))&&(!fechaelegida[2].equals(""))){
+                    archi.savedate(lista[4]);
                 }
             }
         });
@@ -241,7 +242,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
                 code = fechaelegida[2];
             }
         }
-        lista[3] = code;
+        lista[4] = code;
     }
     private void updatefechaelegida(String a, int type, String fechanormal) throws ParseException {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
