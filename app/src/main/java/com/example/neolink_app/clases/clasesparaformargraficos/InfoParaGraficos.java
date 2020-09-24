@@ -245,9 +245,6 @@ public class InfoParaGraficos {
         LDtemperaturainterna.setLineWidth(0.8f);
     }
 
-    public void agregardia(Dias sensork, diasstate statesensor, DiasG sensorg){
-
-    }
     public void agregarmes(Meses sensork, diasstate statesensor, DiasG sensorg){
 
     }

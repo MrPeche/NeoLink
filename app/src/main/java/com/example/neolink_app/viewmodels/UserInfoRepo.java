@@ -19,6 +19,7 @@ import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.SensorG.MinutosG;
 import com.example.neolink_app.clases.SensorG.PuertoG;
 import com.example.neolink_app.clases.SensorG.dataPuertoG;
+import com.example.neolink_app.clases.clasesdelregistro.notihist;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
@@ -632,5 +633,26 @@ public class UserInfoRepo {
         final MediatorLiveData<InfoParaGraficos> diasrandom = new MediatorLiveData<>();
         return diasrandom;
     }
+    public LiveData<notihist> fetchregistro(String neolink,int ano, int mes){
+        final MediatorLiveData<notihist> registrodata = new MediatorLiveData<>();
+        String path = "/NeoLink/"+neolink+"/NotiHist/"+ano+"/"+mes;
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        registrodata.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    for(DataSnapshot dia:dataSnapshot.getChildren()){
+                        String dianame = dia.getKey();
+                        for(DataSnapshot minutos:dia.getChildren()){
 
+                        }
+                    }
+                } else {
+                    registrodata.setValue(null);
+                }
+            }
+        });
+        return registrodata;
+    }
 }

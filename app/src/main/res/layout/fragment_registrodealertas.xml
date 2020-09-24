@@ -8,28 +8,34 @@
     tools:context="com.greenbird.neolink_app.registrodealertas">
 
 
-    <TextView
-        android:id="@+id/tituloregistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tituloregistro"
-        android:fontFamily="@font/lato_bold"
-        android:textSize="@dimen/Tamañotitulo"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lista_registro"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloregistro" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tituloregistro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:text="@string/tituloregistro"
+            android:textSize="@dimen/Tamañotitulo" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lista_registro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/activity_vertical_margin" />
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@ import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.SensorG.HorasG;
+import com.example.neolink_app.clases.clasesdelregistro.notihist;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
@@ -30,6 +31,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<OWNERitems> Usuarioneolinks;
@@ -223,7 +225,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
             @Override
             public LiveData<InfoParaGraficos> apply(Integer input) {
                 if(input==0){
-                    return appRepo.fetchhoyayer(neolink,datetoday.getValue(),datebefore.getValue());
+                    return appRepo.fetchhoyayer(neolink, Objects.requireNonNull(datetoday.getValue()), Objects.requireNonNull(datebefore.getValue()));
                 } else if(input==1){
                     return appRepo.fetchestasemana();
                 } else if(input==2){
@@ -247,6 +249,9 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         resultado.add(Integer.parseInt(ayer[1]));
         resultado.add(Integer.parseInt(ayer[2]));
         datebefore.setValue(resultado);
+    }
+    private void figurarlasemana(){
+        
     }
     public Long getmillistoday(){
         return ahora.getTimeInMillis();
@@ -292,5 +297,6 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<horasstate> funciondedatosgeneralesstate(String name,int hoyano,int hoymes, int hoydia){
         return appRepo.damedatahoyState2(name,hoyano,hoymes,hoydia);
     }
+    //public LiveData<notihist> funcionderecoleccionderegistro(){}
 
 }
