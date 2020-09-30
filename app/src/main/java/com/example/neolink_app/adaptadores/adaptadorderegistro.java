@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neolink_app.R;
+import com.example.neolink_app.clases.clasesdelregistro.notihist;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,28 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     ArrayList<String> fecha;
     ArrayList<String> tiempo;
 
+    public adaptadorderegistro(notihist pack){
+        contenido = new ArrayList<>();
+        fecha = new ArrayList<>();
+        tiempo = new ArrayList<>();
+        managepack(pack);
+    }
+    public void managepack(notihist pack){
+        for(int i=0;i<pack.damelosyears().size();i++){
+            String yearname = pack.damelosyears().get(i);
+            for(int j=0;j<pack.dameelpackdeyears().get(i).damelosmes().size();j++){
+                String mesname = pack.dameelpackdeyears().get(i).damelosmes().get(j);
+                for(int k=0;k<pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).damelosdias().size();k++){
+                    String dianame = pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).damelosdias().get(k);
+                    for(int l=0;l<pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().size();l++){
+                        tiempo.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).damelahora());
+                        fecha.add(dianame+"/"+mesname+"/"+yearname);
+                        contenido.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).dameelcontenido());
+                    }
+                }
+            }
+        }
+    }
     public adaptadorderegistro(ArrayList<String> contenido, ArrayList<String> fecha, ArrayList<String> tiempo){
         this.contenido = contenido;
         this.fecha = fecha;

@@ -98,8 +98,8 @@ public class InfoParaGraficos {
                 }
             }
         }
-    Pair<ArrayList<String>,LineData> PM = extraerdatadelpaquete(PotencialMatricial); //****************
-    Pair<ArrayList<String>,LineData> temp = extraerdatadelpaquete(temperatura); //*************
+        Pair<ArrayList<String>,LineData> PM = extraerdatadelpaquete(PotencialMatricial); //****************
+        Pair<ArrayList<String>,LineData> temp = extraerdatadelpaquete(temperatura); //*************
 
     }
     private Pair<ArrayList<String>,LineData> extraerdatadelpaquete(paquetedatasetPuertos entriesdata){

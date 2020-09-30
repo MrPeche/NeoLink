@@ -20,6 +20,10 @@ import com.example.neolink_app.clases.SensorG.MinutosG;
 import com.example.neolink_app.clases.SensorG.PuertoG;
 import com.example.neolink_app.clases.SensorG.dataPuertoG;
 import com.example.neolink_app.clases.clasesdelregistro.notihist;
+import com.example.neolink_app.clases.clasesdelregistro.registrocontenido;
+import com.example.neolink_app.clases.clasesdelregistro.registrodia;
+import com.example.neolink_app.clases.clasesdelregistro.registromes;
+import com.example.neolink_app.clases.clasesdelregistro.registroyear;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
@@ -510,8 +514,8 @@ public class UserInfoRepo {
                 fetchdataperdaywithsensorstate(neolink,fechaayer.get(0),fechahoy.get(1),fechahoy.get(2)),
                 fetchdataperdaywithsensorg(neolink,fechaayer.get(0),fechahoy.get(1),fechahoy.get(2)));
         InfoParaGraficos data = new InfoParaGraficos();
-        data.agregarinfodias(hoy);
         data.agregarinfodias(ayer);
+        data.agregarinfodias(hoy);
         hoyayer.setValue(data);
         return hoyayer;
     }
@@ -617,10 +621,17 @@ public class UserInfoRepo {
         });
         return datasensorstate;
     }
-    public LiveData<InfoParaGraficos> fetchestasemana(){
+    public LiveData<InfoParaGraficos> fetchestasemana(String neolink, ArrayList<ArrayList<Integer>> semana){
         final MediatorLiveData<InfoParaGraficos> estasemana = new MediatorLiveData<>();
+        InfoParaGraficos obj = new InfoParaGraficos();
+        for(ArrayList<Integer> dia:semana){
+            obj.agregarinfodias(new paquetededatacompleto<Dias,diasstate,DiasG>(fetchdataperdaywithsensork(neolink,dia.get(0),dia.get(1),dia.get(2)),
+                    fetchdataperdaywithsensorstate(neolink,dia.get(0),dia.get(1),dia.get(2)),
+                    fetchdataperdaywithsensorg(neolink,dia.get(0),dia.get(1),dia.get(2))));
+        }
         return estasemana;
     }
+
     public LiveData<InfoParaGraficos> fetchestemes(){
         final MediatorLiveData<InfoParaGraficos> estemes = new MediatorLiveData<>();
         return estemes;
@@ -642,12 +653,23 @@ public class UserInfoRepo {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
+                    registromes regmes = new registromes();
                     for(DataSnapshot dia:dataSnapshot.getChildren()){
                         String dianame = dia.getKey();
+                        registrodia regdia = new registrodia();
                         for(DataSnapshot minutos:dia.getChildren()){
-
+                            String min = minutos.getKey();
+                            String contenido = minutos.getValue(String.class);
+                            registrocontenido content = new registrocontenido(min,contenido);
+                            regdia.agregarcontenido(content);
                         }
+                        regmes.agregarboth(dianame,regdia);
                     }
+                    registroyear regyear = new registroyear();
+                    regyear.agregarlosdos(Integer.toString(ano),regmes);
+                    notihist reg = new notihist();
+                    reg.agregarlosdos(Integer.toString(ano),regyear);
+                    registrodata.setValue(reg);
                 } else {
                     registrodata.setValue(null);
                 }

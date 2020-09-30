@@ -10,6 +10,14 @@ public class notihist {
         this.years = years;
         this.yearspack = yearspack;
     }
+    public notihist(){
+        this.years = new ArrayList<>();
+        this.yearspack = new ArrayList<>();
+    }
+    public void agregarlosdos(String year,registroyear pack){
+        this.years.add(year);
+        this.yearspack.add(pack);
+    }
     public ArrayList<String> damelosyears(){return this.years;}
     public ArrayList<registroyear> dameelpackdeyears(){return this.yearspack;}
 }

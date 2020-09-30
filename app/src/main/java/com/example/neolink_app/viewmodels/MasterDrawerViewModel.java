@@ -227,7 +227,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 if(input==0){
                     return appRepo.fetchhoyayer(neolink, Objects.requireNonNull(datetoday.getValue()), Objects.requireNonNull(datebefore.getValue()));
                 } else if(input==1){
-                    return appRepo.fetchestasemana();
+                    return appRepo.fetchestasemana(neolink, diasdelasemana());
                 } else if(input==2){
                     return appRepo.fetchestemes();
                 } else if(input==3){
@@ -250,8 +250,33 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         resultado.add(Integer.parseInt(ayer[2]));
         datebefore.setValue(resultado);
     }
-    private void figurarlasemana(){
-        
+    private ArrayList<ArrayList<Integer>> diasdelasemana(){
+        ArrayList<Calendar> semana = figurarlasemana();
+        ArrayList<ArrayList<Integer>> resultado = new ArrayList<>();
+        for(Calendar dias: semana){
+            resultado.add(translatesemana(dias));
+        }
+        return resultado;
+    }
+    private ArrayList<Calendar> figurarlasemana(){
+        ArrayList<Calendar> dias = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        for(int i = 0;i<day;i++){
+            calendar.add(Calendar.DATE,-((day-1)-i));
+            dias.add(calendar);
+        }
+        return dias;
+    }
+    private ArrayList<Integer> translatesemana(Calendar cal){
+        ArrayList<Integer> resultado= new ArrayList<>();
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("yy/MM/dd");
+        String day = dateFormat.format(cal.getTime());
+        String[] ayer = day.split("/");
+        resultado.add(Integer.parseInt(ayer[0])%100);
+        resultado.add(Integer.parseInt(ayer[1]));
+        resultado.add(Integer.parseInt(ayer[2]));
+        return resultado;
     }
     public Long getmillistoday(){
         return ahora.getTimeInMillis();
@@ -297,6 +322,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public LiveData<horasstate> funciondedatosgeneralesstate(String name,int hoyano,int hoymes, int hoydia){
         return appRepo.damedatahoyState2(name,hoyano,hoymes,hoydia);
     }
-    //public LiveData<notihist> funcionderecoleccionderegistro(){}
+    public LiveData<notihist> funcionderecoleccionderegistro(String neolink){
+        return appRepo.fetchregistro(neolink,datetoday.getValue().get(0),datetoday.getValue().get(1));
+    }
 
 }
