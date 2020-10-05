@@ -5,11 +5,9 @@ import android.util.Pair;
 
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Dias;
-import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.Meses;
 import com.example.neolink_app.clases.SensorG.DiasG;
 import com.example.neolink_app.clases.database_state.diasstate;
-import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.paquetededatacompleto;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.github.mikephil.charting.components.YAxis;
@@ -18,9 +16,11 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class InfoParaGraficos {
     private ArrayList<paquetededatacompleto<Dias,diasstate,DiasG>> dias = new ArrayList<>();
+    private int cantidaddedias;
     float LINEWIDTH = 2.5f;
     private int alpha = 170;
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
@@ -32,12 +32,19 @@ public class InfoParaGraficos {
     }
     public boolean validarlosdias(){
         boolean validate = true;
-        for(paquetededatacompleto<Dias,diasstate,DiasG> dia: dias){
-            validate = dia.isitready()&&validate;
+        if((dias.size()==0)||(dias.size()!=cantidaddedias)){
+            return false;
+        } else{
+            for(paquetededatacompleto<Dias,diasstate,DiasG> dia: dias){
+                validate = dia.isitready()&&validate;
+            }
+            return validate;
         }
-        return validate;
     }
-    private void managedias(){
+    public void actualizarcantidad(int cantidaddedias){
+        this.cantidaddedias = cantidaddedias;
+    }
+    public kdatapack managedias(){
         ArrayList<Dias> sensork = new ArrayList<>();
         ArrayList<diasstate> sensorstate = new ArrayList<>();
         ArrayList<DiasG> sensorg = new ArrayList<>();
@@ -46,11 +53,13 @@ public class InfoParaGraficos {
             sensorstate.add(dia.damevalorB());
             sensorg.add(dia.damevalorC());
         }
-        managesensorkendias(sensork);
+        //managesensorkendias(sensork);
         managesensorstateendias(sensorstate);
         managesensorgendias(sensorg);
+        return managesensorkendias(sensork);
     }
-    private void managesensorkendias(ArrayList<Dias> data){
+    private kdatapack managesensorkendias(ArrayList<Dias> data){
+        Collections.sort(data,new sortpordias<>());
         paquetedatasetPuertos PotencialMatricial = new paquetedatasetPuertos();
         paquetedatasetPuertos temperatura = new paquetedatasetPuertos();
         DepthPackage depth = new DepthPackage(); //******************************
@@ -67,7 +76,7 @@ public class InfoParaGraficos {
                     labelhoras = dia.damehora(i).damehora(j);
                     for(int k = 0;k<dia.damehora(i).dameminutos(j).dametamano();k++){
                         labelminutos = dia.damehora(i).dameminutos(j).dameminuto(k);
-                        datalabelsaxisX.add(labeldia + " "+labelhoras+sp+labelminutos);
+                        datalabelsaxisX.add(labeldia +"\n"+labelhoras+sp+labelminutos);
                         for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamano();m++){
                             String nombredelpuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
                             switch (nombredelpuerto){
@@ -100,7 +109,8 @@ public class InfoParaGraficos {
         }
         Pair<ArrayList<String>,LineData> PM = extraerdatadelpaquete(PotencialMatricial); //****************
         Pair<ArrayList<String>,LineData> temp = extraerdatadelpaquete(temperatura); //*************
-
+        Pair<paquetedatasetPuertos,paquetedatasetPuertos> Raiz = new Pair<>(PotencialMatricial,temperatura);
+        return new kdatapack(depth,datalabelsaxisX,PM,temp,Raiz);
     }
     private Pair<ArrayList<String>,LineData> extraerdatadelpaquete(paquetedatasetPuertos entriesdata){
         ArrayList<String> orden = new ArrayList<>();
@@ -146,7 +156,8 @@ public class InfoParaGraficos {
         pset.setDrawVerticalHighlightIndicator(false);
         return pset;
     }
-    private void managesensorgendias(ArrayList<DiasG> data){
+    private gdatapack managesensorgendias(ArrayList<DiasG> data){
+        Collections.sort(data,new sortpordias<>());
         paquetedatasetPuertos humS = new paquetedatasetPuertos();
         paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
         paquetedatasetPuertos condE = new paquetedatasetPuertos();
@@ -200,10 +211,15 @@ public class InfoParaGraficos {
                 }
             }
         }
+        Pair<ArrayList<String>,LineData> humedadG = extraerdatadelpaquete(humS);
+        Pair<ArrayList<String>,LineData> temperaturaG = extraerdatadelpaquete(tempeS);
+        Pair<ArrayList<String>,LineData> conductividadG = extraerdatadelpaquete(condE);
+        return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,humS,tempeS,condE);
 
     }
-    private void managesensorstateendias(ArrayList<diasstate> data){
-        final ArrayList<String> XlabelsSTATE = new ArrayList<>();
+    private statedatapack managesensorstateendias(ArrayList<diasstate> data){
+        Collections.sort(data,new sortpordias<>());
+        ArrayList<String> XlabelsSTATE = new ArrayList<>();
         ArrayList<Entry> bateria = new ArrayList<>();
         ArrayList<Entry> solar = new ArrayList<>();
         ArrayList<Entry> presionbaro = new ArrayList<>();
@@ -232,7 +248,6 @@ public class InfoParaGraficos {
                 }
             }
         }
-
         LineDataSet LDS = CreaDataLine(bateria,"Bateria",colores[0]);
         LineDataSet LDSV = CreaDataLine(solar,"Voltaje Solar", colores[1]);
         LDSV.setAxisDependency(YAxis.AxisDependency.LEFT); //
@@ -243,6 +258,18 @@ public class InfoParaGraficos {
         LineDataSet LDtemperaturainterna = CreaDataLine(temperaturainterna, "Temperatura interna",colores[1]);
         LDtemperaturainterna.enableDashedLine(30,10,10);
         LDtemperaturainterna.setLineWidth(0.8f);
+        return new statedatapack(dataseparada(LDhumedadrelativa),dataseparada(LDpresionbarometrica),juntardata(LDS,LDSV),juntardata(LDtemperaturavulvoseco,LDtemperaturainterna),XlabelsSTATE);
+    }
+    private LineData juntardata(LineDataSet A, LineDataSet B){
+        LineData data = new LineData();
+        data.addDataSet(A);
+        data.addDataSet(B);
+        return data;
+    }
+    private LineData dataseparada(LineDataSet A){
+        LineData data = new LineData();
+        data.addDataSet(A);
+        return  data;
     }
 
     public void agregarmes(Meses sensork, diasstate statesensor, DiasG sensorg){

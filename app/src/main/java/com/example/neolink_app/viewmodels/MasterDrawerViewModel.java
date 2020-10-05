@@ -70,6 +70,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         updatetoday();
         setayer();
         settoday();
+        setdatemode();
         //neolinkguardadopositivo();
 
     }

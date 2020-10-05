@@ -1,6 +1,7 @@
 package com.example.neolink_app.viewmodels;
 
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
@@ -507,16 +508,36 @@ public class UserInfoRepo {
     }
     public LiveData<InfoParaGraficos> fetchhoyayer(String neolink,ArrayList<Integer> fechahoy,ArrayList<Integer> fechaayer){
         final MediatorLiveData<InfoParaGraficos> hoyayer = new MediatorLiveData<>();
-        paquetededatacompleto<Dias,diasstate,DiasG> hoy = new paquetededatacompleto<Dias,diasstate,DiasG>(fetchdataperdaywithsensork(neolink,fechahoy.get(0),fechahoy.get(1),fechahoy.get(2)),
-                fetchdataperdaywithsensorstate(neolink,fechahoy.get(0),fechahoy.get(1),fechahoy.get(2)),
-                fetchdataperdaywithsensorg(neolink,fechahoy.get(0),fechahoy.get(1),fechahoy.get(2)));
-        paquetededatacompleto<Dias,diasstate,DiasG> ayer = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink,fechaayer.get(0),fechahoy.get(1),fechahoy.get(2)),
-                fetchdataperdaywithsensorstate(neolink,fechaayer.get(0),fechahoy.get(1),fechahoy.get(2)),
-                fetchdataperdaywithsensorg(neolink,fechaayer.get(0),fechahoy.get(1),fechahoy.get(2)));
+        paquetededatacompleto<Dias,diasstate,DiasG> hoy = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorstate(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorg(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)));
+        paquetededatacompleto<Dias,diasstate,DiasG> ayer = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorstate(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorg(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)));
         InfoParaGraficos data = new InfoParaGraficos();
-        data.agregarinfodias(ayer);
-        data.agregarinfodias(hoy);
-        hoyayer.setValue(data);
+        data.actualizarcantidad(2);
+        hoyayer.setValue(null);
+        hoyayer.addSource(ayer, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+            @Override
+            public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
+                if(pairDiasGPair!=null){
+                    if(ayer.isitready()){
+                        data.agregarinfodias(ayer);
+                        hoyayer.setValue(data);
+                    }
+                } else
+                    hoyayer.setValue(data);
+            }
+        });
+        hoyayer.addSource(hoy, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+            @Override
+            public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
+                if(pairDiasGPair!=null){
+                    if(hoy.isitready()){
+                        data.agregarinfodias(hoy);
+                        hoyayer.setValue(data);
+                    }
+                    hoyayer.setValue(data);
+                } else
+                    hoyayer.setValue(data);
+            }
+        });
         return hoyayer;
     }
     public LiveData<Dias> fetchdataperdaywithsensork(String neolink, int ano, int mes, int dia){
@@ -646,7 +667,7 @@ public class UserInfoRepo {
     }
     public LiveData<notihist> fetchregistro(String neolink,int ano, int mes){
         final MediatorLiveData<notihist> registrodata = new MediatorLiveData<>();
-        String path = "/NeoLink/"+neolink+"/NotiHist/"+ano+"/"+mes;
+        String path = "/NeoLink/"+neolink+"/DataSet/NotiHist/"+ano+"/"+operacionfecha(mes);
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
         final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
         registrodata.addSource(liveDataNL, new Observer<DataSnapshot>() {
@@ -666,7 +687,7 @@ public class UserInfoRepo {
                         regmes.agregarboth(dianame,regdia);
                     }
                     registroyear regyear = new registroyear();
-                    regyear.agregarlosdos(Integer.toString(ano),regmes);
+                    regyear.agregarlosdos(operacionfecha(mes),regmes);
                     notihist reg = new notihist();
                     reg.agregarlosdos(Integer.toString(ano),regyear);
                     registrodata.setValue(reg);

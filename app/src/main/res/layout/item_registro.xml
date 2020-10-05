@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:weightSum="5"
         android:orientation="horizontal">
 
@@ -59,7 +60,7 @@
             android:id="@+id/registrocontenido"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/lato_bold"
             android:textSize="@dimen/Tamañotexto"
             android:textColor="@color/colorTextoNegro"
             android:gravity="start|top"

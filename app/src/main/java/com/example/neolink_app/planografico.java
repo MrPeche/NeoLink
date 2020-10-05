@@ -20,6 +20,8 @@ import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.SensorG.HorasG;
+import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
+import com.example.neolink_app.clases.clasesparaformargraficos.kdatapack;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
@@ -84,6 +86,7 @@ public class planografico extends Fragment {
     private Calendar ahora = Calendar.getInstance();
 
     private horasstate state;
+    private static float OFFSETGRAFPH = 40f;
 
 
     public planografico() {
@@ -214,6 +217,7 @@ public class planografico extends Fragment {
                 public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
                     if(archi.paquetesdedata.isitready()){
                         cleanthisshit();
+                        /*
                         if(horashorasstatePair.first.dametamano()!=0) {
                             cvpotencialMatricial.setVisibility(View.VISIBLE);
                             cvtemperatura.setVisibility(View.VISIBLE);
@@ -221,6 +225,7 @@ public class planografico extends Fragment {
                             setdataPM(YPM2, Xlabels2, DepthP2);
                             setdataTemp(YTemp2, Xlabels2, DepthP2);
                         }
+                        */
                         if(horashorasstatePair.second.dametamano()!=0){
                             cvEnergia.setVisibility(View.VISIBLE);
                             cvHumedadrelativa.setVisibility(View.VISIBLE);
@@ -237,6 +242,19 @@ public class planografico extends Fragment {
             public void onChanged(statelimitsport statelimitsport) {
                 if(statelimitsport!=null){
                     arrangelimitlines(statelimitsport);
+                }
+            }
+        });
+
+        archi.masterdatedatapackage(name).observe(getViewLifecycleOwner(), new Observer<InfoParaGraficos>() {
+            @Override
+            public void onChanged(InfoParaGraficos infoParaGraficos) {
+                if(infoParaGraficos!=null){
+                    if(infoParaGraficos.validarlosdias()){
+                        cvpotencialMatricial.setVisibility(View.VISIBLE);
+                        cvtemperatura.setVisibility(View.VISIBLE);
+                        setgraficosK(infoParaGraficos.managedias());
+                    }
                 }
             }
         });
@@ -813,5 +831,29 @@ public class planografico extends Fragment {
         } else if(caso==3){
             return graficotemperaturadelsuelo.getAxisLeft();
         } else{return graficoconductividaddelsuelo.getAxisLeft();}
+    }
+    private void setgraficosK(kdatapack pack){
+        grafico1.setData(pack.sacarelPM().second);
+        XAxis xaxispm = grafico1.getXAxis();
+        xaxispm.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxispm.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
+        xaxispm.setLabelRotationAngle(-45f);
+        MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first);
+        grafico1.setMarker(adapterpm);
+        grafico1.setExtraTopOffset(OFFSETGRAFPH);
+        grafico1.setExtraLeftOffset(OFFSETGRAFPH);
+        grafico1.invalidate();
+        grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico2.setData(pack.sacareltemp().second);
+        XAxis xAxistemp = grafico2.getXAxis();
+        xAxistemp.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxistemp.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
+        xAxistemp.setLabelRotationAngle(-45f);
+        MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first);
+        grafico2.setMarker(adaptertemp);
+        grafico2.setExtraTopOffset(OFFSETGRAFPH);
+        grafico2.setExtraLeftOffset(OFFSETGRAFPH);
+        grafico2.invalidate();
+        grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
 }
