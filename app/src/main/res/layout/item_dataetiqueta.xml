@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
@@ -16,18 +17,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:gravity="center"
-            android:layout_marginTop="1dp"
-            android:textSize="@dimen/Tamañotexto" />
+            android:layout_gravity="center"
+            android:textSize="@dimen/Tamañotextopequeño" />
 
         <TextView
             android:id="@+id/dataetiqueta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:gravity="center"
-            android:layout_marginBottom="1dp"
-            android:textSize="@dimen/Tamañotexto" />
+            android:layout_gravity="center"
+            android:textSize="@dimen/Tamañotextopequeño" />
     </LinearLayout>
 
 </RelativeLayout>

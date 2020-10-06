@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
 import com.example.neolink_app.adaptadores.graficolabelgenerator;
+import com.example.neolink_app.adaptadores.labelpersonalizadoX;
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.SensorG.HorasG;
@@ -86,7 +87,8 @@ public class planografico extends Fragment {
     private Calendar ahora = Calendar.getInstance();
 
     private horasstate state;
-    private static float OFFSETGRAFPH = 40f;
+    private static float OFFSETGRAFPHTOP = 20f;
+    private static float OFFSETGRAFPHLEFT = 5f;
 
 
     public planografico() {
@@ -251,6 +253,7 @@ public class planografico extends Fragment {
             public void onChanged(InfoParaGraficos infoParaGraficos) {
                 if(infoParaGraficos!=null){
                     if(infoParaGraficos.validarlosdias()){
+                        cleanthisshit();
                         cvpotencialMatricial.setVisibility(View.VISIBLE);
                         cvtemperatura.setVisibility(View.VISIBLE);
                         setgraficosK(infoParaGraficos.managedias());
@@ -834,25 +837,28 @@ public class planografico extends Fragment {
     }
     private void setgraficosK(kdatapack pack){
         grafico1.setData(pack.sacarelPM().second);
+        grafico1.setXAxisRenderer(new labelpersonalizadoX(grafico1.getViewPortHandler(), grafico1.getXAxis(), grafico1.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xaxispm = grafico1.getXAxis();
         xaxispm.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxispm.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
         xaxispm.setLabelRotationAngle(-45f);
         MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first);
         grafico1.setMarker(adapterpm);
-        grafico1.setExtraTopOffset(OFFSETGRAFPH);
-        grafico1.setExtraLeftOffset(OFFSETGRAFPH);
+        grafico1.setExtraTopOffset(OFFSETGRAFPHTOP);
+        grafico1.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico1.invalidate();
         grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
         grafico2.setData(pack.sacareltemp().second);
+        grafico2.setXAxisRenderer(new labelpersonalizadoX(grafico2.getViewPortHandler(), grafico2.getXAxis(), grafico2.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xAxistemp = grafico2.getXAxis();
         xAxistemp.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxistemp.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
         xAxistemp.setLabelRotationAngle(-45f);
         MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first);
         grafico2.setMarker(adaptertemp);
-        grafico2.setExtraTopOffset(OFFSETGRAFPH);
-        grafico2.setExtraLeftOffset(OFFSETGRAFPH);
+        grafico2.setExtraTopOffset(OFFSETGRAFPHTOP);
+        grafico2.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico2.invalidate();
         grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }

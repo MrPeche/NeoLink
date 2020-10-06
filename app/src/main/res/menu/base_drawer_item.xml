@@ -23,8 +23,7 @@
     <group
         android:id="@+id/ndgruponeolinkconect"
         android:checkableBehavior="single">
-        <item
-            android:title = "@string/easyconnect"/>
+        
         <item
             android:title = "@string/configuracion"/>
     </group>

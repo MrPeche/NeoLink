@@ -120,7 +120,6 @@ public class panelesgrafiquito extends Fragment {
 
                     } else {
                         archi.changemode(4);
-
                     }
 
                     if(s.equals("Hoy")) {
