@@ -228,7 +228,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 if(input==0){
                     return appRepo.fetchhoyayer(neolink, Objects.requireNonNull(datetoday.getValue()), Objects.requireNonNull(datebefore.getValue()));
                 } else if(input==1){
-                    return appRepo.fetchestasemana(neolink, diasdelasemana());
+                    return appRepo.fetchestasemana(neolink, figurarlasemana());
                 } else if(input==2){
                     return appRepo.fetchestemes();
                 } else if(input==3){
@@ -251,21 +251,26 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         resultado.add(Integer.parseInt(ayer[2]));
         datebefore.setValue(resultado);
     }
-    private ArrayList<ArrayList<Integer>> diasdelasemana(){
-        ArrayList<Calendar> semana = figurarlasemana();
-        ArrayList<ArrayList<Integer>> resultado = new ArrayList<>();
-        for(Calendar dias: semana){
-            resultado.add(translatesemana(dias));
-        }
-        return resultado;
-    }
-    private ArrayList<Calendar> figurarlasemana(){
-        ArrayList<Calendar> dias = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> figurarlasemana(){
+        ArrayList<ArrayList<Integer>> dias = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        for(int i = 0;i<day;i++){
-            calendar.add(Calendar.DATE,-((day-1)-i));
+        /*
+        for(int i = 0;i<day-1;i++){
+            int heyo = i+2-day;//(day-i-((day-1-i)*2))
+            calendar.add(Calendar.DATE,i+2-day);
             dias.add(calendar);
+        }
+         */
+        if(day==1){
+            dias.add(translatesemana(calendar));
+        } else{
+            for(int i = 0;i<day-1;i++){
+                if (i != 0) {
+                    calendar.add(Calendar.DATE, -1);
+                }
+                dias.add(translatesemana(calendar));
+            }
         }
         return dias;
     }

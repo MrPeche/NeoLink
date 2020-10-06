@@ -22,7 +22,10 @@ import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
+import com.example.neolink_app.clases.clasesparaformargraficos.fulldatapack;
+import com.example.neolink_app.clases.clasesparaformargraficos.gdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.kdatapack;
+import com.example.neolink_app.clases.clasesparaformargraficos.statedatapack;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
@@ -85,10 +88,10 @@ public class planografico extends Fragment {
     private int MAX_DATAVISIBLE = 48;
     private float LINEWIDTH = 2.5f;
     private Calendar ahora = Calendar.getInstance();
-
     private horasstate state;
     private static float OFFSETGRAFPHTOP = 20f;
-    private static float OFFSETGRAFPHLEFT = 5f;
+    private static float OFFSETGRAFPHLEFT = 10f;
+    private static float OFFSETGRAFPHBOTTOM = 15f;
 
 
     public planografico() {
@@ -171,14 +174,12 @@ public class planografico extends Fragment {
 
         startposition();
 
-        int hoyaño = ahora.get(Calendar.YEAR)%100;
-        int hoymes = ahora.get(Calendar.MONTH)+1;
-        int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
-        String sensor = "k";
-
+        /*
         if(archi.datahoyG==null){
             archi.retrivedatag(name);
         }
+
+         */
         /*
         if(!archi.datahoyG.hasActiveObservers()){
             archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
@@ -197,7 +198,7 @@ public class planografico extends Fragment {
             });
         }
          */
-
+        /*
         archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
             @Override
             public void onChanged(HorasG horasG) {
@@ -212,6 +213,8 @@ public class planografico extends Fragment {
                 }
             }
         });
+         */
+        /*
         if(!archi.datahoy.hasActiveObservers()){
             archi.livelydatafull(name,hoyaño,hoymes,hoydia,sensor);
             archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
@@ -219,7 +222,7 @@ public class planografico extends Fragment {
                 public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
                     if(archi.paquetesdedata.isitready()){
                         cleanthisshit();
-                        /*
+
                         if(horashorasstatePair.first.dametamano()!=0) {
                             cvpotencialMatricial.setVisibility(View.VISIBLE);
                             cvtemperatura.setVisibility(View.VISIBLE);
@@ -227,7 +230,7 @@ public class planografico extends Fragment {
                             setdataPM(YPM2, Xlabels2, DepthP2);
                             setdataTemp(YTemp2, Xlabels2, DepthP2);
                         }
-                        */
+
                         if(horashorasstatePair.second.dametamano()!=0){
                             cvEnergia.setVisibility(View.VISIBLE);
                             cvHumedadrelativa.setVisibility(View.VISIBLE);
@@ -239,6 +242,8 @@ public class planografico extends Fragment {
                 }
             });
         }
+         */
+
         archi.fecthlimits(name).observe(getViewLifecycleOwner(), new Observer<statelimitsport>() {
             @Override
             public void onChanged(statelimitsport statelimitsport) {
@@ -253,10 +258,25 @@ public class planografico extends Fragment {
             public void onChanged(InfoParaGraficos infoParaGraficos) {
                 if(infoParaGraficos!=null){
                     if(infoParaGraficos.validarlosdias()){
+                        fulldatapack commdata = infoParaGraficos.managedias();
+                        //Kdata
                         cleanthisshit();
                         cvpotencialMatricial.setVisibility(View.VISIBLE);
                         cvtemperatura.setVisibility(View.VISIBLE);
-                        setgraficosK(infoParaGraficos.managedias());
+                        setgraficosK(commdata.sacarkdatapack());
+                        //state
+                        cvEnergia.setVisibility(View.VISIBLE);
+                        cvHumedadrelativa.setVisibility(View.VISIBLE);
+                        cvpresionbarometrica.setVisibility(View.VISIBLE);
+                        cvtemperaturabulboseco.setVisibility(View.VISIBLE);
+                        setgraficosstate(commdata.sacarstatedatapack());
+                        //sensorg
+                        cleanG();
+                        cvconductividadelectrica.setVisibility(View.VISIBLE);
+                        cvhumedaddelsuelo.setVisibility(View.VISIBLE);
+                        cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                        setgraficoG(commdata.sacargdatapack());
+
                     }
                 }
             }
@@ -717,7 +737,6 @@ public class planografico extends Fragment {
     }
     private void setsensorG(paquetedatasetPuertos firedata, int tipo, final ArrayList<String> XlabelsG,DepthPackage depth){
         ArrayList<String> orden = new ArrayList<>();
-        final ArrayList<String> labelinuse = XlabelsG;
         LineData data = new LineData();
         if(firedata.getP1().size()!=0) {
             LineDataSet set1 = CreaDataLine(firedata.getP1(), "P1", colores[0]);
@@ -841,11 +860,12 @@ public class planografico extends Fragment {
         XAxis xaxispm = grafico1.getXAxis();
         xaxispm.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxispm.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
-        xaxispm.setLabelRotationAngle(-45f);
+        //xaxispm.setLabelRotationAngle(-45f);
         MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first);
         grafico1.setMarker(adapterpm);
         grafico1.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico1.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        grafico1.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico1.invalidate();
         grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
 
@@ -854,12 +874,108 @@ public class planografico extends Fragment {
         XAxis xAxistemp = grafico2.getXAxis();
         xAxistemp.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxistemp.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
-        xAxistemp.setLabelRotationAngle(-45f);
+        //xAxistemp.setLabelRotationAngle(-45f);
         MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first);
         grafico2.setMarker(adaptertemp);
         grafico2.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico2.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        grafico2.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico2.invalidate();
         grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+    }
+    private void setgraficosstate(statedatapack pack){
+
+        graficohumedadrelativa.setData(pack.sacarlahumedadrelativa());
+        graficohumedadrelativa.setXAxisRenderer(new labelpersonalizadoX(graficohumedadrelativa.getViewPortHandler(), graficohumedadrelativa.getXAxis(), graficohumedadrelativa.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis XaxisHR = graficohumedadrelativa.getXAxis();
+        XaxisHR.setPosition(XAxis.XAxisPosition.BOTTOM);
+        XaxisHR.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        graficohumedadrelativa.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficohumedadrelativa.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficohumedadrelativa.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        graficohumedadrelativa.invalidate();
+        graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        graficopresionbarometrica.setData(pack.sacarlapresionbarometrica());
+        graficopresionbarometrica.setXAxisRenderer(new labelpersonalizadoX(graficopresionbarometrica.getViewPortHandler(), graficopresionbarometrica.getXAxis(), graficopresionbarometrica.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis XaxisPB = graficopresionbarometrica.getXAxis();
+        XaxisPB.setPosition(XAxis.XAxisPosition.BOTTOM);
+        XaxisPB.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        graficopresionbarometrica.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficopresionbarometrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficopresionbarometrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        graficopresionbarometrica.invalidate();
+        graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        grafico3.setData(pack.sacarlaenergia());
+        grafico3.setXAxisRenderer(new labelpersonalizadoX(grafico3.getViewPortHandler(), grafico3.getXAxis(), grafico3.getTransformer(YAxis.AxisDependency.LEFT)));
+        YAxis yaxisl = grafico3.getAxisLeft(); //
+        //yaxisl.setAxisMinimum(0f);
+        //yaxisl.setAxisMaximum(8f); //7.5
+        yaxisl.setTextColor(colores[1]);
+        YAxis yaxisr = grafico3.getAxisRight();
+        yaxisr.setAxisMinimum(3.5f);
+        yaxisr.setAxisMaximum(4.3f); //4.5
+        yaxisr.setTextColor(colores[0]);//
+        XAxis xaxis3= grafico3.getXAxis();
+        xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxis3.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        grafico3.setExtraTopOffset(OFFSETGRAFPHTOP);
+        grafico3.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        grafico3.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        grafico3.invalidate();
+        grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        graficotemperaturavulvoseco.setData(pack.sacarlatemperaturavulvoseco());
+        graficotemperaturavulvoseco.setXAxisRenderer(new labelpersonalizadoX(graficotemperaturavulvoseco.getViewPortHandler(), graficotemperaturavulvoseco.getXAxis(), graficotemperaturavulvoseco.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis XaxisTVS = graficotemperaturavulvoseco.getXAxis();
+        XaxisTVS.setPosition(XAxis.XAxisPosition.BOTTOM);
+        XaxisTVS.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        graficotemperaturavulvoseco.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficotemperaturavulvoseco.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficotemperaturavulvoseco.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        graficotemperaturavulvoseco.invalidate();
+        graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+    }
+    private void setgraficoG(gdatapack pack){
+
+        graficohumedaddelsuelo.setData(pack.sacarlahumedad().second);
+        graficohumedaddelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficohumedaddelsuelo.getViewPortHandler(), graficohumedaddelsuelo.getXAxis(), graficohumedaddelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisHS = graficohumedaddelsuelo.getXAxis();
+        xaxisHS.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisHS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        graficohumedaddelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficohumedaddelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficohumedaddelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterHS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizhumedad(),pack.sacarlahumedad().first);
+        graficohumedaddelsuelo.setMarker(adapterHS);
+        graficohumedaddelsuelo.invalidate();
+        graficohumedaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        graficotemperaturadelsuelo.setData(pack.sacarlatemperatura().second);
+        graficotemperaturadelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficotemperaturadelsuelo.getViewPortHandler(), graficotemperaturadelsuelo.getXAxis(), graficotemperaturadelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisTS = graficotemperaturadelsuelo.getXAxis();
+        xaxisTS.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisTS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        graficotemperaturadelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficotemperaturadelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficotemperaturadelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first);
+        graficotemperaturadelsuelo.setMarker(adapterTS);
+        graficotemperaturadelsuelo.invalidate();
+        graficotemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        graficoconductividaddelsuelo.setData(pack.sacarlaconductividad().second);
+        graficoconductividaddelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficoconductividaddelsuelo.getViewPortHandler(), graficoconductividaddelsuelo.getXAxis(), graficoconductividaddelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisCS = graficoconductividaddelsuelo.getXAxis();
+        xaxisCS.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisCS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        graficoconductividaddelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficoconductividaddelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficoconductividaddelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterCS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividad(),pack.sacarlaconductividad().first);
+        graficoconductividaddelsuelo.setMarker(adapterCS);
+        graficoconductividaddelsuelo.invalidate();
+        graficoconductividaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
 }

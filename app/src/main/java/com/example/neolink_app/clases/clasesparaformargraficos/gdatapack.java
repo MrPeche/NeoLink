@@ -30,6 +30,7 @@ public class gdatapack {
     }
 
     public DepthPackage sacareldepth(){return this.depth;}
+    public ArrayList<String> sacarlabels(){return this.datalabelsaxisX;}
     public Pair<ArrayList<String>, LineData> sacarlahumedad(){return this.humedad;}
     public Pair<ArrayList<String>, LineData> sacarlatemperatura(){return this.temperatura;}
     public Pair<ArrayList<String>, LineData> sacarlaconductividad(){return this.conductividad;}

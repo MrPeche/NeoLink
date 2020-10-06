@@ -43,7 +43,7 @@ public class panelesgrafiquito extends Fragment {
     private viewpagergrafiquitosAdapter adapter;
     private String dateselected;
     private ArrayList<String> nodo;
-    private String [] lista ={"Ayer - Hoy","Este mes","Este año","Elige una fecha"};
+    private String [] lista ={"Ayer - Hoy","Esta semana","Este mes","Este año","Elige una fecha"}; //"Ayer - Hoy","Este mes","Este año","Elige una fecha"
     /*
     private MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
     */
@@ -120,13 +120,7 @@ public class panelesgrafiquito extends Fragment {
 
                     } else {
                         archi.changemode(4);
-                    }
 
-                    if(s.equals("Hoy")) {
-                        archi.updatetoday();
-                    } else {
-                        //dateselected = s;
-                        //archi.updatedate(managedate(s, 1), managedate(s, 2), managedate(s, 3));
                     }
                 }
             }

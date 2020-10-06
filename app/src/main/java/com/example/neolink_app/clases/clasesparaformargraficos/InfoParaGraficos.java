@@ -32,7 +32,8 @@ public class InfoParaGraficos {
     }
     public boolean validarlosdias(){
         boolean validate = true;
-        if((dias.size()==0)||(dias.size()!=cantidaddedias)){
+        //(dias.size()==0)||(dias.size()!=cantidaddedias)
+        if((dias.size()==0)){
             return false;
         } else{
             for(paquetededatacompleto<Dias,diasstate,DiasG> dia: dias){
@@ -41,10 +42,25 @@ public class InfoParaGraficos {
             return validate;
         }
     }
+    public Pair<Integer,Boolean> buscarpordiadentro(String dia){
+        boolean hay = false;
+        int posicion = 0;
+        for(int i=0;i<dias.size();i++){
+            if(dias.get(i).damevalorB().damedia(0).equals(dia)){
+                hay=true;
+                posicion=i;
+                break;
+            }
+        }
+        return Pair.create(posicion,hay);
+    }
+    public void actualizardatoespecifico(paquetededatacompleto<Dias,diasstate,DiasG> data, int pos){
+        this.dias.set(pos,data);
+    }
     public void actualizarcantidad(int cantidaddedias){
         this.cantidaddedias = cantidaddedias;
     }
-    public kdatapack managedias(){
+    public fulldatapack managedias(){
         ArrayList<Dias> sensork = new ArrayList<>();
         ArrayList<diasstate> sensorstate = new ArrayList<>();
         ArrayList<DiasG> sensorg = new ArrayList<>();
@@ -53,10 +69,7 @@ public class InfoParaGraficos {
             sensorstate.add(dia.damevalorB());
             sensorg.add(dia.damevalorC());
         }
-        //managesensorkendias(sensork);
-        managesensorstateendias(sensorstate);
-        managesensorgendias(sensorg);
-        return managesensorkendias(sensork);
+        return new fulldatapack(managesensorkendias(sensork),managesensorgendias(sensorg),managesensorstateendias(sensorstate));
     }
     private kdatapack managesensorkendias(ArrayList<Dias> data){
         Collections.sort(data,new sortpordias<>());
@@ -176,7 +189,7 @@ public class InfoParaGraficos {
                     labelhora = dia.damehora(i).damehora(j);
                     for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoG();k++){
                         labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
-                        XlabelsG.add(labeldia+" "+labelhora+sp+labelminuto);
+                        XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
                         for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoG();m++){
                             nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
                             switch (nombrePuerto){
@@ -215,7 +228,6 @@ public class InfoParaGraficos {
         Pair<ArrayList<String>,LineData> temperaturaG = extraerdatadelpaquete(tempeS);
         Pair<ArrayList<String>,LineData> conductividadG = extraerdatadelpaquete(condE);
         return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,humS,tempeS,condE);
-
     }
     private statedatapack managesensorstateendias(ArrayList<diasstate> data){
         Collections.sort(data,new sortpordias<>());
@@ -236,7 +248,7 @@ public class InfoParaGraficos {
                 for(int k = 0;k<dia.damehoras(i).dametamano();k++){
                     labelhora = dia.damehoras(i).damehora(k);
                     for(int j = 0; j<dia.damehoras(i).dameminutos(k).dametamano();j++){
-                        XlabelsSTATE.add(labeldia+" "+labelhora+sp+dia.damehoras(i).dameminutos(k).dameminutos(j));
+                        XlabelsSTATE.add(labeldia+"\n"+labelhora+sp+dia.damehoras(i).dameminutos(k).dameminutos(j));
                         bateria.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBV()));
                         solar.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveSV()));
                         presionbaro.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBP()));

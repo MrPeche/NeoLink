@@ -511,7 +511,7 @@ public class UserInfoRepo {
         paquetededatacompleto<Dias,diasstate,DiasG> hoy = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorstate(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorg(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)));
         paquetededatacompleto<Dias,diasstate,DiasG> ayer = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorstate(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorg(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)));
         InfoParaGraficos data = new InfoParaGraficos();
-        data.actualizarcantidad(2);
+        //data.actualizarcantidad(2);
         hoyayer.setValue(null);
         hoyayer.addSource(ayer, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
             @Override
@@ -530,10 +530,13 @@ public class UserInfoRepo {
             public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
                 if(pairDiasGPair!=null){
                     if(hoy.isitready()){
-                        data.agregarinfodias(hoy);
+                        android.util.Pair<Integer,Boolean> pregunta = data.buscarpordiadentro(hoy.damevalorB().damedia(0));
+                        if(pregunta.second){
+                            data.actualizardatoespecifico(hoy,pregunta.first);
+                        } else
+                            data.agregarinfodias(hoy);
                         hoyayer.setValue(data);
                     }
-                    hoyayer.setValue(data);
                 } else
                     hoyayer.setValue(data);
             }
@@ -645,10 +648,28 @@ public class UserInfoRepo {
     public LiveData<InfoParaGraficos> fetchestasemana(String neolink, ArrayList<ArrayList<Integer>> semana){
         final MediatorLiveData<InfoParaGraficos> estasemana = new MediatorLiveData<>();
         InfoParaGraficos obj = new InfoParaGraficos();
+        estasemana.setValue(null);
         for(ArrayList<Integer> dia:semana){
-            obj.agregarinfodias(new paquetededatacompleto<Dias,diasstate,DiasG>(fetchdataperdaywithsensork(neolink,dia.get(0),dia.get(1),dia.get(2)),
+            paquetededatacompleto<Dias,diasstate,DiasG> diarandom = new paquetededatacompleto<Dias,diasstate,DiasG>(fetchdataperdaywithsensork(neolink,dia.get(0),dia.get(1),dia.get(2)),
                     fetchdataperdaywithsensorstate(neolink,dia.get(0),dia.get(1),dia.get(2)),
-                    fetchdataperdaywithsensorg(neolink,dia.get(0),dia.get(1),dia.get(2))));
+                    fetchdataperdaywithsensorg(neolink,dia.get(0),dia.get(1),dia.get(2)));
+
+            estasemana.addSource(diarandom, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+                @Override
+                public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
+                    if(pairDiasGPair!=null){
+                        if(diarandom.isitready()){
+                            android.util.Pair<Integer,Boolean> pregunta = obj.buscarpordiadentro(diarandom.damevalorB().damedia(0));
+                            if(pregunta.second){
+                                obj.actualizardatoespecifico(diarandom,pregunta.first);
+                            } else
+                                obj.agregarinfodias(diarandom);
+                            estasemana.setValue(obj);
+                        }
+                    } else
+                        estasemana.setValue(obj);
+                }
+            });
         }
         return estasemana;
     }
