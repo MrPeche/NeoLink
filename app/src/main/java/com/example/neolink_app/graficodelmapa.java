@@ -480,24 +480,6 @@ public class graficodelmapa extends Fragment {
         grafico1.clear();
         grafico2.clear();
     }
-    private LineDataSet CreaDataLine(ArrayList<Entry> data, String label,int color){
-        LineDataSet pset = new LineDataSet(data,label);
-        //set1.setHighLightColor(Color.argb(100,255,99,71));
-        pset.setColor(color);
-        pset.setDrawCircles(false);
-        /*
-        pset.setCircleColor(color);
-        pset.setCircleRadius(5f);
-        pset.setCircleHoleColor(Color.WHITE);
-        */
-        pset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        pset.setCubicIntensity(0.2f);
-        pset.setDrawValues(false);
-        pset.setLineWidth(LINEWIDTH);
-        pset.setDrawHorizontalHighlightIndicator(false);
-        pset.setDrawVerticalHighlightIndicator(false);
-        return pset;
-    }
 
     public void onDestroy() {
         super.onDestroy();
