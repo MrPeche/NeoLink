@@ -2,55 +2,34 @@ package com.example.neolink_app;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.core.util.Pair;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
 import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.adaptadores.labelpersonalizadoX;
 import com.example.neolink_app.clases.DepthPackage;
-import com.example.neolink_app.clases.Horas;
-import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.clasesparaformargraficos.fulldatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.gdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.kdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.statedatapack;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
-import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.DataSet;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.LineRadarDataSet;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.EntryXComparator;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 
 
 public class planografico extends Fragment {
@@ -65,6 +44,9 @@ public class planografico extends Fragment {
     private LineChart graficohumedaddelsuelo;
     private LineChart graficotemperaturadelsuelo;
     private LineChart graficoconductividaddelsuelo;
+    private LineChart graficorosadevientos;
+    private LineChart graficoconductividadelectricadelporo;
+    private LineChart graficocontenidovolumetricodelagua;
 
     private CardView cvpotencialMatricial;
     private CardView cvtemperatura;
@@ -75,20 +57,19 @@ public class planografico extends Fragment {
     private CardView cvHumedadrelativa;
     private CardView cvpresionbarometrica;
     private CardView cvtemperaturabulboseco;
+    private CardView cvrosadevientos;
+    private CardView cvconductividadelectricadelporo;
+    private CardView cvcontenidovolumetricodelagua;
 
     private MasterDrawerViewModel archi;
     private paquetedatasetPuertos YPM2 = new paquetedatasetPuertos();
     private paquetedatasetPuertos YTemp2 = new paquetedatasetPuertos();
     private DepthPackage DepthP2 = new DepthPackage();
-    private final ArrayList<String> Xlabels2 = new ArrayList<>();
-    private Horas paquete;
     //private MarkerLineChartAdapter adapter;
     private int alpha = 170;
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
     private float LINEWIDTH = 2.5f;
-    private Calendar ahora = Calendar.getInstance();
-    private horasstate state;
     private static float OFFSETGRAFPHTOP = 20f;
     private static float OFFSETGRAFPHLEFT = 10f;
     private static float OFFSETGRAFPHBOTTOM = 15f;
@@ -106,18 +87,6 @@ public class planografico extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    public static planografico newInstance(Pair<Horas, horasstate> paquete, String name) {
-        planografico fragment = new planografico();
-
-        Bundle args = new Bundle();
-        args.putParcelable("paquete",paquete.first);
-        args.putParcelable("state",paquete.second);
-        args.putString("nombre",name);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,6 +121,9 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo= view.findViewById(R.id.graficotemperaturadelsuelo);
         graficohumedaddelsuelo = view.findViewById(R.id.graficohumedaddelsuelo);
         graficoconductividaddelsuelo = view.findViewById(R.id.graficoConductividadSuelo);
+        graficoconductividadelectricadelporo = view.findViewById(R.id.graficoconductividadPoro);
+        graficocontenidovolumetricodelagua = view.findViewById(R.id.graficocontenidovolumetricodelagua);
+        graficorosadevientos = view.findViewById(R.id.graficorosadevientos);
         cvpotencialMatricial = view.findViewById(R.id.cvpotencialMatricial);
         cvtemperatura = view.findViewById(R.id.cvtemperatura);
         cvEnergia = view.findViewById(R.id.cvEnergia);
@@ -161,88 +133,23 @@ public class planografico extends Fragment {
         cvHumedadrelativa = view.findViewById(R.id.cvHumedadrelativa);
         cvpresionbarometrica = view.findViewById(R.id.cvpresionbarometrica);
         cvtemperaturabulboseco = view.findViewById(R.id.cvtemperaturabulboseco);
+        cvconductividadelectricadelporo = view.findViewById(R.id.cvconductividadelectricadelporo);
+        cvcontenidovolumetricodelagua = view.findViewById(R.id.cvcontenidovolumetricodelagua);
+        cvrosadevientos = view.findViewById(R.id.cvrosadevientos);
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         propiedadesgrafico3();
         propiedadesgraficohumedadrelativa();
         propiedadesgraficopresionbarometrica();
         propiedadesgraficotemperaturavulvoseco();
-
+        propiedadesgraficoconductividadelectricadelporo();
+        propiedadesgraficocontenidovolumetricodelagua();
+        propiedadesgraficorosadelviento();
         propiedadesgraficohumedaddeldelsuelo();
         propiedadesgraficotemperaturadeldelsuelo();
         propiedadesgraficoconductividaddeldelsuelo();
 
         startposition();
-
-        /*
-        if(archi.datahoyG==null){
-            archi.retrivedatag(name);
-        }
-
-         */
-        /*
-        if(!archi.datahoyG.hasActiveObservers()){
-            archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
-                @Override
-                public void onChanged(HorasG horasG) {
-                    if(horasG!=null){
-                        if(horasG.dametamanoG()!=0){
-                            cleanG();
-                            cvconductividadelectrica.setVisibility(View.VISIBLE);
-                            cvhumedaddelsuelo.setVisibility(View.VISIBLE);
-                            cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
-                            setdataG(horasG);
-                        }
-                    }
-                }
-            });
-        }
-         */
-        /*
-        archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
-            @Override
-            public void onChanged(HorasG horasG) {
-                if(horasG!=null){
-                    if(horasG.dametamanoG()!=0){
-                        cleanG();
-                        cvconductividadelectrica.setVisibility(View.VISIBLE);
-                        cvhumedaddelsuelo.setVisibility(View.VISIBLE);
-                        cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
-                        setdataG(horasG);
-                    }
-                }
-            }
-        });
-         */
-        /*
-        if(!archi.datahoy.hasActiveObservers()){
-            archi.livelydatafull(name,hoyaño,hoymes,hoydia,sensor);
-            archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
-                @Override
-                public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
-                    if(archi.paquetesdedata.isitready()){
-                        cleanthisshit();
-
-                        if(horashorasstatePair.first.dametamano()!=0) {
-                            cvpotencialMatricial.setVisibility(View.VISIBLE);
-                            cvtemperatura.setVisibility(View.VISIBLE);
-                            setdatagrafK(horashorasstatePair.first);
-                            setdataPM(YPM2, Xlabels2, DepthP2);
-                            setdataTemp(YTemp2, Xlabels2, DepthP2);
-                        }
-
-                        if(horashorasstatePair.second.dametamano()!=0){
-                            cvEnergia.setVisibility(View.VISIBLE);
-                            cvHumedadrelativa.setVisibility(View.VISIBLE);
-                            cvpresionbarometrica.setVisibility(View.VISIBLE);
-                            cvtemperaturabulboseco.setVisibility(View.VISIBLE);
-                            setStatedata(horashorasstatePair.second);
-                        }
-                    }
-                }
-            });
-        }
-         */
 
         archi.fecthlimits(name).observe(getViewLifecycleOwner(), new Observer<statelimitsport>() {
             @Override
@@ -269,12 +176,15 @@ public class planografico extends Fragment {
                         cvHumedadrelativa.setVisibility(View.VISIBLE);
                         cvpresionbarometrica.setVisibility(View.VISIBLE);
                         cvtemperaturabulboseco.setVisibility(View.VISIBLE);
+                        cvrosadevientos.setVisibility(View.VISIBLE);
                         setgraficosstate(commdata.sacarstatedatapack());
                         //sensorg
                         cleanG();
                         cvconductividadelectrica.setVisibility(View.VISIBLE);
                         cvhumedaddelsuelo.setVisibility(View.VISIBLE);
                         cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                        cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
+                        cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                         setgraficoG(commdata.sacargdatapack());
 
                     }
@@ -284,7 +194,6 @@ public class planografico extends Fragment {
 
     }
     private void cleanthisshit(){
-        Xlabels2.clear();
         YPM2.clean();
         YTemp2.clean();
         DepthP2.clean();
@@ -296,6 +205,9 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo.clear();
         graficohumedaddelsuelo.clear();
         graficoconductividaddelsuelo.clear();
+        graficocontenidovolumetricodelagua.clear();
+        graficoconductividadelectricadelporo.clear();
+        graficorosadevientos.clear();
     }
     private void startposition(){
         cvpotencialMatricial.setVisibility(View.GONE);
@@ -307,6 +219,9 @@ public class planografico extends Fragment {
         cvHumedadrelativa.setVisibility(View.GONE);
         cvpresionbarometrica.setVisibility(View.GONE);
         cvtemperaturabulboseco.setVisibility(View.GONE);
+        cvcontenidovolumetricodelagua.setVisibility(View.GONE);
+        cvconductividadelectricadelporo.setVisibility(View.GONE);
+        cvrosadevientos.setVisibility(View.GONE);
     }
     public void propiedadesgraficoPM(){
         grafico1.setBackgroundColor(Color.TRANSPARENT);
@@ -322,95 +237,6 @@ public class planografico extends Fragment {
         grafico1.setScaleXEnabled(true);
         Legend L = grafico1.getLegend();
     }
-    private void setdatagrafK(Horas paquete){
-        String sp = ":";
-        String label;
-        String label2;
-        float l = 0;
-        for(int i = 0; i<paquete.dametamano();i++){
-            label = paquete.damehora(i);
-            for(int j = 0; j<paquete.dameminutos(i).dametamano();j++){
-                label2 = label+sp+paquete.dameminutos(i).dameminuto(j);
-                Xlabels2.add(label2);
-                for(int k = 0; k<paquete.dameminutos(i).damepaquete(j).dametamano();k++){
-                    String nombrePuerto = paquete.dameminutos(i).damepaquete(j).damePuerto(k);
-                    switch (nombrePuerto){
-                        case "P1":
-                            YPM2.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp2.addP1(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP2.addP1(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P2":
-                            YPM2.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp2.addP2(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP2.addP2(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P3":
-                            YPM2.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp2.addP3(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP2.addP3(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P4":
-                            YPM2.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            YTemp2.addP4(new Entry(l,paquete.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            DepthP2.addP4(paquete.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                    }
-                }
-                l++;
-            }
-        }
-    }
-
-    public void setdataPM(paquetedatasetPuertos YPM,ArrayList<String> Xlabels, DepthPackage DepthLabel){
-        //Collections.sort(YPM, new EntryXComparator());
-        //LineDataSet set1 = new LineDataSet(YPM.getP1(),"P1");
-        ArrayList<String> orden = new ArrayList<>();
-        LineData data = new LineData();
-        if(YPM.getP1().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YPM.getP1(), "P1", colores[0]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P1");
-        }
-        if(YPM.getP2().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YPM.getP2(), "P2", colores[1]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P2");
-        }
-        if(YPM.getP3().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YPM.getP3(), "P3", colores[2]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P3");
-        }
-        if(YPM.getP4().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YPM.getP4(), "P4", colores[3]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P4");
-        }
-        //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        //grafico1.setMaxVisibleValueCount(MAX_DATAVISIBLE);
-        //grafico1.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
-        grafico1.setData(data);
-        //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-        XAxis xaxis = grafico1.getXAxis();
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        final ArrayList<String> xlab = Xlabels;
-        ValueFormatter formatter = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return xlab.get((int) value);
-            }
-        };
-        xaxis.setValueFormatter(formatter);
-        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YPM,orden);
-        grafico1.setMarker(adapter);
-        grafico1.invalidate();
-        grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-    }
     public void propiedadesgraficoTem(){
         grafico2.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
@@ -424,75 +250,6 @@ public class planografico extends Fragment {
         grafico2.setScaleYEnabled(false);
         grafico2.setScaleXEnabled(true);
         Legend L = grafico2.getLegend();
-    }
-
-    public void setdataTemp(paquetedatasetPuertos YTemp,ArrayList<String> Xlabels,DepthPackage DepthLabel){
-        //Collections.sort(YTemp, new EntryXComparator());
-        //LineDataSet set2 = new LineDataSet(YTemp,"P1");
-        ArrayList<String> orden = new ArrayList<>();
-        LineData data = new LineData();
-        if(YTemp.getP1().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YTemp.getP1(), "P1", colores[0]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P1");
-        }
-        if(YTemp.getP2().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YTemp.getP2(), "P2", colores[1]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P2");
-        }
-        if(YTemp.getP3().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YTemp.getP3(), "P3", colores[2]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P3");
-        }
-        if(YTemp.getP4().size()!=0) {
-            LineDataSet set1 = CreaDataLine(YTemp.getP4(), "P4", colores[3]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P4");
-        }
-        //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        //grafico2.setMaxVisibleValueCount(MAX_DATAVISIBLE);
-        //grafico2.setVisibleYRangeMaximum(MAX_DATAVISIBLE, YAxis.AxisDependency.LEFT);
-        grafico2.setData(data);
-
-        //set2.setAxisDependency(YAxis.AxisDependency.LEFT);
-        XAxis xaxis2= grafico2.getXAxis();
-        xaxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
-        final ArrayList<String> xlab2 = Xlabels;
-        ValueFormatter formatter2 = new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return xlab2.get((int) value);
-            }
-        };
-        xaxis2.setValueFormatter(formatter2);
-        MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,DepthLabel,YTemp,orden);
-        grafico2.setMarker(adapter);
-        grafico2.invalidate();
-        grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-    }
-    public LineDataSet CreaDataLine(ArrayList<Entry> data, String label,int color){
-        LineDataSet pset = new LineDataSet(data,label);
-        //set1.setHighLightColor(Color.argb(100,255,99,71));
-        pset.setColor(color);
-        pset.setDrawCircles(false);
-        /*
-        pset.setCircleColor(color);
-        pset.setCircleRadius(5f);
-        pset.setCircleHoleColor(Color.WHITE);
-        */
-        pset.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        pset.setCubicIntensity(0.2f);
-        pset.setDrawValues(false);
-        pset.setLineWidth(LINEWIDTH);
-        pset.setDrawHorizontalHighlightIndicator(false);
-        pset.setDrawVerticalHighlightIndicator(false);
-        return pset;
     }
     public void propiedadesgrafico3(){
         grafico3.setBackgroundColor(Color.TRANSPARENT);
@@ -592,204 +349,47 @@ public class planografico extends Fragment {
         graficoconductividaddelsuelo.setScaleXEnabled(true);
         Legend L = graficoconductividaddelsuelo.getLegend();
     }
-    public void setStatedata(horasstate state){
-        final ArrayList<String> XlabelsSTATE = new ArrayList<>();
-        ArrayList<Entry> bateria = new ArrayList<>();
-        ArrayList<Entry> solar = new ArrayList<>();
-        ArrayList<Entry> presionbaro = new ArrayList<>();
-        ArrayList<Entry> humedadrelativa = new ArrayList<>();
-        ArrayList<Entry> temperaturavulvoseco = new ArrayList<>();
-        ArrayList<Entry> temperaturainterna = new ArrayList<>();
-        String sp = ":";
-        String label;
-        String label2;
-        float l = 0;
-        for(int i = 0; i<state.dametamano();i++){
-            label = state.damehora(i);
-            for(int j = 0; j<state.dameminutos(i).dametamano();j++){
-                label2 = label+sp+state.dameminutos(i).dameminutos(j);
-                XlabelsSTATE.add(label2);
-                bateria.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BV));
-                solar.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).SV));
-                presionbaro.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).BP));
-                humedadrelativa.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).RH));
-                temperaturavulvoseco.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).dT));
-                temperaturainterna.add(new Entry(l,(float) state.dameminutos(i).damepaquete(j).iT));
-                l++;
-            }
-        }
-        LineDataSet LDS = CreaDataLine(bateria,"Bateria",colores[0]);
-        LineDataSet LDSV = CreaDataLine(solar,"Voltaje Solar", colores[1]);
-        LDSV.setAxisDependency(YAxis.AxisDependency.LEFT); //
-        LDS.setAxisDependency(YAxis.AxisDependency.RIGHT); //
-
-        LineDataSet LDhumedadrelativa= CreaDataLine(humedadrelativa,"Humedad Relativa",colores[0]);
-        LineDataSet LDpresionbarometrica= CreaDataLine(presionbaro,"Presion Barométrica",colores[0]);
-        LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
-        LineDataSet LDtemperaturainterna = CreaDataLine(temperaturainterna, "Temperatura interna",colores[1]);
-        LDtemperaturainterna.enableDashedLine(30,10,10);
-        LDtemperaturainterna.setLineWidth(0.8f);
-
-        adddatatostates(1,LDhumedadrelativa,XlabelsSTATE);
-        adddatatostates(2,LDpresionbarometrica,XlabelsSTATE);
-        adddatatostates2(1,LDS,LDSV,XlabelsSTATE);
-        adddatatostates2(2,LDtemperaturavulvoseco,LDtemperaturainterna,XlabelsSTATE);
-
+    private void propiedadesgraficoconductividadelectricadelporo(){
+        graficoconductividadelectricadelporo.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficoconductividadelectricadelporo.setDrawGridBackground(false);
+        graficoconductividadelectricadelporo.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficoconductividadelectricadelporo.getDescription().setEnabled(false);
+        graficoconductividadelectricadelporo.setTouchEnabled(true);
+        graficoconductividadelectricadelporo.setDragEnabled(true);
+        graficoconductividadelectricadelporo.setScaleYEnabled(false);
+        graficoconductividadelectricadelporo.setScaleXEnabled(true);
+        Legend L = graficoconductividadelectricadelporo.getLegend();
     }
-    private void adddatatostates2(int tipo, LineDataSet A,LineDataSet B, ArrayList<String> C){
-        LineData data = new LineData();
-        data.addDataSet(A);
-        data.addDataSet(B);
-        if(tipo==1){
-            grafico3.setData(data);
-            YAxis yaxisl = grafico3.getAxisLeft(); //
-            //yaxisl.setAxisMinimum(0f);
-            //yaxisl.setAxisMaximum(8f); //7.5
-            yaxisl.setTextColor(colores[1]);
-            YAxis yaxisr = grafico3.getAxisRight();
-            yaxisr.setAxisMinimum(3.5f);
-            yaxisr.setAxisMaximum(4.3f); //4.5
-            yaxisr.setTextColor(colores[0]);//
-            XAxis xaxis3= grafico3.getXAxis();
-            xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xaxis3.setValueFormatter(new graficolabelgenerator(C));
-            grafico3.invalidate();
-            grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        } else if(tipo==2){
-            graficotemperaturavulvoseco.setData(data);
-            XAxis Xaxis = graficotemperaturavulvoseco.getXAxis();
-            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            Xaxis.setValueFormatter(new graficolabelgenerator(C));
-            graficotemperaturavulvoseco.invalidate();
-            graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        }
+    private void propiedadesgraficocontenidovolumetricodelagua(){
+        graficocontenidovolumetricodelagua.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficocontenidovolumetricodelagua.setDrawGridBackground(false);
+        graficocontenidovolumetricodelagua.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficocontenidovolumetricodelagua.getDescription().setEnabled(false);
+        graficocontenidovolumetricodelagua.setTouchEnabled(true);
+        graficocontenidovolumetricodelagua.setDragEnabled(true);
+        graficocontenidovolumetricodelagua.setScaleYEnabled(false);
+        graficocontenidovolumetricodelagua.setScaleXEnabled(true);
+        Legend L = graficocontenidovolumetricodelagua.getLegend();
     }
-    private void adddatatostates(int tipo,LineDataSet A, final ArrayList<String> B){
-        LineData data = new LineData();
-        data.addDataSet(A);
-        if(tipo==1){
-            graficohumedadrelativa.setData(data);
-            XAxis Xaxis = graficohumedadrelativa.getXAxis();
-            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            Xaxis.setValueFormatter(new graficolabelgenerator(B));
-            graficohumedadrelativa.invalidate();
-            graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        } else if(tipo==2){
-            graficopresionbarometrica.setData(data);
-            XAxis Xaxis = graficopresionbarometrica.getXAxis();
-            Xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            Xaxis.setValueFormatter(new graficolabelgenerator(B));
-            graficopresionbarometrica.invalidate();
-            graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        }
-    }
-    private void setdataG(HorasG data){
-        paquetedatasetPuertos humS = new paquetedatasetPuertos();
-        paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
-        paquetedatasetPuertos condE = new paquetedatasetPuertos();
-        DepthPackage Depth = new DepthPackage();
-        String sp = ":";
-        String label;
-        String label2;
-        ArrayList<String> XlabelsG = new ArrayList<>();
-        float l = 0;
-        for(int i = 0; i<data.dametamanoG();i++){
-            label = data.damehora(i);
-            for(int j = 0; j<data.dameminutos(i).dametamanoG();j++){
-                label2 = label+sp+data.dameminutos(i).dameminuto(j);
-                XlabelsG.add(label2);
-                for(int k = 0; k<data.dameminutos(i).damepaquete(j).dametamanoG();k++){
-                    String nombrePuerto = data.dameminutos(i).damepaquete(j).damePuerto(k);
-                    switch (nombrePuerto){
-                        case "P1":
-                            humS.addP1(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            tempeS.addP1(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            condE.addP1(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
-                            Depth.addP1(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P2":
-                            humS.addP2(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            tempeS.addP2(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            condE.addP2(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
-                            Depth.addP2(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P3":
-                            humS.addP3(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            tempeS.addP3(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            condE.addP3(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
-                            Depth.addP3(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                        case "P4":
-                            humS.addP4(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV1().floatValue()));
-                            tempeS.addP4(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV2().floatValue()));
-                            condE.addP4(new Entry(l,data.dameminutos(i).damepaquete(j).damedata(k).dameV3().floatValue()));
-                            Depth.addP4(data.dameminutos(i).damepaquete(j).damedata(k).dameDepth());
-                            break;
-                    }
-                }
-                l++;
-            }
-        }
-
-        setsensorG(humS,1,XlabelsG,Depth);
-        setsensorG(tempeS,2,XlabelsG,Depth);
-        setsensorG(condE,3,XlabelsG,Depth);
-    }
-    private void setsensorG(paquetedatasetPuertos firedata, int tipo, final ArrayList<String> XlabelsG,DepthPackage depth){
-        ArrayList<String> orden = new ArrayList<>();
-        LineData data = new LineData();
-        if(firedata.getP1().size()!=0) {
-            LineDataSet set1 = CreaDataLine(firedata.getP1(), "P1", colores[0]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P1");
-        }
-        if(firedata.getP2().size()!=0) {
-            LineDataSet set1 = CreaDataLine(firedata.getP2(), "P2", colores[1]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P2");
-        }
-        if(firedata.getP3().size()!=0) {
-            LineDataSet set1 = CreaDataLine(firedata.getP3(), "P3", colores[2]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P3");
-        }
-        if(firedata.getP4().size()!=0) {
-            LineDataSet set1 = CreaDataLine(firedata.getP4(), "P4", colores[3]);
-            //set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            data.addDataSet(set1);
-            orden.add("P4");
-        }
-        if(tipo == 1){
-            graficohumedaddelsuelo.setData(data);
-            XAxis xaxis = graficohumedaddelsuelo.getXAxis();
-            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
-            MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
-            graficohumedaddelsuelo.setMarker(adapter);
-            graficohumedaddelsuelo.invalidate();
-            graficohumedaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        } else if(tipo==2){
-            graficotemperaturadelsuelo.setData(data);
-            XAxis xaxis = graficotemperaturadelsuelo.getXAxis();
-            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
-            MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
-            graficotemperaturadelsuelo.setMarker(adapter);
-            graficotemperaturadelsuelo.invalidate();
-            graficotemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        } else if(tipo ==3){
-            graficoconductividaddelsuelo.setData(data);
-            XAxis xaxis = graficoconductividaddelsuelo.getXAxis();
-            xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xaxis.setValueFormatter(new graficolabelgenerator(XlabelsG));
-            MarkerLineChartAdapter adapter = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,depth,firedata,orden);
-            graficoconductividaddelsuelo.setMarker(adapter);
-            graficoconductividaddelsuelo.invalidate();
-            graficoconductividaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-        }
+    private void propiedadesgraficorosadelviento(){
+        graficorosadevientos.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficorosadevientos.setDrawGridBackground(false);
+        graficorosadevientos.setDrawBorders(false);
+        //grafico2.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficorosadevientos.getDescription().setEnabled(false);
+        graficorosadevientos.setTouchEnabled(true);
+        graficorosadevientos.setDragEnabled(true);
+        graficorosadevientos.setScaleYEnabled(false);
+        graficorosadevientos.setScaleXEnabled(true);
+        Legend L = graficorosadevientos.getLegend();
     }
     private void arrangelimitlines(statelimitsport obj){
         boolean[] switchs = {deintaboolean(obj.dameP1().damek().dameV1().damebool()),
@@ -936,9 +536,19 @@ public class planografico extends Fragment {
         graficotemperaturavulvoseco.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficotemperaturavulvoseco.invalidate();
         graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        graficorosadevientos.setData(pack.sacarelwindspeed());
+        graficorosadevientos.setXAxisRenderer(new labelpersonalizadoX(graficorosadevientos.getViewPortHandler(), graficorosadevientos.getXAxis(), graficorosadevientos.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis XaxisRV = graficorosadevientos.getXAxis();
+        XaxisRV.setPosition(XAxis.XAxisPosition.BOTTOM);
+        XaxisRV.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        graficorosadevientos.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficorosadevientos.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficorosadevientos.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        graficorosadevientos.invalidate();
+        graficorosadevientos.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
     private void setgraficoG(gdatapack pack){
-
         graficohumedaddelsuelo.setData(pack.sacarlahumedad().second);
         graficohumedaddelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficohumedaddelsuelo.getViewPortHandler(), graficohumedaddelsuelo.getXAxis(), graficohumedaddelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xaxisHS = graficohumedaddelsuelo.getXAxis();
@@ -977,5 +587,31 @@ public class planografico extends Fragment {
         graficoconductividaddelsuelo.setMarker(adapterCS);
         graficoconductividaddelsuelo.invalidate();
         graficoconductividaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        graficoconductividadelectricadelporo.setData(pack.sacarlaconductividaddelporo().second);
+        graficoconductividadelectricadelporo.setXAxisRenderer(new labelpersonalizadoX(graficoconductividadelectricadelporo.getViewPortHandler(), graficoconductividadelectricadelporo.getXAxis(), graficoconductividadelectricadelporo.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisCSP = graficoconductividadelectricadelporo.getXAxis();
+        xaxisCSP.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisCSP.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        graficoconductividadelectricadelporo.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficoconductividadelectricadelporo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficoconductividadelectricadelporo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterCSP = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividaddelporo(),pack.sacarlaconductividaddelporo().first);
+        graficoconductividadelectricadelporo.setMarker(adapterCSP);
+        graficoconductividadelectricadelporo.invalidate();
+        graficoconductividadelectricadelporo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+
+        graficocontenidovolumetricodelagua.setData(pack.sacarelcontenidovolumetricodelagua().second);
+        graficocontenidovolumetricodelagua.setXAxisRenderer(new labelpersonalizadoX(graficocontenidovolumetricodelagua.getViewPortHandler(), graficocontenidovolumetricodelagua.getXAxis(), graficocontenidovolumetricodelagua.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisCVA = graficocontenidovolumetricodelagua.getXAxis();
+        xaxisCVA.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisCVA.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        graficocontenidovolumetricodelagua.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficocontenidovolumetricodelagua.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficocontenidovolumetricodelagua.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterCVA = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizcontenidovolumetricodelagua(),pack.sacarelcontenidovolumetricodelagua().first);
+        graficocontenidovolumetricodelagua.setMarker(adapterCVA);
+        graficocontenidovolumetricodelagua.invalidate();
+        graficocontenidovolumetricodelagua.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
 }

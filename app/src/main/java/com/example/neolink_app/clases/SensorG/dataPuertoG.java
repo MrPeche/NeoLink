@@ -5,15 +5,19 @@ import android.os.Parcelable;
 
 public class dataPuertoG implements Parcelable {
     public Double Depth;
+    public Double PoreCE;
     public Double V1;
     public Double V2;
     public Double V3;
+    public Double VWC;
     public dataPuertoG(){}
-    public dataPuertoG(Double Depth, Double V1,Double V2,Double V3){
+    public dataPuertoG(Double Depth, Double V1,Double V2,Double V3,Double PoreCE,Double VWC){
         this.Depth = Depth;
         this.V1 = V1;
         this.V2 = V2;
         this.V3 = V3;
+        this.PoreCE = PoreCE;
+        this.VWC = VWC;
     }
 
 
@@ -37,6 +41,16 @@ public class dataPuertoG implements Parcelable {
             V3 = null;
         } else {
             V3 = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            PoreCE = null;
+        } else {
+            PoreCE = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            VWC = null;
+        } else {
+            VWC = in.readDouble();
         }
     }
 
@@ -66,6 +80,18 @@ public class dataPuertoG implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeDouble(V3);
         }
+        if (PoreCE == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(PoreCE);
+        }
+        if (VWC == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(VWC);
+        }
     }
 
     @Override
@@ -89,4 +115,6 @@ public class dataPuertoG implements Parcelable {
     public Double dameV2(){return this.V2;}
     public Double dameV3(){return this.V3;}
     public Double dameDepth(){return this.Depth;}
+    public Double dameporece(){return this.PoreCE;}
+    public Double damevwc(){return this.VWC;}
 }

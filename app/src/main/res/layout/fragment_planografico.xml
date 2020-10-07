@@ -141,6 +141,64 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvcontenidovolumetricodelagua"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Contenidovolumetricodelagua"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/graficocontenidovolumetricodelagua"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvconductividadelectricadelporo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/ConductividadElectricadelporo"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/graficoconductividadPoro"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cvconductividadelectrica"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
@@ -251,6 +309,35 @@
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficotemperaturavulvoseco"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvrosadevientos"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Rosadevientos"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/graficorosadevientos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>

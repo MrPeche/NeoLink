@@ -99,7 +99,10 @@
     <string name="Temperaturadevulvoseco">Temperatura de bulbo seco (°C)</string>
     <string name="Humedaddelsuelo">Humedad del Suelo (raw)</string>
     <string name="Temperaturadelsuelo">Temperatura del Suelo (°C)</string>
+    <string name="ConductividadElectricadelporo">Conductividad Eléctrica del Poro (uS/cm)</string>
+    <string name="Contenidovolumetricodelagua">Contenido Volumétrico de agua (m3/m3)</string>
     <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo (uS/cm)</string>
+    <string name="Rosadevientos">Velocidad del Viento (m/s)</string>
 
     //Menu de configuraciones
     <string name="minutos">min</string>

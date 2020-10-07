@@ -151,7 +151,6 @@ public class InfoParaGraficos {
         return Pair.create(orden,data);
     }
     private LineDataSet CreaDataLine(ArrayList<Entry> data, String label,int color){
-
         LineDataSet pset = new LineDataSet(data,label);
         //set1.setHighLightColor(Color.argb(100,255,99,71));
         pset.setColor(color);
@@ -174,6 +173,8 @@ public class InfoParaGraficos {
         paquetedatasetPuertos humS = new paquetedatasetPuertos();
         paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
         paquetedatasetPuertos condE = new paquetedatasetPuertos();
+        paquetedatasetPuertos conddelporo = new paquetedatasetPuertos();
+        paquetedatasetPuertos contentvolumagua = new paquetedatasetPuertos();
         DepthPackage Depth = new DepthPackage();
         String sp = ":";
         String labeldia;
@@ -197,24 +198,32 @@ public class InfoParaGraficos {
                                     humS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
                                     tempeS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
                                     condE.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
                                     Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
                                     break;
                                 case "P2":
                                     humS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
                                     tempeS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
                                     condE.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
                                     Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
                                     break;
                                 case "P3":
                                     humS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
                                     tempeS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
                                     condE.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
                                     Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
                                     break;
                                 case "P4":
                                     humS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
                                     tempeS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
                                     condE.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
                                     Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
                                     break;
                             }
@@ -227,7 +236,9 @@ public class InfoParaGraficos {
         Pair<ArrayList<String>,LineData> humedadG = extraerdatadelpaquete(humS);
         Pair<ArrayList<String>,LineData> temperaturaG = extraerdatadelpaquete(tempeS);
         Pair<ArrayList<String>,LineData> conductividadG = extraerdatadelpaquete(condE);
-        return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,humS,tempeS,condE);
+        Pair<ArrayList<String>,LineData> conductividaddelporo = extraerdatadelpaquete(conddelporo);
+        Pair<ArrayList<String>,LineData> contenidovolumendelagua = extraerdatadelpaquete(contentvolumagua);
+        return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,conductividaddelporo,contenidovolumendelagua,humS,tempeS,condE,conddelporo,contentvolumagua);
     }
     private statedatapack managesensorstateendias(ArrayList<diasstate> data){
         Collections.sort(data,new sortpordias<>());
@@ -238,6 +249,7 @@ public class InfoParaGraficos {
         ArrayList<Entry> humedadrelativa = new ArrayList<>();
         ArrayList<Entry> temperaturavulvoseco = new ArrayList<>();
         ArrayList<Entry> temperaturainterna = new ArrayList<>();
+        ArrayList<Entry> windspeed = new ArrayList<>();
         String sp = ":";
         String labeldia;
         String labelhora;
@@ -255,6 +267,7 @@ public class InfoParaGraficos {
                         humedadrelativa.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveRH()));
                         temperaturavulvoseco.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).givedT()));
                         temperaturainterna.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveiT()));
+                        windspeed.add(new Entry(l,(float)dia.damehoras(i).dameminutos(k).damepaquete(j).giveWS()));
                         l++;
                     }
                 }
@@ -268,9 +281,10 @@ public class InfoParaGraficos {
         LineDataSet LDpresionbarometrica= CreaDataLine(presionbaro,"Presion Barométrica",colores[0]);
         LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
         LineDataSet LDtemperaturainterna = CreaDataLine(temperaturainterna, "Temperatura interna",colores[1]);
+        LineDataSet LDwindspeed = CreaDataLine(windspeed,"Velocidad del viento",colores[0]);
         LDtemperaturainterna.enableDashedLine(30,10,10);
         LDtemperaturainterna.setLineWidth(0.8f);
-        return new statedatapack(dataseparada(LDhumedadrelativa),dataseparada(LDpresionbarometrica),juntardata(LDS,LDSV),juntardata(LDtemperaturavulvoseco,LDtemperaturainterna),XlabelsSTATE);
+        return new statedatapack(dataseparada(LDhumedadrelativa),dataseparada(LDpresionbarometrica),juntardata(LDS,LDSV),juntardata(LDtemperaturavulvoseco,LDtemperaturainterna),dataseparada(LDwindspeed),XlabelsSTATE);
     }
     private LineData juntardata(LineDataSet A, LineDataSet B){
         LineData data = new LineData();

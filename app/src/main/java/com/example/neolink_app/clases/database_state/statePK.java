@@ -12,9 +12,11 @@ public class statePK implements Parcelable {
     public double dT;
     public double SV;
     public double iT;
+    public double WD;
+    public double WS;
 
     public statePK(){}
-    public statePK(double AL,double BP,double BV,double OP_TIME,double RH,double dT,double SV,double iT){
+    public statePK(double AL,double BP,double BV,double OP_TIME,double RH,double dT,double SV,double iT,double WD,double WS){
         this.AL = AL;
         this.BP = BP;
         this.BV = BV;
@@ -23,6 +25,8 @@ public class statePK implements Parcelable {
         this.dT = dT;
         this.SV = SV;
         this.iT = iT;
+        this.WD = WD;
+        this.WS = WS;
     }
 
     protected statePK(Parcel in) {
@@ -34,6 +38,8 @@ public class statePK implements Parcelable {
         dT = in.readDouble();
         SV = in.readDouble();
         iT = in.readDouble();
+        WD = in.readDouble();
+        WS = in.readDouble();
     }
 
     public static final Creator<statePK> CREATOR = new Creator<statePK>() {
@@ -70,6 +76,8 @@ public class statePK implements Parcelable {
     public double giveiT(){
         return this.iT;
     }
+    public double giveWD(){return this.WD;}
+    public double giveWS(){ return this.WS;}
 
     @Override
     public int describeContents() {
@@ -86,5 +94,7 @@ public class statePK implements Parcelable {
         dest.writeDouble(dT);
         dest.writeDouble(SV);
         dest.writeDouble(iT);
+        dest.writeDouble(WD);
+        dest.writeDouble(WS);
     }
 }
