@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -65,6 +66,17 @@ public class actividadbase extends AppCompatActivity {
         correoYO = headerweather.findViewById(R.id.textocorreo);
         String yo = damecorreo();
         correoYO.setText(yo);
+        /*
+        MenuItem salida = navigationView.getMenu().findItem(R.id.ndsalida);
+        salida.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                
+                return true;
+            }
+        });
+
+         */
 
     }
 

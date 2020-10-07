@@ -30,6 +30,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.LineData;
 
 
 public class planografico extends Fragment {
@@ -62,9 +63,6 @@ public class planografico extends Fragment {
     private CardView cvcontenidovolumetricodelagua;
 
     private MasterDrawerViewModel archi;
-    private paquetedatasetPuertos YPM2 = new paquetedatasetPuertos();
-    private paquetedatasetPuertos YTemp2 = new paquetedatasetPuertos();
-    private DepthPackage DepthP2 = new DepthPackage();
     //private MarkerLineChartAdapter adapter;
     private int alpha = 170;
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
@@ -194,9 +192,6 @@ public class planografico extends Fragment {
 
     }
     private void cleanthisshit(){
-        YPM2.clean();
-        YTemp2.clean();
-        DepthP2.clean();
         grafico1.clear();
         grafico2.clear();
         grafico3.clear();
@@ -207,7 +202,6 @@ public class planografico extends Fragment {
         graficoconductividaddelsuelo.clear();
         graficocontenidovolumetricodelagua.clear();
         graficoconductividadelectricadelporo.clear();
-        graficorosadevientos.clear();
     }
     private void startposition(){
         cvpotencialMatricial.setVisibility(View.GONE);
@@ -484,7 +478,6 @@ public class planografico extends Fragment {
         grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
     private void setgraficosstate(statedatapack pack){
-
         graficohumedadrelativa.setData(pack.sacarlahumedadrelativa());
         graficohumedadrelativa.setXAxisRenderer(new labelpersonalizadoX(graficohumedadrelativa.getViewPortHandler(), graficohumedadrelativa.getXAxis(), graficohumedadrelativa.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis XaxisHR = graficohumedadrelativa.getXAxis();
@@ -546,6 +539,7 @@ public class planografico extends Fragment {
         graficorosadevientos.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficorosadevientos.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficorosadevientos.invalidate();
+        LineData hola = graficorosadevientos.getLineData();
         graficorosadevientos.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
     private void setgraficoG(gdatapack pack){
