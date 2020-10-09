@@ -4,8 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registroone"
-    android:background="@drawable/bgfinal">
+    tools:context=".registroone">
+
+    <ImageView
+        android:id="@+id/bgprincipal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bgfinal"
+        android:contentDescription="@string/bg" />
 
     <LinearLayout
         android:layout_width="320dp"
