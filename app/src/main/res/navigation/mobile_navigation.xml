@@ -117,5 +117,10 @@
         android:name="com.greenbird.neolink_app.contactanos"
         android:label="contactanos"
         tools:layout="@layout/contactanos" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.neolink_app.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 
 </navigation>

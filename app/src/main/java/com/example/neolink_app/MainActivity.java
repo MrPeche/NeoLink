@@ -1,5 +1,6 @@
 package com.example.neolink_app;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -55,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                moveTaskToBack(true);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
         createNotificationChannel();
         setContentView(R.layout.activity_main);
         user = findViewById(R.id.usuario); //La variable siempre se llama diferente que el id

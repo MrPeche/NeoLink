@@ -41,7 +41,8 @@
         android:id="@+id/ndsalida"
         android:checkableBehavior="single">
         <item
-            android:title = "@string/salida"/>
+            android:id="@+id/mainActivity"
+            android:title="@string/salida" />
     </group>
 
 </menu>
