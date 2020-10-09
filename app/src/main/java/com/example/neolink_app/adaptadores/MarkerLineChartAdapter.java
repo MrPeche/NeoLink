@@ -35,19 +35,28 @@ public class MarkerLineChartAdapter extends MarkerView {
     public void refreshContent(Entry e, Highlight highlight) {
         String texto2 = "";
         String texto1 = "";
+        String texto3 = "";
         String label = orden.get(highlight.getDataSetIndex());
         switch (label){
             case "P1":
                 texto1 = "Profundidad " + depth.getP1().get(dataset.getP1().indexOf(e));
+                texto3 = "Puerto 1";
                 break;
             case "P2":
                 texto1 = "Profundidad " + depth.getP2().get(dataset.getP2().indexOf(e));
+                texto3 = "Puerto 2";
                 break;
             case "P3":
                 texto1 = "Profundidad " + depth.getP3().get(dataset.getP3().indexOf(e));
+                texto3 = "Puerto 3";
                 break;
+            case "P4":
+                texto1 = "Profundidad " + depth.getP4().get(dataset.getP3().indexOf(e));
+                texto3 = "Puerto 4";
+                break;
+
         }
-        texto2 = label + ": "+ String.valueOf(e.getY());
+        texto2 = texto3 + ": "+ String.valueOf(e.getY());
         tvContentT.setText(texto2);
         tvContent.setText(texto1);
         //tvContent.setText("" + e.getY());

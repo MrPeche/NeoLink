@@ -95,7 +95,7 @@
     <string name="sensorPotencialMatricial">Potencial Matricial (KPa)</string>
     <string name="sensorTemperatura">Temperatura (°C)</string>
     <string name="Bateria">Energía (V)</string>
-    <string name="Presionbarometrica">Presión Barométrica (Pa)</string>
+    <string name="Presionbarometrica">Presión Barométrica (kPa)</string>
     <string name="Humedadrelativa">Humedad Relativa (%)</string>
     <string name="Temperaturadevulvoseco">Temperatura de bulbo seco (°C)</string>
     <string name="Humedaddelsuelo">Humedad del Suelo (raw)</string>
@@ -136,5 +136,10 @@
 
     //Registro
     <string name="tituloregistro">Registro</string>
+
+    //contactus
+    <string name="paginaweb">www.greenbird.pe/</string>
+    <string name="facebook">NeoLink IoT</string>
+    <string name="correo">team@greenbird.pe</string>
 
 </resources>

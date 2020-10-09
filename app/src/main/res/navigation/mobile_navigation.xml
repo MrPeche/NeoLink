@@ -112,5 +112,10 @@
         android:name="com.greenbird.neolink_app.registrodealertas"
         android:label="fragment_registrodealertas"
         tools:layout="@layout/fragment_registrodealertas" />
+    <fragment
+        android:id="@+id/contactanos"
+        android:name="com.greenbird.neolink_app.contactanos"
+        android:label="contactanos"
+        tools:layout="@layout/contactanos" />
 
 </navigation>

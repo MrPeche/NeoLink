@@ -125,22 +125,22 @@ public class InfoParaGraficos {
         ArrayList<String> orden = new ArrayList<>();
         LineData data = new LineData();
         if(entriesdata.getP1().size()!=0) {
-            LineDataSet set1 = CreaDataLine(entriesdata.getP1(), "P1", colores[0]);
+            LineDataSet set1 = CreaDataLine(entriesdata.getP1(), "Puerto1", colores[0]);
             data.addDataSet(set1);
             orden.add("P1");
         }
         if(entriesdata.getP2().size()!=0) {
-            LineDataSet set1 = CreaDataLine(entriesdata.getP2(), "P2", colores[1]);
+            LineDataSet set1 = CreaDataLine(entriesdata.getP2(), "Puerto2", colores[1]);
             data.addDataSet(set1);
             orden.add("P2");
         }
         if(entriesdata.getP3().size()!=0) {
-            LineDataSet set1 = CreaDataLine(entriesdata.getP3(), "P3", colores[2]);
+            LineDataSet set1 = CreaDataLine(entriesdata.getP3(), "Puerto3", colores[2]);
             data.addDataSet(set1);
             orden.add("P3");
         }
         if(entriesdata.getP4().size()!=0) {
-            LineDataSet set1 = CreaDataLine(entriesdata.getP4(), "P4", colores[3]);
+            LineDataSet set1 = CreaDataLine(entriesdata.getP4(), "Puerto4", colores[3]);
             data.addDataSet(set1);
             orden.add("P4");
         }

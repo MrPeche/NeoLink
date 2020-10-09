@@ -32,7 +32,8 @@
         android:id="@+id/ndgrupous"
         android:checkableBehavior="single">
         <item
-            android:title = "@string/llamanos"/>
+            android:id="@+id/contactanos"
+            android:title="@string/llamanos" />
         
     </group>
 
