@@ -1,19 +1,10 @@
 package com.example.neolink_app;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,23 +12,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.neolink_app.clases.LoginFirebase.PCUN;
 import com.example.neolink_app.clases.LoginFirebase.UsuarioNeoL;
 import com.example.neolink_app.viewmodels.loginviewmodel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -163,68 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            /*
-            mAuth.signInWithEmailAndPassword(user.getText().toString(), pass.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                String guardado = "";
-
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "signInWithEmail:success");
-                        FirebaseUser usuarioF = mAuth.getCurrentUser();
-
-                        if (rec.isChecked()) {
-                            guardado = user.getText().toString() + " " + pass.getText().toString() + '\n';
-
-                            try {
-                                if (archivoexiste(fileList(), "NeoLinkid.txt")) {
-                                    InputStreamReader id = new InputStreamReader(openFileInput("NeoLinkid.txt"));
-                                    BufferedReader br = new BufferedReader(id);
-                                    String Lineaguardada = br.readLine();
-                                    id.close();
-                                    br.close();
-                                    if (!Lineaguardada.equals(guardado)) {
-                                        OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
-                                        archivo.write(guardado);
-                                        archivo.flush();
-                                        archivo.close();
-                                    }
-                                } else {
-                                    OutputStreamWriter archivo = new OutputStreamWriter(openFileOutput("NeoLinkid.txt", Activity.MODE_PRIVATE));
-                                    archivo.write(guardado);
-                                    archivo.flush();
-                                    archivo.close();
-                                }
-                            } catch (IOException ignored) {
-
-                            }
-                        }
-                        //mandado del intent - necesita paquete
-
-                        Intent i = new Intent(MainActivity.this, actividadbase.class);
-                        i.putExtra("uid", usuarioF.getUid());
-                        i.putExtra("correo", user.getText().toString());
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
-                        setitbackMain();
-
-                    } else {
-
-                        try {
-                            throw task.getException();
-                        } catch (FirebaseAuthInvalidUserException e) {
-                            Toast.makeText(MainActivity.this, "El correo no existe", Toast.LENGTH_SHORT).show();
-                        } catch (FirebaseAuthInvalidCredentialsException e) {
-                            Toast.makeText(MainActivity.this, "La contraseña es incorrecta", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            Toast.makeText(MainActivity.this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
-                        }
-                        setitbackMain();
-                        Log.d(TAG, "signInWithEmail:fail");
-                    }
-                }
-            });*/
-
         }
     }
 
@@ -247,31 +170,6 @@ public class MainActivity extends AppCompatActivity {
         loadM.setVisibility(View.GONE);
     }
 
-    public boolean archivoexiste(String direccion[], String nombre){
-        for(int i=0;i<direccion.length;i++){
-            if(nombre.equals(direccion[i])){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /*
-    public boolean verificarUserPass(String user,String pass){
-        final int[] v = {0};
-        mAuth.signInWithEmailAndPassword(user,pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG,"signInWithEmail:success");
-                    FirebaseUser user =mAuth.getCurrentUser();
-
-                } else {
-
-            }
-        });
-        return v[0] == 1;
-    }*/
 
     public void registro(View view){ //Funcion para registrarse
         startActivity(new Intent(this,registroone.class));

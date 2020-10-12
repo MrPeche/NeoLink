@@ -187,42 +187,4 @@ public class panelesgrafiquito extends Fragment {
         ((actividadbase)getActivity()).fabplus();
     }
 
-    /*
-    private void setmycalendarbruh(){
-        long today = MaterialDatePicker.todayInUtcMilliseconds();
-        this.builder.setTheme(R.style.materialtheme);
-        this.builder.setTitleText("Seleccione el rango de días que quiere visualizar");
-        //this.builder.setSelection(today);
-    }
-
-    private CalendarConstraints.Builder buildtheconstraint(){
-        CalendarConstraints.Builder constraing = new CalendarConstraints.Builder();
-        constraing.setValidator(DateValidatorPointBackward.now());
-        Calendar iniciocalendario = GregorianCalendar.getInstance();
-        iniciocalendario.set(2020,0,1);
-        constraing.setStart(iniciocalendario.getTimeInMillis());
-        return constraing;
-    }
-    */
-    private Calendar traductordecalendario(long date){
-        Calendar resultado = Calendar.getInstance();
-        resultado.setTimeInMillis(date);
-        return resultado;
-    }
-    private int managedate(String date, int whichone){
-        int resultado = 0;
-        String []split = date.split("/");
-        switch(whichone){
-            case 1:
-                resultado= Integer.parseInt(split[0]);
-                break;
-            case 2:
-                resultado= Integer.parseInt(split[1]);
-                break;
-            case 3:
-                resultado= Integer.parseInt(split[2]);
-                break;
-        }
-        return resultado;
-    }
 }

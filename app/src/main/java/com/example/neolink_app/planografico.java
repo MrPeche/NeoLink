@@ -43,7 +43,7 @@ public class planografico extends Fragment {
     private LineChart graficohumedadrelativa;
     private LineChart graficotemperaturavulvoseco;
     private LineChart graficohumedaddelsuelo;
-    private LineChart graficotemperaturadelsuelo;
+    //private LineChart graficotemperaturadelsuelo;
     private LineChart graficoconductividaddelsuelo;
     private LineChart graficorosadevientos;
     private LineChart graficoconductividadelectricadelporo;
@@ -53,7 +53,7 @@ public class planografico extends Fragment {
     private CardView cvtemperatura;
     private CardView cvEnergia;
     private CardView cvhumedaddelsuelo;
-    private CardView cvtemperaturadelsuelo;
+    //private CardView cvtemperaturadelsuelo;
     private CardView cvconductividadelectrica;
     private CardView cvHumedadrelativa;
     private CardView cvpresionbarometrica;
@@ -116,7 +116,7 @@ public class planografico extends Fragment {
         graficohumedadrelativa= view.findViewById(R.id.graficoHumedadRelativa);
         graficopresionbarometrica= view.findViewById(R.id.graficoPresionBarometrica);
         graficotemperaturavulvoseco= view.findViewById(R.id.graficotemperaturavulvoseco);
-        graficotemperaturadelsuelo= view.findViewById(R.id.graficotemperaturadelsuelo);
+        //graficotemperaturadelsuelo= view.findViewById(R.id.graficotemperaturadelsuelo);
         graficohumedaddelsuelo = view.findViewById(R.id.graficohumedaddelsuelo);
         graficoconductividaddelsuelo = view.findViewById(R.id.graficoConductividadSuelo);
         graficoconductividadelectricadelporo = view.findViewById(R.id.graficoconductividadPoro);
@@ -126,7 +126,7 @@ public class planografico extends Fragment {
         cvtemperatura = view.findViewById(R.id.cvtemperatura);
         cvEnergia = view.findViewById(R.id.cvEnergia);
         cvhumedaddelsuelo = view.findViewById(R.id.cvhumedaddelsuelo);
-        cvtemperaturadelsuelo = view.findViewById(R.id.cvtemperaturadelsuelo);
+        //cvtemperaturadelsuelo = view.findViewById(R.id.cvtemperaturadelsuelo);
         cvconductividadelectrica = view.findViewById(R.id.cvconductividadelectrica);
         cvHumedadrelativa = view.findViewById(R.id.cvHumedadrelativa);
         cvpresionbarometrica = view.findViewById(R.id.cvpresionbarometrica);
@@ -144,7 +144,7 @@ public class planografico extends Fragment {
         propiedadesgraficocontenidovolumetricodelagua();
         propiedadesgraficorosadelviento();
         propiedadesgraficohumedaddeldelsuelo();
-        propiedadesgraficotemperaturadeldelsuelo();
+        //propiedadesgraficotemperaturadeldelsuelo();
         propiedadesgraficoconductividaddeldelsuelo();
 
         startposition();
@@ -180,7 +180,7 @@ public class planografico extends Fragment {
                         cleanG();
                         cvconductividadelectrica.setVisibility(View.VISIBLE);
                         cvhumedaddelsuelo.setVisibility(View.VISIBLE);
-                        cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                        //cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
                         cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
                         cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                         setgraficoG(commdata.sacargdatapack());
@@ -197,7 +197,7 @@ public class planografico extends Fragment {
         grafico3.clear();
     }
     private void cleanG(){
-        graficotemperaturadelsuelo.clear();
+        //graficotemperaturadelsuelo.clear();
         graficohumedaddelsuelo.clear();
         graficoconductividaddelsuelo.clear();
         graficocontenidovolumetricodelagua.clear();
@@ -208,7 +208,7 @@ public class planografico extends Fragment {
         cvtemperatura.setVisibility(View.GONE);
         cvEnergia.setVisibility(View.GONE);
         cvhumedaddelsuelo.setVisibility(View.GONE);
-        cvtemperaturadelsuelo.setVisibility(View.GONE);
+        //cvtemperaturadelsuelo.setVisibility(View.GONE);
         cvconductividadelectrica.setVisibility(View.GONE);
         cvHumedadrelativa.setVisibility(View.GONE);
         cvpresionbarometrica.setVisibility(View.GONE);
@@ -315,6 +315,7 @@ public class planografico extends Fragment {
         graficohumedaddelsuelo.setScaleXEnabled(true);
         Legend L = graficohumedaddelsuelo.getLegend();
     }
+    /*
     private void propiedadesgraficotemperaturadeldelsuelo(){
         graficotemperaturadelsuelo.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
@@ -329,6 +330,7 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo.setScaleXEnabled(true);
         Legend L = graficotemperaturadelsuelo.getLegend();
     }
+     */
     private void propiedadesgraficoconductividaddeldelsuelo(){
         graficoconductividaddelsuelo.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
@@ -434,7 +436,7 @@ public class planografico extends Fragment {
         } else if(caso==2){
             graficohumedaddelsuelo.invalidate();
         } else if(caso==3){
-            graficotemperaturadelsuelo.invalidate();
+            //graficotemperaturadelsuelo.invalidate();
         } else{graficoconductividaddelsuelo.invalidate();}
     }
     private YAxis dameelaxiselegido(int caso){
@@ -444,9 +446,14 @@ public class planografico extends Fragment {
             return grafico2.getAxisLeft();
         } else if(caso==2){
             return graficohumedaddelsuelo.getAxisLeft();
-        } else if(caso==3){
+        }
+        /*
+        else if(caso==3){
             return graficotemperaturadelsuelo.getAxisLeft();
-        } else{return graficoconductividaddelsuelo.getAxisLeft();}
+        }
+
+         */
+        else{return graficoconductividaddelsuelo.getAxisLeft();}
     }
     private void setgraficosK(kdatapack pack){
         grafico1.setData(pack.sacarelPM().second);
@@ -555,7 +562,7 @@ public class planografico extends Fragment {
         graficohumedaddelsuelo.setMarker(adapterHS);
         graficohumedaddelsuelo.invalidate();
         graficohumedaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-
+        /*
         graficotemperaturadelsuelo.setData(pack.sacarlatemperatura().second);
         graficotemperaturadelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficotemperaturadelsuelo.getViewPortHandler(), graficotemperaturadelsuelo.getXAxis(), graficotemperaturadelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xaxisTS = graficotemperaturadelsuelo.getXAxis();
@@ -568,7 +575,7 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo.setMarker(adapterTS);
         graficotemperaturadelsuelo.invalidate();
         graficotemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-
+        */
         graficoconductividaddelsuelo.setData(pack.sacarlaconductividad().second);
         graficoconductividaddelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficoconductividaddelsuelo.getViewPortHandler(), graficoconductividaddelsuelo.getXAxis(), graficoconductividaddelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xaxisCS = graficoconductividaddelsuelo.getXAxis();

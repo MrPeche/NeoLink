@@ -673,9 +673,48 @@ public class UserInfoRepo {
         }
         return estasemana;
     }
+    /*
+    public LiveData<Meses> fetchdatakpormonth(String neolink, int ano, int mes){
+        final MediatorLiveData<Meses> datasensork = new MediatorLiveData<>();
+        String esp ="/";
+        String sensor ="k";
+        String patio ="/NeoLink/"+neolink+"/DataSet/"+sensor+esp+ano+esp+operacionfecha(mes);
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        datasensork.addSource(liveDataNL, dataSnapshot -> {
+            if(dataSnapshot!=null){
+                Dias dias = new Dias();
+                for(DataSnapshot diasFB:dataSnapshot.getChildren()){
+                    String horichi = diasFB.getKey(); //dias
+                    Horas horas = new Horas();
+                    Minutos minutos = new Minutos();
+                    for(DataSnapshot chilchilSnap:childSnap.getChildren()){
+                        String min = chilchilSnap.getKey();//minutos
+                        Puerto puerto = new Puerto();
+                        for(DataSnapshot chilchilchilSnap:chilchilSnap.getChildren()){
+                            String a = chilchilchilSnap.getKey();//puerto
+                            dataPuerto b = chilchilchilSnap.getValue(dataPuerto.class);//data
+                            puerto.tomaPuerto(a,b);
+                        }
+                        minutos.tomaMinutos(min,puerto);
+                    }
+                    horas.tomaHoras(horichi,minutos);
+                }
+                Dias diadata = new Dias();
+                diadata.tomadias(ano+esp+operacionfecha(mes)+esp+operacionfecha(dia),horas);
+                datasensork.setValue(diadata);
+            } else {
+                datasensork.setValue(null);
+            }
+        });
+        return datasensork;
+    }
+
+     */
 
     public LiveData<InfoParaGraficos> fetchestemes(){
         final MediatorLiveData<InfoParaGraficos> estemes = new MediatorLiveData<>();
+
         return estemes;
     }
     public LiveData<InfoParaGraficos> fetchesteano(){

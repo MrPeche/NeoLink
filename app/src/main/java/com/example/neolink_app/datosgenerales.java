@@ -44,7 +44,7 @@ public class datosgenerales extends Fragment {
     private CardView CVsensor1;
     private TextView titulosensor;
     private TextView humedaddelsuelo;
-    private TextView temperaturadelsuelo;
+    //private TextView temperaturadelsuelo;
     private TextView ConductividadEC;
     private CardView CVsensor2;
     private TextView titulosensor2;
@@ -88,7 +88,7 @@ public class datosgenerales extends Fragment {
         CVsensor1 = view.findViewById(R.id.cardView1);
         titulosensor = view.findViewById(R.id.titulosensor1);
         humedaddelsuelo = view.findViewById(R.id.primerdato);
-        temperaturadelsuelo = view.findViewById(R.id.segundodato);
+        //temperaturadelsuelo = view.findViewById(R.id.segundodato);
         ConductividadEC = view.findViewById(R.id.tercerdato);
         CVsensor2 = view.findViewById(R.id.cardView2);
         titulosensor2 = view.findViewById(R.id.titulo2principal);
@@ -151,8 +151,8 @@ public class datosgenerales extends Fragment {
         titulosensor.setText(tit);
         String humedad = (Math.floor(data.dameV1()*100)/100) + "raw";
         humedaddelsuelo.setText(humedad);
-        String temperatura = (Math.floor(data.dameV2()*100)/100) + "°C";
-        temperaturadelsuelo.setText(temperatura);
+        //String temperatura = (Math.floor(data.dameV2()*100)/100) + "°C";
+        //temperaturadelsuelo.setText(temperatura);
         String conductivida = (Math.floor(data.dameV3()*100)/100) + "uS/cm";
         ConductividadEC.setText(conductivida);
     }
