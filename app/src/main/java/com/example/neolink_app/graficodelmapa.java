@@ -2,48 +2,33 @@ package com.example.neolink_app;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.core.util.Pair;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
-import com.example.neolink_app.adaptadores.MarkerLineChartDefault;
 import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.adaptadores.labelpersonalizadoX;
-import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
-import com.example.neolink_app.clases.DepthPackage;
-import com.example.neolink_app.clases.Horas;
-import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.clasesparaformargraficos.fulldatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.gdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.kdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.statedatapack;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
-import com.example.neolink_app.clases.database_state.horasstate;
-import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -564,7 +549,8 @@ public class graficodelmapa extends Fragment {
         grafico1.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico1.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico1.invalidate();
-        grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico1.fitScreen();
 
         grafico2.setData(pack.sacareltemp().second);
         grafico2.setXAxisRenderer(new labelpersonalizadoX(grafico2.getViewPortHandler(), grafico2.getXAxis(), grafico2.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -578,7 +564,8 @@ public class graficodelmapa extends Fragment {
         grafico2.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico2.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico2.invalidate();
-        grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico2.fitScreen();
     }
     private void setgraficosstate(statedatapack pack){
 
@@ -591,7 +578,8 @@ public class graficodelmapa extends Fragment {
         graficohumedadrelativa.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficohumedadrelativa.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficohumedadrelativa.invalidate();
-        graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficohumedadrelativa.fitScreen();
 
         graficopresionbarometrica.setData(pack.sacarlapresionbarometrica());
         graficopresionbarometrica.setXAxisRenderer(new labelpersonalizadoX(graficopresionbarometrica.getViewPortHandler(), graficopresionbarometrica.getXAxis(), graficopresionbarometrica.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -602,7 +590,8 @@ public class graficodelmapa extends Fragment {
         graficopresionbarometrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficopresionbarometrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficopresionbarometrica.invalidate();
-        graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficopresionbarometrica.fitScreen();
 
         grafico3.setData(pack.sacarlaenergia());
         grafico3.setXAxisRenderer(new labelpersonalizadoX(grafico3.getViewPortHandler(), grafico3.getXAxis(), grafico3.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -621,7 +610,8 @@ public class graficodelmapa extends Fragment {
         grafico3.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico3.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico3.invalidate();
-        grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico3.fitScreen();
 
         graficotemperaturavulvoseco.setData(pack.sacarlatemperaturavulvoseco());
         graficotemperaturavulvoseco.setXAxisRenderer(new labelpersonalizadoX(graficotemperaturavulvoseco.getViewPortHandler(), graficotemperaturavulvoseco.getXAxis(), graficotemperaturavulvoseco.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -632,7 +622,8 @@ public class graficodelmapa extends Fragment {
         graficotemperaturavulvoseco.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficotemperaturavulvoseco.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficotemperaturavulvoseco.invalidate();
-        graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficotemperaturavulvoseco.fitScreen();
 
         graficorosadevientos.setData(pack.sacarelwindspeed());
         graficorosadevientos.setXAxisRenderer(new labelpersonalizadoX(graficorosadevientos.getViewPortHandler(), graficorosadevientos.getXAxis(), graficorosadevientos.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -643,7 +634,8 @@ public class graficodelmapa extends Fragment {
         graficorosadevientos.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficorosadevientos.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficorosadevientos.invalidate();
-        graficorosadevientos.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficorosadevientos.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficorosadevientos.fitScreen();
     }
     private void setgraficoG(gdatapack pack){
         /*
@@ -673,7 +665,8 @@ public class graficodelmapa extends Fragment {
         MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first);
         graficoMPtemperaturadelsuelo.setMarker(adapterTS);
         graficoMPtemperaturadelsuelo.invalidate();
-        graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficoMPtemperaturadelsuelo.fitScreen();
 
         graficoMPconductividadelectrica.setData(pack.sacarlaconductividad().second);
         graficoMPconductividadelectrica.setXAxisRenderer(new labelpersonalizadoX(graficoMPconductividadelectrica.getViewPortHandler(), graficoMPconductividadelectrica.getXAxis(), graficoMPconductividadelectrica.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -686,7 +679,8 @@ public class graficodelmapa extends Fragment {
         MarkerLineChartAdapter adapterCS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividad(),pack.sacarlaconductividad().first);
         graficoMPconductividadelectrica.setMarker(adapterCS);
         graficoMPconductividadelectrica.invalidate();
-        graficoMPconductividadelectrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficoMPconductividadelectrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficoMPconductividadelectrica.fitScreen();
 
         graficoconductividadelectricadelporo.setData(pack.sacarlaconductividaddelporo().second);
         graficoconductividadelectricadelporo.setXAxisRenderer(new labelpersonalizadoX(graficoconductividadelectricadelporo.getViewPortHandler(), graficoconductividadelectricadelporo.getXAxis(), graficoconductividadelectricadelporo.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -699,7 +693,8 @@ public class graficodelmapa extends Fragment {
         MarkerLineChartAdapter adapterCSP = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividaddelporo(),pack.sacarlaconductividaddelporo().first);
         graficoconductividadelectricadelporo.setMarker(adapterCSP);
         graficoconductividadelectricadelporo.invalidate();
-        graficoconductividadelectricadelporo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficoconductividadelectricadelporo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficoconductividadelectricadelporo.fitScreen();
 
         graficocontenidovolumetricodelagua.setData(pack.sacarelcontenidovolumetricodelagua().second);
         graficocontenidovolumetricodelagua.setXAxisRenderer(new labelpersonalizadoX(graficocontenidovolumetricodelagua.getViewPortHandler(), graficocontenidovolumetricodelagua.getXAxis(), graficocontenidovolumetricodelagua.getTransformer(YAxis.AxisDependency.LEFT)));

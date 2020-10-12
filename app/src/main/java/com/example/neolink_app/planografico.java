@@ -469,7 +469,8 @@ public class planografico extends Fragment {
         grafico1.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico1.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico1.invalidate();
-        grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico1.fitScreen();
 
         grafico2.setData(pack.sacareltemp().second);
         grafico2.setXAxisRenderer(new labelpersonalizadoX(grafico2.getViewPortHandler(), grafico2.getXAxis(), grafico2.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -483,7 +484,8 @@ public class planografico extends Fragment {
         grafico2.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico2.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico2.invalidate();
-        grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico2.fitScreen();
     }
     private void setgraficosstate(statedatapack pack){
         graficohumedadrelativa.setData(pack.sacarlahumedadrelativa());
@@ -495,7 +497,8 @@ public class planografico extends Fragment {
         graficohumedadrelativa.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficohumedadrelativa.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficohumedadrelativa.invalidate();
-        graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficohumedadrelativa.fitScreen();
 
         graficopresionbarometrica.setData(pack.sacarlapresionbarometrica());
         graficopresionbarometrica.setXAxisRenderer(new labelpersonalizadoX(graficopresionbarometrica.getViewPortHandler(), graficopresionbarometrica.getXAxis(), graficopresionbarometrica.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -506,7 +509,8 @@ public class planografico extends Fragment {
         graficopresionbarometrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficopresionbarometrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficopresionbarometrica.invalidate();
-        graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficopresionbarometrica.fitScreen();
 
         grafico3.setData(pack.sacarlaenergia());
         grafico3.setXAxisRenderer(new labelpersonalizadoX(grafico3.getViewPortHandler(), grafico3.getXAxis(), grafico3.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -525,7 +529,8 @@ public class planografico extends Fragment {
         grafico3.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico3.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico3.invalidate();
-        grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        grafico3.fitScreen();
 
         graficotemperaturavulvoseco.setData(pack.sacarlatemperaturavulvoseco());
         graficotemperaturavulvoseco.setXAxisRenderer(new labelpersonalizadoX(graficotemperaturavulvoseco.getViewPortHandler(), graficotemperaturavulvoseco.getXAxis(), graficotemperaturavulvoseco.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -536,7 +541,8 @@ public class planografico extends Fragment {
         graficotemperaturavulvoseco.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficotemperaturavulvoseco.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficotemperaturavulvoseco.invalidate();
-        graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficotemperaturavulvoseco.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficotemperaturavulvoseco.fitScreen();
 
         graficorosadevientos.setData(pack.sacarelwindspeed());
         graficorosadevientos.setXAxisRenderer(new labelpersonalizadoX(graficorosadevientos.getViewPortHandler(), graficorosadevientos.getXAxis(), graficorosadevientos.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -547,8 +553,8 @@ public class planografico extends Fragment {
         graficorosadevientos.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficorosadevientos.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficorosadevientos.invalidate();
-        LineData hola = graficorosadevientos.getLineData();
-        graficorosadevientos.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        //graficorosadevientos.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficorosadevientos.fitScreen();
     }
     private void setgraficoG(gdatapack pack){
         /*
