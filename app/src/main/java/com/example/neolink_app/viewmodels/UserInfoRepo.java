@@ -518,7 +518,11 @@ public class UserInfoRepo {
             public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
                 if(pairDiasGPair!=null){
                     if(ayer.isitready()){
-                        data.agregarinfodias(ayer);
+                        android.util.Pair<Integer,Boolean> pregunta = data.buscarpordiadentro(ayer.damevalorB().damedia(0));
+                        if(pregunta.second){
+                            data.actualizardatoespecifico(ayer,pregunta.first);
+                        } else
+                            data.agregarinfodias(ayer);
                         hoyayer.setValue(data);
                     }
                 } else

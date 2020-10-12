@@ -83,7 +83,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvhumedaddelsuelo"
+                android:id="@+id/cvtemperaturadelsuelo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -105,7 +105,7 @@
                         android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/graficohumedaddelsuelo"
+                        android:id="@+id/graficotemperaturadelsuelo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>

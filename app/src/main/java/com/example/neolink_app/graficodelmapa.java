@@ -53,8 +53,8 @@ public class graficodelmapa extends Fragment {
     private CardView cvgrf1;
     private CardView cvgrf2;
     private CardView cvgrf3;
-    private CardView cvgrhumedaddelsuelo;
-    //private CardView cvgrtemperaturadelsuelo;
+    //private CardView cvgrhumedaddelsuelo;
+    private CardView cvgrtemperaturadelsuelo;
     private CardView cvgrconductividadelectrica;
     private CardView cvgrHumedadrelativa;
     private CardView cvgrpresionbarometrica;
@@ -70,16 +70,12 @@ public class graficodelmapa extends Fragment {
     private LineChart graficopresionbarometrica;
     private LineChart graficohumedadrelativa;
     private LineChart graficotemperaturavulvoseco;
-    private LineChart graficoMPhumedaddelsuelo;
-    //private LineChart graficoMPtemperaturadelsuelo;
+    //private LineChart graficoMPhumedaddelsuelo;
+    private LineChart graficoMPtemperaturadelsuelo;
     private LineChart graficoMPconductividadelectrica;
     private LineChart graficorosadevientos;
     private LineChart graficoconductividadelectricadelporo;
     private LineChart graficocontenidovolumetricodelagua;
-    private paquetedatasetPuertos YPM = new paquetedatasetPuertos();
-    private paquetedatasetPuertos YTemp = new paquetedatasetPuertos();
-    private DepthPackage DepthP = new DepthPackage();
-    private final ArrayList<String> Xlabels = new ArrayList<>();
     private int alpha = 170;
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
@@ -118,8 +114,8 @@ public class graficodelmapa extends Fragment {
         graficohumedadrelativa= view.findViewById(R.id.graficoMPHumedadRelativa);
         graficopresionbarometrica= view.findViewById(R.id.graficoMPPresionBarometrica);
         graficotemperaturavulvoseco= view.findViewById(R.id.graficoMPtemperaturavulvoseco);
-        graficoMPhumedaddelsuelo = view.findViewById(R.id.graficoMPhumedaddelsuelo);
-        //graficoMPtemperaturadelsuelo = view.findViewById(R.id.graficoMPtemperaturadelsuelo);
+        //graficoMPhumedaddelsuelo = view.findViewById(R.id.graficoMPhumedaddelsuelo);
+        graficoMPtemperaturadelsuelo = view.findViewById(R.id.graficoMPtemperaturadelsuelo);
         graficoMPconductividadelectrica = view.findViewById(R.id.graficoMPconductividadelectrica);
         graficorosadevientos = view.findViewById(R.id.graficoMProsadevientos);
         graficoconductividadelectricadelporo = view.findViewById(R.id.graficoMPconductividadelectricadelporo);
@@ -127,8 +123,8 @@ public class graficodelmapa extends Fragment {
         cvgrf1 = view.findViewById(R.id.cardVMP1);
         cvgrf2 = view.findViewById(R.id.cardVMP2);
         cvgrf3 = view.findViewById(R.id.cardVMP3); //esta es energia por alguna razon que no quiero ver en este momento ORDENAR LUEGO
-        cvgrhumedaddelsuelo = view.findViewById(R.id.cardMPhumedaddelsuelo);
-        //cvgrtemperaturadelsuelo = view.findViewById(R.id.cardMPtemperaturadelsuelo);
+        //cvgrhumedaddelsuelo = view.findViewById(R.id.cardMPhumedaddelsuelo);
+        cvgrtemperaturadelsuelo = view.findViewById(R.id.cardMPtemperaturadelsuelo);
         cvgrconductividadelectrica = view.findViewById(R.id.cardMPconductividadelectrica);
         cvgrHumedadrelativa = view.findViewById(R.id.cardhumedadrelativa);
         cvgrpresionbarometrica = view.findViewById(R.id.cardpresionbarometrica);
@@ -146,8 +142,8 @@ public class graficodelmapa extends Fragment {
         propiedadesgraficoconductividadelectricadelporo();
         propiedadesgraficocontenidovolumetricodelagua();
         propiedadesgraficorosadelviento();
-        propiedadesgraficohumedaddeldelsuelo();
-        //propiedadesgraficotemperaturadeldelsuelo();
+        //propiedadesgraficohumedaddeldelsuelo();
+        propiedadesgraficotemperaturadeldelsuelo();
         propiedadesgraficoconductividaddeldelsuelo();
 
         startposition();
@@ -248,8 +244,8 @@ public class graficodelmapa extends Fragment {
                         //sensorg
                         cleanG();
                         cvgrconductividadelectrica.setVisibility(View.VISIBLE);
-                        cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
-                        //cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                        //cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
+                        cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
                         cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
                         cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                         setgraficoG(commdata.sacargdatapack());
@@ -292,12 +288,12 @@ public class graficodelmapa extends Fragment {
         cvgrpresionbarometrica.setVisibility(View.GONE);
         cvgrtemperaturabulboseco.setVisibility(View.GONE);
         cvgrconductividadelectrica.setVisibility(View.GONE);
-        cvgrhumedaddelsuelo.setVisibility(View.GONE);
-        //cvgrtemperaturadelsuelo.setVisibility(View.GONE);
+        //cvgrhumedaddelsuelo.setVisibility(View.GONE);
+        cvgrtemperaturadelsuelo.setVisibility(View.GONE);
     }
     private void cleanG(){
-        //graficoMPtemperaturadelsuelo.clear();
-        graficoMPhumedaddelsuelo.clear();
+        graficoMPtemperaturadelsuelo.clear();
+        //graficoMPhumedaddelsuelo.clear();
         graficoMPconductividadelectrica.clear();
         graficoconductividadelectricadelporo.clear();
         graficocontenidovolumetricodelagua.clear();
@@ -388,6 +384,7 @@ public class graficodelmapa extends Fragment {
         graficotemperaturavulvoseco.setScaleXEnabled(true);
         Legend L = graficotemperaturavulvoseco.getLegend();
     }
+    /*
     private void propiedadesgraficohumedaddeldelsuelo(){
         graficoMPhumedaddelsuelo.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
@@ -402,7 +399,7 @@ public class graficodelmapa extends Fragment {
         graficoMPhumedaddelsuelo.setScaleXEnabled(true);
         Legend L = graficoMPhumedaddelsuelo.getLegend();
     }
-    /*
+     */
     private void propiedadesgraficotemperaturadeldelsuelo(){
         graficoMPtemperaturadelsuelo.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
@@ -417,7 +414,6 @@ public class graficodelmapa extends Fragment {
         graficoMPtemperaturadelsuelo.setScaleXEnabled(true);
         Legend L = graficoMPtemperaturadelsuelo.getLegend();
     }
-     */
     private void propiedadesgraficoconductividaddeldelsuelo(){
         graficoMPconductividadelectrica.setBackgroundColor(Color.TRANSPARENT);
         //grafico1.setGridBackgroundColor(Color.BLACK);
@@ -475,10 +471,6 @@ public class graficodelmapa extends Fragment {
         Legend L = graficorosadevientos.getLegend();
     }
     private void cleanthisshit(){
-        Xlabels.clear();
-        YPM.clean();
-        YTemp.clean();
-        DepthP.clean();
         grafico1.clear();
         grafico2.clear();
     }
@@ -537,9 +529,9 @@ public class graficodelmapa extends Fragment {
         } else if(caso==1){
             grafico2.invalidate();
         } else if(caso==2){
-            graficoMPhumedaddelsuelo.invalidate();
+            //graficoMPhumedaddelsuelo.invalidate();
         } else if(caso==3){
-            //graficoMPtemperaturadelsuelo.invalidate();
+            graficoMPtemperaturadelsuelo.invalidate();
         } else{graficoMPconductividadelectrica.invalidate();}
     }
     private YAxis dameelaxiselegido(int caso){
@@ -547,15 +539,16 @@ public class graficodelmapa extends Fragment {
             return grafico1.getAxisLeft();
         } else if(caso==1){
             return grafico2.getAxisLeft();
-        } else if(caso==2){
-            return graficoMPhumedaddelsuelo.getAxisLeft();
         }
         /*
-        else if(caso==3){
-            return graficoMPtemperaturadelsuelo.getAxisLeft();
+        else if(caso==2){
+            return graficoMPhumedaddelsuelo.getAxisLeft();
         }
          */
 
+        else if(caso==3){
+            return graficoMPtemperaturadelsuelo.getAxisLeft();
+        }
         else{return graficoMPconductividadelectrica.getAxisLeft();}
     }
     private void setgraficosK(kdatapack pack){
@@ -653,6 +646,7 @@ public class graficodelmapa extends Fragment {
         graficorosadevientos.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
     }
     private void setgraficoG(gdatapack pack){
+        /*
         graficoMPhumedaddelsuelo.setData(pack.sacarlahumedad().second);
         graficoMPhumedaddelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficoMPhumedaddelsuelo.getViewPortHandler(), graficoMPhumedaddelsuelo.getXAxis(), graficoMPhumedaddelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xaxisHS = graficoMPhumedaddelsuelo.getXAxis();
@@ -666,7 +660,8 @@ public class graficodelmapa extends Fragment {
         graficoMPhumedaddelsuelo.invalidate();
         graficoMPhumedaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
 
-        /*
+         */
+
         graficoMPtemperaturadelsuelo.setData(pack.sacarlatemperatura().second);
         graficoMPtemperaturadelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficoMPtemperaturadelsuelo.getViewPortHandler(), graficoMPtemperaturadelsuelo.getXAxis(), graficoMPtemperaturadelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xaxisTS = graficoMPtemperaturadelsuelo.getXAxis();
@@ -679,7 +674,6 @@ public class graficodelmapa extends Fragment {
         graficoMPtemperaturadelsuelo.setMarker(adapterTS);
         graficoMPtemperaturadelsuelo.invalidate();
         graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
-         */
 
         graficoMPconductividadelectrica.setData(pack.sacarlaconductividad().second);
         graficoMPconductividadelectrica.setXAxisRenderer(new labelpersonalizadoX(graficoMPconductividadelectrica.getViewPortHandler(), graficoMPconductividadelectrica.getXAxis(), graficoMPconductividadelectrica.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -719,5 +713,6 @@ public class graficodelmapa extends Fragment {
         graficocontenidovolumetricodelagua.setMarker(adapterCVA);
         graficocontenidovolumetricodelagua.invalidate();
         graficocontenidovolumetricodelagua.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficocontenidovolumetricodelagua.fitScreen();
     }
 }
