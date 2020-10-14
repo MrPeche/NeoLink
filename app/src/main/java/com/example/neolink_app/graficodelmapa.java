@@ -132,88 +132,38 @@ public class graficodelmapa extends Fragment {
         propiedadesgraficoconductividaddeldelsuelo();
 
         startposition();
-        /*
-        int hoyaño = ahora.get(Calendar.YEAR)%100;
-        int hoymes = ahora.get(Calendar.MONTH)+1;
-        int hoydia = ahora.get(Calendar.DAY_OF_MONTH);
-        archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
-        String sensor = "k";
-        ArrayList<String> nodaso = new ArrayList<>();
-        nodaso.add(nombre);
-        final ArrayList<String> nodito = nodaso;
-        archi.getLivedaylydata(nombre,hoyaño,hoymes,hoydia,sensor);
-         */
-        /*
-        archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas, horasstate>>() {
-            @Override
-            public void onChanged(Pair<Horas, horasstate> horashorasstatePair) {
-                if(archi.paquetesdedata.isitready()){
-                    cleanthisshit();
-                    if(horashorasstatePair.first.dametamano()!=0) {
-                        cvgrf1.setVisibility(View.VISIBLE);
-                        cvgrf2.setVisibility(View.VISIBLE);
-                        setdatagrafK(horashorasstatePair.first);
-                        setdataPM(YPM, Xlabels, DepthP);
-                        setdataTemp(YTemp, Xlabels, DepthP);
-                    }
-                    if(horashorasstatePair.second.dametamano()!=0){
-                        cvgrf3.setVisibility(View.VISIBLE);
-                        cvgrHumedadrelativa.setVisibility(View.VISIBLE);
-                        cvgrpresionbarometrica.setVisibility(View.VISIBLE);
-                        cvgrtemperaturabulboseco.setVisibility(View.VISIBLE);
-                        setStatedata(horashorasstatePair.second);
-                    }
-                }
-            }
-        });
-         */
-        /*
-        if(archi.datahoyG==null){
-            archi.retrivedatag(nombre);
-        }
 
-         */
-        /*
-        if(!archi.datahoyG.hasActiveObservers()){
-            archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
-                @Override
-                public void onChanged(HorasG horasG) {
-                    if(horasG!=null){
-                        if(horasG.dametamanoG()!=0){
-                            cleanG();
-                            cvgrconductividadelectrica.setVisibility(View.VISIBLE);
-                            cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
-                            cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
-                            setdataG(horasG);
-                        }
-                    }
-                }
-            });
-        }
-         */
-        /*
-        archi.datahoyG.observe(getViewLifecycleOwner(), new Observer<HorasG>() {
-            @Override
-            public void onChanged(HorasG horasG) {
-                if(horasG!=null){
-                    if(horasG.dametamanoG()!=0){
-                        cleanG();
-                        cvgrconductividadelectrica.setVisibility(View.VISIBLE);
-                        cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
-                        cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
-                        setdataG(horasG);
-                    }
-                }
-            }
-        });
-
-         */
         archi.masterdatedatapackage(nombre).observe(getViewLifecycleOwner(), new Observer<InfoParaGraficos>() {
             @Override
             public void onChanged(InfoParaGraficos infoParaGraficos) {
                 if(infoParaGraficos!=null){
                     if(infoParaGraficos.validarlosdias()){
                         fulldatapack commdata = infoParaGraficos.managedias();
+                        if(commdata.sacarkdatapack().sacarloslabels().size()!=0){
+                            cleanthisshit();
+                            cvgrf1.setVisibility(View.VISIBLE);
+                            cvgrf2.setVisibility(View.VISIBLE);
+                            setgraficosK(commdata.sacarkdatapack());
+                        }
+                        if(commdata.sacarstatedatapack().sacaraxislabels().size()!=0){
+                            cvgrf3.setVisibility(View.VISIBLE);
+                            cvgrHumedadrelativa.setVisibility(View.VISIBLE);
+                            cvgrpresionbarometrica.setVisibility(View.VISIBLE);
+                            cvgrtemperaturabulboseco.setVisibility(View.VISIBLE);
+                            cvrosadevientos.setVisibility(View.VISIBLE);
+                            setgraficosstate(commdata.sacarstatedatapack());
+                        }
+                        if(commdata.sacargdatapack().sacarlabels().size()!=0){
+                            cleanG();
+                            cvgrconductividadelectrica.setVisibility(View.VISIBLE);
+                            //cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
+                            cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                            cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
+                            cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
+                            setgraficoG(commdata.sacargdatapack());
+                        }
+
+                        /*
                         //Kdata
                         cleanthisshit();
                         cvgrf1.setVisibility(View.VISIBLE);
@@ -235,6 +185,8 @@ public class graficodelmapa extends Fragment {
                         cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                         setgraficoG(commdata.sacargdatapack());
 
+                         */
+
                     }
                 }
             }
@@ -247,22 +199,6 @@ public class graficodelmapa extends Fragment {
                 }
             }
         });
-        //if(!archi.datahoy.hasActiveObservers()){ }
-        /*
-        archi.datahoy.observe(getViewLifecycleOwner(), new Observer<Horas>(){
-            @Override
-            public void onChanged(Horas horas) {
-                if(horas.dametamano()!=0) {
-                    cvgrf1.setVisibility(View.VISIBLE);
-                    cvgrf2.setVisibility(View.VISIBLE);
-                    cleanthisshit();
-                    setdatagrafK(horas);
-                    setdataPM(YPM, Xlabels, DepthP);
-                    setdataTemp(YTemp, Xlabels, DepthP);
-                }
-            }
-        });
-         */
 
     }
     private void startposition(){

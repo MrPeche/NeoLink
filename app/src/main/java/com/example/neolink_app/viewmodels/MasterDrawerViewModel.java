@@ -230,7 +230,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 } else if(input==1){
                     return appRepo.fetchestasemana(neolink, figurarlasemana());
                 } else if(input==2){
-                    return appRepo.fetchestemes();
+                    return appRepo.fetchestemes(neolink, Objects.requireNonNull(datetoday.getValue()));
                 } else if(input==3){
                     return appRepo.fetchesteano();
                 } else {

@@ -7,7 +7,9 @@ import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.Dias;
 import com.example.neolink_app.clases.Meses;
 import com.example.neolink_app.clases.SensorG.DiasG;
+import com.example.neolink_app.clases.SensorG.MesesG;
 import com.example.neolink_app.clases.database_state.diasstate;
+import com.example.neolink_app.clases.database_state.mesesstate;
 import com.example.neolink_app.clases.liveclases.paquetededatacompleto;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.github.mikephil.charting.components.YAxis;
@@ -20,6 +22,7 @@ import java.util.Collections;
 
 public class InfoParaGraficos {
     private ArrayList<paquetededatacompleto<Dias,diasstate,DiasG>> dias = new ArrayList<>();
+    private ArrayList<paquetededatacompleto<Meses, mesesstate, MesesG>> meses = new ArrayList<>();
     float LINEWIDTH = 2.5f;
     private int alpha = 170;
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
@@ -29,9 +32,25 @@ public class InfoParaGraficos {
     public void agregarinfodias(paquetededatacompleto<Dias,diasstate,DiasG> data){
         this.dias.add(data);
     }
+    public void agregarmesinfomes(paquetededatacompleto<Meses, mesesstate, MesesG> mes){
+        this.meses.add(mes);
+    }
     public boolean validarlosdias(){
         boolean validate = true;
-        //(dias.size()==0)||(dias.size()!=cantidaddedias)
+        if(dias.size()!=0){
+            for(paquetededatacompleto<Dias,diasstate,DiasG> dia: dias){
+                validate = dia.isitready()&&validate;
+            }
+            return validate;
+        } else if(meses.size()!=0){
+            for(paquetededatacompleto<Meses,mesesstate,MesesG> mes: meses){
+                validate = mes.isitready()&&validate;
+            }
+            return validate;
+        } else
+            return false;
+
+        /*
         if((dias.size()==0)){
             return false;
         } else{
@@ -40,6 +59,7 @@ public class InfoParaGraficos {
             }
             return validate;
         }
+         */
     }
     public Pair<Integer,Boolean> buscarpordiadentro(String dia){
         boolean hay = false;

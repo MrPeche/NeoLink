@@ -165,6 +165,30 @@ public class planografico extends Fragment {
                     if(infoParaGraficos.validarlosdias()){
                         fulldatapack commdata = infoParaGraficos.managedias();
                         //Kdata
+                        if(commdata.sacarkdatapack().sacarloslabels().size()!=0){
+                            cleanthisshit();
+                            cvpotencialMatricial.setVisibility(View.VISIBLE);
+                            cvtemperatura.setVisibility(View.VISIBLE);
+                            setgraficosK(commdata.sacarkdatapack());
+                        }
+                        if(commdata.sacarstatedatapack().sacaraxislabels().size()!=0){
+                            cvEnergia.setVisibility(View.VISIBLE);
+                            cvHumedadrelativa.setVisibility(View.VISIBLE);
+                            cvpresionbarometrica.setVisibility(View.VISIBLE);
+                            cvtemperaturabulboseco.setVisibility(View.VISIBLE);
+                            cvrosadevientos.setVisibility(View.VISIBLE);
+                            setgraficosstate(commdata.sacarstatedatapack());
+                        }
+                        if(commdata.sacargdatapack().sacarlabels().size()!=0){
+                            cleanG();
+                            cvconductividadelectrica.setVisibility(View.VISIBLE);
+                            //cvhumedaddelsuelo.setVisibility(View.VISIBLE);
+                            cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                            cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
+                            cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
+                            setgraficoG(commdata.sacargdatapack());
+                        }
+                        /*
                         cleanthisshit();
                         cvpotencialMatricial.setVisibility(View.VISIBLE);
                         cvtemperatura.setVisibility(View.VISIBLE);
@@ -184,6 +208,7 @@ public class planografico extends Fragment {
                         cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
                         cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                         setgraficoG(commdata.sacargdatapack());
+                         */
 
                     }
                 }

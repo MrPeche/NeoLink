@@ -11,5 +11,12 @@ public class mesesstate {
         this.meses.add(mes);
         this.dias.add(dia);
     }
+    public String damemeses(int posicion){return this.meses.get(posicion);}
+    public diasstate damedias(int posicion){return this.dias.get(posicion);}
+    public int tamanomes(){return this.dias.size();}
+    public void tomameses(String mes, diasstate dia){
+        this.meses.add(mes);
+        this.dias.add(dia);
+    }
 
 }
