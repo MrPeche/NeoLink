@@ -478,6 +478,7 @@ public class graficodelmapa extends Fragment {
         XAxis xaxispm = grafico1.getXAxis();
         xaxispm.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxispm.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
+        xaxispm.setGranularityEnabled(true);
         //xaxispm.setLabelRotationAngle(-45f);
         MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first);
         grafico1.setMarker(adapterpm);
@@ -493,6 +494,7 @@ public class graficodelmapa extends Fragment {
         XAxis xAxistemp = grafico2.getXAxis();
         xAxistemp.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxistemp.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
+        xAxistemp.setGranularityEnabled(true);
         //xAxistemp.setLabelRotationAngle(-45f);
         MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first);
         grafico2.setMarker(adaptertemp);
@@ -510,6 +512,7 @@ public class graficodelmapa extends Fragment {
         XAxis XaxisHR = graficohumedadrelativa.getXAxis();
         XaxisHR.setPosition(XAxis.XAxisPosition.BOTTOM);
         XaxisHR.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        XaxisHR.setGranularityEnabled(true);
         graficohumedadrelativa.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficohumedadrelativa.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficohumedadrelativa.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -522,6 +525,7 @@ public class graficodelmapa extends Fragment {
         XAxis XaxisPB = graficopresionbarometrica.getXAxis();
         XaxisPB.setPosition(XAxis.XAxisPosition.BOTTOM);
         XaxisPB.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        XaxisPB.setGranularityEnabled(true);
         graficopresionbarometrica.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficopresionbarometrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficopresionbarometrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -542,6 +546,7 @@ public class graficodelmapa extends Fragment {
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis3.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        xaxis3.setGranularityEnabled(true);
         grafico3.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico3.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico3.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -554,6 +559,7 @@ public class graficodelmapa extends Fragment {
         XAxis XaxisTVS = graficotemperaturavulvoseco.getXAxis();
         XaxisTVS.setPosition(XAxis.XAxisPosition.BOTTOM);
         XaxisTVS.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        XaxisTVS.setGranularityEnabled(true);
         graficotemperaturavulvoseco.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficotemperaturavulvoseco.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficotemperaturavulvoseco.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -566,6 +572,7 @@ public class graficodelmapa extends Fragment {
         XAxis XaxisRV = graficorosadevientos.getXAxis();
         XaxisRV.setPosition(XAxis.XAxisPosition.BOTTOM);
         XaxisRV.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
+        XaxisRV.setGranularityEnabled(true);
         graficorosadevientos.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficorosadevientos.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficorosadevientos.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -595,6 +602,7 @@ public class graficodelmapa extends Fragment {
         XAxis xaxisTS = graficoMPtemperaturadelsuelo.getXAxis();
         xaxisTS.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxisTS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisTS.setGranularityEnabled(true);
         graficoMPtemperaturadelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoMPtemperaturadelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoMPtemperaturadelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -609,6 +617,7 @@ public class graficodelmapa extends Fragment {
         XAxis xaxisCS = graficoMPconductividadelectrica.getXAxis();
         xaxisCS.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxisCS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisCS.setGranularityEnabled(true);
         graficoMPconductividadelectrica.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoMPconductividadelectrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoMPconductividadelectrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -623,6 +632,7 @@ public class graficodelmapa extends Fragment {
         XAxis xaxisCSP = graficoconductividadelectricadelporo.getXAxis();
         xaxisCSP.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxisCSP.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisCSP.setGranularityEnabled(true);
         graficoconductividadelectricadelporo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoconductividadelectricadelporo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoconductividadelectricadelporo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -637,6 +647,7 @@ public class graficodelmapa extends Fragment {
         XAxis xaxisCVA = graficocontenidovolumetricodelagua.getXAxis();
         xaxisCVA.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxisCVA.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisCVA.setGranularityEnabled(true);
         graficocontenidovolumetricodelagua.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficocontenidovolumetricodelagua.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficocontenidovolumetricodelagua.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);

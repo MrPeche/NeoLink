@@ -12,12 +12,10 @@ import com.github.mikephil.charting.utils.MPPointF;
 public class MarkerLineChartDefault extends MarkerView {
 
     private TextView tvContent;
-    private TextView tvContentT;
 
     public MarkerLineChartDefault(Context context, int layoutResource) {
         super(context, layoutResource);
-        tvContent = findViewById(R.id.dataetiqueta);
-        tvContentT = findViewById(R.id.datadata);
+        tvContent = findViewById(R.id.datasecundaria);
     }
 
     @Override

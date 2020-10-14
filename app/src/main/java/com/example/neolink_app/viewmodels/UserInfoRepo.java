@@ -575,7 +575,7 @@ public class UserInfoRepo {
                     horas.tomaHoras(horichi,minutos);
                 }
                 Dias diadata = new Dias();
-                diadata.tomadias(ano+esp+operacionfecha(mes)+esp+operacionfecha(dia),horas);
+                diadata.tomadias(operacionfecha(dia)+esp+operacionfecha(mes)+esp+ano,horas);
                 datasensork.setValue(diadata);
             } else {
                 datasensork.setValue(null);
@@ -611,7 +611,7 @@ public class UserInfoRepo {
                         horas.tomaHoras(horichi,minutos);
                     }
                     DiasG diadata = new DiasG();
-                    diadata.tomadias(ano+esp+operacionfecha(mes)+esp+operacionfecha(dia),horas);
+                    diadata.tomadias(operacionfecha(dia)+esp+operacionfecha(mes)+esp+ano,horas);
                     datasensorg.setValue(diadata);
                 } else {
                     datasensorg.setValue(null);
@@ -642,7 +642,7 @@ public class UserInfoRepo {
                         horas.tomahoras(horichi,minutos);
                     }
                     diasstate diasdata = new diasstate();
-                    diasdata.tomadata(ano+esp+operacionfecha(mes)+esp+operacionfecha(dia),horas);
+                    diasdata.tomadata(operacionfecha(dia)+esp+operacionfecha(mes)+esp+ano,horas);
                     datasensorstate.setValue(diasdata);
                 } else {
                     datasensorstate.setValue(null);

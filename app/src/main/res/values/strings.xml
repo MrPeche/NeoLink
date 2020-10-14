@@ -72,7 +72,7 @@
     <string name="primernombre2">Potencial hidrico</string>
     <string name="segundonombre2">Temperatura</string>
 
-    <string name="tituloprincipal3">S003 Atmos</string>
+    <string name="tituloprincipal3">Condiciones Ambientales</string>
     <string name="primernombre3">Presión barométrica</string>
     <string name="segundonombre3">Humedad relativa</string>
     <string name="cuartonombre3">Temperatura de bulbo seco</string>
