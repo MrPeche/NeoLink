@@ -33,7 +33,8 @@ public class InfoParaGraficos {
         this.dias.add(data);
     }
     public void agregarmesinfomes(paquetededatacompleto<Meses, mesesstate, MesesG> mes){
-        this.meses.add(mes);
+        this.meses.clear();
+        //this.meses.add(mes);
     }
     public boolean validarlosdias(){
         boolean validate = true;
@@ -77,6 +78,21 @@ public class InfoParaGraficos {
         this.dias.set(pos,data);
     }
     public fulldatapack managedias(){
+        if(dias.size()!=0){
+            ArrayList<Dias> sensork = new ArrayList<>();
+            ArrayList<diasstate> sensorstate = new ArrayList<>();
+            ArrayList<DiasG> sensorg = new ArrayList<>();
+            for(paquetededatacompleto<Dias,diasstate,DiasG> dia: dias){
+                sensork.add(dia.damevalorA());
+                sensorstate.add(dia.damevalorB());
+                sensorg.add(dia.damevalorC());
+            }
+            return new fulldatapack(managesensorkendias(sensork),managesensorgendias(sensorg),managesensorstateendias(sensorstate));
+        } else {
+            return new fulldatapack(managesensorkmes(meses.get(0).damevalorA()),managesensorgmes(meses.get(0).damevalorC()),managesensorstatemes(meses.get(0).damevalorB()));
+        }
+
+        /*
         ArrayList<Dias> sensork = new ArrayList<>();
         ArrayList<diasstate> sensorstate = new ArrayList<>();
         ArrayList<DiasG> sensorg = new ArrayList<>();
@@ -86,6 +102,7 @@ public class InfoParaGraficos {
             sensorg.add(dia.damevalorC());
         }
         return new fulldatapack(managesensorkendias(sensork),managesensorgendias(sensorg),managesensorstateendias(sensorstate));
+         */
     }
     private kdatapack managesensorkendias(ArrayList<Dias> data){
         Collections.sort(data,new sortpordias<>());
@@ -315,8 +332,175 @@ public class InfoParaGraficos {
         return  data;
     }
 
-    public void agregarmes(Meses sensork, diasstate statesensor, DiasG sensorg){
-
+    private kdatapack managesensorkmes(Meses data){
+        paquetedatasetPuertos PotencialMatricial = new paquetedatasetPuertos();
+        paquetedatasetPuertos temperatura = new paquetedatasetPuertos();
+        DepthPackage depth = new DepthPackage(); //******************************
+        String sp = ":";
+        String labeldia;
+        String labelhoras;
+        String labelminutos;
+        ArrayList<String> datalabelsaxisX = new ArrayList<>(); //****************
+        float Xindex = 0;
+        for(Dias dia:data.dameelarraycompleto()){
+            for(int i =0;i<dia.dametamano();i++){
+                labeldia = data.damemes(0)+"/"+dia.damedia(i);
+                for(int j = 0; j<dia.damehora(i).dametamano();j++){
+                    labelhoras = dia.damehora(i).damehora(j);
+                    for(int k = 0;k<dia.damehora(i).dameminutos(j).dametamano();k++){
+                        labelminutos = dia.damehora(i).dameminutos(j).dameminuto(k);
+                        datalabelsaxisX.add(labeldia +"\n"+labelhoras+sp+labelminutos);
+                        for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamano();m++){
+                            String nombredelpuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                            switch (nombredelpuerto){
+                                case "P1":
+                                    PotencialMatricial.addP1(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    temperatura.addP1(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P2":
+                                    PotencialMatricial.addP2(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    temperatura.addP2(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P3":
+                                    PotencialMatricial.addP3(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    temperatura.addP3(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P4":
+                                    PotencialMatricial.addP4(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    temperatura.addP4(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                            }
+                            Xindex++;
+                        }
+                    }
+                }
+            }
+        }
+        Pair<ArrayList<String>,LineData> PM = extraerdatadelpaquete(PotencialMatricial); //****************
+        Pair<ArrayList<String>,LineData> temp = extraerdatadelpaquete(temperatura); //*************
+        Pair<paquetedatasetPuertos,paquetedatasetPuertos> Raiz = new Pair<>(PotencialMatricial,temperatura);
+        return new kdatapack(depth,datalabelsaxisX,PM,temp,Raiz);
+    }
+    private gdatapack managesensorgmes(MesesG data){
+        paquetedatasetPuertos humS = new paquetedatasetPuertos();
+        paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
+        paquetedatasetPuertos condE = new paquetedatasetPuertos();
+        paquetedatasetPuertos conddelporo = new paquetedatasetPuertos();
+        paquetedatasetPuertos contentvolumagua = new paquetedatasetPuertos();
+        DepthPackage Depth = new DepthPackage();
+        String sp = ":";
+        String labeldia;
+        String labelhora;
+        String labelminuto;
+        String nombrePuerto;
+        ArrayList<String> XlabelsG = new ArrayList<>();
+        float l = 0;
+        for(DiasG dia:data.damearraydedias()){
+            for(int i = 0; i<dia.dametamanoG();i++){
+                labeldia = data.damemes(0)+"/"+dia.damedia(i);
+                for(int j = 0; j<dia.damehora(i).dametamanoG();j++){
+                    labelhora = dia.damehora(i).damehora(j);
+                    for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoG();k++){
+                        labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
+                        XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
+                        for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoG();m++){
+                            nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                            switch (nombrePuerto){
+                                case "P1":
+                                    humS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    tempeS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    condE.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                    Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P2":
+                                    humS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    tempeS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    condE.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                    Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P3":
+                                    humS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    tempeS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    condE.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                    Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P4":
+                                    humS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                    tempeS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                    condE.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                    conddelporo.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                    contentvolumagua.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                    Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                            }
+                        }
+                        l++;
+                    }
+                    //l++;
+                }
+            }
+        }
+        Pair<ArrayList<String>,LineData> humedadG = extraerdatadelpaquete(humS);
+        Pair<ArrayList<String>,LineData> temperaturaG = extraerdatadelpaquete(tempeS);
+        Pair<ArrayList<String>,LineData> conductividadG = extraerdatadelpaquete(condE);
+        Pair<ArrayList<String>,LineData> conductividaddelporo = extraerdatadelpaquete(conddelporo);
+        Pair<ArrayList<String>,LineData> contenidovolumendelagua = extraerdatadelpaquete(contentvolumagua);
+        return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,conductividaddelporo,contenidovolumendelagua,humS,tempeS,condE,conddelporo,contentvolumagua);
+    }
+    private statedatapack managesensorstatemes(mesesstate data){
+        ArrayList<String> XlabelsSTATE = new ArrayList<>();
+        ArrayList<Entry> bateria = new ArrayList<>();
+        ArrayList<Entry> solar = new ArrayList<>();
+        ArrayList<Entry> presionbaro = new ArrayList<>();
+        ArrayList<Entry> humedadrelativa = new ArrayList<>();
+        ArrayList<Entry> temperaturavulvoseco = new ArrayList<>();
+        ArrayList<Entry> temperaturainterna = new ArrayList<>();
+        ArrayList<Entry> windspeed = new ArrayList<>();
+        String sp = ":";
+        String labeldia;
+        String labelhora;
+        float l = 0;
+        for(diasstate dia:data.damearraydedias()){
+            for(int i = 0; i<dia.dametamano();i++){
+                labeldia = data.damemeses(0)+"/"+dia.damedia(i);
+                for(int k = 0;k<dia.damehoras(i).dametamano();k++){
+                    labelhora = dia.damehoras(i).damehora(k);
+                    for(int j = 0; j<dia.damehoras(i).dameminutos(k).dametamano();j++){
+                        XlabelsSTATE.add(labeldia+"\n"+labelhora+sp+dia.damehoras(i).dameminutos(k).dameminutos(j));
+                        bateria.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBV()));
+                        solar.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveSV()));
+                        presionbaro.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBP()));
+                        humedadrelativa.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveRH()));
+                        temperaturavulvoseco.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).givedT()));
+                        temperaturainterna.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveiT()));
+                        windspeed.add(new Entry(l,(float)dia.damehoras(i).dameminutos(k).damepaquete(j).giveWS()));
+                        l++;
+                    }
+                }
+            }
+        }
+        LineDataSet LDS = CreaDataLine(bateria,"Bateria",colores[0]);
+        LineDataSet LDSV = CreaDataLine(solar,"Voltaje Solar", colores[1]);
+        LDSV.setAxisDependency(YAxis.AxisDependency.LEFT); //
+        LDS.setAxisDependency(YAxis.AxisDependency.RIGHT); //
+        LineDataSet LDhumedadrelativa= CreaDataLine(humedadrelativa,"Humedad Relativa",colores[0]);
+        LineDataSet LDpresionbarometrica= CreaDataLine(presionbaro,"Presion Barométrica",colores[0]);
+        LineDataSet LDtemperaturavulvoseco= CreaDataLine(temperaturavulvoseco,"Temperatura de bulbo seco",colores[0]);
+        LineDataSet LDtemperaturainterna = CreaDataLine(temperaturainterna, "Temperatura interna",colores[1]);
+        LineDataSet LDwindspeed = CreaDataLine(windspeed,"Velocidad del viento",colores[0]);
+        LDtemperaturainterna.enableDashedLine(30,10,10);
+        LDtemperaturainterna.setLineWidth(0.8f);
+        return new statedatapack(dataseparada(LDhumedadrelativa),dataseparada(LDpresionbarometrica),juntardata(LDS,LDSV),juntardata(LDtemperaturavulvoseco,LDtemperaturainterna),dataseparada(LDwindspeed),XlabelsSTATE);
     }
     public void agregarano(){
 

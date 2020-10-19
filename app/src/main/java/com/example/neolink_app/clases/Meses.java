@@ -16,6 +16,7 @@ public class Meses {
     public Dias damedias(int posicion){
         return this.dias.get(posicion);
     }
+    public ArrayList<Dias> dameelarraycompleto(){ return this.dias;}
     public void tomameses(String mes, Dias dia){
         this.meses.add(mes);
         this.dias.add(dia);

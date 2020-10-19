@@ -807,7 +807,8 @@ public class UserInfoRepo {
             public void onChanged(Pair<Pair<Meses, mesesstate>, MesesG> pairMesesGPair) {
                 if(pairMesesGPair!=null){
                     if(mes.isitready()){
-                        //Pair<Integer,Boolean> pregunta = data.buscarpordiadentro()
+                        data.agregarmesinfomes(mes);
+                        estemes.setValue(data);
                     }
                 } else estemes.setValue(data);
             }

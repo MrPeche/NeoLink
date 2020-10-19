@@ -12,6 +12,7 @@ public class MesesG {
     }
     public String damemes(int posicion){return meses.get(posicion);}
     public DiasG damedias(int posicion){return dias.get(posicion);}
+    public ArrayList<DiasG> damearraydedias(){return this.dias;}
     public int dametamanoG(){return this.dias.size();}
     public void tomameses(String mes, DiasG dia){
         this.meses.add(mes);

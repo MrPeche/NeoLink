@@ -13,6 +13,7 @@ public class mesesstate {
     }
     public String damemeses(int posicion){return this.meses.get(posicion);}
     public diasstate damedias(int posicion){return this.dias.get(posicion);}
+    public ArrayList<diasstate> damearraydedias(){return this.dias;}
     public int tamanomes(){return this.dias.size();}
     public void tomameses(String mes, diasstate dia){
         this.meses.add(mes);
