@@ -295,7 +295,7 @@ public class dialogfechagraf extends AppCompatDialogFragment implements AdapterV
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(position==3){
+        if(position==4){
             popupTexts();
             popupcalendar();
         } else {

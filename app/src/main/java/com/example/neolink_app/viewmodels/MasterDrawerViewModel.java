@@ -2,6 +2,7 @@ package com.example.neolink_app.viewmodels;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -234,10 +235,62 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 } else if(input==3){
                     return appRepo.fetchesteano();
                 } else {
-                    return appRepo.fetchdiasrandom();
+                    return appRepo.fetchdiasrandom(neolink,sacarlosdiasentre(datechoosen.getValue()));
                 }
             }
         });
+    }
+    private ArrayList<ArrayList<Integer>> sacarlosdiasentre(String lineadefecha){
+        ArrayList<ArrayList<Integer>> tiempo = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> los2dias = manejareltiempodesdehasta(manejareldesdehasta(lineadefecha));
+        Calendar datedesde = Calendar.getInstance();
+        Calendar datehasta = Calendar.getInstance();
+        datedesde.set(los2dias.get(0).get(0),los2dias.get(0).get(1)-1,los2dias.get(0).get(2));
+        datehasta.set(los2dias.get(1).get(0),los2dias.get(1).get(1)-1,los2dias.get(1).get(2));
+        datedesde.get(Calendar.DATE);
+        datehasta.get(Calendar.DATE);
+        while(!eselmismodia(datedesde,datehasta)){
+            tiempo.add(translatesemana(datehasta));
+            datehasta.add(Calendar.DATE,-1);
+        }
+        tiempo.add(translatesemana(datehasta));
+        return tiempo;
+    }
+    private boolean eselmismodia(Calendar o1, Calendar o2){
+        return (o1.get(Calendar.YEAR) == o2.get(Calendar.YEAR)) && (o1.get(Calendar.MONTH) == o2.get(Calendar.MONTH)) && o1.get(Calendar.DAY_OF_MONTH) == o2.get(Calendar.DAY_OF_MONTH);
+    }
+    private ArrayList<String[]> manejareldesdehasta(String data){
+        ArrayList<String[]> resultado = new ArrayList<>();
+        String[] dias = data.replace(" ","").split("-");
+        for(String dia:dias){
+            String[] fecha = dia.split("/");
+            resultado.add(fecha);
+        }
+        return resultado;
+    }
+    private ArrayList<ArrayList<Integer>> manejareltiempodesdehasta(ArrayList<String[]> date){
+        ArrayList<ArrayList<Integer>> resultado = new ArrayList<>();
+        for(String[] day:date){
+            ArrayList<Integer> dia = new ArrayList<>();
+            dia.add(translatetoint(day[0],0));
+            dia.add(translatetoint(day[1],1));
+            dia.add(translatetoint(day[2],2));
+            resultado.add(dia);
+        }
+        return resultado;
+    }
+    private Integer translatetoint(String line,int modo){
+        if(modo==0){
+            return Integer.parseInt(line);
+        } else if(modo==1){
+            if(line.charAt(0)=='0'){
+                return Integer.parseInt(line.substring(1,2));
+            } else return Integer.parseInt(line);
+        } else{
+            if(line.charAt(0)=='0'){
+                return Integer.parseInt(line.substring(1,2));
+            } else return Integer.parseInt(line);
+        }
     }
     private void setayer(){
         ArrayList<Integer> resultado = new ArrayList<>();

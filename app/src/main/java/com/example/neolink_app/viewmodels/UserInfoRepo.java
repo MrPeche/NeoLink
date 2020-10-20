@@ -1,5 +1,7 @@
 package com.example.neolink_app.viewmodels;
 
+import android.annotation.SuppressLint;
+
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;
@@ -42,7 +44,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -819,9 +824,33 @@ public class UserInfoRepo {
         final MediatorLiveData<InfoParaGraficos> esteano = new MediatorLiveData<>();
         return esteano;
     }
-    public LiveData<InfoParaGraficos> fetchdiasrandom(){
-        final MediatorLiveData<InfoParaGraficos> diasrandom = new MediatorLiveData<>();
-        return diasrandom;
+    public LiveData<InfoParaGraficos> fetchdiasrandom(String neolink, ArrayList<ArrayList<Integer>> dates){
+        final MediatorLiveData<InfoParaGraficos> diarandom = new MediatorLiveData<>();
+        InfoParaGraficos obj = new InfoParaGraficos();
+        diarandom.setValue(null);
+        for(ArrayList<Integer> day:dates){
+            paquetededatacompleto<Dias,diasstate,DiasG> dialistener = new paquetededatacompleto<Dias,diasstate,DiasG>(fetchdataperdaywithsensork(neolink,day.get(0),day.get(1),day.get(2)),
+                    fetchdataperdaywithsensorstate(neolink,day.get(0),day.get(1),day.get(2)),
+                    fetchdataperdaywithsensorg(neolink,day.get(0),day.get(1),day.get(2)));
+
+            diarandom.addSource(dialistener, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+                @Override
+                public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
+                    if(pairDiasGPair!=null){
+                        if(dialistener.isitready()){
+                            android.util.Pair<Integer, Boolean> pregunta = obj.buscarpordiadentro(dialistener.damevalorB().damedia(0));
+                            if(pregunta.second){
+                                obj.actualizardatoespecifico(dialistener,pregunta.first);
+                            } else
+                                obj.agregarinfodias(dialistener);
+                            diarandom.setValue(obj);
+                        }
+                    } else
+                        diarandom.setValue(obj);
+                }
+            });
+        }
+        return diarandom;
     }
     public LiveData<notihist> fetchregistro(String neolink,int ano, int mes){
         final MediatorLiveData<notihist> registrodata = new MediatorLiveData<>();
