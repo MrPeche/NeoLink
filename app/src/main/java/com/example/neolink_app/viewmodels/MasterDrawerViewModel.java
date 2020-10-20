@@ -307,7 +307,11 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     private ArrayList<ArrayList<Integer>> figurarlasemana(){
         ArrayList<ArrayList<Integer>> dias = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        for(int i = 0; i<7;i++){
+            dias.add(translatesemana(calendar));
+            calendar.add(Calendar.DATE,-1);
+        }
+        //int day = calendar.get(Calendar.DAY_OF_WEEK);
         /*
         for(int i = 0;i<day-1;i++){
             int heyo = i+2-day;//(day-i-((day-1-i)*2))
@@ -315,6 +319,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
             dias.add(calendar);
         }
          */
+        /*
         if(day==1){
             dias.add(translatesemana(calendar));
         } else{
@@ -325,6 +330,9 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 dias.add(translatesemana(calendar));
             }
         }
+
+         */
+
         return dias;
     }
     private ArrayList<Integer> translatesemana(Calendar cal){
