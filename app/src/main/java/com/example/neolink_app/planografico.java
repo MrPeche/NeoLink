@@ -18,6 +18,7 @@ import com.example.neolink_app.adaptadores.MarkerLineChartDefault;
 import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.adaptadores.labelpersonalizadoX;
 import com.example.neolink_app.clases.DepthPackage;
+import com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.clasesparaformargraficos.fulldatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.gdatapack;
@@ -32,6 +33,8 @@ import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class planografico extends Fragment {
@@ -44,7 +47,7 @@ public class planografico extends Fragment {
     private LineChart graficohumedadrelativa;
     private LineChart graficotemperaturavulvoseco;
     //private LineChart graficohumedaddelsuelo;
-    private LineChart graficotemperaturadelsuelo;
+    private chartlinealparadapter graficotemperaturadelsuelo;
     private LineChart graficoconductividaddelsuelo;
     private LineChart graficorosadevientos;
     private LineChart graficoconductividadelectricadelporo;
@@ -611,6 +614,8 @@ public class planografico extends Fragment {
         graficohumedaddelsuelo.fitScreen();
 
          */
+        final Snackbar Avizoneolinklisto = Snackbar.make(getView(),"Click", BaseTransientBottomBar.LENGTH_SHORT);
+
         graficotemperaturadelsuelo.setData(pack.sacarlatemperatura().second);
         graficotemperaturadelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficotemperaturadelsuelo.getViewPortHandler(), graficotemperaturadelsuelo.getXAxis(), graficotemperaturadelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
         XAxis xaxisTS = graficotemperaturadelsuelo.getXAxis();
@@ -620,7 +625,7 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficotemperaturadelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficotemperaturadelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first);
+        MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first,Avizoneolinklisto);
         graficotemperaturadelsuelo.setMarker(adapterTS);
         graficotemperaturadelsuelo.invalidate();
         //graficotemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);

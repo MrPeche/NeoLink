@@ -7,8 +7,11 @@
     android:gravity="center|top">
 
     <LinearLayout
+        android:id="@+id/llmarker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -16,16 +19,18 @@
             android:id="@+id/datadata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
             android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/lato"
             android:textSize="@dimen/Tamañotextopequeño" />
 
         <TextView
             android:id="@+id/dataetiqueta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
             android:layout_gravity="center"
+            android:fontFamily="@font/lato"
             android:textSize="@dimen/Tamañotextopequeño" />
     </LinearLayout>
 

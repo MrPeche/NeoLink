@@ -104,7 +104,7 @@
                         android:text="@string/Temperaturadelsuelo"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficotemperaturadelsuelo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
