@@ -124,6 +124,15 @@ public class panelesgrafiquito extends Fragment {
                 }
             }
         });
+        archi.haycomentarionuevo().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s!=null){
+                    Navigation.findNavController(getView()).navigate(panelesgrafiquitoDirections.actionPanelesgrafiquitoToDialogodeagregarcomentarios(s));
+                    archi.vaciarelavizodecomentarionuevo();
+                }
+            }
+        });
         /*
         archi.paquetesdedata.observe(getViewLifecycleOwner(), new Observer<Pair<Horas,horasstate>>() {
             @Override
@@ -155,8 +164,6 @@ public class panelesgrafiquito extends Fragment {
                 vp.setAdapter(adapter);
             }
         });
-
-
         ((actividadbase)getActivity()).fabcalendar();
         ((actividadbase)getActivity()).fabaparecer();
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +172,7 @@ public class panelesgrafiquito extends Fragment {
                 Navigation.findNavController(getView()).navigate(panelesgrafiquitoDirections.actionPanelesgrafiquitoToDialogfechagraf());
             }
         });
+
         /*
         materialdatepick.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
             @Override

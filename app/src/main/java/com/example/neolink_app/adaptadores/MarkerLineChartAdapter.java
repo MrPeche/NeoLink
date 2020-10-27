@@ -2,14 +2,20 @@ package com.example.neolink_app.adaptadores;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatEditText;
+
 import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
+import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -27,6 +33,11 @@ public class MarkerLineChartAdapter extends MarkerView {
     private DepthPackage depth;
     private paquetedatasetPuertos dataset;
     private ArrayList<String> orden;
+    private MasterDrawerViewModel archi;
+    private ArrayList<String> timelabels;
+    private String neolink;
+    private String sensor;
+    private String var;
     public float drawingPosX;
     public float drawingPosY;
     private long startClickTime;
@@ -42,7 +53,7 @@ public class MarkerLineChartAdapter extends MarkerView {
         tvContentT = findViewById(R.id.datadata);
         markerContainerView = findViewById(R.id.llmarker);
     }
-    public MarkerLineChartAdapter(Context context, int layoutResource, DepthPackage depth, paquetedatasetPuertos dataset, ArrayList<String> orden,final Snackbar msg) {
+    public MarkerLineChartAdapter(Context context, int layoutResource, DepthPackage depth, paquetedatasetPuertos dataset, ArrayList<String> orden,ArrayList<String> timelabels,String neolink,String sensor,String var ,MasterDrawerViewModel archi) {
         super(context, layoutResource);
         this.depth = depth;
         this.dataset = dataset;
@@ -51,12 +62,15 @@ public class MarkerLineChartAdapter extends MarkerView {
         tvContent = findViewById(R.id.dataetiqueta);
         tvContentT = findViewById(R.id.datadata);
         markerContainerView = findViewById(R.id.llmarker);
-        markerContainerView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                msg.show();
-            }
-        });
+        this.archi = archi;
+        this.timelabels = timelabels;
+        this.neolink = neolink;
+        this.sensor = sensor;
+        this.var = var;
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.setMargins(100,0,100,0);
 
     }
 
@@ -93,7 +107,16 @@ public class MarkerLineChartAdapter extends MarkerView {
 
         //tvContent.setText("" + e.getY());
         // this will perform necessary layouting
-
+        markerContainerView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(timelabels!=null){
+                    String[] time =timelabels.get((int) e.getX()).split("\n");
+                    //String a = neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var;
+                    archi.avizarquehayuncomentarionuevo(neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var);
+                }
+            }
+        });
         super.refreshContent(e, highlight);
     }
 

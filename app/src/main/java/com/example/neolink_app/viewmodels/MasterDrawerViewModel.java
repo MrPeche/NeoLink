@@ -52,6 +52,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public boolean valua,valueb = false;
     public final MutableLiveData<String> datechoosen = new MutableLiveData<>();
     public final MutableLiveData<String> nuevoNeolink = new MutableLiveData<>();
+    public final MutableLiveData<String> comentarionuevo = new MutableLiveData<>();
     private UserInfoRepo appRepo;
     private manejadordedispositivo FCM;
     private String uid;
@@ -355,6 +356,29 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public LiveData<Boolean> segraboelneolink(){
         return neolinkguardado;
+    }
+
+    public void avizarquehayuncomentarionuevo(String referencia){
+        comentarionuevo.setValue(referencia);
+    }
+    public void vaciarelavizodecomentarionuevo(){
+        comentarionuevo.setValue(null);
+    }
+    public LiveData<String> haycomentarionuevo(){
+        return comentarionuevo;
+    }
+    public void guardarcomentarioneolink(String neolink, String mensaje){
+        Calendar ahorita = Calendar.getInstance();
+        ArrayList<Integer> heute = new ArrayList<>();
+        heute.add(ahorita.get(Calendar.YEAR)%100);
+        heute.add(ahorita.get(Calendar.MONTH)+1);
+        heute.add(ahorita.get(Calendar.DAY_OF_MONTH));
+        heute.add(ahorita.get(Calendar.HOUR_OF_DAY));
+        heute.add(ahorita.get(Calendar.MINUTE));
+        appRepo.guardarelmensaje(neolink,heute.get(0),heute.get(1),heute.get(2),heute.get(3),heute.get(4),mensaje);
+    }
+    public void borrarcomentario(String neolink,String ano,String mes,String dia,String hora){
+        appRepo.borrarmensaje(neolink,ano,mes,dia,hora);
     }
 
     public void neolinkguardadopositivo(){

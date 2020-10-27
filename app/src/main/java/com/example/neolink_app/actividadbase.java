@@ -119,7 +119,6 @@ public class actividadbase extends AppCompatActivity {
         });
 
          */
-
     }
     String dameuid(){
         return getIntent().getExtras().getString("uid");

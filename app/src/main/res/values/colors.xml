@@ -8,6 +8,7 @@
     <color name="colorTextoGris">#9a9a9a</color>
     <color name="notificacion" >#3e7098</color>
     <color name="colorojo">#fa8072</color>
+    <color name="coloracelestedelaapp">#849AAF</color>
 
     <color name="stroke_color">
         <selector xmlns:android="http://schemas.android.com/apk/res/android">

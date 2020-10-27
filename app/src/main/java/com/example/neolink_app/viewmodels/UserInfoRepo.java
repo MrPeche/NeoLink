@@ -466,7 +466,16 @@ public class UserInfoRepo {
         });
         return configuracionconfvalue;
     }
-
+    public void guardarelmensaje(String neolink,int ano,int mes,int dia,int hora,int minutos, String encodemessage){
+        String path = "/NeoLink/"+ neolink + "/DataSet/NotiHist/";
+        final DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference(path);
+        basecompleta.child(operacionfecha(ano)).child(operacionfecha(mes)).child(operacionfecha(dia)).child(operacionfecha(hora)+":"+operacionfecha(minutos)).setValue(encodemessage);
+    }
+    public void borrarmensaje(String neolink,String ano,String mes,String dia,String hora){
+        String path = "/NeoLink/"+ neolink + "/DataSet/NotiHist/";
+        final DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference(path);
+        basecompleta.child(ano).child(mes).child(dia).child(hora).setValue(null);
+    }
     public void saveconfiguration(String neolink,boolean beep,int beepv,boolean port, int portv, boolean gps, int gpsv, boolean tiempoentreplazos, int tiempoentreplazosv,boolean[] switchs,boolean[] switchsactuales,boolean[] superior,boolean[] inferior,String[] superiorl,String[] inferiorl,double[] valorsuperior,double[] valorinferior){
         String patio = "/NeoLink/"+neolink;
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);

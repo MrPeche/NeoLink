@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -76,6 +79,9 @@ public class planografico extends Fragment {
     private static float OFFSETGRAFPHLEFT = 10f;
     private static float OFFSETGRAFPHBOTTOM = 15f;
 
+    private AlertDialog.Builder builder;
+    private AppCompatEditText input;
+
 
     public planografico() {
         // Required empty public constructor
@@ -112,6 +118,9 @@ public class planografico extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
+        builder = new AlertDialog.Builder(getActivity());
+        input = new AppCompatEditText(getActivity());
+
         nombre = view.findViewById(R.id.Nombrepager);
         nombre.setText(name);
         grafico1 = view.findViewById(R.id.graficochart1);
@@ -614,7 +623,7 @@ public class planografico extends Fragment {
         graficohumedaddelsuelo.fitScreen();
 
          */
-        final Snackbar Avizoneolinklisto = Snackbar.make(getView(),"Click", BaseTransientBottomBar.LENGTH_SHORT);
+        //final Snackbar Avizoneolinklisto = Snackbar.make(getView(),"Click", BaseTransientBottomBar.LENGTH_SHORT);
 
         graficotemperaturadelsuelo.setData(pack.sacarlatemperatura().second);
         graficotemperaturadelsuelo.setXAxisRenderer(new labelpersonalizadoX(graficotemperaturadelsuelo.getViewPortHandler(), graficotemperaturadelsuelo.getXAxis(), graficotemperaturadelsuelo.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -625,7 +634,7 @@ public class planografico extends Fragment {
         graficotemperaturadelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficotemperaturadelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficotemperaturadelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first,Avizoneolinklisto);
+        MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first,pack.sacarlabels(),name,"g","V2",archi);
         graficotemperaturadelsuelo.setMarker(adapterTS);
         graficotemperaturadelsuelo.invalidate();
         //graficotemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);

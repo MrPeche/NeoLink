@@ -136,10 +136,17 @@
 
     //Registro
     <string name="tituloregistro">Registro</string>
-
+    <string name="registroeditar">Boton para ediitar</string>
+    <string name="registroborrar">boton para borrar</string>
     //contactus
     <string name="paginaweb">www.greenbird.pe/</string>
     <string name="facebook">NeoLink IoT</string>
     <string name="correo">team@greenbird.pe</string>
+
+    //Dialogagragarcomentario
+    <string name="titulodeldialogocomentario">Agregue un comentario</string>
+    <string name="hintdeldialogocomentario">Ingrese su comentario</string>
+
+
 
 </resources>

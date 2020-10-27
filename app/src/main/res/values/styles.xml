@@ -21,6 +21,14 @@
 
     </style>
 
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#000000</item>
+        <item name="android:textColorPrimary">#3C77AF</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="fontFamily">@font/lato</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="cardview" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#849AAF</item>

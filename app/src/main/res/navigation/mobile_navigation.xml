@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_panelesgrafiquito_to_dialogfechagraf"
             app:destination="@id/dialogfechagraf" />
+        <action
+            android:id="@+id/action_panelesgrafiquito_to_dialogodeagregarcomentarios"
+            app:destination="@id/dialogodeagregarcomentarios" />
     </fragment>
     <fragment
         android:id="@+id/planografico"
@@ -122,5 +125,14 @@
         android:name="com.example.neolink_app.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <dialog
+        android:id="@+id/dialogodeagregarcomentarios"
+        android:name="com.greenbird.neolink_app.dialogodeagregarcomentarios"
+        android:label="fragment_dialogodeagregarcomentarios"
+        tools:layout="@layout/fragment_dialogodeagregarcomentarios" >
+        <argument
+            android:name="referencia"
+            app:argType="string" />
+    </dialog>
 
 </navigation>
