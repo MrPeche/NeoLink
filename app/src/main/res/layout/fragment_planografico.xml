@@ -83,35 +83,6 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvtemperaturadelsuelo"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/tamañoCardScroll"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:gravity="center"
-                        android:padding="@dimen/margencard"
-                        android:text="@string/Temperaturadelsuelo"
-                        android:textSize="@dimen/Tamañotexto" />
-
-                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
-                        android:id="@+id/graficotemperaturadelsuelo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
                 android:id="@+id/cvcontenidovolumetricodelagua"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
@@ -135,6 +106,35 @@
 
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficocontenidovolumetricodelagua"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvconductividadelectrica"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Conductividaddelsuelo"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
+                        android:id="@+id/graficoConductividadSuelo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
@@ -170,7 +170,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvconductividadelectrica"
+                android:id="@+id/cvtemperaturadelsuelo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -188,11 +188,11 @@
                         android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:padding="@dimen/margencard"
-                        android:text="@string/Conductividaddelsuelo"
+                        android:text="@string/Temperaturadelsuelo"
                         android:textSize="@dimen/Tamañotexto" />
 
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
-                        android:id="@+id/graficoConductividadSuelo"
+                        android:id="@+id/graficotemperaturadelsuelo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>

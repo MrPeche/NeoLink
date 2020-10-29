@@ -85,36 +85,6 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardMPtemperaturadelsuelo"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/tamañoCardScroll"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:cardCornerRadius="@dimen/cardRadio"
-                app:cardElevation="@dimen/cardelevasion">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:gravity="center"
-                        android:padding="@dimen/margencard"
-                        android:text="@string/Temperaturadelsuelo"
-                        android:textSize="@dimen/Tamañotexto" />
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/graficoMPtemperaturadelsuelo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
                 android:id="@+id/cardMPcontenidovolumetricodelagua"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
@@ -139,6 +109,36 @@
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoMPcontenidovolumetricodelagua"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMPconductividadelectrica"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/Conductividaddelsuelo"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/graficoMPconductividadelectrica"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
@@ -175,7 +175,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardMPconductividadelectrica"
+                android:id="@+id/cardMPtemperaturadelsuelo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
@@ -194,11 +194,11 @@
                         android:fontFamily="@font/lato"
                         android:gravity="center"
                         android:padding="@dimen/margencard"
-                        android:text="@string/Conductividaddelsuelo"
+                        android:text="@string/Temperaturadelsuelo"
                         android:textSize="@dimen/Tamañotexto" />
 
                     <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/graficoMPconductividadelectrica"
+                        android:id="@+id/graficoMPtemperaturadelsuelo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
