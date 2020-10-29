@@ -96,7 +96,7 @@ public class MarkerLineChartAdapter extends MarkerView {
                 texto3 = "Puerto 3";
                 break;
             case "P4":
-                texto1 = "Profundidad " + depth.getP4().get(dataset.getP3().indexOf(e));
+                texto1 = "Profundidad " + depth.getP4().get(dataset.getP4().indexOf(e));
                 texto3 = "Puerto 4";
                 break;
 
