@@ -45,7 +45,7 @@
                         android:text="@string/sensorPotencialMatricial"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficochart1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -75,7 +75,7 @@
                         android:text="@string/sensorTemperatura"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficochar2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -133,7 +133,7 @@
                         android:text="@string/Contenidovolumetricodelagua"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficocontenidovolumetricodelagua"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -162,7 +162,7 @@
                         android:text="@string/ConductividadElectricadelporo"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoconductividadPoro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -191,7 +191,7 @@
                         android:text="@string/Conductividaddelsuelo"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoConductividadSuelo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />

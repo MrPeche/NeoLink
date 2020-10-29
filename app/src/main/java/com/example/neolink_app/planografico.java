@@ -502,7 +502,7 @@ public class planografico extends Fragment {
         xaxispm.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
         xaxispm.setGranularityEnabled(true);
         //xaxispm.setLabelRotationAngle(-45f);
-        MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first);
+        MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first,pack.sacarloslabels(),name,"k","V1",archi);
         grafico1.setMarker(adapterpm);
         grafico1.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico1.setExtraLeftOffset(OFFSETGRAFPHLEFT);
@@ -518,7 +518,7 @@ public class planografico extends Fragment {
         xAxistemp.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
         xAxistemp.setGranularityEnabled(true);
         //xAxistemp.setLabelRotationAngle(-45f);
-        MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first);
+        MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first,pack.sacarloslabels(),name,"k","V2",archi);
         grafico2.setMarker(adaptertemp);
         grafico2.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico2.setExtraLeftOffset(OFFSETGRAFPHLEFT);
@@ -649,7 +649,7 @@ public class planografico extends Fragment {
         graficoconductividaddelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoconductividaddelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoconductividaddelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterCS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividad(),pack.sacarlaconductividad().first);
+        MarkerLineChartAdapter adapterCS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividad(),pack.sacarlaconductividad().first,pack.sacarlabels(),name,"g","V3",archi);
         graficoconductividaddelsuelo.setMarker(adapterCS);
         graficoconductividaddelsuelo.invalidate();
         //graficoconductividaddelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -664,7 +664,7 @@ public class planografico extends Fragment {
         graficoconductividadelectricadelporo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoconductividadelectricadelporo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoconductividadelectricadelporo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterCSP = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividaddelporo(),pack.sacarlaconductividaddelporo().first);
+        MarkerLineChartAdapter adapterCSP = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividaddelporo(),pack.sacarlaconductividaddelporo().first,pack.sacarlabels(),name,"g","PoreCer",archi);
         graficoconductividadelectricadelporo.setMarker(adapterCSP);
         graficoconductividadelectricadelporo.invalidate();
         //graficoconductividadelectricadelporo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -679,7 +679,7 @@ public class planografico extends Fragment {
         graficocontenidovolumetricodelagua.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficocontenidovolumetricodelagua.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficocontenidovolumetricodelagua.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterCVA = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizcontenidovolumetricodelagua(),pack.sacarelcontenidovolumetricodelagua().first);
+        MarkerLineChartAdapter adapterCVA = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizcontenidovolumetricodelagua(),pack.sacarelcontenidovolumetricodelagua().first,pack.sacarlabels(),name,"g","vwc",archi);
         graficocontenidovolumetricodelagua.setMarker(adapterCVA);
         graficocontenidovolumetricodelagua.invalidate();
         //graficocontenidovolumetricodelagua.setVisibleXRangeMaximum(MAX_DATAVISIBLE);

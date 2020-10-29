@@ -134,5 +134,10 @@
             android:name="referencia"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/configuracioncuenta"
+        android:name="com.greenbird.neolink_app.configuracioncuenta"
+        android:label="fragment_configuracioncuenta"
+        tools:layout="@layout/fragment_configuracioncuenta" />
 
 </navigation>

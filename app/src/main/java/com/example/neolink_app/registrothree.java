@@ -10,9 +10,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.neolink_app.adaptadores.ListaNeonodesAdapter;
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,12 +38,15 @@ public class registrothree extends AppCompatActivity {
     private TextInputEditText ticket;
     private TextInputLayout layticket;
     private DatabaseReference mDatabase;
+    private RadioButton neolinkowner;
+    private RadioButton familiar;
     private Button botonS3;
     private TextView botonA3;
     private ProgressBar load3;
     private FirebaseUser user;
     private static final String TAG = "Leyendo el dato";
     private String antes;
+    private TextView mensajedeayuda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,10 @@ public class registrothree extends AppCompatActivity {
         botonS3 = findViewById(R.id.button_registrothree);
         botonA3 = findViewById(R.id.volverthree);
         load3 = findViewById(R.id.Cargado3);
+        neolinkowner = findViewById(R.id.radioButtonneolink);
+        familiar = findViewById(R.id.radioButtonfamiliar);
+        neolinkowner.setChecked(true);
+        mensajedeayuda = findViewById(R.id.mensajeregistrothree);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ticket.addTextChangedListener(new TextWatcher() {
             @Override
@@ -78,7 +87,23 @@ public class registrothree extends AppCompatActivity {
                  */
             }
         });
+        neolinkowner.setOnClickListener(neolinklist);
+        familiar.setOnClickListener(familiarlist);
     }
+    private View.OnClickListener neolinklist = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(!mensajedeayuda.getText().toString().equals(getString(R.string.MensajeRegistroThree)))
+                mensajedeayuda.setText(getString(R.string.MensajeRegistroThree));
+        }
+    };
+    private View.OnClickListener familiarlist = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(!mensajedeayuda.getText().toString().equals(getString(R.string.MensajeRegistroThree2)))
+                mensajedeayuda.setText(getString(R.string.MensajeRegistroThree2));
+        }
+    };
 
     /*private ValueEventListener orejitasTerminar = new ValueEventListener() {
      String boleto = "";
@@ -107,44 +132,101 @@ public class registrothree extends AppCompatActivity {
 
     public void validarticket(){
         //validar = false;
+        if(neolinkowner.isChecked()){
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String boleto = ticket.getText().toString();
+                    if((dataSnapshot.child("NEWneolinks").child(boleto).exists())){
+                        //Terminar mensaje y irnos al main
+                        Intent itwo = getIntent();
+                        Bundle extras = itwo.getExtras();
+                        String correo = extras.getString("correo");
+                        String passw = extras.getString("passw");
+                        String uid = extras.getString("uid");
+                        mDatabase.child("NEWneolinks").child(boleto).removeValue();
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String boleto = ticket.getText().toString();
-                if((dataSnapshot.child("NEWneolinks").child(boleto).exists())){
-                    //Terminar mensaje y irnos al main
+                        OLDneolinksboleto paqueton = new OLDneolinksboleto(uid);
+                        mDatabase.child("OLDneolinks").child(boleto).setValue(paqueton);
+
+                        ArrayList<String> Alan = new ArrayList<>();
+                        Alan.add(boleto);
+                        OWNERitems notdead = new OWNERitems(Alan);
+                        mDatabase.child("OWNERitems").child(uid).setValue(notdead);
+
+                        Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(registrothree.this, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                    } else {
+                        Toast.makeText( registrothree.this, "Ticket invalido", Toast.LENGTH_SHORT).show();
+                        setitback3();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText( registrothree.this, "Problemas de Conexión", Toast.LENGTH_SHORT).show();
+                    setitback3();
+                }
+            });
+        } else{
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String boleto = ticket.getText().toString();
                     Intent itwo = getIntent();
                     Bundle extras = itwo.getExtras();
                     String correo = extras.getString("correo");
                     String passw = extras.getString("passw");
                     String uid = extras.getString("uid");
-                    mDatabase.child("NEWneolinks").child(boleto).removeValue();
+                    boolean existe = false;
+                    String uidowner = "";
+                    for(DataSnapshot nodo:snapshot.child("tokendevinculo").getChildren()){
+                        if(nodo.getValue().equals(boleto)){
+                            existe=true;
+                            uidowner=nodo.getKey();
+                            break;
+                        }
+                    }
+                    if(existe&&!uidowner.equals("")){
+                        if(snapshot.child("Familiapadre").child(uidowner).exists()){
+                            if(snapshot.child("Familiapadre").child(uidowner).getChildrenCount()<5){
+                                String[] cliente = correo.split("@");
+                                mDatabase.child("Familiapadre").child(uidowner).child(uid).setValue(cliente[0]);
+                                mDatabase.child("Familiahijos").child(uid).setValue(uidowner);
+                                Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(registrothree.this, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(i);
+                            } else {
+                                Toast.makeText( registrothree.this, "El dueño ha alcanzado el límite de cuentas vinculadas", Toast.LENGTH_SHORT).show();
+                                setitback3();
+                            }
+                        } else {
+                            String[] cliente = correo.split("@");
+                            mDatabase.child("Familiapadre").child(uidowner).child(uid).setValue(cliente[0]);
+                            mDatabase.child("Familiahijos").child(uid).setValue(uidowner);
+                            Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(registrothree.this, MainActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+                        }
 
-                    OLDneolinksboleto paqueton = new OLDneolinksboleto(uid);
-                    mDatabase.child("OLDneolinks").child(boleto).setValue(paqueton);
+                    } else{
+                        Toast.makeText( registrothree.this, "El token es invalido", Toast.LENGTH_SHORT).show();
+                        setitback3();
+                    }
+                }
 
-                    ArrayList<String> Alan = new ArrayList<>();
-                    Alan.add(boleto);
-                    OWNERitems notdead = new OWNERitems(Alan);
-                    mDatabase.child("OWNERitems").child(uid).setValue(notdead);
-
-                    Toast.makeText(registrothree.this, "Registro completado", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(registrothree.this, MainActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(i);
-                } else {
-                    Toast.makeText( registrothree.this, "Ticket invalido", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText( registrothree.this, "Problemas de Conexión", Toast.LENGTH_SHORT).show();
                     setitback3();
                 }
-            }
+            });
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText( registrothree.this, "Problemas de Conexión", Toast.LENGTH_SHORT).show();
-                setitback3();
-            }
-        });
         //mDatabase.addListenerForSingleValueEvent(orejitasTerminar);
 
         //Task validacion = mDatabase.addListenerForSingleValueEvent();

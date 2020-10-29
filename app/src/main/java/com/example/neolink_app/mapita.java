@@ -152,9 +152,14 @@ public class mapita extends Fragment implements OnMapReadyCallback {
         archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
             @Override
             public void onChanged(OWNERitems owneRitems) {
+                if(owneRitems!=null){
+                    ArrayList<String> lista = owneRitems.damelista();
+                    agregarmarkadores(lista);
+                }
+                /*
                 ArrayList<String> lista = owneRitems.damelista();
                 agregarmarkadores(lista);
-
+                 */
             }
         });
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {

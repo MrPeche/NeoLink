@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.neolink_app.adaptadores.FirebaseQueryLiveData;
@@ -894,4 +895,77 @@ public class UserInfoRepo {
         });
         return registrodata;
     }
+    public void guardartokendevinculo(String token, String uid){
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference();
+        BaseDatosNL.child("tokendevinculo").child(uid).setValue(token);
+    }
+    public LiveData<String> retrivetokendevinculo(String uid){
+        MediatorLiveData<String> tok = new MediatorLiveData<>();
+        String path = "/tokendevinculo/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        tok.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    tok.setValue(dataSnapshot.child(uid).getValue(String.class));
+                } else tok.setValue(null);
+            }
+        });
+        return tok;
+    }
+    public LiveData<Pair<Boolean,String>> validarlaposicionenlafamilia(String uid){
+        MediatorLiveData<Pair<Boolean,String>> validacion = new MediatorLiveData<>();
+        String path1 = "/OWNERitems/";
+        String path2 = "/Familiahijos/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path1);
+        DatabaseReference BaseDatosNL2 = FirebaseDatabase.getInstance().getReference(path2);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        final FirebaseQueryLiveData liveDataNL2 = new FirebaseQueryLiveData(BaseDatosNL2);
+        validacion.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    if(dataSnapshot.child(uid).exists()){
+                        validacion.setValue(new Pair<>(false,""));
+                    } else {
+                        validacion.addSource(liveDataNL2, new Observer<DataSnapshot>() {
+                            @Override
+                            public void onChanged(DataSnapshot dataSnapshot) {
+                                if(dataSnapshot!=null){
+                                    if(dataSnapshot.child(uid).exists()){
+                                        validacion.setValue(new Pair<Boolean, String>(true,dataSnapshot.child(uid).getValue(String.class)));
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+        return validacion;
+    }
+
+    public LiveData<Pair<ArrayList<String>,ArrayList<String>>> mostrarhijos(String uid){
+        MediatorLiveData<Pair<ArrayList<String>,ArrayList<String>>> hijos = new MediatorLiveData<>();
+        String path = "/Familiapadre/"+uid;
+        ArrayList<String> a = new ArrayList<>();
+        ArrayList<String> b = new ArrayList<>();
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        hijos.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    for(DataSnapshot correo:dataSnapshot.getChildren()){
+                        a.add(correo.getKey());
+                        b.add(correo.getValue(String.class));
+                    }
+                    hijos.setValue(new Pair<>(a,b));
+                }
+            }
+        });
+        return hijos;
+    }
+
 }

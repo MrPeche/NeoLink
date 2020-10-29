@@ -3,6 +3,7 @@ package com.example.neolink_app;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -54,7 +55,7 @@ public class actividadbase extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.listita,R.id.grafiquitos,R.id.mapita,R.id.registrodealertas,R.id.contactanos,R.id.mainActivity)
+                R.id.listita,R.id.grafiquitos,R.id.mapita,R.id.registrodealertas,R.id.contactanos,R.id.mainActivity,R.id.configuracioncuenta)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -91,6 +92,16 @@ public class actividadbase extends AppCompatActivity {
     void iniciarelView(){
         archi = new ViewModelProvider(this).get(MasterDrawerViewModel.class);
         archi.poneruid(dameuid());
+        archi.validaruid().observe(this, new Observer<Pair<Boolean, String>>() {
+            @Override
+            public void onChanged(Pair<Boolean, String> booleanStringPair) {
+                if(booleanStringPair!=null){
+                    if(booleanStringPair.first){
+                        archi.eshijo(booleanStringPair.second);
+                    } else archi.espadre();
+                }
+            }
+        });
         archi.getLiveNL();
         archi.Usuarioneolinks.observe(this, new Observer<OWNERitems>() {
             @Override
@@ -108,6 +119,7 @@ public class actividadbase extends AppCompatActivity {
                 }
             }
         });
+
         /*
         archi.segraboelneolink().observe(this, new Observer<Boolean>() {
             @Override

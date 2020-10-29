@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorfondito"
+    tools:context="com.greenbird.neolink_app.configuracioncuenta">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/lato_bold"
+                android:textSize="@dimen/Tamañotitulo"
+                android:text="@string/tituloconfiguracioncuenta"
+                android:textColor="@color/colorTextoNegro"
+                android:padding="@dimen/margencard"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margencard"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:textSize="@dimen/Tamañosubtitulo"
+                        android:text="@string/titulolinkeo"
+                        android:textColor="@color/colorTextoNegro" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="start"
+                            android:fontFamily="@font/lato"
+                            android:textSize="@dimen/Tamañotexto"
+                            android:text="@string/token"
+                            android:layout_weight="4.2"
+                            android:textColor="@color/colorTextoNegro"/>
+
+                        <TextView
+                            android:id="@+id/tokendelvinculo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:fontFamily="@font/lato"
+                            android:textSize="@dimen/Tamañotexto"
+                            android:layout_weight="4"
+                            android:textColor="@color/colorTextoNegro" />
+
+                        <Button
+                            android:id="@+id/botondegenerar"
+                            android:layout_width="0dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.8"
+                            android:background="@drawable/boton"
+                            android:text="@string/botongenerar"
+                            android:textSize="@dimen/Tamañotextopequeño" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/usuariosfamiliares"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

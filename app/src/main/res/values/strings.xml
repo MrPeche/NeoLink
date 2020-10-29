@@ -46,8 +46,10 @@
     //Actividad Registro 3
     <string name="TituloRegistroThree">Ingrese su ticket</string>
     <string name="MensajeRegistroThree">El ticket es un código único que viene incluido en la caja</string>
+    <string name="MensajeRegistroThree2">El ticket es generado por el dueño del neolink al que se quiere vincular</string>
     <string name="MensajeRegistroErrorThree">Código invalido</string>
-
+    <string name="radiobuttonneolink">Dueño neolink</string>
+    <string name="radiobuttonfamiliar">Vincular cuenta</string>
     <string name="appname">NeoLink +</string>
 
     //Navigation Drawer Menu
@@ -147,6 +149,11 @@
     <string name="titulodeldialogocomentario">Agregue un comentario</string>
     <string name="hintdeldialogocomentario">Ingrese su comentario</string>
 
+    //Configuracion cuenta
+    <string name="tituloconfiguracioncuenta">Configuración de la cuenta</string>
+    <string name="titulolinkeo">Manejo de cuentas vinculadas</string>
+    <string name="token">Código de vínculo:</string>
+    <string name="botongenerar">Generar</string>
 
 
 </resources>

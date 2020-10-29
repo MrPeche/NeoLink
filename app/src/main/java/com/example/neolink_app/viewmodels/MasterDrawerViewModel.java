@@ -56,6 +56,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     private UserInfoRepo appRepo;
     private manejadordedispositivo FCM;
     private String uid;
+    private String estadofamiliar;
+    private String uidreal;
     private Calendar ahora = Calendar.getInstance();
     public MutableLiveData<ArrayList<Integer>> date = new MutableLiveData<>();
     public MutableLiveData<Integer> datemode = new MutableLiveData<>();
@@ -78,7 +80,18 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public void poneruid(String uid){
         this.uid = uid;
+        this.uidreal = uid;
         FCM.guardardispositivo(uid);
+    }
+    public LiveData<Pair<Boolean,String>> validaruid(){
+        return appRepo.validarlaposicionenlafamilia(this.uid);
+    }
+    public void espadre(){
+        this.estadofamiliar="padre";
+    }
+    public void eshijo(String uidpadre){
+        this.estadofamiliar="hijo";
+        this.uid = uidpadre;
     }
     public void getLiveNL(){
         Usuarioneolinks = appRepo.dameneolinks(uid);
@@ -415,6 +428,14 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public LiveData<notihist> funcionderecoleccionderegistro(String neolink){
         return appRepo.fetchregistro(neolink,datetoday.getValue().get(0),datetoday.getValue().get(1));
+    }
+    public void guardartokenparavincular(String token){ appRepo.guardartokendevinculo(token,this.uid); }
+    public LiveData<String> tokendevinculoanterior(){
+        return appRepo.retrivetokendevinculo(this.uid);
+    }
+
+    public LiveData<Pair<ArrayList<String>,ArrayList<String>>> mostrarhijos(){
+        return appRepo.mostrarhijos(this.uid);
     }
 
 }

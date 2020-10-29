@@ -25,6 +25,7 @@
         android:checkableBehavior="single">
         
         <item
+            android:id="@+id/configuracioncuenta"
             android:title = "@string/configuracion"/>
     </group>
 
