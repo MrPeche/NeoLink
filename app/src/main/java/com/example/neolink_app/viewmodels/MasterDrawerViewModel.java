@@ -55,6 +55,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public final MutableLiveData<String> comentarionuevo = new MutableLiveData<>();
     private UserInfoRepo appRepo;
     private manejadordedispositivo FCM;
+    private MutableLiveData<String> puid = new MutableLiveData<>();
     private String uid;
     private String estadofamiliar;
     private String uidreal;
@@ -81,6 +82,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public void poneruid(String uid){
         this.uid = uid;
         this.uidreal = uid;
+        this.puid.setValue(uid);
         FCM.guardardispositivo(uid);
     }
     public LiveData<Pair<Boolean,String>> validaruid(){
@@ -92,9 +94,17 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public void eshijo(String uidpadre){
         this.estadofamiliar="hijo";
         this.uid = uidpadre;
+        this.puid.setValue(uidpadre);
     }
     public void getLiveNL(){
-        Usuarioneolinks = appRepo.dameneolinks(uid);
+        //Usuarioneolinks = appRepo.dameneolinks(uid);
+        Usuarioneolinks = Transformations.switchMap(puid, new Function<String, LiveData<OWNERitems>>() {
+            @Override
+            public LiveData<OWNERitems> apply(String input) {
+                return appRepo.dameneolinks(input);
+            }
+        });
+
     }
     /*
     public void getlistaNLNN(OWNERitems prelista){
