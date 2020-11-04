@@ -12,7 +12,7 @@
     android:clickable="true"
     android:focusable="true"
     app:cardUseCompatPadding="true"
-    android:layout_margin="8dp"
+    android:layout_margin="4dp"
     android:theme="@style/cardview"
     style="@style/Widget.MaterialComponents.CardView"
     app:cardPreventCornerOverlap="false">

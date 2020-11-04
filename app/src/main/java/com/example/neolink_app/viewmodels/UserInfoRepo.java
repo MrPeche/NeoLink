@@ -499,6 +499,7 @@ public class UserInfoRepo {
                 } else childUpdates.put("/State/Limits/Port1/k/V"+(i-2)+"/",paquetedesubida);
             }
         }
+        childUpdates.put("/State/NewConf/",1);
         BaseDatosNL.updateChildren(childUpdates);
     }
     private double generarlimite(boolean limiteb,String valor,double valororiginal){

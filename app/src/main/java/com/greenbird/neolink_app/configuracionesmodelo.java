@@ -35,7 +35,7 @@ public class configuracionesmodelo extends Fragment {
     private EditText tiempoentredatos;
     private SwitchCompat portRQ;
     private SwitchCompat gpsRQ;
-    private TextView nombredelwifi;
+    //private TextView nombredelwifi;
     private TextView firmware;
     private TextView Gps;
     private TextView lastupdate;
@@ -120,7 +120,7 @@ public class configuracionesmodelo extends Fragment {
         tiempoentredatos = view.findViewById(R.id.tiempoentredatos);
         portRQ = view.findViewById(R.id.portrq);
         gpsRQ = view.findViewById(R.id.gpsrq);
-        nombredelwifi = view.findViewById(R.id.nombredelwifi);
+        //nombredelwifi = view.findViewById(R.id.nombredelwifi);
         firmware = view.findViewById(R.id.firmware);
         Gps = view.findViewById(R.id.gps);
         lastupdate = view.findViewById(R.id.lastupdate);
@@ -268,7 +268,7 @@ public class configuracionesmodelo extends Fragment {
         if(object.BEEP_EN!=0){
             beepdelsistema.setChecked(true);
         } else beepdelsistema.setChecked(false);
-        nombredelwifi.setText(object.WIFI_SSID);
+        //nombredelwifi.setText(object.WIFI_SSID);
         tiempoentredatos.setText(desegundosaminutos(object.SLEEP_TIME));
         if(object.PORT_RQ!=0){
             portRQ.setChecked(true);
@@ -278,7 +278,7 @@ public class configuracionesmodelo extends Fragment {
         } else gpsRQ.setChecked(false);
     }
     private void arrangedataState(state object){
-        firmware.setText(String.valueOf(object.Firmware));
+        firmware.setText(object.Firmware);
         String gps = object.GPS.LAT+","+object.GPS.LONG;
         Gps.setText(gps);
         lastupdate.setText(arrangelastupload(object.LastUpload));

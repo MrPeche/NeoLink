@@ -172,34 +172,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:weightSum="3"
-                        android:layout_marginVertical="@dimen/nav_header_vertical_spacing"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/lato"
-                            android:textSize="@dimen/Tamañotexto"
-                            android:textColor="@color/colorTextoGris"
-                            android:text="@string/Wifi_SSID" />
-
-                        <TextView
-                            android:id="@+id/nombredelwifi"
-                            android:gravity="end"
-                            android:layout_weight="2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lato"
-                            android:textColor="@color/colorTextoGris"
-                            android:textSize="@dimen/Tamañotexto" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
                         android:weightSum="2"
                         android:layout_marginVertical="@dimen/nav_header_vertical_spacing"
                         android:orientation="horizontal">

@@ -15,6 +15,7 @@ public class graficolabelgenerator extends ValueFormatter {
     @Override
     public String getAxisLabel(float value, AxisBase axis) {
         int v = (int) value;
+        if(v==-1) v=1;
         if(v < label.size()){
             return label.get(v);
         } else return "";
