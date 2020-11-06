@@ -141,7 +141,7 @@
     <string name="registroeditar">Boton para ediitar</string>
     <string name="registroborrar">boton para borrar</string>
     //contactus
-    <string name="paginaweb">www.greenbird.pe/</string>
+    <string name="paginaweb"><a href="https://www.greenbird.pe/">www.greenbird.pe/</a></string>
     <string name="facebook">NeoLink IoT</string>
     <string name="correo">team@greenbird.pe</string>
 

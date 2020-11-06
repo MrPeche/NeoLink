@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
+import com.example.neolink_app.adaptadores.MarkerLineChartDefault;
 import com.github.mikephil.charting.charts.LineChart;
 
 public class chartlinealparadapter extends LineChart {
@@ -35,7 +36,16 @@ public class chartlinealparadapter extends LineChart {
             }else{
                 handled = super.onTouchEvent(event);
             }
-        }else{
+        }else if(isShowingMarker() && this.getMarker() instanceof MarkerLineChartDefault){
+            MarkerLineChartDefault markerView = (MarkerLineChartDefault) this.getMarker();
+            Rect rect = new Rect((int)markerView.drawingPosX,(int)markerView.drawingPosY,(int)markerView.drawingPosX + markerView.getWidth(), (int)markerView.drawingPosY + markerView.getHeight());
+            if (rect.contains((int) event.getX(),(int) event.getY())) {
+                // touch on marker -> dispatch touch event in to marker
+                markerView.dispatchTouchEvent(event);
+            }else{
+                handled = super.onTouchEvent(event);
+            }
+        } else{
             handled = super.onTouchEvent(event);
         }
         return handled;

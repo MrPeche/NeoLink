@@ -104,7 +104,6 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 return appRepo.dameneolinks(input);
             }
         });
-
     }
     /*
     public void getlistaNLNN(OWNERitems prelista){
@@ -446,6 +445,9 @@ public class MasterDrawerViewModel extends AndroidViewModel {
 
     public LiveData<Pair<ArrayList<String>,ArrayList<String>>> mostrarhijos(){
         return appRepo.mostrarhijos(this.uid);
+    }
+    public void editarmensajes(String fecha,String hora, String contenido){
+        appRepo.editarmensaje(fecha,hora,contenido);
     }
 
 }

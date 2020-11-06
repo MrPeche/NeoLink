@@ -67,10 +67,6 @@ public class MarkerLineChartAdapter extends MarkerView {
         this.neolink = neolink;
         this.sensor = sensor;
         this.var = var;
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        lp.setMargins(100,0,100,0);
 
     }
 
@@ -102,6 +98,7 @@ public class MarkerLineChartAdapter extends MarkerView {
 
         }
         texto2 = texto3 + ": "+ String.valueOf(e.getY());
+        final String puertotexto = texto3;
         tvContentT.setText(texto2);
         tvContent.setText(texto1);
 
@@ -113,7 +110,7 @@ public class MarkerLineChartAdapter extends MarkerView {
                 if(timelabels!=null){
                     String[] time =timelabels.get((int) e.getX()).split("\n");
                     //String a = neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var;
-                    archi.avizarquehayuncomentarionuevo(neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var);
+                    archi.avizarquehayuncomentarionuevo(neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+puertotexto+"5PORT5"+sensor+"5TYP5"+var);
                 }
             }
         });

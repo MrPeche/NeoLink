@@ -108,8 +108,15 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     private String[] decodificador(String line){
         String[] neolink = line.split("5HEISSEN5");  //neolink + lodemas
         String[] time = neolink[1].split("5ZEIT5");  //fecha + hora + lodemas
-        String[] tipo = time[2].split("5TYP5");      //sensor + variable + mensaje
-        return new String[] {neolink[0],time[0],time[1],tipo[0],tipo[1],tipo[2]};
+        if(time[2].contains("5PORT5")){
+            String[] puerto = time[2].split("5PORT5");
+            String[] tipo = puerto[1].split("5TYP5");
+            return new String[] {neolink[0],time[0],time[1],tipo[0],tipo[1],tipo[2],puerto[0]};
+        } else {
+            String[] tipo = time[2].split("5TYP5"); //sensor + variable + mensaje
+            return new String[] {neolink[0],time[0],time[1],tipo[0],tipo[1],tipo[2]};
+        }
+        //String[] tipo = tipo[];
     }
     public static class adaptadorderegistroViewHolder extends RecyclerView.ViewHolder{
         public TextView contenidoitem;

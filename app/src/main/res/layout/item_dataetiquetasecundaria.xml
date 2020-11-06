@@ -7,15 +7,20 @@
     android:gravity="center|top">
 
     <LinearLayout
+        android:id="@+id/lletiquetasecundaria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:orientation="vertical">
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="2dp">
 
         <TextView
             android:id="@+id/datasecundaria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:fontFamily="@font/lato"
             android:textSize="@dimen/Tamañotextopequeño" />
 

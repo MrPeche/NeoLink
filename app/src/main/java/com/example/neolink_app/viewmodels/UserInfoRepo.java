@@ -968,5 +968,11 @@ public class UserInfoRepo {
         });
         return hijos;
     }
+    public void editarmensaje(String fecha,String hora, String contenido){
+        String[] neo = contenido.split("5HEISSEN5");
+        String[] indices = fecha.split("/");
+        String path = "/"+neo[0]+"/"+indices[2]+"/"+indices[1]+"/"+indices[0]+"/"+hora;
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+    }
 
 }
