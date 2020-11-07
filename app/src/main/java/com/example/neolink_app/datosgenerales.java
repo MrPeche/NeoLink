@@ -41,6 +41,7 @@ public class datosgenerales extends Fragment {
     private TextView titulo;
     private Calendar ahora = Calendar.getInstance();
     private MasterDrawerViewModel archi;
+    /*
     private CardView CVsensor1;
     private TextView titulosensor;
     //private TextView humedaddelsuelo;
@@ -50,6 +51,8 @@ public class datosgenerales extends Fragment {
     private TextView titulosensor2;
     private TextView potencialmatricial;
     private TextView temperatura;
+
+     */
     private CardView CVsensor3;
     private TextView voltajesolar;
     private TextView temperaturainterna;
@@ -85,15 +88,18 @@ public class datosgenerales extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         titulo = view.findViewById(R.id.tituloDG);
+        /*
         CVsensor1 = view.findViewById(R.id.cardView1);
         titulosensor = view.findViewById(R.id.titulosensor1);
-        //humedaddelsuelo = view.findViewById(R.id.primerdato);
+        humedaddelsuelo = view.findViewById(R.id.primerdato);
         temperaturadelsuelo = view.findViewById(R.id.segundodato);
         ConductividadEC = view.findViewById(R.id.tercerdato);
         CVsensor2 = view.findViewById(R.id.cardView2);
         titulosensor2 = view.findViewById(R.id.titulo2principal);
         potencialmatricial = view.findViewById(R.id.primer2dato);
         temperatura = view.findViewById(R.id.segundo2dato);
+
+         */
         CVsensor3 = view.findViewById(R.id.cardView3);
         voltajesolar = view.findViewById(R.id.cuarto3dato);
         temperaturainterna = view.findViewById(R.id.sexto3dato);
@@ -140,21 +146,21 @@ public class datosgenerales extends Fragment {
         });
     }
     private void startupstate(){
-        CVsensor1.setVisibility(View.GONE);
-        CVsensor2.setVisibility(View.GONE);
+        //CVsensor1.setVisibility(View.GONE);
+        //CVsensor2.setVisibility(View.GONE);
         CVsensor3.setVisibility(View.GONE);
     }
     private void arrangesensor1(HorasG obj){
         dataPuertoG data = dameelultimodato(obj);
-        CVsensor1.setVisibility(View.VISIBLE);
+        //CVsensor1.setVisibility(View.VISIBLE);
         String tit = "Sensor "+data.dameDepth();
-        titulosensor.setText(tit);
+        //titulosensor.setText(tit);
         //String humedad = (Math.floor(data.dameV1()*100)/100) + "raw";
         //humedaddelsuelo.setText(humedad);
         String temperatura = (Math.floor(data.dameV2()*100)/100) + "°C";
-        temperaturadelsuelo.setText(temperatura);
+        //temperaturadelsuelo.setText(temperatura);
         String conductivida = (Math.floor(data.dameV3()*100)/100) + "uS/cm";
-        ConductividadEC.setText(conductivida);
+        //ConductividadEC.setText(conductivida);
     }
     private dataPuertoG dameelultimodato(HorasG obj){
         MinutosG paquete = obj.dameminutos(obj.dametamanoG()-1);
@@ -163,13 +169,13 @@ public class datosgenerales extends Fragment {
     }
     private void arrangesensor2(Horas obj){
         dataPuerto data = dameultimodatoK(obj);
-        CVsensor2.setVisibility(View.VISIBLE);
+        //CVsensor2.setVisibility(View.VISIBLE);
         String tit = "Sensor "+data.Depth;
-        titulosensor2.setText(tit);
+        //titulosensor2.setText(tit);
         String PM = (Math.floor(data.dameV1()*100)/100) + "kPa";
-        potencialmatricial.setText(PM);
+        //potencialmatricial.setText(PM);
         String temp = (Math.floor(data.dameV2()*100)/100) + "°C";
-        temperatura.setText(temp);
+        //temperatura.setText(temp);
     }
     private dataPuerto dameultimodatoK(Horas obj){
         Minutos paquete = obj.dameminutos(obj.dametamano()-1);
@@ -191,7 +197,7 @@ public class datosgenerales extends Fragment {
         voltajebateria.setText(Bat);
         String tempint = (Math.floor(data.giveiT()*100)/100)+"°C";
         temperaturainterna.setText(tempint);
-        String alti = (Math.floor(data.giveAL()*100)/100)+"m  s.n.m";
+        String alti = (Math.floor(data.giveAL()*100)/100)+"m s.n.m";
         altitud.setText(alti);
     }
     private statePK dameultimodatostate(horasstate obj){

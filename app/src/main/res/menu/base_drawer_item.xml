@@ -10,14 +10,15 @@
             android:id="@+id/mapita"
             android:title="@string/mapa" />
         <item
-            android:id="@+id/listita"
-            android:title="@string/lista" />
-        <item
             android:id="@+id/grafiquitos"
             android:title="@string/graficos" />
         <item
             android:id="@+id/registrodealertas"
             android:title="@string/notificaciones" />
+        <item
+            android:id="@+id/listita"
+            android:title="@string/lista" />
+
     </group>
 
     <group

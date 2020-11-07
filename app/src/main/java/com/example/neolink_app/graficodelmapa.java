@@ -12,10 +12,13 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
+import com.example.neolink_app.adaptadores.MarkerLineChartDefault;
 import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.adaptadores.labelpersonalizadoX;
+import com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.clasesparaformargraficos.fulldatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.gdatapack;
@@ -49,18 +52,18 @@ public class graficodelmapa extends Fragment {
     private CardView cvcontenidovolumetricodelagua;
     private Calendar ahora = Calendar.getInstance();
     private MasterDrawerViewModel archi;
-    private LineChart grafico1;
-    private LineChart grafico2;
+    private chartlinealparadapter grafico1;
+    private chartlinealparadapter grafico2;
     private LineChart grafico3;
-    private LineChart graficopresionbarometrica;
-    private LineChart graficohumedadrelativa;
-    private LineChart graficotemperaturavulvoseco;
+    private chartlinealparadapter graficopresionbarometrica;
+    private chartlinealparadapter graficohumedadrelativa;
+    private chartlinealparadapter graficotemperaturavulvoseco;
     //private LineChart graficoMPhumedaddelsuelo;
-    private LineChart graficoMPtemperaturadelsuelo;
-    private LineChart graficoMPconductividadelectrica;
-    private LineChart graficorosadevientos;
-    private LineChart graficoconductividadelectricadelporo;
-    private LineChart graficocontenidovolumetricodelagua;
+    private chartlinealparadapter graficoMPtemperaturadelsuelo;
+    private chartlinealparadapter graficoMPconductividadelectrica;
+    private chartlinealparadapter graficorosadevientos;
+    private chartlinealparadapter graficoconductividadelectricadelporo;
+    private chartlinealparadapter graficocontenidovolumetricodelagua;
     private int alpha = 170;
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
@@ -132,7 +135,15 @@ public class graficodelmapa extends Fragment {
         propiedadesgraficoconductividaddeldelsuelo();
 
         startposition();
-
+        archi.haycomentarionuevo().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s!=null){
+                    Navigation.findNavController(getView()).navigate(graficodelmapaDirections.actionGraficodelmapaToDialogodeagregarcomentarios(s));
+                    archi.vaciarelavizodecomentarionuevo();
+                }
+            }
+        });
         archi.masterdatedatapackage(nombre).observe(getViewLifecycleOwner(), new Observer<InfoParaGraficos>() {
             @Override
             public void onChanged(InfoParaGraficos infoParaGraficos) {
@@ -480,7 +491,7 @@ public class graficodelmapa extends Fragment {
         xaxispm.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
         xaxispm.setGranularityEnabled(true);
         //xaxispm.setLabelRotationAngle(-45f);
-        MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first);
+        MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first,pack.sacarloslabels(),nombre,"k","V1",archi);
         grafico1.setMarker(adapterpm);
         grafico1.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico1.setExtraLeftOffset(OFFSETGRAFPHLEFT);
@@ -496,7 +507,7 @@ public class graficodelmapa extends Fragment {
         xAxistemp.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
         xAxistemp.setGranularityEnabled(true);
         //xAxistemp.setLabelRotationAngle(-45f);
-        MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first);
+        MarkerLineChartAdapter adaptertemp = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().second,pack.sacareltemp().first,pack.sacarloslabels(),nombre,"k","V2",archi);
         grafico2.setMarker(adaptertemp);
         grafico2.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico2.setExtraLeftOffset(OFFSETGRAFPHLEFT);
@@ -516,6 +527,7 @@ public class graficodelmapa extends Fragment {
         graficohumedadrelativa.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficohumedadrelativa.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficohumedadrelativa.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        graficohumedadrelativa.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","RH",archi));
         graficohumedadrelativa.invalidate();
         //graficohumedadrelativa.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         graficohumedadrelativa.fitScreen();
@@ -526,6 +538,7 @@ public class graficodelmapa extends Fragment {
         XaxisPB.setPosition(XAxis.XAxisPosition.BOTTOM);
         XaxisPB.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
         XaxisPB.setGranularityEnabled(true);
+        graficopresionbarometrica.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","BP",archi));
         graficopresionbarometrica.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficopresionbarometrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficopresionbarometrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -547,6 +560,7 @@ public class graficodelmapa extends Fragment {
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis3.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
         xaxis3.setGranularityEnabled(true);
+        grafico3.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria));
         grafico3.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico3.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         grafico3.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -560,6 +574,7 @@ public class graficodelmapa extends Fragment {
         XaxisTVS.setPosition(XAxis.XAxisPosition.BOTTOM);
         XaxisTVS.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
         XaxisTVS.setGranularityEnabled(true);
+        graficotemperaturavulvoseco.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","dT",archi));
         graficotemperaturavulvoseco.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficotemperaturavulvoseco.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficotemperaturavulvoseco.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -573,6 +588,7 @@ public class graficodelmapa extends Fragment {
         XaxisRV.setPosition(XAxis.XAxisPosition.BOTTOM);
         XaxisRV.setValueFormatter(new graficolabelgenerator(pack.sacaraxislabels()));
         XaxisRV.setGranularityEnabled(true);
+        graficorosadevientos.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","WS",archi));
         graficorosadevientos.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficorosadevientos.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficorosadevientos.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
@@ -606,7 +622,7 @@ public class graficodelmapa extends Fragment {
         graficoMPtemperaturadelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoMPtemperaturadelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoMPtemperaturadelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first);
+        MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first,pack.sacarlabels(),nombre,"g","V2",archi);
         graficoMPtemperaturadelsuelo.setMarker(adapterTS);
         graficoMPtemperaturadelsuelo.invalidate();
         //graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -621,7 +637,7 @@ public class graficodelmapa extends Fragment {
         graficoMPconductividadelectrica.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoMPconductividadelectrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoMPconductividadelectrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterCS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividad(),pack.sacarlaconductividad().first);
+        MarkerLineChartAdapter adapterCS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividad(),pack.sacarlaconductividad().first,pack.sacarlabels(),nombre,"g","V3",archi);
         graficoMPconductividadelectrica.setMarker(adapterCS);
         graficoMPconductividadelectrica.invalidate();
         //graficoMPconductividadelectrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -636,7 +652,7 @@ public class graficodelmapa extends Fragment {
         graficoconductividadelectricadelporo.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficoconductividadelectricadelporo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoconductividadelectricadelporo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterCSP = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividaddelporo(),pack.sacarlaconductividaddelporo().first);
+        MarkerLineChartAdapter adapterCSP = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividaddelporo(),pack.sacarlaconductividaddelporo().first,pack.sacarlabels(),nombre,"g","PoreCer",archi);
         graficoconductividadelectricadelporo.setMarker(adapterCSP);
         graficoconductividadelectricadelporo.invalidate();
         //graficoconductividadelectricadelporo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -651,7 +667,7 @@ public class graficodelmapa extends Fragment {
         graficocontenidovolumetricodelagua.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficocontenidovolumetricodelagua.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficocontenidovolumetricodelagua.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
-        MarkerLineChartAdapter adapterCVA = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizcontenidovolumetricodelagua(),pack.sacarelcontenidovolumetricodelagua().first);
+        MarkerLineChartAdapter adapterCVA = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizcontenidovolumetricodelagua(),pack.sacarelcontenidovolumetricodelagua().first,pack.sacarlabels(),nombre,"g","vwc",archi);
         graficocontenidovolumetricodelagua.setMarker(adapterCVA);
         graficocontenidovolumetricodelagua.invalidate();
         graficocontenidovolumetricodelagua.setVisibleXRangeMaximum(MAX_DATAVISIBLE);

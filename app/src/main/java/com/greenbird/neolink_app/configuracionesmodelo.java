@@ -120,6 +120,7 @@ public class configuracionesmodelo extends Fragment {
         tiempoentredatos = view.findViewById(R.id.tiempoentredatos);
         portRQ = view.findViewById(R.id.portrq);
         gpsRQ = view.findViewById(R.id.gpsrq);
+        gpsRQ.setVisibility(View.GONE);
         //nombredelwifi = view.findViewById(R.id.nombredelwifi);
         firmware = view.findViewById(R.id.firmware);
         Gps = view.findViewById(R.id.gps);

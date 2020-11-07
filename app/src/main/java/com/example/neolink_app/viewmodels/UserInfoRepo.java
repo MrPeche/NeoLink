@@ -467,10 +467,10 @@ public class UserInfoRepo {
         });
         return configuracionconfvalue;
     }
-    public void guardarelmensaje(String neolink,int ano,int mes,int dia,int hora,int minutos, String encodemessage){
+    public void guardarelmensaje(String neolink,int ano,int mes,int dia,int hora,int minutos,int secs, String encodemessage){
         String path = "/NeoLink/"+ neolink + "/DataSet/NotiHist/";
         final DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference(path);
-        basecompleta.child(operacionfecha(ano)).child(operacionfecha(mes)).child(operacionfecha(dia)).child(operacionfecha(hora)+":"+operacionfecha(minutos)).setValue(encodemessage);
+        basecompleta.child(operacionfecha(ano)).child(operacionfecha(mes)).child(operacionfecha(dia)).child(operacionfecha(hora)+":"+operacionfecha(minutos)+":"+operacionfecha(secs)).setValue(encodemessage);
     }
     public void borrarmensaje(String neolink,String ano,String mes,String dia,String hora){
         String path = "/NeoLink/"+ neolink + "/DataSet/NotiHist/";
@@ -971,8 +971,9 @@ public class UserInfoRepo {
     public void editarmensaje(String fecha,String hora, String contenido){
         String[] neo = contenido.split("5HEISSEN5");
         String[] indices = fecha.split("/");
-        String path = "/"+neo[0]+"/"+indices[2]+"/"+indices[1]+"/"+indices[0]+"/"+hora;
+        String path = "/NeoLink/"+neo[0]+"/DataSet/NotiHist/"+indices[2]+"/"+indices[1]+"/"+indices[0]+"/"+hora;
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+        BaseDatosNL.setValue(contenido);
     }
 
 }

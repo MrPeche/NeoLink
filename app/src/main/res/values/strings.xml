@@ -113,8 +113,8 @@
     <string name="Titutloconfiguraciones">Configuraciones</string>
     <string name="Generales">Configuraciones Generales</string>
     <string name="sonido">Beep del sistema</string>
-    <string name="tiempoentredatos">Tiempo entre toma de datos (min)</string>
-    <string name="portRQ">Pedir actualización de los Puertos</string>
+    <string name="tiempoentredatos">Tiempo de muestreo (min)</string>
+    <string name="portRQ">Pedir actualización de los puertos</string>
     <string name="gpsRQ">Pedir actualización del GPS</string>
     <string name="ConfiguracionesEspecificas">Información del Dispositivo</string>
     <string name="Wifi_pss">Password del WIFI</string>
@@ -144,16 +144,24 @@
     <string name="paginaweb"><a href="https://www.greenbird.pe/">www.greenbird.pe/</a></string>
     <string name="facebook">NeoLink IoT</string>
     <string name="correo">team@greenbird.pe</string>
+    <string name="telefono">(+51) 983–569–250</string>
+    <string name="direccion">LA LIBERTAD\nLos Corales 289, Trujillo 13011</string>
+    <string name="direccion2">LIMA\nCalle Cmdt. Ladislao Espinar 250 San Miguel</string>
 
     //Dialogagragarcomentario
     <string name="titulodeldialogocomentario">Agregue un comentario</string>
     <string name="hintdeldialogocomentario">Ingrese su comentario</string>
+
+    //Dialogoeditarcomentario
+    <string name="titutlodeldialogocomentarioparaeditar">Edite su comentario</string>
 
     //Configuracion cuenta
     <string name="tituloconfiguracioncuenta">Configuración de la cuenta</string>
     <string name="titulolinkeo">Manejo de cuentas vinculadas</string>
     <string name="token">Código de vínculo:</string>
     <string name="botongenerar">Generar</string>
+
+
 
 
 </resources>

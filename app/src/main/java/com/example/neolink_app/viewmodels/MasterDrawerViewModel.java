@@ -53,6 +53,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public final MutableLiveData<String> datechoosen = new MutableLiveData<>();
     public final MutableLiveData<String> nuevoNeolink = new MutableLiveData<>();
     public final MutableLiveData<String> comentarionuevo = new MutableLiveData<>();
+    public final MutableLiveData<String[]> editarcomentario= new MutableLiveData<>();
     private UserInfoRepo appRepo;
     private manejadordedispositivo FCM;
     private MutableLiveData<String> puid = new MutableLiveData<>();
@@ -397,7 +398,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         heute.add(ahorita.get(Calendar.DAY_OF_MONTH));
         heute.add(ahorita.get(Calendar.HOUR_OF_DAY));
         heute.add(ahorita.get(Calendar.MINUTE));
-        appRepo.guardarelmensaje(neolink,heute.get(0),heute.get(1),heute.get(2),heute.get(3),heute.get(4),mensaje);
+        heute.add(ahorita.get(Calendar.SECOND));
+        appRepo.guardarelmensaje(neolink,heute.get(0),heute.get(1),heute.get(2),heute.get(3),heute.get(4),heute.get(5),mensaje);
     }
     public void borrarcomentario(String neolink,String ano,String mes,String dia,String hora){
         appRepo.borrarmensaje(neolink,ano,mes,dia,hora);
@@ -445,6 +447,15 @@ public class MasterDrawerViewModel extends AndroidViewModel {
 
     public LiveData<Pair<ArrayList<String>,ArrayList<String>>> mostrarhijos(){
         return appRepo.mostrarhijos(this.uid);
+    }
+    public LiveData<String[]> dialogoeditarmensaje(){
+        return editarcomentario;
+    }
+    public void dialogoeditarmensajesubir(String fecha,String hora,String contenido){
+        editarcomentario.setValue(new String[]{fecha, hora, contenido});
+    }
+    public void dilaogoeditarmensajeborrar(){
+        editarcomentario.setValue(null);
     }
     public void editarmensajes(String fecha,String hora, String contenido){
         appRepo.editarmensaje(fecha,hora,contenido);

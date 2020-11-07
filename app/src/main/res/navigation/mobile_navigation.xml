@@ -95,6 +95,9 @@
         <argument
             android:name="nombreNLG"
             app:argType="string" />
+        <action
+            android:id="@+id/action_graficodelmapa_to_dialogodeagregarcomentarios"
+            app:destination="@id/dialogodeagregarcomentarios" />
     </fragment>
     <dialog
         android:id="@+id/dialogfechagraf"
@@ -114,7 +117,11 @@
         android:id="@+id/registrodealertas"
         android:name="com.greenbird.neolink_app.registrodealertas"
         android:label="fragment_registrodealertas"
-        tools:layout="@layout/fragment_registrodealertas" />
+        tools:layout="@layout/fragment_registrodealertas" >
+        <action
+            android:id="@+id/action_registrodealertas_to_dialogoeditarcomentario"
+            app:destination="@id/dialogoeditarcomentario" />
+    </fragment>
     <fragment
         android:id="@+id/contactanos"
         android:name="com.greenbird.neolink_app.contactanos"
@@ -139,5 +146,20 @@
         android:name="com.greenbird.neolink_app.configuracioncuenta"
         android:label="fragment_configuracioncuenta"
         tools:layout="@layout/fragment_configuracioncuenta" />
+    <dialog
+        android:id="@+id/dialogoeditarcomentario"
+        android:name="com.greenbird.neolink_app.dialogoeditarcomentario"
+        android:label="fragment_dialogoeditarcomentario"
+        tools:layout="@layout/fragment_dialogoeditarcomentario" >
+        <argument
+            android:name="fecha"
+            app:argType="string" />
+        <argument
+            android:name="hora"
+            app:argType="string" />
+        <argument
+            android:name="contenido"
+            app:argType="string" />
+    </dialog>
 
 </navigation>

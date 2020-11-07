@@ -10,6 +10,7 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,6 +73,14 @@ public class registrodealertas extends Fragment {
                 if(notihist!=null){
                     adapter = new adaptadorderegistro(notihist,dialogodeborrado,archi);
                     rv.setAdapter(adapter);
+                }
+            }
+        });
+        archi.dialogoeditarmensaje().observe(getViewLifecycleOwner(), new Observer<String[]>() {
+            @Override
+            public void onChanged(String[] strings) {
+                if(strings!=null){
+                    Navigation.findNavController(getView()).navigate(registrodealertasDirections.actionRegistrodealertasToDialogoeditarcomentario(strings[0],strings[1],strings[2]));
                 }
             }
         });

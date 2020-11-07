@@ -46,7 +46,7 @@
                         android:text="@string/sensorPotencialMatricial"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMP1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -77,7 +77,7 @@
                         android:text="@string/sensorTemperatura"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMP2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -107,7 +107,7 @@
                         android:text="@string/Contenidovolumetricodelagua"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPcontenidovolumetricodelagua"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -137,7 +137,7 @@
                         android:text="@string/Conductividaddelsuelo"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPconductividadelectrica"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -167,7 +167,7 @@
                         android:text="@string/ConductividadElectricadelporo"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPconductividadelectricadelporo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -197,7 +197,7 @@
                         android:text="@string/Temperaturadelsuelo"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPtemperaturadelsuelo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -227,7 +227,7 @@
                         android:text="@string/Presionbarometrica"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPPresionBarometrica"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -257,7 +257,7 @@
                         android:text="@string/Humedadrelativa"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPHumedadRelativa"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -287,7 +287,7 @@
                         android:text="@string/Temperaturadevulvoseco"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPtemperaturavulvoseco"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -317,7 +317,7 @@
                         android:text="@string/Rosadevientos"
                         android:textSize="@dimen/Tamañotexto" />
 
-                    <com.github.mikephil.charting.charts.LineChart
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMProsadevientos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />

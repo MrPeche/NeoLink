@@ -22,6 +22,12 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     ArrayList<String> contenido;
     ArrayList<String> fecha;
     ArrayList<String> tiempo;
+    String[] variablesg = {"ApPer","Depth","PoreCE","PorePer","V1","V2","V3","VWC"};
+    String[] variablesk = {"V1","V2"};
+    String[] variablesstate = {"AL","BP","BV","dT","iT","OP_TIME","RH","SV","WD","WS"};
+    String[] variablesrealesg = {"","","Conductividad eléctrica del poro","Permibilidad del poro","Humedad del suelo","Temperatura del suelo","Conductividad eléctrica","Contenido eléctrico del suelo"};
+    String[] variablesrealesk = {"Potencial Mátricual","Temperatura"};
+    String[] variablesrealesstate = {"Altitud","Presión Barométrica","Voltaje","Temperatura de bulbo seco","Tiempo de operación","Humedad relativa","Voltaje solar","Dirección del viento","Velocidad del viento"};
     private MasterDrawerViewModel archi;
     private AlertDialog.Builder avizodeborrado;
     public adaptadorderegistro(notihist pack){
@@ -75,12 +81,13 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
         holder.fechaitem.setText(fechaunitaria);
         holder.contenidoitem.setText(contenidounitario[5]);
         holder.headercontenidoitem.setText(header);
-        holder.editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int a = 0;
-            }
-        });
+        String second = "";
+        if(contenidounitario.length==6){
+            second = translateelvalor(contenidounitario[3],contenidounitario[4]);
+        } else {
+            second = contenidounitario[6] + " " + translateelvalor(contenidounitario[3],contenidounitario[4]);
+        }
+        holder.secondheaderitem.setText(second);
         holder.borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +107,30 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
                 avizodeborrado.show();
             }
         });
+        holder.editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                archi.dialogoeditarmensajesubir(fechaunitaria,tiempounitario,contenido.get(position));
+            }
+        });
+    }
+    private String translateelvalor(String sensor,String variables){
+        if(sensor.equals("g")){
+            return encontrarreal(variablesg,variablesrealesg,variables);
+        } else if(sensor.equals("k")){
+            return encontrarreal(variablesk,variablesrealesk,variables);
+        } else if(sensor.equals("state")){
+            return encontrarreal(variablesstate,variablesrealesstate,variables);
+        } else return variables;
+    }
+    private String encontrarreal(String[] variables,String[] variablesreales,String var){
+        String resultado = var;
+        for(int i=0;i<variables.length;i++){
+            if(variables[i].equals(var)){
+                resultado=variablesreales[i];
+            }
+        }
+        return resultado;
     }
     @Override
     public int getItemCount() {
@@ -121,6 +152,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     public static class adaptadorderegistroViewHolder extends RecyclerView.ViewHolder{
         public TextView contenidoitem;
         public TextView headercontenidoitem;
+        public TextView secondheaderitem;
         public TextView fechaitem;
         public TextView tiempoitem;
         public ImageView editar;
@@ -131,6 +163,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
             fechaitem = itemView.findViewById(R.id.fecha);
             tiempoitem = itemView.findViewById(R.id.tiempo);
             headercontenidoitem = itemView.findViewById(R.id.headerregistrocontenido);
+            secondheaderitem = itemView.findViewById(R.id.secondheaderregistrocontenido);
             editar = itemView.findViewById(R.id.registroeditar);
             borrar = itemView.findViewById(R.id.registroborrar);
         }
