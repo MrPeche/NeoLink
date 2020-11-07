@@ -22,7 +22,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     ArrayList<String> contenido;
     ArrayList<String> fecha;
     ArrayList<String> tiempo;
-    String[] variablesg = {"ApPer","Depth","PoreCE","PorePer","V1","V2","V3","VWC"};
+    String[] variablesg = {"ApPer","Depth","PoreCE","PorePer","V1","V2","V3","vwc"};
     String[] variablesk = {"V1","V2"};
     String[] variablesstate = {"AL","BP","BV","dT","iT","OP_TIME","RH","SV","WD","WS"};
     String[] variablesrealesg = {"","","Conductividad eléctrica del poro","Permibilidad del poro","Humedad del suelo","Temperatura del suelo","Conductividad eléctrica","Contenido eléctrico del suelo"};
