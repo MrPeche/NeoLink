@@ -25,7 +25,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     String[] variablesg = {"ApPer","Depth","PoreCE","PorePer","V1","V2","V3","vwc"};
     String[] variablesk = {"V1","V2"};
     String[] variablesstate = {"AL","BP","BV","dT","iT","OP_TIME","RH","SV","WD","WS"};
-    String[] variablesrealesg = {"","","Conductividad eléctrica del poro","Permibilidad del poro","Humedad del suelo","Temperatura del suelo","Conductividad eléctrica","Contenido volumétrico del agua"};
+    String[] variablesrealesg = {"","","Conductividad eléctrica del poro","Permibilidad del poro","Humedad del suelo","Temperatura del suelo","Conductividad eléctrica","Contenido volumétrico de agua"};
     String[] variablesrealesk = {"Potencial Mátricual","Temperatura"};
     String[] variablesrealesstate = {"Altitud","Presión Barométrica","Voltaje","Temperatura de bulbo seco","Tiempo de operación","Humedad relativa","Voltaje solar","Dirección del viento","Velocidad del viento"};
     private MasterDrawerViewModel archi;

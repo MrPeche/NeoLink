@@ -9,6 +9,8 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.neolink_app.R;
 import com.example.neolink_app.actividadbase;
+import com.example.neolink_app.adaptadores.adaptadordelimitesneolinkexterior;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
 import com.example.neolink_app.clases.configuracion.statePortsactive;
@@ -78,7 +81,12 @@ public class configuracionesmodelo extends Fragment {
     private state stateobj;
     private Confvalues confvobj;
 
+    private RecyclerView limitsrc;
+    private adaptadordelimitesneolinkexterior adapter;
+    private GridLayoutManager glm;
+
     private int data;
+
 
 
 
@@ -165,6 +173,8 @@ public class configuracionesmodelo extends Fragment {
         port2active = view.findViewById(R.id.Puertoactivo2);
         port3active = view.findViewById(R.id.Puertoactivo3);
         port4active = view.findViewById(R.id.Puertoactivo4);
+
+        limitsrc = view.findViewById(R.id.rclimitesviews);
 
         archi.crearpaquetedeconfiguraciones(neolinkname).observe(getViewLifecycleOwner(), new Observer<Pair<state, Confvalues>>() {
             @Override
@@ -285,6 +295,7 @@ public class configuracionesmodelo extends Fragment {
         lastupdate.setText(arrangelastupload(object.LastUpload));
         arrangeportsactive(object.Port);
         arrangelimits(object.Limits);
+        arrangenewlimits(object.Limits);
     }
     private String arrangelastupload(String A){
         String[] list = A.split("\\.");
@@ -467,6 +478,12 @@ public class configuracionesmodelo extends Fragment {
                 obj.dameP1().dameG().dameV3().dameMAX(),
                 obj.dameP1().damek().dameV1().dameMAX(),
                 obj.dameP1().damek().dameV2().dameMAX()};
+    }
+    private void arrangenewlimits(statelimitsport limits){
+        adapter = new adaptadordelimitesneolinkexterior(limits,getActivity());
+        glm = new GridLayoutManager(getActivity(),1);
+        limitsrc.setLayoutManager(glm);
+        limitsrc.setAdapter(adapter);
     }
 
 

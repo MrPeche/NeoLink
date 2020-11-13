@@ -161,6 +161,10 @@
     <string name="token">Código de vínculo:</string>
     <string name="botongenerar">Generar</string>
 
+    //adaptadoresdelimites
+    <string name="iconoplegableplegado">Icono plegable plegado</string>
+    <string name="iconoplegabledesplegado">Icono plegable plegado</string>
+
 
 
 

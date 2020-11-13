@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/Margendeconfiguracionconsensores"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Space
+            android:layout_width="@dimen/Margendeconfiguracionconsensores"
+            android:layout_height="match_parent"/>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/variabledelpuerto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/colorTextoGris"
+            android:textSize="@dimen/Tamañotexto"
+            android:text="@string/sensorPotencialMatricial" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/limitesuperioritem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+        <Space
+            android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:fontFamily="@font/lato"
+            android:text="@string/Limitesuperior"
+            android:textColor="@color/colorTextoGris"
+            android:textSize="@dimen/Tamañotexto" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/valordellimitesuperior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
