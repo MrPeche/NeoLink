@@ -49,7 +49,7 @@
         app:layout_constraintStart_toEndOf="@+id/puertonameitem"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/desplegar_icon"
-        app:tint="@color/colorTextoGris"
+        app:tint="@color/colorTextoNegro"
         tools:ignore="VectorDrawableCompat" />
 
     <androidx.recyclerview.widget.RecyclerView

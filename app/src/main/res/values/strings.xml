@@ -134,6 +134,7 @@
     <string name="Sensorstate">Sensor</string>
     <string name="Limitesuperior">Limite Superior</string>
     <string name="Limiteinferior">Limite Inferior</string>
+    <string name="Limiteespecial">AU:Agua Útil</string>
     <string name="Puertosactivos">Puertos Activos</string>
 
     //Registro

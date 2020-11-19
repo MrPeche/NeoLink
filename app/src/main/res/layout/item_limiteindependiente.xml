@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/Margendeconfiguracionconsensores"
+    android:layout_marginVertical="@dimen/Margendeconfiguracionconsensores"
     android:orientation="vertical">
 
     <LinearLayout
@@ -32,25 +32,112 @@
         <Space
             android:layout_width="@dimen/Margendeconfiguracionconsensores2"
             android:layout_height="wrap_content" />
+
         <TextView
+            android:id="@+id/textosuperioritem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:fontFamily="@font/lato"
             android:text="@string/Limitesuperior"
             android:textColor="@color/colorTextoGris"
             android:textSize="@dimen/Tamañotexto" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/valordellimitesuperior"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/valorsuperior"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="end" />
-
+            android:layout_gravity="end"
+            android:layout_weight="2"
+            android:ems="3"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:hint="@string/lim"
+            android:importantForAutofill="no"
+            android:inputType="numberSigned|numberDecimal"
+            android:textColor="@color/colorTextoGris"
+            android:textSize="@dimen/Tamañotexto" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/limiteinferioritem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
 
+        <Space
+            android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textoinferioritem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:fontFamily="@font/lato"
+            android:text="@string/Limiteinferior"
+            android:textColor="@color/colorTextoGris"
+            android:textSize="@dimen/Tamañotexto" />
+
+        <EditText
+            android:id="@+id/valorinferior"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="2"
+            android:ems="3"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:hint="@string/lim"
+            android:importantForAutofill="no"
+            android:inputType="numberSigned|numberDecimal"
+            android:textColor="@color/colorTextoGris"
+            android:textSize="@dimen/Tamañotexto" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/limiteespecialritem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="5">
+
+        <Space
+            android:layout_width="@dimen/Margendeconfiguracionconsensores2"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textoespecialitem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:fontFamily="@font/lato"
+            android:text="@string/Limiteespecial"
+            android:textColor="@color/colorTextoGris"
+            android:textSize="@dimen/Tamañotexto" />
+
+        <EditText
+            android:id="@+id/valorespecial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="2"
+            android:ems="3"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:hint="@string/lim"
+            android:importantForAutofill="no"
+            android:inputType="numberSigned|numberDecimal"
+            android:textColor="@color/colorTextoGris"
+            android:textSize="@dimen/Tamañotexto" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,12 +1,19 @@
 package com.example.neolink_app.adaptadores;
 
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.neolink_app.R;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
 
+import java.util.ArrayList;
+
 public class adaptadordelimitesneolinkexterior extends RecyclerView.Adapter<adaptadordelimitesneolinkexterior.adaptadordellimiteneolinkpuerto>{
     private statelimitsport obj;
     private FragmentActivity activ;
+    private ArrayList<Pair<Pair<ArrayList<SwitchCompat>,ArrayList<EditText>>,Pair<ArrayList<EditText>,ArrayList<EditText>>>> paquetedevaloresinteriores = new ArrayList<>();
+    private ArrayList<Pair<Pair<ArrayList<Integer>,ArrayList<Double>>,Pair<ArrayList<Double>,ArrayList<Double>>>> paquetedevaloresinterioresoriginales = new ArrayList<>();
 
     public adaptadordelimitesneolinkexterior(statelimitsport obj,FragmentActivity activ){
         this.obj = obj;
@@ -38,6 +49,7 @@ public class adaptadordelimitesneolinkexterior extends RecyclerView.Adapter<adap
             public void onClick(View v) {
                 holder.plegar.setVisibility(View.GONE);
                 holder.desplegar.setVisibility(View.VISIBLE);
+                holder.puertoname.setTextColor(Color.BLACK);
                 holder.rvport.setVisibility(View.VISIBLE);
             }
         });
@@ -46,12 +58,31 @@ public class adaptadordelimitesneolinkexterior extends RecyclerView.Adapter<adap
             public void onClick(View v) {
                 holder.plegar.setVisibility(View.VISIBLE);
                 holder.desplegar.setVisibility(View.GONE);
+                holder.puertoname.setTextColor(Color.parseColor("#9a9a9a"));
                 holder.rvport.setVisibility(View.GONE);
             }
         });
         holder.glm = new GridLayoutManager(activ,1);
         holder.rvport.setLayoutManager(holder.glm);
-        //holder.rvport.setAdapter();
+        if(position==0){
+            holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP1());
+        } else if(position==1){
+            holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP2());
+        } else if(position==2){
+            holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP3());
+        } else if(position==3){
+            holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP4());
+        }
+        //holder.adapter = new adaptadordelimitesneolinkinterior();
+        holder.rvport.setAdapter(holder.adapter);
+        this.paquetedevaloresinteriores.add(holder.adapter.entregardatoscompletosdelimitesidependientes());
+        this.paquetedevaloresinterioresoriginales.add(holder.adapter.entregardatoscompletosdelimitesidependientesoriginales());
+    }
+    public ArrayList<Pair<Pair<ArrayList<SwitchCompat>,ArrayList<EditText>>,Pair<ArrayList<EditText>,ArrayList<EditText>>>> entregardatosporpuerto(){
+        return paquetedevaloresinteriores;
+    }
+    public ArrayList<Pair<Pair<ArrayList<Integer>,ArrayList<Double>>,Pair<ArrayList<Double>,ArrayList<Double>>>> entregardatosporpuertooriginales(){
+        return paquetedevaloresinterioresoriginales;
     }
 
     @Override
@@ -65,13 +96,13 @@ public class adaptadordelimitesneolinkexterior extends RecyclerView.Adapter<adap
         public ImageView desplegar;
         public RecyclerView rvport;
         public GridLayoutManager glm;
+        public adaptadordelimitesneolinkinterior adapter;
         public adaptadordellimiteneolinkpuerto(@NonNull View itemView) {
             super(itemView);
             puertoname = itemView.findViewById(R.id.puertonameitem);
             plegar = itemView.findViewById(R.id.plegaricon);
             desplegar = itemView.findViewById(R.id.desplegaricon);
             rvport = itemView.findViewById(R.id.rvportlimititem);
-
         }
     }
 }
