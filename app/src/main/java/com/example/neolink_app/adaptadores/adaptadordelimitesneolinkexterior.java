@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neolink_app.R;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
+import com.example.neolink_app.clases.configuracion.stateport;
 
 import java.util.ArrayList;
 
@@ -66,18 +67,34 @@ public class adaptadordelimitesneolinkexterior extends RecyclerView.Adapter<adap
         holder.rvport.setLayoutManager(holder.glm);
         if(position==0){
             holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP1());
+            if(buscarelestadodelpuerto(obj.dameP1())){
+                holder.plegar.performClick();
+            }
         } else if(position==1){
             holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP2());
+            if(buscarelestadodelpuerto(obj.dameP2())){
+                holder.plegar.performClick();
+            }
         } else if(position==2){
             holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP3());
+            if(buscarelestadodelpuerto(obj.dameP3())){
+                holder.plegar.performClick();
+            }
         } else if(position==3){
             holder.adapter = new adaptadordelimitesneolinkinterior(obj.dameP4());
+            if(buscarelestadodelpuerto(obj.dameP4())){
+                holder.plegar.performClick();
+            }
         }
         //holder.adapter = new adaptadordelimitesneolinkinterior();
         holder.rvport.setAdapter(holder.adapter);
         this.paquetedevaloresinteriores.add(holder.adapter.entregardatoscompletosdelimitesidependientes());
         this.paquetedevaloresinterioresoriginales.add(holder.adapter.entregardatoscompletosdelimitesidependientesoriginales());
     }
+    private boolean buscarelestadodelpuerto(stateport obj){
+        return inttoboleano(obj.damek().dameV1().damebool())||inttoboleano(obj.damek().dameV2().damebool())||inttoboleano(obj.dameG().dameV2().damebool())||inttoboleano(obj.dameG().dameV3().damebool())||inttoboleano(obj.dameG().damePoreCer().damebool())||inttoboleano(obj.dameG().damevwc().damebool());
+    }
+    private boolean inttoboleano(int data){return data==1;}
     public ArrayList<Pair<Pair<ArrayList<SwitchCompat>,ArrayList<EditText>>,Pair<ArrayList<EditText>,ArrayList<EditText>>>> entregardatosporpuerto(){
         return paquetedevaloresinteriores;
     }

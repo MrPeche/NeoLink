@@ -28,6 +28,8 @@ import com.example.neolink_app.clases.clasesparaformargraficos.gdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.kdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.statedatapack;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
+import com.example.neolink_app.clases.configuracion.statesinglelimitspecialvalues;
+import com.example.neolink_app.clases.configuracion.statesinglelimitvalues;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.charts.LineChart;
@@ -38,6 +40,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 
 public class planografico extends Fragment {
@@ -72,7 +76,7 @@ public class planografico extends Fragment {
     private MasterDrawerViewModel archi;
     //private MarkerLineChartAdapter adapter;
     private int alpha = 170;
-    private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
+    private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,147,112,219)}; //salmon, medium sea green,corn flower blue, medium purple https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
     private float LINEWIDTH = 2.5f;
     private static float OFFSETGRAFPHTOP = 20f;
@@ -425,73 +429,88 @@ public class planografico extends Fragment {
         Legend L = graficorosadevientos.getLegend();
     }
     private void arrangelimitlines(statelimitsport obj){
-        boolean[] switchs = {deintaboolean(obj.dameP1().damek().dameV1().damebool()),
-                deintaboolean(obj.dameP1().damek().dameV2().damebool()),
-                deintaboolean(obj.dameP1().dameG().dameV1().damebool()),
-                deintaboolean(obj.dameP1().dameG().dameV2().damebool()),
-                deintaboolean(obj.dameP1().dameG().dameV3().damebool())};
-        double[] superior = {obj.dameP1().damek().dameV1().dameMAX(),
-                obj.dameP1().damek().dameV2().dameMAX(),
-                obj.dameP1().dameG().dameV1().dameMAX(),
-                obj.dameP1().dameG().dameV2().dameMAX(),
-                obj.dameP1().dameG().dameV3().dameMAX()};
-        double[] inferior = {obj.dameP1().damek().dameV1().dameMin(),
-                obj.dameP1().damek().dameV2().dameMin(),
-                obj.dameP1().dameG().dameV1().dameMin(),
-                obj.dameP1().dameG().dameV2().dameMin(),
-                obj.dameP1().dameG().dameV3().dameMin()};
-        for(int i=0;i<switchs.length;i++){
-            if(switchs[i]){
-                LimitLine arriba = new LimitLine((float)superior[i]);
-                arriba.setLineColor(colores[0]);
-                arriba.setLineWidth(0.9f);
-                arriba.enableDashedLine(30,10,10);
-                LimitLine abajo = new LimitLine((float)inferior[i]);
-                arriba.setLineWidth(0.9f);
-                arriba.enableDashedLine(10,10,10);
-                abajo.setLineColor(colores[0]);
-                agregarloslimites(arriba,abajo,i);
-            }
+        limitesnormales(obj.dameP1().damek().dameV1(),obj.dameP2().damek().dameV1(),obj.dameP3().damek().dameV1(),obj.dameP4().damek().dameV1(),0);
+        limitesnormales(obj.dameP1().damek().dameV2(),obj.dameP2().damek().dameV2(),obj.dameP3().damek().dameV2(),obj.dameP4().damek().dameV2(),1);
+        limitesnormales(obj.dameP1().dameG().dameV2(),obj.dameP2().dameG().dameV2(),obj.dameP3().dameG().dameV2(),obj.dameP4().dameG().dameV2(),2);
+        limitesnormales(obj.dameP1().dameG().dameV3(),obj.dameP2().dameG().dameV3(),obj.dameP3().dameG().dameV3(),obj.dameP4().dameG().dameV3(),3);
+        limitesnormales(obj.dameP1().dameG().damePoreCer(),obj.dameP2().dameG().damePoreCer(),obj.dameP3().dameG().damePoreCer(),obj.dameP4().dameG().damePoreCer(),4);
+        limiteespecial(obj.dameP1().dameG().damevwc(),obj.dameP2().dameG().damevwc(),obj.dameP3().dameG().damevwc(),obj.dameP4().dameG().damevwc());
+    }
+    private void limitesnormales(statesinglelimitvalues puerto1, statesinglelimitvalues puerto2, statesinglelimitvalues puerto3, statesinglelimitvalues puerto4, int caso){
+        YAxis yAxis = dameelaxiselegido(caso);
+        yAxis.setDrawLimitLinesBehindData(true);
+        if(deintaboolean(puerto1.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto1.dameMAX(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto1.dameMin(),0));
+        } else if(deintaboolean(puerto2.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameMAX(),1));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameMin(),1));
+        } else if(deintaboolean(puerto3.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameMAX(),2));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameMin(),2));
+        } else if(deintaboolean(puerto4.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameMAX(),3));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameMin(),3));
         }
+        invalidation(caso);
+    }
+    private void limiteespecial(statesinglelimitspecialvalues puerto1, statesinglelimitspecialvalues puerto2, statesinglelimitspecialvalues puerto3, statesinglelimitspecialvalues puerto4){
+        YAxis yAxis = dameelaxiselegido(5);
+        yAxis.setDrawLimitLinesBehindData(true);
+        if(deintaboolean(puerto1.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto1.dameCC(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto1.damePMP(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto1.dameAU(),0));
+        } else if(deintaboolean(puerto2.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameCC(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.damePMP(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameAU(),0));
+        } else if(deintaboolean(puerto3.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameCC(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.damePMP(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameAU(),0));
+        } else if(deintaboolean(puerto4.damebool())){
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameCC(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.damePMP(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameAU(),0));
+        }
+        invalidation(5);
+    }
+    private LimitLine crearunlimite(float valor, int puerto){
+        LimitLine RS = new LimitLine(valor);
+        RS.setLineColor(colores[puerto]);
+        RS.setLineWidth(0.9f);
+        RS.enableDashedLine(30,10,10);
+        return RS;
     }
     private boolean deintaboolean(int data){
         return data==1;
     }
-    private void agregarloslimites(LimitLine superior, LimitLine inferior,int caso){
-        YAxis yAxis = dameelaxiselegido(caso);
-        yAxis.setDrawLimitLinesBehindData(true);
-        yAxis.addLimitLine(superior);
-        yAxis.addLimitLine(inferior);
-        invalidation(caso);
-    }
-
     private void invalidation(int caso){
         if(caso==0){
             grafico1.invalidate();
         } else if(caso==1){
             grafico2.invalidate();
         } else if(caso==2){
-            //graficohumedaddelsuelo.invalidate();
-        } else if(caso==3){
             graficotemperaturadelsuelo.invalidate();
-        } else{graficoconductividaddelsuelo.invalidate();}
+        } else if(caso==3){
+            graficoconductividaddelsuelo.invalidate();
+        } else if(caso==4){
+            graficoconductividadelectricadelporo.invalidate();
+        } else graficocontenidovolumetricodelagua.invalidate();
     }
     private YAxis dameelaxiselegido(int caso){
         if(caso==0){
-            return grafico1.getAxisLeft();
+            return grafico1.getAxisLeft(); //K v1
         } else if(caso==1){
-            return grafico2.getAxisLeft();
-        }
-        /*
-        else if(caso==2){
-            return graficohumedaddelsuelo.getAxisLeft();
-        }
-
-         */
-        else if(caso==3){
-            return graficotemperaturadelsuelo.getAxisLeft();
-        }
-        else{return graficoconductividaddelsuelo.getAxisLeft();}
+            return grafico2.getAxisLeft(); //k v2
+        } else if(caso==2){
+            return graficotemperaturadelsuelo.getAxisLeft(); //g v2
+        } else if(caso==3){
+            return graficoconductividaddelsuelo.getAxisLeft(); //g v3
+        } else if(caso==4){
+            return graficoconductividadelectricadelporo.getAxisLeft(); //g PoreCer
+        } else return graficocontenidovolumetricodelagua.getAxisLeft(); //g vwc
     }
     private void setgraficosK(kdatapack pack){
         grafico1.setData(pack.sacarelPM().second);

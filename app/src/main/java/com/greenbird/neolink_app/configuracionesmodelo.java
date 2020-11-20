@@ -232,7 +232,7 @@ public class configuracionesmodelo extends Fragment {
             valor=40;
         } else if((40<valor)&&(valor<60)){
             valor=60;
-        } else if(valor<60){
+        } else if(valor>60){
             valor=60;
         }
         return valor*60;
