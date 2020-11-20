@@ -92,6 +92,9 @@ public class AuthRepo {
         });
         return neousuario;
     }
+    public void limpiarelneousuario(){
+        neousuario.setValue(new UsuarioNeoL(4));
+    }
     public LiveData<Boolean> archivoexiste(String direccion[], String nombre){
         fileexist.setValue(false);
         for (String s : direccion) {

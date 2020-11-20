@@ -130,21 +130,24 @@ public class MainActivity extends AppCompatActivity {
                         i.putExtra("correo", usuarioNeoL.giveMail());
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
-                        setitbackMain();
+
                     } else {
                         switch(usuarioNeoL.Validate()){
                             case 1:
                                 Toast.makeText(MainActivity.this, "El correo no existe", Toast.LENGTH_SHORT).show();
+                                archi.borrarlavariablelog();
                                 break;
                             case 2:
                                 Toast.makeText(MainActivity.this, "La contraseña es incorrecta", Toast.LENGTH_SHORT).show();
+                                archi.borrarlavariablelog();
                                 break;
                             case 3:
                                 Toast.makeText(MainActivity.this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
+                                archi.borrarlavariablelog();
                                 break;
                         }
-                        setitbackMain();
                     }
+                    setitbackMain();
                 }
             });
 
