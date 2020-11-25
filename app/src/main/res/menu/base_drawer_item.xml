@@ -14,17 +14,18 @@
             android:title="@string/graficos" />
         <item
             android:id="@+id/registrodealertas"
-            android:title="@string/notificaciones" />
-        <item
-            android:id="@+id/listita"
-            android:title="@string/lista" />
+            android:title="@string/comentarios" />
+
 
     </group>
 
     <group
         android:id="@+id/ndgruponeolinkconect"
         android:checkableBehavior="single">
-        
+
+        <item
+            android:id="@+id/listita"
+            android:title="@string/lista" />
         <item
             android:id="@+id/configuracioncuenta"
             android:title = "@string/configuracion"/>

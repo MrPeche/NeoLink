@@ -55,15 +55,16 @@
     //Navigation Drawer Menu
     <string name="home">Principal</string>
     <string name="mapa">Mapa</string>
-    <string name="lista">Lista de Diapositivos</string>
+    <string name="lista">Configuración de Dispositivos</string>
     <string name="graficos">Gráficos</string>
     <string name="notificaciones">Notificaciones</string>
     <string name="easyconnect">Easy Connect</string>
-    <string name="configuracion">Configuración</string>
+    <string name="configuracion">Configuración General</string>
     <string name="llamanos">Contáctanos</string>
     <string name="version">Versión</string>
     <string name="neolinktit">NeoLink +</string>
     <string name="salida">Salir</string>
+    <string name="comentarios">Comentarios</string>
 
     //datos generales
     <string name="primernombre">Humedad del suelo</string>

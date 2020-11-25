@@ -462,17 +462,17 @@ public class planografico extends Fragment {
             yAxis.addLimitLine(crearunlimite((float) puerto1.damePMP(),0));
             yAxis.addLimitLine(crearunlimite((float) puerto1.dameAU(),0));
         } else if(deintaboolean(puerto2.damebool())){
-            yAxis.addLimitLine(crearunlimite((float) puerto2.dameCC(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto2.damePMP(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto2.dameAU(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameCC(),1));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.damePMP(),1));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameAU(),1));
         } else if(deintaboolean(puerto3.damebool())){
-            yAxis.addLimitLine(crearunlimite((float) puerto3.dameCC(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto3.damePMP(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto3.dameAU(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameCC(),2));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.damePMP(),2));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameAU(),2));
         } else if(deintaboolean(puerto4.damebool())){
-            yAxis.addLimitLine(crearunlimite((float) puerto4.dameCC(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto4.damePMP(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto4.dameAU(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameCC(),3));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.damePMP(),3));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameAU(),3));
         }
         invalidation(5);
     }
@@ -519,6 +519,9 @@ public class planografico extends Fragment {
         xaxispm.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxispm.setValueFormatter(new graficolabelgenerator(pack.sacarloslabels()));
         xaxispm.setGranularityEnabled(true);
+        //barChart.getXAxis().setGranularityEnabled(true);
+        //barChart.getXAxis().setGranularity(1.0f);
+        //lineChart.getXAxis().setLabelCount(3); 
         //xaxispm.setLabelRotationAngle(-45f);
         MarkerLineChartAdapter adapterpm = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarlasraizes().first,pack.sacarelPM().first,pack.sacarloslabels(),name,"k","V1",archi);
         grafico1.setMarker(adapterpm);
