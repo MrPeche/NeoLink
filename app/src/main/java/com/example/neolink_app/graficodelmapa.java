@@ -450,17 +450,17 @@ public class graficodelmapa extends Fragment {
             yAxis.addLimitLine(crearunlimite((float) puerto1.damePMP(),0));
             yAxis.addLimitLine(crearunlimite((float) puerto1.dameAU(),0));
         } else if(deintaboolean(puerto2.damebool())){
-            yAxis.addLimitLine(crearunlimite((float) puerto2.dameCC(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto2.damePMP(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto2.dameAU(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameCC(),1));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.damePMP(),1));
+            yAxis.addLimitLine(crearunlimite((float) puerto2.dameAU(),1));
         } else if(deintaboolean(puerto3.damebool())){
-            yAxis.addLimitLine(crearunlimite((float) puerto3.dameCC(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto3.damePMP(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto3.dameAU(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameCC(),2));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.damePMP(),2));
+            yAxis.addLimitLine(crearunlimite((float) puerto3.dameAU(),2));
         } else if(deintaboolean(puerto4.damebool())){
-            yAxis.addLimitLine(crearunlimite((float) puerto4.dameCC(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto4.damePMP(),0));
-            yAxis.addLimitLine(crearunlimite((float) puerto4.dameAU(),0));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameCC(),3));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.damePMP(),3));
+            yAxis.addLimitLine(crearunlimite((float) puerto4.dameAU(),3));
         }
         invalidation(5);
     }
