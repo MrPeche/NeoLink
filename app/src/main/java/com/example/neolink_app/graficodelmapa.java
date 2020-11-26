@@ -572,7 +572,7 @@ public class graficodelmapa extends Fragment {
         yaxisl.setTextColor(colores[1]);
         YAxis yaxisr = grafico3.getAxisRight();
         yaxisr.setAxisMinimum(3.5f);
-        yaxisr.setAxisMaximum(4.3f); //4.5
+        yaxisr.setAxisMaximum(4.5f); //4.5
         yaxisr.setTextColor(colores[0]);//
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
