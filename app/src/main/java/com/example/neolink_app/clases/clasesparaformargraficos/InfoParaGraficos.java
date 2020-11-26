@@ -24,8 +24,8 @@ public class InfoParaGraficos {
     private ArrayList<paquetededatacompleto<Dias,diasstate,DiasG>> dias = new ArrayList<>();
     private ArrayList<paquetededatacompleto<Meses, mesesstate, MesesG>> meses = new ArrayList<>();
     float LINEWIDTH = 2.5f;
-    private int alpha = 170;
-    private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,176,196,222)}; //salmon, medium sea green,corn flower blue, light steel blue https://www.rapidtables.com/web/color/RGB_Color.html
+    private int alpha = 250;
+    private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,147,112,219)}; //salmon, medium sea green,corn flower blue,  medium purple https://www.rapidtables.com/web/color/RGB_Color.html
 
     public InfoParaGraficos(){}
 

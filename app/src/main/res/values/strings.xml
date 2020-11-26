@@ -110,6 +110,7 @@
 
     //Menu de configuraciones
     <string name="minutos">min</string>
+    <string name="unidadprofundidad">cm</string>
     <string name="lim">Lim</string>
     <string name="Titutloconfiguraciones">Configuraciones</string>
     <string name="Generales">Configuraciones Generales</string>
@@ -137,9 +138,10 @@
     <string name="Limiteinferior">Limite Inferior</string>
     <string name="Limiteespecial">AU:Agua Útil</string>
     <string name="Puertosactivos">Puertos Activos</string>
+    <string name="profundidadtitulo">Profundidad</string>
 
     //Registro
-    <string name="tituloregistro">Registro</string>
+    <string name="tituloregistro">Comentarios</string>
     <string name="registroeditar">Boton para ediitar</string>
     <string name="registroborrar">boton para borrar</string>
     //contactus

@@ -478,7 +478,7 @@ public class UserInfoRepo {
         final DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference(path);
         basecompleta.child(ano).child(mes).child(dia).child(hora).setValue(null);
     }
-    public void saveconfiguration2(String neolink,boolean beep,int beepv,boolean port, int portv, boolean gps, int gpsv, boolean tiempoentreplazos, int tiempoentreplazosv,ArrayList<ArrayList<Boolean>> switchscomparados,ArrayList<ArrayList<Boolean>> switchsactuales,ArrayList<ArrayList<Boolean>> superiorescomparados,ArrayList<ArrayList<Boolean>> inferiorescomparados,ArrayList<ArrayList<Boolean>> especialcomparados,ArrayList<ArrayList<String>> limsuperioractual,ArrayList<ArrayList<String>> liminferioractual,ArrayList<ArrayList<String>> limespecialactual,ArrayList<ArrayList<Double>> valorsuperiororiginal,ArrayList<ArrayList<Double>> valorinferiororiginal,ArrayList<ArrayList<Double>> valorespecialoriginal){
+    public void saveconfiguration2(String neolink,boolean beep,int beepv,boolean port, int portv, boolean gps, int gpsv, boolean tiempoentreplazos, int tiempoentreplazosv,ArrayList<ArrayList<Boolean>> switchscomparados,ArrayList<ArrayList<Boolean>> switchsactuales,ArrayList<ArrayList<Boolean>> superiorescomparados,ArrayList<ArrayList<Boolean>> inferiorescomparados,ArrayList<ArrayList<Boolean>> especialcomparados,ArrayList<ArrayList<String>> limsuperioractual,ArrayList<ArrayList<String>> liminferioractual,ArrayList<ArrayList<String>> limespecialactual,ArrayList<ArrayList<Double>> valorsuperiororiginal,ArrayList<ArrayList<Double>> valorinferiororiginal,ArrayList<ArrayList<Double>> valorespecialoriginal,ArrayList<Boolean> depthport, ArrayList<Integer> valueport){
         String patio = "/NeoLink/"+neolink;
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
         Map<String, Object> childUpdates  = new HashMap<>();
@@ -521,7 +521,11 @@ public class UserInfoRepo {
                 }
             }
         }
-
+        for(int z=0;z<depthport.size();z++){
+            if(!depthport.get(z)){
+                childUpdates.put("/Conf_values/DEPTH/P"+(z+1)+"/",valueport.get(z));
+            }
+        }
         childUpdates.put("/State/NewConf/",1);
         BaseDatosNL.updateChildren(childUpdates);
     }

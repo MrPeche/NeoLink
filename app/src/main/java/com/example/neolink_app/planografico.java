@@ -75,7 +75,7 @@ public class planografico extends Fragment {
 
     private MasterDrawerViewModel archi;
     //private MarkerLineChartAdapter adapter;
-    private int alpha = 170;
+    private int alpha = 170;    //170
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,147,112,219)}; //salmon, medium sea green,corn flower blue, medium purple https://www.rapidtables.com/web/color/RGB_Color.html
     private int MAX_DATAVISIBLE = 48;
     private float LINEWIDTH = 2.5f;
@@ -585,7 +585,7 @@ public class planografico extends Fragment {
         yaxisl.setTextColor(colores[1]);
         YAxis yaxisr = grafico3.getAxisRight();
         yaxisr.setAxisMinimum(3.5f);
-        yaxisr.setAxisMaximum(4.3f); //4.5
+        yaxisr.setAxisMaximum(4.5f); //4.5
         yaxisr.setTextColor(colores[0]);//
         XAxis xaxis3= grafico3.getXAxis();
         xaxis3.setPosition(XAxis.XAxisPosition.BOTTOM);

@@ -56,6 +56,11 @@ public class configuracionesmodelo extends Fragment {
     private state stateobj;
     private Confvalues confvobj;
 
+    private EditText port1depth;
+    private EditText port2depth;
+    private EditText port3depth;
+    private EditText port4depth;
+
     private RecyclerView limitsrc;
     private adaptadordelimitesneolinkexterior adapter;
     private GridLayoutManager glm;
@@ -114,6 +119,11 @@ public class configuracionesmodelo extends Fragment {
         port2active = view.findViewById(R.id.Puertoactivo2);
         port3active = view.findViewById(R.id.Puertoactivo3);
         port4active = view.findViewById(R.id.Puertoactivo4);
+
+        port1depth = view.findViewById(R.id.profundidadp1);
+        port2depth = view.findViewById(R.id.profundidadp2);
+        port3depth = view.findViewById(R.id.profundidadp3);
+        port4depth = view.findViewById(R.id.profundidadp4);
 
         limitsrc = view.findViewById(R.id.rclimitesviews);
 
@@ -182,6 +192,18 @@ public class configuracionesmodelo extends Fragment {
         } else beepdelsistema.setChecked(false);
         //nombredelwifi.setText(object.WIFI_SSID);
         tiempoentredatos.setText(desegundosaminutos(object.SLEEP_TIME));
+        if(object.DEPTH.P1!=0){
+            port1depth.setText(String.valueOf(object.DEPTH.P1));
+        } else port1depth.setText("");
+        if(object.DEPTH.P2!=0){
+            port2depth.setText(String.valueOf(object.DEPTH.P2));
+        } else port2depth.setText("");
+        if(object.DEPTH.P3!=0){
+            port3depth.setText(String.valueOf(object.DEPTH.P3));
+        } else port3depth.setText("");
+        if(object.DEPTH.P4!=0){
+            port4depth.setText(String.valueOf(object.DEPTH.P4));
+        } else port4depth.setText("");
         if(object.PORT_RQ!=0){
             portRQ.setChecked(true);
         } else portRQ.setChecked(false);
@@ -243,7 +265,23 @@ public class configuracionesmodelo extends Fragment {
         Boolean tiempoentredatosB = tiempoentredatos.getText().toString().equals(desegundosaminutos(confvobj.SLEEP_TIME));
         Boolean portRQB = portRQ.isChecked() == translatebool(confvobj.PORT_RQ);
         Boolean gpsRQB = gpsRQ.isChecked() == translatebool(confvobj.GPS_RQ);
-
+        ArrayList<Boolean> porteval = new ArrayList<>();
+        ArrayList<Integer> portvalue = new ArrayList<>();
+        for(int u=0;u<4;u++){
+            if(u==0){
+                porteval.add(translatedepth(port1depth.getText().toString())==confvobj.DEPTH.P1);
+                portvalue.add(translatedepth(port1depth.getText().toString()));
+            } else if(u==1){
+                porteval.add(translatedepth(port2depth.getText().toString())==confvobj.DEPTH.P2);
+                portvalue.add(translatedepth(port2depth.getText().toString()));
+            }else if(u==2){
+                porteval.add(translatedepth(port3depth.getText().toString())==confvobj.DEPTH.P3);
+                portvalue.add(translatedepth(port3depth.getText().toString()));
+            }else {
+                porteval.add(translatedepth(port4depth.getText().toString())==confvobj.DEPTH.P4);
+                portvalue.add(translatedepth(port4depth.getText().toString()));
+            }
+        }
         //Boolean e = checklimits(stateobj.Limits);
         ArrayList<ArrayList<Boolean>> RVswitchs = new ArrayList<>();
         ArrayList<ArrayList<Boolean>> RVlimsuperior = new ArrayList<>();
@@ -270,13 +308,25 @@ public class configuracionesmodelo extends Fragment {
             limespecialoriginal.add(datosdelimitesoriginales.get(i).second.second);
         }
 
-        if(!(beepB&&tiempoentredatosB&&portRQB&&gpsRQB&&analizarelarregloboleano(RVswitchs)&&analizarelarregloboleano(RVlimsuperior)&&analizarelarregloboleano(RVliminferior)&&analizarelarregloboleano(RVespecial))){
+        if(!(beepB&&tiempoentredatosB&&portRQB&&gpsRQB&&analizarelarregloboleano(RVswitchs)&&analizarelarregloboleano(RVlimsuperior)&&analizarelarregloboleano(RVliminferior)&&analizarelarregloboleano(RVespecial)&&analizarbooleanarreglo(porteval))){
             positivo.show();
-            archi.saveconfiguracion2(neolinkname,!beepB,translateint(beepdelsistema.isChecked()),!portRQB,translateint(portRQ.isChecked()),!gpsRQB,translateint(gpsRQ.isChecked()),!tiempoentredatosB,deminutosasegundos(tiempoentredatos.getText().toString()),RVswitchs,swactuales,RVlimsuperior,RVliminferior,RVespecial,limsuperioractual,liminferioractual,limespecialactual,limsuperiororiginal,liminferiororiginal,limespecialoriginal);
+            archi.saveconfiguracion2(neolinkname,!beepB,translateint(beepdelsistema.isChecked()),!portRQB,translateint(portRQ.isChecked()),!gpsRQB,translateint(gpsRQ.isChecked()),!tiempoentredatosB,deminutosasegundos(tiempoentredatos.getText().toString()),RVswitchs,swactuales,RVlimsuperior,RVliminferior,RVespecial,limsuperioractual,liminferioractual,limespecialactual,limsuperiororiginal,liminferiororiginal,limespecialoriginal,porteval,portvalue);
         } else negativo.show();
     }
     private Boolean translatebool(int o){
         return o != 0;
+    }
+    private int translatedepth(String lntexto){
+        if(lntexto.equals("")){
+            return 0;
+        } else return Integer.parseInt(lntexto);
+    }
+    private Boolean analizarbooleanarreglo(ArrayList<Boolean> obj){
+        boolean a = true;
+        for(Boolean port:obj){
+            a = a&&port;
+        }
+        return a;
     }
     private int translateint(boolean o){
         if(o){
