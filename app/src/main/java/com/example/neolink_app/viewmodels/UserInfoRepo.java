@@ -927,6 +927,36 @@ public class UserInfoRepo {
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference();
         BaseDatosNL.child("tokendevinculo").child(uid).setValue(token);
     }
+    public LiveData<String> fetchuiddelhijo(String uid, String nombre){
+        final MediatorLiveData<String> uidhijo = new MediatorLiveData<>();
+        String path1 = "/Familiapadre/"+uid+"/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path1);
+        final FirebaseQueryLiveData liveDataNL1 = new FirebaseQueryLiveData(BaseDatosNL);
+        uidhijo.addSource(liveDataNL1, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    for(DataSnapshot hijo:dataSnapshot.getChildren()){
+                        if(hijo.getChildren().toString().equals(nombre)){
+                            uidhijo.setValue(hijo.getKey());
+                        }
+                    }
+                } else
+                    uidhijo.setValue(null);
+
+            }
+        });
+        return uidhijo;
+    }
+    public void borrarhijo(String uidhijo,String uidpadre){
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference();
+        final FirebaseQueryLiveData liveDataNL1 = new FirebaseQueryLiveData(BaseDatosNL);
+        Map<String, Object> childUpdates  = new HashMap<>();
+        childUpdates.put("/Familiapadre/"+uidpadre+"/"+uidhijo+"/",null);
+        childUpdates.put("/Familiahijos/"+uidhijo+"/",null);
+        childUpdates.put("/CarpetaEraseCorreo/"+uidhijo+"/",true);
+        //BaseDatosNL.updateChildren(childUpdates);
+    }
     public LiveData<String> retrivetokendevinculo(String uid){
         MediatorLiveData<String> tok = new MediatorLiveData<>();
         String path = "/tokendevinculo/";
@@ -985,6 +1015,8 @@ public class UserInfoRepo {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
+                    a.clear();
+                    b.clear();
                     for(DataSnapshot correo:dataSnapshot.getChildren()){
                         a.add(correo.getKey());
                         b.add(correo.getValue(String.class));

@@ -51,6 +51,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/margencard"
                         android:fontFamily="@font/lato"
                         android:textSize="@dimen/Tamañosubtitulo"
                         android:text="@string/titulolinkeo"
@@ -66,11 +67,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginVertical="@dimen/margencard"
                             android:gravity="start"
                             android:fontFamily="@font/lato"
                             android:textSize="@dimen/Tamañotexto"
                             android:text="@string/token"
-                            android:layout_weight="4.2"
+                            android:layout_weight="5"
                             android:textColor="@color/colorTextoNegro"/>
 
                         <TextView
@@ -82,22 +84,24 @@
                             android:gravity="center"
                             android:fontFamily="@font/lato"
                             android:textSize="@dimen/Tamañotexto"
-                            android:layout_weight="4"
+                            android:layout_weight="5"
                             android:textColor="@color/colorTextoNegro" />
 
-                        <Button
-                            android:id="@+id/botondegenerar"
-                            android:layout_width="0dp"
-                            android:layout_height="34dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1.8"
-                            android:background="@drawable/boton"
-                            android:text="@string/botongenerar"
-                            android:textSize="@dimen/Tamañotextopequeño" />
                     </LinearLayout>
+
+                    <Button
+                        android:id="@+id/botondegenerar"
+                        android:layout_width="match_parent"
+                        android:layout_marginVertical="@dimen/margencard"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/boton"
+                        android:text="@string/botongenerar"
+                        android:textSize="@dimen/Tamañotextopequeño" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/usuariosfamiliares"
+                        android:layout_marginVertical="@dimen/margencard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 

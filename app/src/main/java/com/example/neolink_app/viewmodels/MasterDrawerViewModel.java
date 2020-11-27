@@ -441,6 +441,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         return appRepo.fetchregistro(neolink,datetoday.getValue().get(0),datetoday.getValue().get(1));
     }
     public void guardartokenparavincular(String token){ appRepo.guardartokendevinculo(token,this.uid); }
+    public LiveData<String> fetchuiddelhijo(String nombredelhijo){ return appRepo.fetchuiddelhijo(this.uid,nombredelhijo);}
+    public void borrarhijo(String uidhijo){ appRepo.borrarhijo(uidhijo,this.uid);}
     public LiveData<String> tokendevinculoanterior(){
         return appRepo.retrivetokendevinculo(this.uid);
     }

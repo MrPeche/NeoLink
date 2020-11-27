@@ -17,6 +17,7 @@ import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistro.adaptadorderegistroViewHolder> {
     ArrayList<String> contenido;
@@ -35,12 +36,14 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
         fecha = new ArrayList<>();
         tiempo = new ArrayList<>();
         managepack(pack);
+        dalevuelta();
     }
     public adaptadorderegistro(notihist pack, AlertDialog.Builder avizodeborrado,MasterDrawerViewModel archi){
         contenido = new ArrayList<>();
         fecha = new ArrayList<>();
         tiempo = new ArrayList<>();
         managepack(pack);
+        dalevuelta();
         this.archi = archi;
         this.avizodeborrado = avizodeborrado;
     }
@@ -60,11 +63,10 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
             }
         }
     }
-
-    public adaptadorderegistro(ArrayList<String> contenido, ArrayList<String> fecha, ArrayList<String> tiempo){
-        this.contenido = contenido;
-        this.fecha = fecha;
-        this.tiempo = tiempo;
+    private void dalevuelta(){
+        Collections.reverse(tiempo);
+        Collections.reverse(fecha);
+        Collections.reverse(contenido);
     }
     @NonNull
     @Override
