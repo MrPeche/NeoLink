@@ -937,7 +937,7 @@ public class UserInfoRepo {
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
                     for(DataSnapshot hijo:dataSnapshot.getChildren()){
-                        if(hijo.getChildren().toString().equals(nombre)){
+                        if(hijo.getValue().toString().equals(nombre)){
                             uidhijo.setValue(hijo.getKey());
                         }
                     }
@@ -955,7 +955,7 @@ public class UserInfoRepo {
         childUpdates.put("/Familiapadre/"+uidpadre+"/"+uidhijo+"/",null);
         childUpdates.put("/Familiahijos/"+uidhijo+"/",null);
         childUpdates.put("/CarpetaEraseCorreo/"+uidhijo+"/",true);
-        //BaseDatosNL.updateChildren(childUpdates);
+        BaseDatosNL.updateChildren(childUpdates);
     }
     public LiveData<String> retrivetokendevinculo(String uid){
         MediatorLiveData<String> tok = new MediatorLiveData<>();

@@ -90,7 +90,8 @@ public class configuracioncuenta extends Fragment {
             @Override
             public void onChanged(Pair<ArrayList<String>, ArrayList<String>> arrayListArrayListPair) {
                 if(arrayListArrayListPair!=null){
-                    adapter = new Listadefamiliareshijos(arrayListArrayListPair.second);
+                    //adapter = new Listadefamiliareshijos(arrayListArrayListPair.second);
+                    adapter = new Listadefamiliareshijos(arrayListArrayListPair.second,archi,getViewLifecycleOwner());
                     listadefamiliares.setAdapter(adapter);
                 }
             }
