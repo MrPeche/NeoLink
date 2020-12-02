@@ -110,7 +110,8 @@ public class MarkerLineChartAdapter extends MarkerView {
                 if(timelabels!=null){
                     String[] time =timelabels.get((int) e.getX()).split("\n");
                     //String a = neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var;
-                    archi.avizarquehayuncomentarionuevo(neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+puertotexto+"5PORT5"+sensor+"5TYP5"+var);
+                    archi.avizarquehayuncomentarionuevo(neolink+"5HN5"+time[0]+"5ZT5"+time[1]+"5ZT5"+puertotexto+"5PT5"+sensor+"5TP5"+var);
+                    //archi.avizarquehayuncomentarionuevo(neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+puertotexto+"5PORT5"+sensor+"5TYP5"+var);
                 }
             }
         });

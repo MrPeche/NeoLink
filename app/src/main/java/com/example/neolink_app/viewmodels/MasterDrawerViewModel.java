@@ -3,6 +3,7 @@ package com.example.neolink_app.viewmodels;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.text.format.DateUtils;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -27,6 +28,8 @@ import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.datadeconfiguracion;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackagetwoday;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,6 +59,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public final MutableLiveData<String[]> editarcomentario= new MutableLiveData<>();
     private UserInfoRepo appRepo;
     private manejadordedispositivo FCM;
+    private String nombredecorreo;
     private MutableLiveData<String> puid = new MutableLiveData<>();
     private String uid;
     private String estadofamiliar;
@@ -68,6 +72,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public MutableLiveData<ArrayList<Integer>> datetoday = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Integer>> datebefore = new MutableLiveData<>();
     public ArrayList<OLDneolinksboleto> listacompleta = new ArrayList<>();
+    public Snackbar avizonoerespadre;
 
     public MasterDrawerViewModel(@NonNull Application application) {
         super(application);
@@ -85,6 +90,9 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         this.uidreal = uid;
         this.puid.setValue(uid);
         FCM.guardardispositivo(uid);
+    }
+    public void ponercorreo(String correo){
+        this.nombredecorreo = correo;
     }
     public LiveData<Pair<Boolean,String>> validaruid(){
         return appRepo.validarlaposicionenlafamilia(this.uid);
@@ -106,6 +114,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
             }
         });
     }
+    public Boolean cualeselestadofamiliar(){ return this.estadofamiliar.equals("hijo");}
+    public void actualizaravizonoerespadre(View vista){ Snackbar.make(vista,"Su cuenta no tiene permiso para esta acción", BaseTransientBottomBar.LENGTH_SHORT).show();}
     /*
     public void getlistaNLNN(OWNERitems prelista){
         ArrayList<ArrayList<String>> listacompleta = new ArrayList<>();
@@ -399,7 +409,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         heute.add(ahorita.get(Calendar.HOUR_OF_DAY));
         heute.add(ahorita.get(Calendar.MINUTE));
         heute.add(ahorita.get(Calendar.SECOND));
-        appRepo.guardarelmensaje(neolink,heute.get(0),heute.get(1),heute.get(2),heute.get(3),heute.get(4),heute.get(5),mensaje);
+        appRepo.guardarelmensaje(neolink,heute.get(0),heute.get(1),heute.get(2),heute.get(3),heute.get(4),heute.get(5),mensaje+"5MS5"+nombredecorreo);
     }
     public void borrarcomentario(String neolink,String ano,String mes,String dia,String hora){
         appRepo.borrarmensaje(neolink,ano,mes,dia,hora);

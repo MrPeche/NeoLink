@@ -120,7 +120,10 @@ public class listita extends Fragment implements ListaNeolinks.OnclickListenerIt
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToDialogNeolink());
+                if(archi.cualeselestadofamiliar()){
+                    archi.actualizaravizonoerespadre(v);
+                } else
+                    Navigation.findNavController(getView()).navigate(listitaDirections.actionListitaToDialogNeolink());
             }
         });
     }

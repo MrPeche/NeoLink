@@ -24,6 +24,8 @@ import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class actividadbase extends AppCompatActivity {
 
@@ -67,7 +69,6 @@ public class actividadbase extends AppCompatActivity {
         correoYO = headerweather.findViewById(R.id.textocorreo);
         String yo = damecorreo();
         correoYO.setText(yo);
-        
         /*
         MenuItem salida = navigationView.getMenu().findItem(R.id.ndsalida);
         salida.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -92,6 +93,7 @@ public class actividadbase extends AppCompatActivity {
     void iniciarelView(){
         archi = new ViewModelProvider(this).get(MasterDrawerViewModel.class);
         archi.poneruid(dameuid());
+        archi.ponercorreo(damecorreo());
         archi.validaruid().observe(this, new Observer<Pair<Boolean, String>>() {
             @Override
             public void onChanged(Pair<Boolean, String> booleanStringPair) {
@@ -119,6 +121,7 @@ public class actividadbase extends AppCompatActivity {
                 }
             }
         });
+
 
         /*
         archi.segraboelneolink().observe(this, new Observer<Boolean>() {

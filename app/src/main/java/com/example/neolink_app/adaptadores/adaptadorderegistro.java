@@ -58,6 +58,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
                         tiempo.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).damelahora());
                         fecha.add(dianame+"/"+mesname+"/"+yearname);
                         contenido.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).dameelcontenido()); //neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var+"5TYP5"+mensage
+                        //neolink+"5HN5"+time[0]+"5ZT5"+time[1]+"5ZT5"+puertotexto+"5PT5"+sensor+"5TP5"+var+"5TP5"+mensaje+"5MS5""+nombreorreo
                     }
                 }
             }
@@ -84,29 +85,37 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
         holder.contenidoitem.setText(contenidounitario[5]);
         holder.headercontenidoitem.setText(header);
         String second = "";
-        if(contenidounitario.length==6){
+        if(!(contenido.get(position).contains("5PT5")||contenido.get(position).contains("5PORT5"))){
             second = translateelvalor(contenidounitario[3],contenidounitario[4]);
         } else {
             second = contenidounitario[6] + " " + translateelvalor(contenidounitario[3],contenidounitario[4]);
         }
+        if(!contenido.get(position).contains("5PT5")){
+            holder.autor.setText(contenidounitario[6]);
+        } else holder.autor.setText(contenidounitario[7]);
         holder.secondheaderitem.setText(second);
+
         holder.borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                avizodeborrado.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String[] fecha = fechaunitaria.split("/");
-                        archi.borrarcomentario(contenidounitario[0],fecha[2],fecha[1],fecha[0],tiempounitario);
+                if(archi.cualeselestadofamiliar()){
+                    archi.actualizaravizonoerespadre(v);
+                } else {
+                    avizodeborrado.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String[] fecha = fechaunitaria.split("/");
+                            archi.borrarcomentario(contenidounitario[0], fecha[2], fecha[1], fecha[0], tiempounitario);
 
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                avizodeborrado.show();
+                        }
+                    });
+                    avizodeborrado.show();
+                }
             }
         });
         holder.editar.setOnClickListener(new View.OnClickListener() {
@@ -139,15 +148,30 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
         return this.contenido.size();
     }
     private String[] decodificador(String line){
-        String[] neolink = line.split("5HEISSEN5");  //neolink + lodemas
-        String[] time = neolink[1].split("5ZEIT5");  //fecha + hora + lodemas
-        if(time[2].contains("5PORT5")){
-            String[] puerto = time[2].split("5PORT5");
-            String[] tipo = puerto[1].split("5TYP5");
-            return new String[] {neolink[0],time[0],time[1],tipo[0],tipo[1],tipo[2],puerto[0]};
+        if(line.contains("5HN5")){
+            String[] neolink = line.split("5HN5");  //neolink + lodemas
+            String[] time = neolink[1].split("5ZT5");  //fecha + hora + lodemas
+            if (time[2].contains("5PT5")) {
+                String[] puerto = time[2].split("5PT5");
+                String[] tipo = puerto[1].split("5TP5");
+                String[] mensaje = tipo[2].split("5MS5");
+                return new String[]{neolink[0], time[0], time[1], tipo[0], tipo[1], mensaje[0], puerto[0], mensaje[1]};
+            } else {
+                String[] tipo = time[2].split("5TP5"); //sensor + variable + mensaje
+                String[] mensaje = tipo[2].split("5MS5");
+                return new String[]{neolink[0], time[0], time[1], tipo[0], tipo[1], mensaje[0], mensaje[1]};
+            }
         } else {
-            String[] tipo = time[2].split("5TYP5"); //sensor + variable + mensaje
-            return new String[] {neolink[0],time[0],time[1],tipo[0],tipo[1],tipo[2]};
+            String[] neolink = line.split("5HEISSEN5");  //neolink + lodemas
+            String[] time = neolink[1].split("5ZEIT5");  //fecha + hora + lodemas
+            if (time[2].contains("5PORT5")) {
+                String[] puerto = time[2].split("5PORT5");
+                String[] tipo = puerto[1].split("5TYP5");
+                return new String[]{neolink[0], time[0], time[1], tipo[0], tipo[1], tipo[2], puerto[0]};
+            } else {
+                String[] tipo = time[2].split("5TYP5"); //sensor + variable + mensaje
+                return new String[]{neolink[0], time[0], time[1], tipo[0], tipo[1], tipo[2]};
+            }
         }
         //String[] tipo = tipo[];
     }
@@ -155,6 +179,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
         public TextView contenidoitem;
         public TextView headercontenidoitem;
         public TextView secondheaderitem;
+        public TextView autor;
         public TextView fechaitem;
         public TextView tiempoitem;
         public ImageView editar;
@@ -165,6 +190,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
             fechaitem = itemView.findViewById(R.id.fecha);
             tiempoitem = itemView.findViewById(R.id.tiempo);
             headercontenidoitem = itemView.findViewById(R.id.headerregistrocontenido);
+            autor = itemView.findViewById(R.id.correoautor);
             secondheaderitem = itemView.findViewById(R.id.secondheaderregistrocontenido);
             editar = itemView.findViewById(R.id.registroeditar);
             borrar = itemView.findViewById(R.id.registroborrar);

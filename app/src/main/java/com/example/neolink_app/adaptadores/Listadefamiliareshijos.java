@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neolink_app.R;
@@ -17,12 +16,10 @@ import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import java.util.ArrayList;
 
 public class Listadefamiliareshijos extends RecyclerView.Adapter<Listadefamiliareshijos.ListaFamiliaresViewHolder> {
-    private ArrayList<String> correos = new ArrayList<>();
+    private ArrayList<String> correos;
     private MasterDrawerViewModel archi;
     private LifecycleOwner act;
-    public Listadefamiliareshijos(ArrayList<String> correos){
-        this.correos = correos;
-    }
+
     public Listadefamiliareshijos(ArrayList<String> correos, MasterDrawerViewModel archi, LifecycleOwner act){
         this.correos = correos;
         this.archi = archi;
@@ -38,19 +35,14 @@ public class Listadefamiliareshijos extends RecyclerView.Adapter<Listadefamiliar
     @Override
     public void onBindViewHolder(@NonNull ListaFamiliaresViewHolder holder, int position) {
         holder.correo.setText(correos.get(position));
-        holder.borrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                archi.fetchuiddelhijo(correos.get(position)).observe(act, new Observer<String>() {
-                    @Override
-                    public void onChanged(String s) {
-                        if(s!=null){
-                            archi.borrarhijo(s);
-                        }
-                    }
-                });
+        holder.borrar.setOnClickListener(v -> archi.fetchuiddelhijo(correos.get(position)).observe(act, s -> {
+            if(s!=null){
+                if(archi.cualeselestadofamiliar()){
+                    archi.actualizaravizonoerespadre(holder.itemView);
+                } else
+                    archi.borrarhijo(s);
             }
-        });
+        }));
     }
 
     @Override

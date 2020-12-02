@@ -50,7 +50,7 @@
     <string name="MensajeRegistroErrorThree">Código invalido</string>
     <string name="radiobuttonneolink">Dueño neolink</string>
     <string name="radiobuttonfamiliar">Vincular cuenta</string>
-    <string name="appname">NeoLink +</string>
+    <string name="appname">NeoLink</string>
 
     //Navigation Drawer Menu
     <string name="home">Principal</string>
@@ -164,6 +164,7 @@
     <string name="titulolinkeo">Manejo de cuentas vinculadas</string>
     <string name="token">Código de vínculo:</string>
     <string name="botongenerar">Generar</string>
+    <string name="imagenborrar">La imagen para borrar la cuenta</string>
 
     //adaptadoresdelimites
     <string name="iconoplegableplegado">Icono plegable plegado</string>

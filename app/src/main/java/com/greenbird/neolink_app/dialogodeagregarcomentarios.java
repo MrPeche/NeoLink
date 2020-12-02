@@ -50,7 +50,7 @@ public class dialogodeagregarcomentarios extends AppCompatDialogFragment {
                 if(mensajecomentario.getText().toString().length()!=0) {
                     //archi.agregarneolink(codigoneolinknuevo.getText().toString());
                     //neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var
-                    archi.guardarcomentarioneolink(decodificarnombre(referencia),referencia+"5TYP5"+mensajecomentario.getText().toString());
+                    archi.guardarcomentarioneolink(decodificarnombre(referencia),referencia+"5TP5"+mensajecomentario.getText().toString());
                 }
             }
         });
@@ -58,7 +58,7 @@ public class dialogodeagregarcomentarios extends AppCompatDialogFragment {
         return builder.create();
     }
     private String decodificarnombre(String line){
-        String[] resultado = line.split("5HEISSEN5");
+        String[] resultado = line.split("5HN5");
         return resultado[0];
     }
 

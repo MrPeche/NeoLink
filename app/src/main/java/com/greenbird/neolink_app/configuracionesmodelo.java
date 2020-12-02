@@ -171,9 +171,13 @@ public class configuracionesmodelo extends Fragment {
         ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final Snackbar Avizoguardado = Snackbar.make(v,"Configuración Guardada", BaseTransientBottomBar.LENGTH_SHORT);
                 final Snackbar Avizonoguardo = Snackbar.make(v,"No hay cambio detectado", BaseTransientBottomBar.LENGTH_SHORT);
-                doineedtosave(Avizoguardado,Avizonoguardo);
+                if(archi.cualeselestadofamiliar()){
+                    archi.actualizaravizonoerespadre(v);
+                } else
+                    doineedtosave(Avizoguardado,Avizonoguardo);
             }
         });
 

@@ -31,5 +31,6 @@
         android:layout_gravity="end"
         app:srcCompat="@drawable/borrarcuentavinculada"
         tools:ignore="VectorDrawableCompat"
-        app:tint="@color/colorojo" />
+        app:tint="@color/colorojo"
+        android:contentDescription="@string/imagenborrar" />
 </LinearLayout>

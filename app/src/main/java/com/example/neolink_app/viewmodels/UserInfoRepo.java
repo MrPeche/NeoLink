@@ -967,7 +967,8 @@ public class UserInfoRepo {
             public void onChanged(DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null){
                     tok.setValue(dataSnapshot.child(uid).getValue(String.class));
-                } else tok.setValue(null);
+                }
+                //else tok.setValue(null);
             }
         });
         return tok;

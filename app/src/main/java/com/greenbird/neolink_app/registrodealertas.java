@@ -80,7 +80,10 @@ public class registrodealertas extends Fragment {
             @Override
             public void onChanged(String[] strings) {
                 if(strings!=null){
-                    Navigation.findNavController(getView()).navigate(registrodealertasDirections.actionRegistrodealertasToDialogoeditarcomentario(strings[0],strings[1],strings[2]));
+                    if(archi.cualeselestadofamiliar()){
+                        archi.actualizaravizonoerespadre(view);
+                    } else
+                        Navigation.findNavController(getView()).navigate(registrodealertasDirections.actionRegistrodealertasToDialogoeditarcomentario(strings[0],strings[1],strings[2]));
                 }
             }
         });

@@ -1,6 +1,11 @@
 package com.greenbird.neolink_app;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,19 +16,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.example.neolink_app.R;
-import com.example.neolink_app.adaptadores.ListaNeolinks;
 import com.example.neolink_app.adaptadores.Listadefamiliareshijos;
-import com.example.neolink_app.listita;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,14 +35,12 @@ public class configuracioncuenta extends Fragment {
     public configuracioncuenta() {
         // Required empty public constructor
     }
-
     public static configuracioncuenta newInstance(String param1, String param2) {
         configuracioncuenta fragment = new configuracioncuenta();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,18 +89,19 @@ public class configuracioncuenta extends Fragment {
                 }
             }
         });
-
-
     }
     private View.OnClickListener botongenerar = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String tok = getRandomString(10);
-            tokendevinculacion.setText(tok);
-            archi.guardartokenparavincular(tok);
+            if(archi.cualeselestadofamiliar()){
+                archi.actualizaravizonoerespadre(v);
+            } else {
+                String tok = getRandomString(10);
+                tokendevinculacion.setText(tok);
+                archi.guardartokenparavincular(tok);
+            }
         }
     };
-
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 
     private static String getRandomString(final int sizeOfRandomString)

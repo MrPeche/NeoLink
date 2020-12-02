@@ -76,6 +76,14 @@
                 android:id="@+id/secondheaderregistrocontenido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:gravity="start|top"
+                android:textColor="@color/colorTextoNegro"
+                android:textSize="@dimen/Tamañotextopequeño" />
+            <TextView
+                android:id="@+id/correoautor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/Margendeconfiguracionconsensores"
                 android:fontFamily="@font/lato"
                 android:gravity="start|top"
