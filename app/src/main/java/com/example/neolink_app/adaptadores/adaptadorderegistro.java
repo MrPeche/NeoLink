@@ -91,8 +91,12 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
             second = contenidounitario[6] + " " + translateelvalor(contenidounitario[3],contenidounitario[4]);
         }
         if(!contenido.get(position).contains("5PT5")){
-            holder.autor.setText(contenidounitario[6]);
-        } else holder.autor.setText(contenidounitario[7]);
+            String var = contenidounitario[6].split("@")[0] + " comentó";
+            holder.autor.setText(var);
+        } else{
+            String var = contenidounitario[7].split("@")[0] + " comentó";
+            holder.autor.setText(var);
+        }
         holder.secondheaderitem.setText(second);
 
         holder.borrar.setOnClickListener(new View.OnClickListener() {

@@ -84,8 +84,9 @@
                 android:id="@+id/correoautor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/Margendeconfiguracionconsensores"
                 android:fontFamily="@font/lato"
+                android:layout_marginBottom="@dimen/Margendeconfiguracionconsensores"
+                android:textStyle="italic"
                 android:gravity="start|top"
                 android:textColor="@color/colorTextoNegro"
                 android:textSize="@dimen/Tamañotextopequeño" />
@@ -95,7 +96,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
-                android:layout_marginBottom="@dimen/Margendeconfiguracionconsensores"
                 android:gravity="start|top"
                 android:textColor="@color/colorTextoNegro"
                 android:textSize="@dimen/Tamañotextopequeño" />

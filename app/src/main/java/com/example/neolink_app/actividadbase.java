@@ -68,7 +68,7 @@ public class actividadbase extends AppCompatActivity {
         View headerweather= navigationView.getHeaderView(0);
         correoYO = headerweather.findViewById(R.id.textocorreo);
         String yo = damecorreo();
-        correoYO.setText(yo);
+        correoYO.setText(yo.split("@")[0]);
         /*
         MenuItem salida = navigationView.getMenu().findItem(R.id.ndsalida);
         salida.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
