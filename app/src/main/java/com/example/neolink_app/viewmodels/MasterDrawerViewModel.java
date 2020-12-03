@@ -267,7 +267,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 } else if(input==2){
                     return appRepo.fetchestemes(neolink, Objects.requireNonNull(datetoday.getValue()));
                 } else if(input==3){
-                    return appRepo.fetchesteano();
+                    return appRepo.fetchesteano(neolink, figurarlosmeses());
                 } else {
                     return appRepo.fetchdiasrandom(neolink,sacarlosdiasentre(datechoosen.getValue()));
                 }
@@ -368,6 +368,15 @@ public class MasterDrawerViewModel extends AndroidViewModel {
          */
 
         return dias;
+    }
+    private ArrayList<ArrayList<Integer>> figurarlosmeses(){
+        ArrayList<ArrayList<Integer>> meses = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for(int i=0;i<12;i++){
+            meses.add(translatesemana(calendar));
+            calendar.add(Calendar.MONTH,-1);
+        }
+        return meses;
     }
     private ArrayList<Integer> translatesemana(Calendar cal){
         ArrayList<Integer> resultado= new ArrayList<>();

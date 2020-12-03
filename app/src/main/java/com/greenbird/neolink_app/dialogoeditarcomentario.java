@@ -39,8 +39,9 @@ public class dialogoeditarcomentario extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialogoeditarcomentario,null);
         mensajecomentario = view.findViewById(R.id.mensajeparaeditar);
         archi = new ViewModelProvider(getActivity()).get(MasterDrawerViewModel.class);
-        String[] mensaje = comentario.split("5TYP5");
-        mensajecomentario.setText(mensaje[2]);
+        String[] mensaje = comentario.split("5TP5");
+        String[] division = mensaje[2].split("5MS5");
+        mensajecomentario.setText(division[0]);
         builder.setView(view).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -50,7 +51,7 @@ public class dialogoeditarcomentario extends AppCompatDialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(!mensajecomentario.getText().toString().equals("")){
-                    String nuevocomentario = mensaje[0]+"5TYP5"+mensaje[1]+"5TYP5"+mensajecomentario.getText().toString();
+                    String nuevocomentario = mensaje[0]+"5TP5"+mensaje[1]+"5TP5"+mensajecomentario.getText().toString()+"5MS5"+division[1];
                     archi.editarmensajes(fecha,hora,nuevocomentario);
                     archi.dilaogoeditarmensajeborrar();
                 }

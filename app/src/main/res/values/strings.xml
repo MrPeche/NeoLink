@@ -160,7 +160,7 @@
     <string name="titutlodeldialogocomentarioparaeditar">Edite su comentario</string>
 
     //Configuracion cuenta
-    <string name="tituloconfiguracioncuenta">Configuración de la cuenta</string>
+    <string name="tituloconfiguracioncuenta">Configuración General</string>
     <string name="titulolinkeo">Manejo de cuentas vinculadas</string>
     <string name="token">Código de vínculo:</string>
     <string name="botongenerar">Generar</string>

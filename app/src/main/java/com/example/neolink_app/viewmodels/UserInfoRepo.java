@@ -858,8 +858,24 @@ public class UserInfoRepo {
         });
         return estemes;
     }
-    public LiveData<InfoParaGraficos> fetchesteano(){
+    public LiveData<InfoParaGraficos> fetchesteano(String neolink,ArrayList<ArrayList<Integer>> fechasdemeses){
         final MediatorLiveData<InfoParaGraficos> esteano = new MediatorLiveData<>();
+        InfoParaGraficos data = new InfoParaGraficos();
+        esteano.setValue(null);
+        for(ArrayList<Integer> mes:fechasdemeses){
+            paquetededatacompleto<Meses,mesesstate,MesesG> datames = new paquetededatacompleto<>(fetchdatakpormonth(neolink,mes.get(0), mes.get(1)),fetchdatastatepormonth(neolink,mes.get(0), mes.get(1)),fetchdatagpormonth(neolink,mes.get(0), mes.get(1)));
+            esteano.addSource(datames, new Observer<Pair<Pair<Meses, mesesstate>, MesesG>>() {
+                @Override
+                public void onChanged(Pair<Pair<Meses, mesesstate>, MesesG> pairMesesGPair) {
+                    if(pairMesesGPair!=null){
+                        if(datames.isitready()){
+                            data.agregarmesinfomes(datames);
+                            esteano.setValue(data);
+                        }
+                    } else esteano.setValue(data);
+                }
+            });
+        }
         return esteano;
     }
     public LiveData<InfoParaGraficos> fetchdiasrandom(String neolink, ArrayList<ArrayList<Integer>> dates){
@@ -1029,7 +1045,7 @@ public class UserInfoRepo {
         return hijos;
     }
     public void editarmensaje(String fecha,String hora, String contenido){
-        String[] neo = contenido.split("5HEISSEN5");
+        String[] neo = contenido.split("5HN5");
         String[] indices = fecha.split("/");
         String path = "/NeoLink/"+neo[0]+"/DataSet/NotiHist/"+indices[2]+"/"+indices[1]+"/"+indices[0]+"/"+hora;
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);

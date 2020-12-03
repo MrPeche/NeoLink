@@ -30,11 +30,16 @@ public class InfoParaGraficos {
     public InfoParaGraficos(){}
 
     public void agregarinfodias(paquetededatacompleto<Dias,diasstate,DiasG> data){
+        limpiarlosarrays();
         this.dias.add(data);
     }
     public void agregarmesinfomes(paquetededatacompleto<Meses, mesesstate, MesesG> mes){
+        limpiarlosarrays();
+        this.meses.add(mes);
+    }
+    private void limpiarlosarrays(){
+        this.dias.clear();
         this.meses.clear();
-        //this.meses.add(mes);
     }
     public boolean validarlosdias(){
         boolean validate = true;
@@ -89,7 +94,15 @@ public class InfoParaGraficos {
             }
             return new fulldatapack(managesensorkendias(sensork),managesensorgendias(sensorg),managesensorstateendias(sensorstate));
         } else {
-            return new fulldatapack(managesensorkmes(meses.get(0).damevalorA()),managesensorgmes(meses.get(0).damevalorC()),managesensorstatemes(meses.get(0).damevalorB()));
+            ArrayList<Meses> sensorkmes = new ArrayList<>();
+            ArrayList<mesesstate> sensorstatemes = new ArrayList<>();
+            ArrayList<MesesG> sensorgmes = new ArrayList<>();
+            for(paquetededatacompleto<Meses,mesesstate,MesesG> mes: meses){
+                sensorkmes.add(mes.damevalorA());
+                sensorstatemes.add(mes.damevalorB());
+                sensorgmes.add(mes.damevalorC());
+            }
+            return new fulldatapack(managesensorkmes(sensorkmes),managesensorgmes(sensorgmes),managesensorstatemes(sensorstatemes));
         }
 
         /*
@@ -332,7 +345,7 @@ public class InfoParaGraficos {
         return  data;
     }
 
-    private kdatapack managesensorkmes(Meses data){
+    private kdatapack managesensorkmes(ArrayList<Meses> data){
         paquetedatasetPuertos PotencialMatricial = new paquetedatasetPuertos();
         paquetedatasetPuertos temperatura = new paquetedatasetPuertos();
         DepthPackage depth = new DepthPackage(); //******************************
@@ -342,50 +355,53 @@ public class InfoParaGraficos {
         String labelminutos;
         ArrayList<String> datalabelsaxisX = new ArrayList<>(); //****************
         float Xindex = 0;
-        for(Dias dia:data.dameelarraycompleto()){
-            for(int i =0;i<dia.dametamano();i++){
-                labeldia = data.damemes(0)+"/"+dia.damedia(i);
-                for(int j = 0; j<dia.damehora(i).dametamano();j++){
-                    labelhoras = dia.damehora(i).damehora(j);
-                    for(int k = 0;k<dia.damehora(i).dameminutos(j).dametamano();k++){
-                        labelminutos = dia.damehora(i).dameminutos(j).dameminuto(k);
-                        datalabelsaxisX.add(labeldia +"\n"+labelhoras+sp+labelminutos);
-                        for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamano();m++){
-                            String nombredelpuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
-                            switch (nombredelpuerto){
-                                case "P1":
-                                    PotencialMatricial.addP1(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    temperatura.addP1(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
-                                case "P2":
-                                    PotencialMatricial.addP2(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    temperatura.addP2(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
-                                case "P3":
-                                    PotencialMatricial.addP3(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    temperatura.addP3(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
-                                case "P4":
-                                    PotencialMatricial.addP4(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    temperatura.addP4(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
+        for(Meses mes:data){
+            for(Dias dia:mes.dameelarraycompleto()){
+                for(int i =0;i<dia.dametamano();i++){
+                    labeldia = mes.damemes(0)+"/"+dia.damedia(i);
+                    for(int j = 0; j<dia.damehora(i).dametamano();j++){
+                        labelhoras = dia.damehora(i).damehora(j);
+                        for(int k = 0;k<dia.damehora(i).dameminutos(j).dametamano();k++){
+                            labelminutos = dia.damehora(i).dameminutos(j).dameminuto(k);
+                            datalabelsaxisX.add(labeldia +"\n"+labelhoras+sp+labelminutos);
+                            for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamano();m++){
+                                String nombredelpuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                                switch (nombredelpuerto){
+                                    case "P1":
+                                        PotencialMatricial.addP1(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        temperatura.addP1(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P2":
+                                        PotencialMatricial.addP2(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        temperatura.addP2(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P3":
+                                        PotencialMatricial.addP3(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        temperatura.addP3(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P4":
+                                        PotencialMatricial.addP4(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        temperatura.addP4(new Entry(Xindex,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                }
+                                Xindex++;
                             }
-                            Xindex++;
                         }
                     }
                 }
             }
         }
+
         Pair<ArrayList<String>,LineData> PM = extraerdatadelpaquete(PotencialMatricial); //****************
         Pair<ArrayList<String>,LineData> temp = extraerdatadelpaquete(temperatura); //*************
         Pair<paquetedatasetPuertos,paquetedatasetPuertos> Raiz = new Pair<>(PotencialMatricial,temperatura);
         return new kdatapack(depth,datalabelsaxisX,PM,temp,Raiz);
     }
-    private gdatapack managesensorgmes(MesesG data){
+    private gdatapack managesensorgmes(ArrayList<MesesG> data){
         paquetedatasetPuertos humS = new paquetedatasetPuertos();
         paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
         paquetedatasetPuertos condE = new paquetedatasetPuertos();
@@ -399,57 +415,60 @@ public class InfoParaGraficos {
         String nombrePuerto;
         ArrayList<String> XlabelsG = new ArrayList<>();
         float l = 0;
-        for(DiasG dia:data.damearraydedias()){
-            for(int i = 0; i<dia.dametamanoG();i++){
-                labeldia = data.damemes(0)+"/"+dia.damedia(i);
-                for(int j = 0; j<dia.damehora(i).dametamanoG();j++){
-                    labelhora = dia.damehora(i).damehora(j);
-                    for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoG();k++){
-                        labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
-                        XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
-                        for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoG();m++){
-                            nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
-                            switch (nombrePuerto){
-                                case "P1":
-                                    humS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    tempeS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    condE.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
-                                    conddelporo.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
-                                    contentvolumagua.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
-                                    Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
-                                case "P2":
-                                    humS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    tempeS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    condE.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
-                                    conddelporo.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
-                                    contentvolumagua.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
-                                    Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
-                                case "P3":
-                                    humS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    tempeS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    condE.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
-                                    conddelporo.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
-                                    contentvolumagua.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
-                                    Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
-                                case "P4":
-                                    humS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
-                                    tempeS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
-                                    condE.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
-                                    conddelporo.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
-                                    contentvolumagua.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
-                                    Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
-                                    break;
+        for(MesesG mes:data){
+            for(DiasG dia:mes.damearraydedias()){
+                for(int i = 0; i<dia.dametamanoG();i++){
+                    labeldia = mes.damemes(0)+"/"+dia.damedia(i);
+                    for(int j = 0; j<dia.damehora(i).dametamanoG();j++){
+                        labelhora = dia.damehora(i).damehora(j);
+                        for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoG();k++){
+                            labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
+                            XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
+                            for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoG();m++){
+                                nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                                switch (nombrePuerto){
+                                    case "P1":
+                                        humS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        tempeS.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        condE.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                        conddelporo.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                        contentvolumagua.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                        Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P2":
+                                        humS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        tempeS.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        condE.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                        conddelporo.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                        contentvolumagua.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                        Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P3":
+                                        humS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        tempeS.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        condE.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                        conddelporo.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                        contentvolumagua.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                        Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P4":
+                                        humS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV1().floatValue()));
+                                        tempeS.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV2().floatValue()));
+                                        condE.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameV3().floatValue()));
+                                        conddelporo.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameporece().floatValue()));
+                                        contentvolumagua.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damevwc().floatValue()));
+                                        Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                }
                             }
+                            l++;
                         }
-                        l++;
+                        //l++;
                     }
-                    //l++;
                 }
             }
         }
+
         Pair<ArrayList<String>,LineData> humedadG = extraerdatadelpaquete(humS);
         Pair<ArrayList<String>,LineData> temperaturaG = extraerdatadelpaquete(tempeS);
         Pair<ArrayList<String>,LineData> conductividadG = extraerdatadelpaquete(condE);
@@ -457,7 +476,7 @@ public class InfoParaGraficos {
         Pair<ArrayList<String>,LineData> contenidovolumendelagua = extraerdatadelpaquete(contentvolumagua);
         return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,conductividaddelporo,contenidovolumendelagua,humS,tempeS,condE,conddelporo,contentvolumagua);
     }
-    private statedatapack managesensorstatemes(mesesstate data){
+    private statedatapack managesensorstatemes(ArrayList<mesesstate> data){
         ArrayList<String> XlabelsSTATE = new ArrayList<>();
         ArrayList<Entry> bateria = new ArrayList<>();
         ArrayList<Entry> solar = new ArrayList<>();
@@ -470,21 +489,23 @@ public class InfoParaGraficos {
         String labeldia;
         String labelhora;
         float l = 0;
-        for(diasstate dia:data.damearraydedias()){
-            for(int i = 0; i<dia.dametamano();i++){
-                labeldia = data.damemeses(0)+"/"+dia.damedia(i);
-                for(int k = 0;k<dia.damehoras(i).dametamano();k++){
-                    labelhora = dia.damehoras(i).damehora(k);
-                    for(int j = 0; j<dia.damehoras(i).dameminutos(k).dametamano();j++){
-                        XlabelsSTATE.add(labeldia+"\n"+labelhora+sp+dia.damehoras(i).dameminutos(k).dameminutos(j));
-                        bateria.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBV()));
-                        solar.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveSV()));
-                        presionbaro.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBP()));
-                        humedadrelativa.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveRH()));
-                        temperaturavulvoseco.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).givedT()));
-                        temperaturainterna.add(new Entry(l,(float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveiT()));
-                        windspeed.add(new Entry(l,(float)dia.damehoras(i).dameminutos(k).damepaquete(j).giveWS()));
-                        l++;
+        for(mesesstate mes: data) {
+            for (diasstate dia : mes.damearraydedias()) {
+                for (int i = 0; i < dia.dametamano(); i++) {
+                    labeldia = mes.damemeses(0) + "/" + dia.damedia(i);
+                    for (int k = 0; k < dia.damehoras(i).dametamano(); k++) {
+                        labelhora = dia.damehoras(i).damehora(k);
+                        for (int j = 0; j < dia.damehoras(i).dameminutos(k).dametamano(); j++) {
+                            XlabelsSTATE.add(labeldia + "\n" + labelhora + sp + dia.damehoras(i).dameminutos(k).dameminutos(j));
+                            bateria.add(new Entry(l, (float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBV()));
+                            solar.add(new Entry(l, (float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveSV()));
+                            presionbaro.add(new Entry(l, (float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveBP()));
+                            humedadrelativa.add(new Entry(l, (float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveRH()));
+                            temperaturavulvoseco.add(new Entry(l, (float) dia.damehoras(i).dameminutos(k).damepaquete(j).givedT()));
+                            temperaturainterna.add(new Entry(l, (float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveiT()));
+                            windspeed.add(new Entry(l, (float) dia.damehoras(i).dameminutos(k).damepaquete(j).giveWS()));
+                            l++;
+                        }
                     }
                 }
             }

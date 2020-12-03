@@ -513,6 +513,7 @@ public class graficodelmapa extends Fragment {
         grafico1.setMarker(adapterpm);
         grafico1.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico1.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        grafico1.setExtraRightOffset(OFFSETGRAFPHLEFT);
         grafico1.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico1.invalidate();
         //grafico1.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -529,6 +530,7 @@ public class graficodelmapa extends Fragment {
         grafico2.setMarker(adaptertemp);
         grafico2.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico2.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        grafico2.setExtraRightOffset(OFFSETGRAFPHLEFT);
         grafico2.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico2.invalidate();
         //grafico2.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -544,6 +546,7 @@ public class graficodelmapa extends Fragment {
         XaxisHR.setGranularityEnabled(true);
         graficohumedadrelativa.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficohumedadrelativa.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficohumedadrelativa.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficohumedadrelativa.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficohumedadrelativa.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","RH",archi));
         graficohumedadrelativa.invalidate();
@@ -559,6 +562,7 @@ public class graficodelmapa extends Fragment {
         graficopresionbarometrica.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","BP",archi));
         graficopresionbarometrica.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficopresionbarometrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficopresionbarometrica.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficopresionbarometrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficopresionbarometrica.invalidate();
         //graficopresionbarometrica.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -581,6 +585,7 @@ public class graficodelmapa extends Fragment {
         grafico3.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria));
         grafico3.setExtraTopOffset(OFFSETGRAFPHTOP);
         grafico3.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        grafico3.setExtraRightOffset(OFFSETGRAFPHLEFT);
         grafico3.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         grafico3.invalidate();
         //grafico3.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
@@ -594,6 +599,7 @@ public class graficodelmapa extends Fragment {
         XaxisTVS.setGranularityEnabled(true);
         graficotemperaturavulvoseco.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","dT",archi));
         graficotemperaturavulvoseco.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficotemperaturavulvoseco.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficotemperaturavulvoseco.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficotemperaturavulvoseco.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficotemperaturavulvoseco.invalidate();
@@ -608,6 +614,7 @@ public class graficodelmapa extends Fragment {
         XaxisRV.setGranularityEnabled(true);
         graficorosadevientos.setMarker(new MarkerLineChartDefault(getContext(),R.layout.item_dataetiquetasecundaria,pack.sacaraxislabels(),nombre,"state","WS",archi));
         graficorosadevientos.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficorosadevientos.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficorosadevientos.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficorosadevientos.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         graficorosadevientos.invalidate();
@@ -638,6 +645,7 @@ public class graficodelmapa extends Fragment {
         xaxisTS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
         xaxisTS.setGranularityEnabled(true);
         graficoMPtemperaturadelsuelo.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficoMPtemperaturadelsuelo.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficoMPtemperaturadelsuelo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoMPtemperaturadelsuelo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         MarkerLineChartAdapter adapterTS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiztemperatura(),pack.sacarlatemperatura().first,pack.sacarlabels(),nombre,"g","V2",archi);
@@ -653,6 +661,7 @@ public class graficodelmapa extends Fragment {
         xaxisCS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
         xaxisCS.setGranularityEnabled(true);
         graficoMPconductividadelectrica.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficoMPconductividadelectrica.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficoMPconductividadelectrica.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoMPconductividadelectrica.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         MarkerLineChartAdapter adapterCS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividad(),pack.sacarlaconductividad().first,pack.sacarlabels(),nombre,"g","V3",archi);
@@ -668,6 +677,7 @@ public class graficodelmapa extends Fragment {
         xaxisCSP.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
         xaxisCSP.setGranularityEnabled(true);
         graficoconductividadelectricadelporo.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficoconductividadelectricadelporo.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficoconductividadelectricadelporo.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficoconductividadelectricadelporo.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         MarkerLineChartAdapter adapterCSP = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizconductividaddelporo(),pack.sacarlaconductividaddelporo().first,pack.sacarlabels(),nombre,"g","PoreCer",archi);
@@ -683,6 +693,7 @@ public class graficodelmapa extends Fragment {
         xaxisCVA.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
         xaxisCVA.setGranularityEnabled(true);
         graficocontenidovolumetricodelagua.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficocontenidovolumetricodelagua.setExtraRightOffset(OFFSETGRAFPHLEFT);
         graficocontenidovolumetricodelagua.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficocontenidovolumetricodelagua.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
         MarkerLineChartAdapter adapterCVA = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizcontenidovolumetricodelagua(),pack.sacarelcontenidovolumetricodelagua().first,pack.sacarlabels(),nombre,"g","vwc",archi);

@@ -29,12 +29,16 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_gravity="start"
-            android:theme="@style/cardview">
+            android:theme="@style/cardview"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin">
+            <Space
+                android:layout_width="@dimen/margencard"
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/neolinkicon"
                 android:tint="#FFFFFF"
@@ -57,9 +61,11 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="end|top"
+            android:layout_marginRight="@dimen/margencard"
             android:text="@string/cardtitle"
             android:fontFamily="@font/lato_bold"
-            android:textSize="@dimen/Tamañotexto" />
+            android:textSize="@dimen/Tamañotexto"
+            android:layout_marginEnd="@dimen/margencard" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
