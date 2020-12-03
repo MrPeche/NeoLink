@@ -30,16 +30,12 @@ public class InfoParaGraficos {
     public InfoParaGraficos(){}
 
     public void agregarinfodias(paquetededatacompleto<Dias,diasstate,DiasG> data){
-        limpiarlosarrays();
+        this.meses.clear();
         this.dias.add(data);
     }
     public void agregarmesinfomes(paquetededatacompleto<Meses, mesesstate, MesesG> mes){
-        limpiarlosarrays();
-        this.meses.add(mes);
-    }
-    private void limpiarlosarrays(){
         this.dias.clear();
-        this.meses.clear();
+        this.meses.add(mes);
     }
     public boolean validarlosdias(){
         boolean validate = true;
@@ -346,6 +342,7 @@ public class InfoParaGraficos {
     }
 
     private kdatapack managesensorkmes(ArrayList<Meses> data){
+        Collections.sort(data, new sortpormes<>());
         paquetedatasetPuertos PotencialMatricial = new paquetedatasetPuertos();
         paquetedatasetPuertos temperatura = new paquetedatasetPuertos();
         DepthPackage depth = new DepthPackage(); //******************************
@@ -402,6 +399,7 @@ public class InfoParaGraficos {
         return new kdatapack(depth,datalabelsaxisX,PM,temp,Raiz);
     }
     private gdatapack managesensorgmes(ArrayList<MesesG> data){
+        Collections.sort(data, new sortpormes<>());
         paquetedatasetPuertos humS = new paquetedatasetPuertos();
         paquetedatasetPuertos tempeS = new paquetedatasetPuertos();
         paquetedatasetPuertos condE = new paquetedatasetPuertos();
@@ -477,6 +475,7 @@ public class InfoParaGraficos {
         return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,conductividaddelporo,contenidovolumendelagua,humS,tempeS,condE,conddelporo,contentvolumagua);
     }
     private statedatapack managesensorstatemes(ArrayList<mesesstate> data){
+        Collections.sort(data, new sortpormes<>());
         ArrayList<String> XlabelsSTATE = new ArrayList<>();
         ArrayList<Entry> bateria = new ArrayList<>();
         ArrayList<Entry> solar = new ArrayList<>();

@@ -708,7 +708,7 @@ public class planografico extends Fragment {
         xaxisCVA.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
         xaxisCVA.setGranularityEnabled(true);
         //xaxisCVA.setGranularity(50f);
-        xaxisCVA.setLabelCount(6,true);
+        //xaxisCVA.setLabelCount(6, true);
         graficocontenidovolumetricodelagua.setExtraTopOffset(OFFSETGRAFPHTOP);
         graficocontenidovolumetricodelagua.setExtraLeftOffset(OFFSETGRAFPHLEFT);
         graficocontenidovolumetricodelagua.setExtraRightOffset(OFFSETGRAFPHLEFT);
