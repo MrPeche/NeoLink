@@ -246,6 +246,7 @@ public class graficodelmapa extends Fragment {
         grafico1.setScaleYEnabled(false);
         grafico1.setScaleXEnabled(true);
         Legend L = grafico1.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficoTem(){
         grafico2.setBackgroundColor(Color.TRANSPARENT);
@@ -261,6 +262,7 @@ public class graficodelmapa extends Fragment {
         grafico2.setScaleYEnabled(false);
         grafico2.setScaleXEnabled(true);
         Legend L = grafico2.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgrafico3(){
         grafico3.setBackgroundColor(Color.TRANSPARENT);
@@ -275,6 +277,7 @@ public class graficodelmapa extends Fragment {
         grafico3.setScaleYEnabled(false);
         grafico3.setScaleXEnabled(true);
         Legend L = grafico3.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficohumedadrelativa(){
         graficohumedadrelativa.setBackgroundColor(Color.TRANSPARENT);
@@ -289,6 +292,7 @@ public class graficodelmapa extends Fragment {
         graficohumedadrelativa.setScaleYEnabled(false);
         graficohumedadrelativa.setScaleXEnabled(true);
         Legend L = graficohumedadrelativa.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficopresionbarometrica(){
         graficopresionbarometrica.setBackgroundColor(Color.TRANSPARENT);
@@ -303,6 +307,7 @@ public class graficodelmapa extends Fragment {
         graficopresionbarometrica.setScaleYEnabled(false);
         graficopresionbarometrica.setScaleXEnabled(true);
         Legend L = graficopresionbarometrica.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficotemperaturavulvoseco(){
         graficotemperaturavulvoseco.setBackgroundColor(Color.TRANSPARENT);
@@ -317,6 +322,7 @@ public class graficodelmapa extends Fragment {
         graficotemperaturavulvoseco.setScaleYEnabled(false);
         graficotemperaturavulvoseco.setScaleXEnabled(true);
         Legend L = graficotemperaturavulvoseco.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     /*
     private void propiedadesgraficohumedaddeldelsuelo(){
@@ -347,6 +353,7 @@ public class graficodelmapa extends Fragment {
         graficoMPtemperaturadelsuelo.setScaleYEnabled(false);
         graficoMPtemperaturadelsuelo.setScaleXEnabled(true);
         Legend L = graficoMPtemperaturadelsuelo.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficoconductividaddeldelsuelo(){
         graficoMPconductividadelectrica.setBackgroundColor(Color.TRANSPARENT);
@@ -361,6 +368,7 @@ public class graficodelmapa extends Fragment {
         graficoMPconductividadelectrica.setScaleYEnabled(false);
         graficoMPconductividadelectrica.setScaleXEnabled(true);
         Legend L = graficoMPconductividadelectrica.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficoconductividadelectricadelporo(){
         graficoconductividadelectricadelporo.setBackgroundColor(Color.TRANSPARENT);
@@ -375,6 +383,7 @@ public class graficodelmapa extends Fragment {
         graficoconductividadelectricadelporo.setScaleYEnabled(false);
         graficoconductividadelectricadelporo.setScaleXEnabled(true);
         Legend L = graficoconductividadelectricadelporo.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficocontenidovolumetricodelagua(){
         graficocontenidovolumetricodelagua.setBackgroundColor(Color.TRANSPARENT);
@@ -389,6 +398,7 @@ public class graficodelmapa extends Fragment {
         graficocontenidovolumetricodelagua.setScaleYEnabled(false);
         graficocontenidovolumetricodelagua.setScaleXEnabled(true);
         Legend L = graficocontenidovolumetricodelagua.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void propiedadesgraficorosadelviento(){
         graficorosadevientos.setBackgroundColor(Color.TRANSPARENT);
@@ -403,6 +413,7 @@ public class graficodelmapa extends Fragment {
         graficorosadevientos.setScaleYEnabled(false);
         graficorosadevientos.setScaleXEnabled(true);
         Legend L = graficorosadevientos.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     private void cleanthisshit(){
         grafico1.clear();

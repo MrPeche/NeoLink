@@ -50,7 +50,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMP1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -81,7 +82,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMP2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -111,7 +113,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPcontenidovolumetricodelagua"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -141,7 +144,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPconductividadelectrica"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -171,7 +175,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPconductividadelectricadelporo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -201,7 +206,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPtemperaturadelsuelo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -231,7 +237,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPPresionBarometrica"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -261,7 +268,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPHumedadRelativa"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -291,7 +299,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMPtemperaturavulvoseco"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -321,7 +330,8 @@
                     <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
                         android:id="@+id/graficoMProsadevientos"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -352,7 +362,8 @@
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/graficoMPBateria"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
