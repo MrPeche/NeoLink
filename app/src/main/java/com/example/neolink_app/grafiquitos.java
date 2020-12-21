@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.neolink_app.adaptadores.ListaNeolinks;
 import com.example.neolink_app.adaptadores.grafiquitosneolinks;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
@@ -51,13 +52,20 @@ public class grafiquitos extends Fragment implements grafiquitosneolinks.clickpr
         rv = view.findViewById(R.id.recyclergraficos);
         glm = new GridLayoutManager(getActivity(),1);
         rv.setLayoutManager(glm);
-
-        ArrayList<String> lol = new ArrayList<>();
-        lol.add("NL2006-0002");
-        lol.add("NL2006-0003");
-        lol.add("NL2006-0004");
-
+        /*
         archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+            @Override
+            public void onChanged(OWNERitems owneRitems) {
+                if(owneRitems!=null) {
+                    lista = owneRitems.damelista();
+                    adapter = new grafiquitosneolinks(owneRitems, grafiquitos.this);
+                    rv.setAdapter(adapter);
+                }
+            }
+        });
+
+         */
+        archi.dametodoslosneolinks().observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
             @Override
             public void onChanged(OWNERitems owneRitems) {
                 if(owneRitems!=null) {

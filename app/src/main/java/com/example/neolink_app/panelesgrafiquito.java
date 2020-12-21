@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 
 import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
 import com.example.neolink_app.clases.Horas;
+import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
@@ -95,7 +96,7 @@ public class panelesgrafiquito extends Fragment {
         });
         */
 
-        archi.retrivepaqueteDatos(nombre);
+//        archi.retrivepaqueteDatos(nombre);
 
         /*
         if(!archi.paquetesdedata.hasObservers()) {
@@ -156,12 +157,26 @@ public class panelesgrafiquito extends Fragment {
             }
         });
         */
-        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+//        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+//            @Override
+//            public void onChanged(OWNERitems owneRitems) {
+//                nodo = owneRitems.damelista();
+//                adapter = new viewpagergrafiquitosAdapter(getActivity(),nodo);
+//                vp.setAdapter(adapter);
+//            }
+//        });
+        archi.dameneonodos(neolinkname).observe(getViewLifecycleOwner(), new Observer<OLDneolinksboleto>() {
             @Override
-            public void onChanged(OWNERitems owneRitems) {
-                nodo = owneRitems.damelista();
-                adapter = new viewpagergrafiquitosAdapter(getActivity(),nodo);
-                vp.setAdapter(adapter);
+            public void onChanged(OLDneolinksboleto olDneolinksboleto) {
+                if(olDneolinksboleto!=null){
+                    ArrayList<String> nodo2 = new ArrayList<>();
+                    nodo2.add(neolinkname);
+                    if(olDneolinksboleto.dameneonodos()!=null){
+                        nodo2.addAll(olDneolinksboleto.dameneonodos());
+                    }
+                    adapter = new viewpagergrafiquitosAdapter(getActivity(),nodo2);
+                    vp.setAdapter(adapter);
+                }
             }
         });
         ((actividadbase)getActivity()).fabcalendar();

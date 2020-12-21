@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neolink_app.R;
@@ -20,6 +21,7 @@ public class ListaNeolinks extends RecyclerView.Adapter<ListaNeolinks.ListaNeoli
         this.data = data;
         this.onclicklisteneritem = onclicklisteneritem;
     }
+
 
     @Override
     public ListaNeolinksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

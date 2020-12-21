@@ -41,12 +41,10 @@ public class DialogNeolink extends AppCompatDialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(codigoneolinknuevo.getText().toString().length()!=0) {
-                    //archi.agregarneolink(codigoneolinknuevo.getText().toString());
                     archi.guardarneolinkdeldialogo(codigoneolinknuevo.getText().toString());
                 }
             }
         });
-        codigoneolinknuevo = view.findViewById(R.id.ticketdialog);
         return builder.create();
     }
 }

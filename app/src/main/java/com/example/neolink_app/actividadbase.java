@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
+import com.example.neolink_app.clases.paqueteneolinkasociados;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -104,24 +105,31 @@ public class actividadbase extends AppCompatActivity {
                 }
             }
         });
-        archi.getLiveNL();
-        archi.Usuarioneolinks.observe(this, new Observer<OWNERitems>() {
+//        archi.getLiveNL();
+//        archi.Usuarioneolinks.observe(this, new Observer<OWNERitems>() {
+//            @Override
+//            public void onChanged(OWNERitems owneRitems) {
+//                if(owneRitems!=null){
+//                    for(int i=0;i<owneRitems.dametamanolista();i++){
+//                        archi.getneonodofromneolink(owneRitems.getitem(i)).observe(actividadbase.this, new Observer<OLDneolinksboleto>() {
+//                            @Override
+//                            public void onChanged(OLDneolinksboleto olDneolinksboleto) {
+//                                if(olDneolinksboleto!=null)
+//                                    archi.listacompleta.add(olDneolinksboleto);
+//                            }
+//                        });
+//                    }
+//                }
+//            }
+//        });
+        archi.gettodoelpaqueteneolinkasociado().observe(this, new Observer<paqueteneolinkasociados>() {
             @Override
-            public void onChanged(OWNERitems owneRitems) {
-                if(owneRitems!=null){
-                    for(int i=0;i<owneRitems.dametamanolista();i++){
-                        archi.getneonodofromneolink(owneRitems.getitem(i)).observe(actividadbase.this, new Observer<OLDneolinksboleto>() {
-                            @Override
-                            public void onChanged(OLDneolinksboleto olDneolinksboleto) {
-                                if(olDneolinksboleto!=null)
-                                    archi.listacompleta.add(olDneolinksboleto);
-                            }
-                        });
-                    }
+            public void onChanged(paqueteneolinkasociados paqueteneolinkasociados) {
+                if(paqueteneolinkasociados!=null){
+                    archi.guardarelpaquetedelneolinkasociado(paqueteneolinkasociados);
                 }
             }
         });
-
 
         /*
         archi.segraboelneolink().observe(this, new Observer<Boolean>() {
@@ -132,7 +140,6 @@ public class actividadbase extends AppCompatActivity {
                 }
             }
         });
-
          */
     }
     String dameuid(){

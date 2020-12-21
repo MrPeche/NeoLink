@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,7 +18,9 @@ import android.view.ViewGroup;
 
 import com.example.neolink_app.clases.GPS;
 import com.example.neolink_app.clases.OWNERitems;
+import com.example.neolink_app.clases.paqueteneolinkasociados;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -114,8 +117,10 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        //map.setIndoorEnabled(false);
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
+        //map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        //map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         // Set a preference for minimum and maximum zoom.
         map.setMinZoomPreference(8f);
         map.setMaxZoomPreference(16f);
@@ -148,18 +153,26 @@ public class mapita extends Fragment implements OnMapReadyCallback {
 
             }
         });*/
-        archi.getGPS2();
-        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+//        archi.getGPS2();
+//        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
+//            @Override
+//            public void onChanged(OWNERitems owneRitems) {
+//                if(owneRitems!=null){
+//                    ArrayList<String> lista = owneRitems.damelista();
+//                    agregarmarkadores(lista);
+//                }
+//                /*
+//                ArrayList<String> lista = owneRitems.damelista();
+//                agregarmarkadores(lista);
+//                 */
+//            }
+//        });
+        archi.recibirtodoslosgps().observe(getViewLifecycleOwner(), new Observer<ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>>>() {
             @Override
-            public void onChanged(OWNERitems owneRitems) {
-                if(owneRitems!=null){
-                    ArrayList<String> lista = owneRitems.damelista();
-                    agregarmarkadores(lista);
+            public void onChanged(ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>> pairs) {
+                if(pairs!=null){
+                    agregarmarkadores2(pairs);
                 }
-                /*
-                ArrayList<String> lista = owneRitems.damelista();
-                agregarmarkadores(lista);
-                 */
             }
         });
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -186,7 +199,6 @@ public class mapita extends Fragment implements OnMapReadyCallback {
 
             }
         });
-
     }
 
     @Override
@@ -222,6 +234,18 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 14));
                 }
             });
+        }
+    }
+    private void agregarmarkadores2(ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>> dispositivos){
+        if(marker!=null) marker.remove();
+        for(Pair<ArrayList<String>, ArrayList<GPS>> disp: dispositivos){
+            for(int i=0;i<disp.first.size();i++){
+                if(disp.second.get(i)!=null){
+                    LatLng posicionmarcador2 = new LatLng(disp.second.get(i).getLat(),disp.second.get(i).getLong());
+                    marker = map.addMarker(new MarkerOptions().position(posicionmarcador2).title(disp.first.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador2,14));
+                }
+            }
         }
     }
 }

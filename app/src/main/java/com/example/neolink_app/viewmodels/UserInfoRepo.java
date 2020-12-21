@@ -1,6 +1,7 @@
 package com.example.neolink_app.viewmodels;
 
 import android.annotation.SuppressLint;
+import android.provider.MediaStore;
 
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
@@ -42,6 +43,7 @@ import com.example.neolink_app.clases.database_state.mesesstate;
 import com.example.neolink_app.clases.database_state.minutosstate;
 import com.example.neolink_app.clases.database_state.statePK;
 import com.example.neolink_app.clases.liveclases.paquetededatacompleto;
+import com.example.neolink_app.clases.paqueteneolinkasociados;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -92,6 +94,100 @@ public class UserInfoRepo {
         });
         return ownerdata;
     }
+    public LiveData<OWNERitems> dameneolinks2(String uid) {
+        MediatorLiveData<OWNERitems> neolinks = new MediatorLiveData<>();
+        String patio = "/OWNERitems/" + uid;
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        neolinks.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    neolinks.setValue(dataSnapshot.getValue(OWNERitems.class));
+                }
+            }
+        });
+        return neolinks;
+    }
+    public LiveData<OWNERitems> getneolinks(String uid){
+        MediatorLiveData<OWNERitems> dispositivosneolinks = new MediatorLiveData<>();
+        String path = "/OWNERitems/"+uid;
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+        final FirebaseQueryLiveData livedataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        dispositivosneolinks.addSource(livedataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    dispositivosneolinks.setValue(dataSnapshot.getValue(OWNERitems.class));
+                }
+            }
+        });
+        return dispositivosneolinks;
+    }
+    public LiveData<ArrayList<Pair<ArrayList<String>,ArrayList<GPS>>>> obtenerelgpsdelosdispositivos(paqueteneolinkasociados obj){
+        MediatorLiveData<ArrayList<Pair<ArrayList<String>,ArrayList<GPS>>>> res = new MediatorLiveData<>();
+        ArrayList<Pair<ArrayList<String>,ArrayList<GPS>>> transaccion = new ArrayList<>();
+        for(int i=0;i<obj.dameneolinks().size();i++){
+            ArrayList<String> nuevopaquete = new ArrayList<>();
+            nuevopaquete.add(obj.dameneolinks().get(i));
+            nuevopaquete.addAll(obj.dameneonodos().get(i));
+            res.addSource(fetchgpsdata(nuevopaquete), new Observer<ArrayList<GPS>>() {
+                @Override
+                public void onChanged(ArrayList<GPS> gps) {
+                    if((gps!=null)&&(gps.size()==nuevopaquete.size())){
+                        transaccion.add(new Pair<>(nuevopaquete,gps));
+                        res.setValue(transaccion);
+                    }
+                }
+            });
+        }
+        return res;
+    }
+    public LiveData<ArrayList<GPS>> fetchgpsdata(ArrayList<String> obj){
+        MediatorLiveData<ArrayList<GPS>> gpsdata = new MediatorLiveData<>();
+        ArrayList<GPS> gps = new ArrayList<>();
+        for(String name:obj){
+            String path = "/NeoLink/"+name+"/State/GPS/";
+            DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+            final FirebaseQueryLiveData livedatanl = new FirebaseQueryLiveData(BaseDatosNL);
+            gpsdata.addSource(livedatanl, new Observer<DataSnapshot>() {
+                @Override
+                public void onChanged(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue()!=null){
+                        gps.add(dataSnapshot.getValue(GPS.class));
+                        gpsdata.setValue(gps);
+                    } else{
+                        gps.add(null);
+                        gpsdata.setValue(gps);
+                    }
+                }
+            });
+        }
+        return gpsdata;
+    }
+    public LiveData<paqueteneolinkasociados> getpaquetecompletodedispositivos(ArrayList<String> neolinks){
+        MediatorLiveData<paqueteneolinkasociados> dispositivos = new MediatorLiveData<>();
+        paqueteneolinkasociados obj = new paqueteneolinkasociados();
+        for(String neolink:neolinks){
+            String path = "/OLDneolinks/"+neolink;
+            DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+            FirebaseQueryLiveData livedataNL = new FirebaseQueryLiveData(BaseDatosNL);
+            dispositivos.addSource(livedataNL, new Observer<DataSnapshot>() {
+                @Override
+                public void onChanged(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot!=null){
+                        OLDneolinksboleto objtransicion = dataSnapshot.getValue(OLDneolinksboleto.class);
+                        obj.agregarneolinks(dataSnapshot.getKey());
+                        if(objtransicion.dameneonodos()!=null){
+                            obj.agregarneonodos(objtransicion.dameneonodos());
+                        } else obj.agregarneonodos(new ArrayList<String>());
+                        dispositivos.setValue(obj);
+                    }
+                }
+            });
+        }
+        return dispositivos;
+    }
 
     public LiveData<OLDneolinksboleto> damenodos(String uid, String neolink){
         String patio = "/OLDneolinks/" + neolink;
@@ -114,6 +210,7 @@ public class UserInfoRepo {
         });
         return oldneolinks;
     }
+
     // ESTE ES GENERICO
     public LiveData<OLDneolinksboleto> damenodos2(String uid, String neolink){
         final MediatorLiveData<OLDneolinksboleto> neonodo = new MediatorLiveData<>();
@@ -130,8 +227,6 @@ public class UserInfoRepo {
                     if(uid2.equals(neolinks.neolinksuid())){
                         neonodo.setValue(neolinks);
                     }
-                } else {
-                    neonodo.setValue(null);
                 }
             }
         });
@@ -437,6 +532,47 @@ public class UserInfoRepo {
             }
         });
         return transferencia;
+    }
+    public LiveData<Boolean> agregarneolink2(String codigo, String uid,ArrayList<String> actual){
+        final MediatorLiveData<Boolean> transaccioncompleta = new MediatorLiveData<>();
+        String patio = "/NEWneolinks/"+codigo;
+        final DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        transaccioncompleta.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()!=null){
+                    transaccioncompleta.setValue(true);
+                    basecompleta.child("NEWneolinks").child(codigo).removeValue();
+                    actual.add(codigo);
+                    basecompleta.child("OWNERitems").child(uid).child("neolinks").setValue(actual);
+                    basecompleta.child("OLDneolinks").child(codigo).setValue(new OLDneolinksboleto(uid));
+                    transaccioncompleta.removeSource(liveDataNL); //CREO QUE ESTO PUEDE FUNCIONAR CHECKEARLO
+                } else transaccioncompleta.setValue(false);
+            }
+        });
+        return transaccioncompleta;
+    }
+    public LiveData<Boolean> agregarneonodos(String codigo, String neolink,ArrayList<String> actual){
+        final MediatorLiveData<Boolean> transaccioncompleta = new MediatorLiveData<>();
+        String patio = "/NEWneonodes/"+codigo;
+        final DatabaseReference basecompleta = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        transaccioncompleta.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()!=null){
+                    transaccioncompleta.setValue(true);
+                    basecompleta.child("NEWneonodes").child(codigo).removeValue();
+                    actual.add(codigo);
+                    basecompleta.child("OLDneolinks").child(neolink).child("neonodos").setValue(actual);
+                    transaccioncompleta.removeSource(liveDataNL);
+                } else transaccioncompleta.setValue(false);
+            }
+        });
+        return transaccioncompleta;
     }
     public LiveData<state> fetchdataconfigracionstate(String neolink){
         final MediatorLiveData<state> configuracionstate = new MediatorLiveData<>();
@@ -914,7 +1050,7 @@ public class UserInfoRepo {
         registrodata.addSource(liveDataNL, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null){
+                if(dataSnapshot.getValue()!=null){
                     registromes regmes = new registromes();
                     for(DataSnapshot dia:dataSnapshot.getChildren()){
                         String dianame = dia.getKey();
@@ -937,6 +1073,38 @@ public class UserInfoRepo {
                 }
             }
         });
+        return registrodata;
+    }
+    public LiveData<ArrayList<notihist>> fetchtodoslosregistros(ArrayList<String> dispositivos, int ano, int mes){
+        final MediatorLiveData<ArrayList<notihist>> registrodata = new MediatorLiveData<>();
+        ArrayList<notihist> todoslosregistros = new ArrayList<>();
+        for(String disp:dispositivos){
+            registrodata.addSource(fetchregistro(disp, ano, mes), new Observer<notihist>() {
+                @Override
+                public void onChanged(notihist notihist) {
+                    if(notihist!=null){
+                        todoslosregistros.add(notihist);
+                        registrodata.setValue(todoslosregistros);
+                    }
+                }
+            });
+        }
+        return registrodata;
+    }
+    public LiveData<notihist> fetchtodoslosregistros2(ArrayList<String> dispositivos, int ano, int mes){
+        final MediatorLiveData<notihist> registrodata = new MediatorLiveData<>();
+        notihist todoslosregistros = new notihist();
+        for(String disp:dispositivos){
+            registrodata.addSource(fetchregistro(disp, ano, mes), new Observer<notihist>() {
+                @Override
+                public void onChanged(notihist notihist) {
+                    if(notihist!=null){
+                        todoslosregistros.agregarotronotihist(notihist);
+                        registrodata.setValue(todoslosregistros);
+                    }
+                }
+            });
+        }
         return registrodata;
     }
     public void guardartokendevinculo(String token, String uid){
@@ -1050,6 +1218,19 @@ public class UserInfoRepo {
         String path = "/NeoLink/"+neo[0]+"/DataSet/NotiHist/"+indices[2]+"/"+indices[1]+"/"+indices[0]+"/"+hora;
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
         BaseDatosNL.setValue(contenido);
+    }
+    public void borrarunneolink(String neolink,String uid,ArrayList<String> packneolinks){
+        String path = "/OLDneolinks/"+neolink;
+        String path2 = "/OWNERitems/"+uid+"/neolinks";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+        DatabaseReference BaseDatosNL2 = FirebaseDatabase.getInstance().getReference(path2);
+        BaseDatosNL.removeValue();
+        BaseDatosNL2.setValue(packneolinks);
+    }
+    public void borrarneonodo(String neolink,ArrayList<String> packneonodos){
+        String path = "/OLDneolinks/"+neolink+"/neonodos/";
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
+        BaseDatosNL.setValue(packneonodos);
     }
 
 }

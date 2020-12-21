@@ -28,6 +28,7 @@ import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.liveclases.datadeconfiguracion;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.clases.liveclases.livedaylydatapackagetwoday;
+import com.example.neolink_app.clases.paqueteneolinkasociados;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -55,6 +56,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public boolean valua,valueb = false;
     public final MutableLiveData<String> datechoosen = new MutableLiveData<>();
     public final MutableLiveData<String> nuevoNeolink = new MutableLiveData<>();
+    public final MutableLiveData<String> nuevoNeonodo = new MutableLiveData<>();
     public final MutableLiveData<String> comentarionuevo = new MutableLiveData<>();
     public final MutableLiveData<String[]> editarcomentario= new MutableLiveData<>();
     private UserInfoRepo appRepo;
@@ -73,6 +75,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public MutableLiveData<ArrayList<Integer>> datebefore = new MutableLiveData<>();
     public ArrayList<OLDneolinksboleto> listacompleta = new ArrayList<>();
     public Snackbar avizonoerespadre;
+    private MutableLiveData<paqueteneolinkasociados> dispositivos = new MutableLiveData<>();
+    //private paqueteneolinkasociados dispositivos;
 
     public MasterDrawerViewModel(@NonNull Application application) {
         super(application);
@@ -114,6 +118,52 @@ public class MasterDrawerViewModel extends AndroidViewModel {
             }
         });
     }
+    public LiveData<OWNERitems> dametodoslosneolinks(){
+        return Transformations.switchMap(puid, new Function<String, LiveData<OWNERitems>>() {
+            @Override
+            public LiveData<OWNERitems> apply(String input) {
+                return appRepo.dameneolinks2(input);
+            }
+        });
+    }
+    public LiveData<paqueteneolinkasociados> gettodoelpaqueteneolinkasociado(){
+        return Transformations.switchMap(puid, new Function<String, LiveData<paqueteneolinkasociados>>() {
+            @Override
+            public LiveData<paqueteneolinkasociados> apply(String input) {
+                return Transformations.switchMap(appRepo.getneolinks(input), new Function<OWNERitems, LiveData<paqueteneolinkasociados>>() {
+                    @Override
+                    public LiveData<paqueteneolinkasociados> apply(OWNERitems input) {
+                        return appRepo.getpaquetecompletodedispositivos(input.damelista());
+                    }
+                });
+            }
+        });
+        /*
+        return Transformations.switchMap(appRepo.getneolinks(this.uid), new Function<OWNERitems, LiveData<paqueteneolinkasociados>>() {
+            @Override
+            public LiveData<paqueteneolinkasociados> apply(OWNERitems input) {
+                return appRepo.getpaquetecompletodedispositivos(input.damelista());
+            }
+        });
+         */
+    }
+    public LiveData<ArrayList<Pair<ArrayList<String>,ArrayList<GPS>>>> recibirtodoslosgps(){
+        return Transformations.switchMap(dispositivos, new Function<paqueteneolinkasociados, LiveData<ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>>>>() {
+            @Override
+            public LiveData<ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>>> apply(paqueteneolinkasociados input) {
+                return appRepo.obtenerelgpsdelosdispositivos(input);
+            }
+        });
+        //return appRepo.obtenerelgpsdelosdispositivos(this.dispositivos);
+    }
+    public void guardarelpaquetedelneolinkasociado(paqueteneolinkasociados obj){
+        dispositivos.setValue(obj);
+        //this.dispositivos = obj;
+    }
+    public paqueteneolinkasociados damepaqueteneolinksasociado(){
+        return dispositivos.getValue();
+        //return this.dispositivos;
+    }
     public Boolean cualeselestadofamiliar(){ return this.estadofamiliar.equals("hijo");}
     public void actualizaravizonoerespadre(View vista){ Snackbar.make(vista,"Su cuenta no tiene permiso para esta acción", BaseTransientBottomBar.LENGTH_SHORT).show();}
     /*
@@ -143,6 +193,14 @@ public class MasterDrawerViewModel extends AndroidViewModel {
             }
         });
         return neonodos;
+    }
+    public LiveData<OLDneolinksboleto> dameneonodos(String name){
+        return Transformations.switchMap(puid, new Function<String, LiveData<OLDneolinksboleto>>() {
+            @Override
+            public LiveData<OLDneolinksboleto> apply(String input) {
+                return appRepo.damenodos2(input,name);
+            }
+        });
     }
     public void updateneolinkF(String neolink){
         neolinkF.setValue(neolink);
@@ -396,6 +454,12 @@ public class MasterDrawerViewModel extends AndroidViewModel {
             neolinkguardado=appRepo.agregarneolink(codigo,Usuarioneolinks.getValue().damelista(),this.uid);
         }
     }
+    public LiveData<Boolean> agregarneolink2(String codigo,ArrayList<String> listactual){
+        return appRepo.agregarneolink2(codigo,uid,listactual);
+    }
+    public LiveData<Boolean> agregarneonodo(String codigo,String neolink,ArrayList<String> neonodolista){
+        return appRepo.agregarneonodos(codigo,neolink,neonodolista);
+    }
     public LiveData<Boolean> segraboelneolink(){
         return neolinkguardado;
     }
@@ -432,11 +496,17 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public void guardarneolinkdeldialogo(String neolink){
         nuevoNeolink.setValue(neolink);
     }
+    public void guardarneonododialogo(String neonodo){
+        nuevoNeonodo.setValue(neonodo);
+    }
     public void vacialneolinkdeldialogo(){
         nuevoNeolink.setValue(null);
     }
     public LiveData<String> neolinkdeldialogo(){
         return nuevoNeolink;
+    }
+    public LiveData<String> neonododialogo(){
+        return nuevoNeonodo;
     }
     public LiveData<Pair<state, Confvalues>> crearpaquetedeconfiguraciones(String neolink){
         return new datadeconfiguracion<>(appRepo.fetchdataconfigracionstate(neolink),appRepo.fetchdataconfigracionconfvalue(neolink));
@@ -458,6 +528,12 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public LiveData<notihist> funcionderecoleccionderegistro(String neolink){
         return appRepo.fetchregistro(neolink,datetoday.getValue().get(0),datetoday.getValue().get(1));
+    }
+    public LiveData<ArrayList<notihist>> funcionderecoleccionderegistro2(ArrayList<String> dispositivos){
+        return appRepo.fetchtodoslosregistros(dispositivos,datetoday.getValue().get(0),datetoday.getValue().get(1));
+    }
+    public LiveData<notihist> funcionrecoleccionderegristro3(ArrayList<String> dispositivos){
+        return appRepo.fetchtodoslosregistros2(dispositivos,datetoday.getValue().get(0),datetoday.getValue().get(1));
     }
     public void guardartokenparavincular(String token){ appRepo.guardartokendevinculo(token,this.uid); }
     public LiveData<String> fetchuiddelhijo(String nombredelhijo){ return appRepo.fetchuiddelhijo(this.uid,nombredelhijo);}
@@ -481,5 +557,8 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public void editarmensajes(String fecha,String hora, String contenido){
         appRepo.editarmensaje(fecha,hora,contenido);
     }
-
+    public void borrarunneolink(String neolink,ArrayList<String> packneolinks){
+        appRepo.borrarunneolink(neolink,this.uid,packneolinks);}
+    public void borrarunneonodo(String neolink, ArrayList<String> packneonodo){
+        appRepo.borrarneonodo(neolink,packneonodo);}
 }

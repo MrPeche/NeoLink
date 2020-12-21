@@ -1,5 +1,6 @@
 package com.greenbird.neolink_app;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -31,6 +33,7 @@ public class configuracioncuenta extends Fragment {
     private RecyclerView listadefamiliares;
     private Listadefamiliareshijos adapter;
     private GridLayoutManager glm;
+    private AlertDialog.Builder dialogodeborrado;
 
     public configuracioncuenta() {
         // Required empty public constructor
@@ -63,6 +66,8 @@ public class configuracioncuenta extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dialogodeborrado = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(),R.style.AlertDialogCustom));
+        dialogodeborrado.setMessage("¿Esta seguro que quiere eliminar esta cuenta de su lista de invitados?");
         tokendevinculacion = view.findViewById(R.id.tokendelvinculo);
         botondegenerar = view.findViewById(R.id.botondegenerar);
         botondegenerar.setOnClickListener(botongenerar);
@@ -84,7 +89,7 @@ public class configuracioncuenta extends Fragment {
             public void onChanged(Pair<ArrayList<String>, ArrayList<String>> arrayListArrayListPair) {
                 if(arrayListArrayListPair!=null){
                     //adapter = new Listadefamiliareshijos(arrayListArrayListPair.second);
-                    adapter = new Listadefamiliareshijos(arrayListArrayListPair.second,archi,getViewLifecycleOwner());
+                    adapter = new Listadefamiliareshijos(arrayListArrayListPair.second,archi,getViewLifecycleOwner(),dialogodeborrado);
                     listadefamiliares.setAdapter(adapter);
                 }
             }

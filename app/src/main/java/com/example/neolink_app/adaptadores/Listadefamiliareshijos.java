@@ -1,5 +1,7 @@
 package com.example.neolink_app.adaptadores;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +21,18 @@ public class Listadefamiliareshijos extends RecyclerView.Adapter<Listadefamiliar
     private ArrayList<String> correos;
     private MasterDrawerViewModel archi;
     private LifecycleOwner act;
+    private AlertDialog.Builder avizodeborrado;
 
     public Listadefamiliareshijos(ArrayList<String> correos, MasterDrawerViewModel archi, LifecycleOwner act){
         this.correos = correos;
         this.archi = archi;
         this.act = act;
+    }
+    public Listadefamiliareshijos(ArrayList<String> correos, MasterDrawerViewModel archi, LifecycleOwner act, AlertDialog.Builder avizodeborrado){
+        this.correos = correos;
+        this.archi = archi;
+        this.act = act;
+        this.avizodeborrado = avizodeborrado;
     }
 
     @NonNull
@@ -39,8 +48,21 @@ public class Listadefamiliareshijos extends RecyclerView.Adapter<Listadefamiliar
             if(s!=null){
                 if(archi.cualeselestadofamiliar()){
                     archi.actualizaravizonoerespadre(holder.itemView);
-                } else
-                    archi.borrarhijo(s);
+                } else{
+                    avizodeborrado.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            archi.borrarhijo(s);
+
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
+                }
+
             }
         }));
     }

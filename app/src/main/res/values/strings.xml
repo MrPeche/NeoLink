@@ -86,9 +86,11 @@
 
     //cardview
     <string name="cardtitle">NeoLink</string>
+    <string name="cardtitle2">NeoNodo</string>
 
     //dialogo
     <string name="dailogtitle">Agregue el código del NeoLink</string>
+    <string name="dailogtitle2">Agregue el código del Neonodo</string>
     <string name="aceptardialog">Enviar</string>
     <string name="cancelardialog">Cancelar</string>
     <string name="desde">Desde: </string>
@@ -169,7 +171,6 @@
     //adaptadoresdelimites
     <string name="iconoplegableplegado">Icono plegable plegado</string>
     <string name="iconoplegabledesplegado">Icono plegable plegado</string>
-
 
 
 

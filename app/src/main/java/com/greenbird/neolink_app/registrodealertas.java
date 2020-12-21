@@ -24,6 +24,7 @@ import com.example.neolink_app.adaptadores.ListaNeolinks;
 import com.example.neolink_app.adaptadores.adaptadorderegistro;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.clasesdelregistro.notihist;
+import com.example.neolink_app.clases.paqueteneolinkasociados;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -66,7 +67,30 @@ public class registrodealertas extends Fragment {
         rv = view.findViewById(R.id.lista_registro);
         glm = new GridLayoutManager(getActivity(),1);
         rv.setLayoutManager(glm);
-        OWNERitems items = archi.Usuarioneolinks.getValue();
+        //OWNERitems items = archi.Usuarioneolinks.getValue();
+
+        archi.gettodoelpaqueteneolinkasociado().observe(getViewLifecycleOwner(), new Observer<paqueteneolinkasociados>() {
+            @Override
+            public void onChanged(paqueteneolinkasociados paqueteneolinkasociados) {
+                if(paqueteneolinkasociados!=null){
+                    ArrayList<String> todoslosdispositivos = new ArrayList<>();
+                    for(int i=0;i<paqueteneolinkasociados.dameneolinks().size();i++){
+                        todoslosdispositivos.add(paqueteneolinkasociados.dameneolinks().get(i));
+                        todoslosdispositivos.addAll(paqueteneolinkasociados.dameneonodos().get(i));
+                    }
+                    archi.funcionrecoleccionderegristro3(todoslosdispositivos).observe(getViewLifecycleOwner(), new Observer<notihist>() {
+                        @Override
+                        public void onChanged(notihist notihist) {
+                            if(notihist!=null){
+                                adapter = new adaptadorderegistro(notihist,dialogodeborrado,archi);
+                                rv.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        /*
         archi.funcionderecoleccionderegistro(items.getitem(0)).observe(getViewLifecycleOwner(), new Observer<notihist>() {
             @Override
             public void onChanged(notihist notihist) {
@@ -76,6 +100,7 @@ public class registrodealertas extends Fragment {
                 }
             }
         });
+        */
         archi.dialogoeditarmensaje().observe(getViewLifecycleOwner(), new Observer<String[]>() {
             @Override
             public void onChanged(String[] strings) {

@@ -18,6 +18,10 @@ public class notihist {
         this.years.add(year);
         this.yearspack.add(pack);
     }
+    public void agregarotronotihist(notihist pack){
+        this.years.addAll(pack.damelosyears());
+        this.yearspack.addAll(pack.dameelpackdeyears());
+    }
     public ArrayList<String> damelosyears(){return this.years;}
     public ArrayList<registroyear> dameelpackdeyears(){return this.yearspack;}
 }

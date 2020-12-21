@@ -34,4 +34,5 @@ public class OLDneolinksboleto {
     public String damenodo(int posicion){
         return neonodos.get(posicion);
     }
+    public String damecorreo(){ return this.correo;}
 }

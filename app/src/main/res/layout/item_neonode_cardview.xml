@@ -59,7 +59,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="end|top"
-            android:text="@string/cardtitle"
+            android:text="@string/cardtitle2"
             android:fontFamily="@font/lato_bold"
             android:layout_marginRight="@dimen/margencard"
             android:textSize="@dimen/Tamañotexto"

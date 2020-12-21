@@ -18,11 +18,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistro.adaptadorderegistroViewHolder> {
-    ArrayList<String> contenido;
-    ArrayList<String> fecha;
-    ArrayList<String> tiempo;
+    //ArrayList<String> contenido;
+    //ArrayList<String> fecha;
+    //ArrayList<String> tiempo;
+    ArrayList<comentario> listadecomentarios;
     String[] variablesg = {"ApPer","Depth","PoreCE","PorePer","V1","V2","V3","vwc"};
     String[] variablesk = {"V1","V2"};
     String[] variablesstate = {"AL","BP","BV","dT","iT","OP_TIME","RH","SV","WD","WS"};
@@ -32,16 +34,17 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     private MasterDrawerViewModel archi;
     private AlertDialog.Builder avizodeborrado;
     public adaptadorderegistro(notihist pack){
-        contenido = new ArrayList<>();
-        fecha = new ArrayList<>();
-        tiempo = new ArrayList<>();
+//        contenido = new ArrayList<>();
+//        fecha = new ArrayList<>();
+//        tiempo = new ArrayList<>();
         managepack(pack);
         dalevuelta();
     }
     public adaptadorderegistro(notihist pack, AlertDialog.Builder avizodeborrado,MasterDrawerViewModel archi){
-        contenido = new ArrayList<>();
-        fecha = new ArrayList<>();
-        tiempo = new ArrayList<>();
+//        contenido = new ArrayList<>();
+//        fecha = new ArrayList<>();
+//        tiempo = new ArrayList<>();
+        listadecomentarios = new ArrayList<>();
         managepack(pack);
         dalevuelta();
         this.archi = archi;
@@ -55,19 +58,21 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
                 for(int k=0;k<pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).damelosdias().size();k++){
                     String dianame = pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).damelosdias().get(k);
                     for(int l=0;l<pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().size();l++){
-                        tiempo.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).damelahora());
-                        fecha.add(dianame+"/"+mesname+"/"+yearname);
-                        contenido.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).dameelcontenido()); //neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var+"5TYP5"+mensage
+                        //tiempo.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).damelahora());
+                        //fecha.add(dianame+"/"+mesname+"/"+yearname);
+                        //contenido.add(pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).dameelcontenido()); //neolink+"5HEISSEN5"+time[0]+"5ZEIT5"+time[1]+"5ZEIT5"+sensor+"5TYP5"+var+"5TYP5"+mensage
                         //neolink+"5HN5"+time[0]+"5ZT5"+time[1]+"5ZT5"+puertotexto+"5PT5"+sensor+"5TP5"+var+"5TP5"+mensaje+"5MS5""+nombreorreo
+                        listadecomentarios.add(new comentario(dianame+"/"+mesname+"/"+yearname,pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).damelahora(),pack.dameelpackdeyears().get(i).dameelpackdelosmes().get(j).dameelpackdedias().get(k).dameelcontenido().get(l).dameelcontenido()));
                     }
                 }
             }
         }
     }
     private void dalevuelta(){
-        Collections.reverse(tiempo);
-        Collections.reverse(fecha);
-        Collections.reverse(contenido);
+//        Collections.reverse(tiempo);
+//        Collections.reverse(fecha);
+//        Collections.reverse(contenido);
+        Collections.sort(listadecomentarios,new sortcomentarios<>());
     }
     @NonNull
     @Override
@@ -76,21 +81,24 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     }
     @Override
     public void onBindViewHolder(@NonNull adaptadorderegistroViewHolder holder, int position) {
-        String[] contenidounitario = decodificador(contenido.get(position));
+//        String[] contenidounitario = decodificador(contenido.get(position));
+        String[] contenidounitario = decodificador(listadecomentarios.get(position).darmecontenido());
         String header = contenidounitario[0]+" "+contenidounitario[1]+" "+contenidounitario[2];
-        String fechaunitaria = fecha.get(position);
-        String tiempounitario = tiempo.get(position);
+//        String fechaunitaria = fecha.get(position);
+        String fechaunitaria = listadecomentarios.get(position).darmefecha();
+//        String tiempounitario = tiempo.get(position);
+        String tiempounitario = listadecomentarios.get(position).darmetiempo();
         holder.tiempoitem.setText(tiempounitario);
         holder.fechaitem.setText(fechaunitaria);
         holder.contenidoitem.setText(contenidounitario[5]);
         holder.headercontenidoitem.setText(header);
         String second = "";
-        if(!(contenido.get(position).contains("5PT5")||contenido.get(position).contains("5PORT5"))){
+        if(!(listadecomentarios.get(position).darmecontenido().contains("5PT5")||listadecomentarios.get(position).darmecontenido().contains("5PORT5"))){
             second = translateelvalor(contenidounitario[3],contenidounitario[4]);
         } else {
             second = contenidounitario[6] + " " + translateelvalor(contenidounitario[3],contenidounitario[4]);
         }
-        if(!contenido.get(position).contains("5PT5")){
+        if(!listadecomentarios.get(position).darmecontenido().contains("5PT5")){
             String var = contenidounitario[6].split("@")[0] + " comentó";
             holder.autor.setText(var);
         } else{
@@ -98,7 +106,6 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
             holder.autor.setText(var);
         }
         holder.secondheaderitem.setText(second);
-
         holder.borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +132,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
         holder.editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                archi.dialogoeditarmensajesubir(fechaunitaria,tiempounitario,contenido.get(position));
+                archi.dialogoeditarmensajesubir(fechaunitaria,tiempounitario,listadecomentarios.get(position).darmecontenido());
             }
         });
     }
@@ -149,7 +156,7 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     }
     @Override
     public int getItemCount() {
-        return this.contenido.size();
+        return this.listadecomentarios.size();
     }
     private String[] decodificador(String line){
         if(line.contains("5HN5")){
@@ -198,6 +205,50 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
             secondheaderitem = itemView.findViewById(R.id.secondheaderregistrocontenido);
             editar = itemView.findViewById(R.id.registroeditar);
             borrar = itemView.findViewById(R.id.registroborrar);
+        }
+    }
+    private static class comentario {
+        private String fechacomen;
+        private String tiempocomen;
+        private String contenidocomen;
+        public comentario(String fechacomen, String tiempocomen, String contenidocomen){
+            this.fechacomen = fechacomen;
+            this.tiempocomen = tiempocomen;
+            this.contenidocomen = contenidocomen;
+        }
+        public String darmefecha(){ return this.fechacomen;}
+        public String darmetiempo(){ return this.tiempocomen;}
+        public String darmecontenido(){ return this.contenidocomen;}
+    }
+    private static class sortcomentarios<comentario> implements Comparator<adaptadorderegistro.comentario> {
+
+        @Override
+        public int compare(adaptadorderegistro.comentario o1, adaptadorderegistro.comentario o2) {
+            //String[] dates1 = o1.darmefecha().split("/");
+            Integer[] dates1 = transformarstringaint(o1.darmefecha().split("/"));
+            Integer[] dates2 = transformarstringaint(o2.darmefecha().split("/"));
+            Integer[] zeit1 = transformarstringaint(o1.darmetiempo().split(":"));
+            Integer[] zeit2 = transformarstringaint(o2.darmetiempo().split(":"));
+            if(dates1[2].equals(dates2[2])){
+                if(dates1[1].equals(dates2[1])){
+                    if(dates1[0].equals(dates2[0])){
+                        if(zeit1[0].equals(zeit2[0])){
+                            if(zeit1[1].equals(zeit2[1])){
+                                if(zeit1[2].equals(zeit2[2])){
+                                    return 0;
+                                } else return zeit2[2]-zeit1[2];
+                            } else return zeit2[1]-zeit1[1];
+                        }else return zeit2[0]-zeit1[0];
+                    } else return dates2[0] - dates1[0];
+                } else return dates2[1] - dates1[1];
+            } else return dates2[2] - dates1[2];
+        }
+        private Integer[] transformarstringaint(String[] numeros){
+            Integer[] resultado = new Integer[numeros.length];
+            for(int i=0;i<numeros.length;i++){
+                resultado[i] = Integer.parseInt(numeros[i]);
+            }
+            return resultado;
         }
     }
 
