@@ -75,12 +75,6 @@ public class grafiquitos extends Fragment implements grafiquitosneolinks.clickpr
                 }
             }
         });
-        /*
-        OWNERitems loli = new OWNERitems(lol);
-        lista = lol;
-        adapter = new grafiquitosneolinks(loli,grafiquitos.this);
-        rv.setAdapter(adapter);
-         */
     }
 
     @Override

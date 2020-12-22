@@ -28,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -238,12 +239,20 @@ public class mapita extends Fragment implements OnMapReadyCallback {
     }
     private void agregarmarkadores2(ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>> dispositivos){
         if(marker!=null) marker.remove();
+        LatLngBounds.Builder bld = new LatLngBounds.Builder();
         for(Pair<ArrayList<String>, ArrayList<GPS>> disp: dispositivos){
             for(int i=0;i<disp.first.size();i++){
                 if(disp.second.get(i)!=null){
                     LatLng posicionmarcador2 = new LatLng(disp.second.get(i).getLat(),disp.second.get(i).getLong());
+                    bld.include(posicionmarcador2);
+                    marker = map.addMarker(new MarkerOptions().position(posicionmarcador2).title(disp.first.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
+                    map.moveCamera(CameraUpdateFactory.newLatLngBounds(bld.build(),0));
+                    /*
+                    LatLng posicionmarcador2 = new LatLng(disp.second.get(i).getLat(),disp.second.get(i).getLong());
                     marker = map.addMarker(new MarkerOptions().position(posicionmarcador2).title(disp.first.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador2,14));
+
+                     */
                 }
             }
         }
