@@ -125,49 +125,6 @@ public class mapita extends Fragment implements OnMapReadyCallback {
         // Set a preference for minimum and maximum zoom.
         map.setMinZoomPreference(8f);
         map.setMaxZoomPreference(16f);
-        /*
-        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
-            @Override
-            public void onChanged(OWNERitems owneRitems) {
-                ArrayList<String> listadeneolinks = new ArrayList<>();
-                for(int i = 0; i<owneRitems.gettamanolista(); i++) {
-                    listadeneolinks.add(owneRitems.getitem(i));
-                }
-            }
-        });
-        */
-        /*
-        String neolink = "NL2006-0002";
-        archi.getGPS(neolink);
-        final String nombre = neolink;
-        */
-        /*
-        archi.GPSM.observe(getViewLifecycleOwner(), new Observer<GPS>() {
-            @Override
-            public void onChanged(GPS gps) {
-                if(marker!=null){
-                    marker.remove();
-                }
-                LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
-                marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 14));
-
-            }
-        });*/
-//        archi.getGPS2();
-//        archi.Usuarioneolinks.observe(getViewLifecycleOwner(), new Observer<OWNERitems>() {
-//            @Override
-//            public void onChanged(OWNERitems owneRitems) {
-//                if(owneRitems!=null){
-//                    ArrayList<String> lista = owneRitems.damelista();
-//                    agregarmarkadores(lista);
-//                }
-//                /*
-//                ArrayList<String> lista = owneRitems.damelista();
-//                agregarmarkadores(lista);
-//                 */
-//            }
-//        });
         archi.recibirtodoslosgps().observe(getViewLifecycleOwner(), new Observer<ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>>>() {
             @Override
             public void onChanged(ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>> pairs) {
@@ -201,41 +158,21 @@ public class mapita extends Fragment implements OnMapReadyCallback {
             }
         });
     }
-
     @Override
     public void onPause() {
         mapView.onPause();
         super.onPause();
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         if(mapView!=null)
         mapView.onDestroy();
     }
-
-
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
-    }
-
-    private void agregarmarkadores(ArrayList<String> listadedispositivos){
-        if(marker!=null) marker.remove();
-        for(int i=0;i<listadedispositivos.size();i++){
-            archi.updateGPS(listadedispositivos.get(i));
-            final String nombre = listadedispositivos.get(i);
-            archi.GPSM.observe(getViewLifecycleOwner(), new Observer<GPS>() {
-                @Override
-                public void onChanged(GPS gps) {
-                    LatLng posicionmarcador = new LatLng(gps.getLat(), gps.getLong());
-                    marker = map.addMarker(new MarkerOptions().position(posicionmarcador).title(nombre).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador, 14));
-                }
-            });
-        }
     }
     private void agregarmarkadores2(ArrayList<Pair<ArrayList<String>, ArrayList<GPS>>> dispositivos){
         if(marker!=null) marker.remove();
@@ -247,12 +184,7 @@ public class mapita extends Fragment implements OnMapReadyCallback {
                     bld.include(posicionmarcador2);
                     marker = map.addMarker(new MarkerOptions().position(posicionmarcador2).title(disp.first.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
                     map.moveCamera(CameraUpdateFactory.newLatLngBounds(bld.build(),0));
-                    /*
-                    LatLng posicionmarcador2 = new LatLng(disp.second.get(i).getLat(),disp.second.get(i).getLong());
-                    marker = map.addMarker(new MarkerOptions().position(posicionmarcador2).title(disp.first.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.icono22)).draggable(true));
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador2,14));
-
-                     */
+                    //map.moveCamera(CameraUpdateFactory.newLatLngZoom(posicionmarcador2,14));
                 }
             }
         }
