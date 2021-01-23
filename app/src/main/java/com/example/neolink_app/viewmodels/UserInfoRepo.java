@@ -1159,31 +1159,15 @@ public class UserInfoRepo {
     }
     public LiveData<Pair<Boolean,String>> validarlaposicionenlafamilia(String uid){
         MediatorLiveData<Pair<Boolean,String>> validacion = new MediatorLiveData<>();
-        String path1 = "/OWNERitems/";
-        String path2 = "/Familiahijos/";
-        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path1);
-        DatabaseReference BaseDatosNL2 = FirebaseDatabase.getInstance().getReference(path2);
-        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
-        final FirebaseQueryLiveData liveDataNL2 = new FirebaseQueryLiveData(BaseDatosNL2);
-        validacion.addSource(liveDataNL, new Observer<DataSnapshot>() {
+        String path3 = "/Familiahijos/"+uid;
+        DatabaseReference BaseDatosNL3 = FirebaseDatabase.getInstance().getReference(path3);
+        final FirebaseQueryLiveData livedataNL3 = new FirebaseQueryLiveData(BaseDatosNL3);
+        validacion.addSource(livedataNL3, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null){
-                    if(dataSnapshot.child(uid).exists()){
-                        validacion.setValue(new Pair<>(false,""));
-                    } else {
-                        validacion.addSource(liveDataNL2, new Observer<DataSnapshot>() {
-                            @Override
-                            public void onChanged(DataSnapshot dataSnapshot) {
-                                if(dataSnapshot!=null){
-                                    if(dataSnapshot.child(uid).exists()){
-                                        validacion.setValue(new Pair<Boolean, String>(true,dataSnapshot.child(uid).getValue(String.class)));
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
+                if(dataSnapshot.getValue()!=null){
+                    validacion.setValue(new Pair<>(true,dataSnapshot.getValue(String.class)));
+                } else validacion.setValue(new Pair<>(false,""));
             }
         });
         return validacion;
