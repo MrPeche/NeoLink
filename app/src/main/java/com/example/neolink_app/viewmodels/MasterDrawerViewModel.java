@@ -133,7 +133,9 @@ public class MasterDrawerViewModel extends AndroidViewModel {
                 return Transformations.switchMap(appRepo.getneolinks(input), new Function<OWNERitems, LiveData<paqueteneolinkasociados>>() {
                     @Override
                     public LiveData<paqueteneolinkasociados> apply(OWNERitems input) {
-                        return appRepo.getpaquetecompletodedispositivos(input.damelista());
+                        if(input!=null)
+                            return appRepo.getpaquetecompletodedispositivos(input.damelista());
+                        else return null;
                     }
                 });
             }
