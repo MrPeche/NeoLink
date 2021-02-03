@@ -147,12 +147,18 @@
     <string name="registroeditar">Boton para ediitar</string>
     <string name="registroborrar">boton para borrar</string>
     //contactus
+    <string name="contactanos">Contactanos</string>
     <string name="paginaweb"><a href="https://www.greenbird.pe/">www.greenbird.pe/</a></string>
+    <string name="paginawebdescrip">Icono de la pagina web</string>
     <string name="facebook">NeoLink IoT</string>
     <string name="correo">team@greenbird.pe</string>
+    <string name="correodescrip">Icono del correo</string>
     <string name="telefono">(+51) 983–569–250</string>
+    <string name="telefonodescrip">Icono del telefono</string>
     <string name="direccion">LA LIBERTAD\nLos Corales 289, Trujillo 13011</string>
+    <string name="dirreciondescrip">Icono de la direccion</string>
     <string name="direccion2">LIMA\nCalle Cmdt. Ladislao Espinar 250 San Miguel</string>
+    <string name="dirreciondescrip2">Icono de la segunda direccion</string>
 
     //Dialogagragarcomentario
     <string name="titulodeldialogocomentario">Agregue un comentario</string>
@@ -164,9 +170,14 @@
     //Configuracion cuenta
     <string name="tituloconfiguracioncuenta">Configuración General</string>
     <string name="titulolinkeo">Manejo de cuentas vinculadas</string>
+    <string name="titulodebienvenidadrive">Binvenido ""</string>
+    <string name="elegirfecha">Elija el tiempo a reportar</string>
     <string name="token">Código de vínculo:</string>
     <string name="botongenerar">Generar</string>
+    <string name="botonauthgoogle">Ingrese con su cuenta Drive</string>
+    <string name="botonconfirmacionaceptadadecuenta">Cuenta confirmada</string>
     <string name="imagenborrar">La imagen para borrar la cuenta</string>
+    <string name="tituloparagenerarreporte">Manejo de reportes</string>
 
     //adaptadoresdelimites
     <string name="iconoplegableplegado">Icono plegable plegado</string>

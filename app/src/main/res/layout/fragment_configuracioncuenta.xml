@@ -108,6 +108,106 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margencard"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/margencard"
+                        android:fontFamily="@font/lato"
+                        android:textSize="@dimen/Tamañosubtitulo"
+                        android:text="@string/tituloparagenerarreporte"
+                        android:textColor="@color/colorTextoNegro" />
+
+                    <Button
+                        android:id="@+id/botonparaingresarcuentaG"
+                        android:layout_width="match_parent"
+                        android:layout_marginVertical="@dimen/margencard"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/boton2"
+                        android:text="@string/botonauthgoogle"
+                        android:textSize="@dimen/Tamañotextopequeño" />
+
+                    <Button
+                        android:id="@+id/botonconfirmaciondecuenta"
+                        android:layout_width="match_parent"
+                        android:layout_marginVertical="@dimen/margencard"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/boton"
+                        android:text="@string/botonconfirmacionaceptadadecuenta"
+                        android:textSize="@dimen/Tamañotextopequeño"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:id="@+id/dialogodeusuarioconectado"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/cuentadedrive"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/margencard"
+                            android:fontFamily="@font/lato_bold"
+                            android:gravity="center"
+                            android:text="@string/titulodebienvenidadrive"
+                            android:textColor="#efc94c"
+                            android:textSize="@dimen/Tamañotexto" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/margencard"
+                            android:fontFamily="@font/lato"
+                            android:text="@string/elegirfecha"
+                            android:textColor="@color/colorTextoNegro"
+                            android:textSize="@dimen/Tamañotexto" />
+
+                        <Spinner
+                            android:id="@+id/opcionesdereportes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margencard"
+                            android:fontFamily="@font/lato"
+                            android:textColor="@color/colorTextoNegro"
+                            android:textSize="@dimen/Tamañotexto" />
+
+                        <Button
+                            android:id="@+id/generarreporte"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:layout_marginVertical="@dimen/margencard"
+                            android:background="@drawable/boton"
+                            android:text="@string/botongenerar"
+                            android:textSize="@dimen/Tamañotextopequeño" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/Margen_inferior_graficopaneles" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
