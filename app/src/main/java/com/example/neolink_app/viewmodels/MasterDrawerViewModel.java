@@ -31,7 +31,11 @@ import com.example.neolink_app.clases.liveclases.livedaylydatapackagetwoday;
 import com.example.neolink_app.clases.paqueteneolinkasociados;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.api.client.http.FileContent;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -562,5 +566,11 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     public void borrarunneolink(String neolink,ArrayList<String> packneolinks){
         appRepo.borrarunneolink(neolink,this.uid,packneolinks);}
     public void borrarunneonodo(String neolink, ArrayList<String> packneonodo){
-        appRepo.borrarneonodo(neolink,packneonodo);}
+        appRepo.borrarneonodo(neolink,packneonodo);
+    }
+    public void subirarchivoaldrive(File paramA, FileContent paramB, Drive paramC) throws IOException {
+        File file = paramC.files().create(paramA, paramB)
+                .setFields("id")
+                .execute();
+    }
 }
