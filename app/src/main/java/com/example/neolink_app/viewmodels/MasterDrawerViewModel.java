@@ -20,6 +20,7 @@ import com.example.neolink_app.clases.OLDneolinksboleto;
 import com.example.neolink_app.clases.OWNERitems;
 import com.example.neolink_app.clases.SensorG.HorasG;
 import com.example.neolink_app.clases.clasesdelregistro.notihist;
+import com.example.neolink_app.clases.clasesdereporte.InfoParaReporte;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
@@ -36,6 +37,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -433,6 +435,15 @@ public class MasterDrawerViewModel extends AndroidViewModel {
 
         return dias;
     }
+    private ArrayList<ArrayList<Integer>> figurarlosdiasdesdehoyhaciaatras(int cantidaddedias){
+        ArrayList<ArrayList<Integer>> dias = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for(int i = 0; i<cantidaddedias;i++){
+            dias.add(translatesemana(calendar));
+            calendar.add(Calendar.DATE,-1);
+        }
+        return dias;
+    }
     private ArrayList<ArrayList<Integer>> figurarlosmeses(){
         ArrayList<ArrayList<Integer>> meses = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -489,6 +500,17 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         heute.add(ahorita.get(Calendar.MINUTE));
         heute.add(ahorita.get(Calendar.SECOND));
         appRepo.guardarelmensaje(neolink,heute.get(0),heute.get(1),heute.get(2),heute.get(3),heute.get(4),heute.get(5),mensaje+"5MS5"+nombredecorreo);
+    }
+    public ArrayList<Integer> damelahora(){
+        Calendar ahorita = Calendar.getInstance();
+        ArrayList<Integer> heute = new ArrayList<>();
+        heute.add(ahorita.get(Calendar.YEAR)%100);
+        heute.add(ahorita.get(Calendar.MONTH)+1);
+        heute.add(ahorita.get(Calendar.DAY_OF_MONTH));
+        heute.add(ahorita.get(Calendar.HOUR_OF_DAY));
+        heute.add(ahorita.get(Calendar.MINUTE));
+        heute.add(ahorita.get(Calendar.SECOND));
+        return heute;
     }
     public void borrarcomentario(String neolink,String ano,String mes,String dia,String hora){
         appRepo.borrarmensaje(neolink,ano,mes,dia,hora);
@@ -572,5 +594,28 @@ public class MasterDrawerViewModel extends AndroidViewModel {
         File file = paramC.files().create(paramA, paramB)
                 .setFields("id")
                 .execute();
+    }
+    public LiveData<ArrayList<ArrayList<InfoParaReporte>>> sistemadegenerarreportes(int opcion){
+        ArrayList<ArrayList<String>> listadedispositivos = organizarlosdispositivosparaelreporte();
+        if(opcion==0){
+            return appRepo.crearlalistadedatosparalosreportescompleto1(listadedispositivos,figurarlosdiasdesdehoyhaciaatras(15));
+        } else if(opcion==1){
+            return appRepo.crearlalistadedatosparalosreportescompleto1(listadedispositivos,figurarlosdiasdesdehoyhaciaatras(30));
+        } else {
+            return appRepo.crearlalistadedatosparalosreportescompleto2(listadedispositivos,figurarlosmeses());
+        }
+    }
+    public ArrayList<ArrayList<String>> organizarlosdispositivosparaelreporte(){
+        ArrayList<ArrayList<String>> listadereporte = new ArrayList<>();
+        paqueteneolinkasociados Devi = dispositivos.getValue();
+        ArrayList<String> neolinks = Devi.dameneolinks();
+        ArrayList<ArrayList<String>> neonodos = Devi.dameneonodos();
+        for(int i=0;i<neolinks.size();i++){
+            ArrayList<String> A = new ArrayList<>();
+            A.add(neolinks.get(i));
+            A.addAll(neonodos.get(i));
+            listadereporte.add(A);
+        }
+        return listadereporte;
     }
 }

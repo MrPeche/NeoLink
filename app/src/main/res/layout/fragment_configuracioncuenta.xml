@@ -113,7 +113,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margencard"
                 app:cardCornerRadius="@dimen/cardRadio"
-                android:visibility="gone"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true" >
 

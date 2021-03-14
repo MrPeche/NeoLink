@@ -30,6 +30,7 @@ import com.example.neolink_app.clases.clasesdelregistro.registrocontenido;
 import com.example.neolink_app.clases.clasesdelregistro.registrodia;
 import com.example.neolink_app.clases.clasesdelregistro.registromes;
 import com.example.neolink_app.clases.clasesdelregistro.registroyear;
+import com.example.neolink_app.clases.clasesdereporte.InfoParaReporte;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.configuracion.Confvalues;
 import com.example.neolink_app.clases.configuracion.state;
@@ -42,7 +43,9 @@ import com.example.neolink_app.clases.database_state.horasstate;
 import com.example.neolink_app.clases.database_state.mesesstate;
 import com.example.neolink_app.clases.database_state.minutosstate;
 import com.example.neolink_app.clases.database_state.statePK;
+import com.example.neolink_app.clases.liveclases.objetoconjunto;
 import com.example.neolink_app.clases.liveclases.paquetededatacompleto;
+import com.example.neolink_app.clases.liveclases.paquetededatacompletoparareporte;
 import com.example.neolink_app.clases.paqueteneolinkasociados;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -889,7 +892,8 @@ public class UserInfoRepo {
                     dias.tomadias(dia,horas);
                 }
                 Meses month = new Meses();
-                month.tomameses(ano + esp + operacionfecha(mes),dias);
+                //month.tomameses(ano + esp + operacionfecha(mes),dias);
+                month.tomameses( operacionfecha(mes)+esp+ano,dias);
                 datasensork.setValue(month);
             } else {
                 datasensork.setValue(null);
@@ -930,7 +934,8 @@ public class UserInfoRepo {
                         dias.tomadias(dia,horas);
                     }
                     MesesG meses = new MesesG();
-                    meses.tomameses(ano+esp+operacionfecha(mes),dias);
+                    //meses.tomameses(ano+esp+operacionfecha(mes),dias);
+                    meses.tomameses(operacionfecha(mes)+esp+ano,dias);
                     datasensorg.setValue(meses);
                 } else {
                     datasensorg.setValue(null);
@@ -966,7 +971,8 @@ public class UserInfoRepo {
                         dias.tomadata(day,horas);
                     }
                     mesesstate meses = new mesesstate();
-                    meses.tomameses(ano+esp+operacionfecha(mes),dias);
+                    //meses.tomameses(ano+esp+operacionfecha(mes),dias);
+                    meses.tomameses(operacionfecha(mes)+esp+ano,dias);
                     datasensorstate.setValue(meses);
                 } else {
                     datasensorstate.setValue(null);
@@ -1215,6 +1221,138 @@ public class UserInfoRepo {
         String path = "/OLDneolinks/"+neolink+"/neonodos/";
         DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(path);
         BaseDatosNL.setValue(packneonodos);
+    }
+    public LiveData<ArrayList<InfoParaReporte>> crearlalistadedatosparalosreportes1(ArrayList<String> disp,ArrayList<ArrayList<Integer>> tiempo){
+        MediatorLiveData<ArrayList<InfoParaReporte>> listadedatos = new MediatorLiveData<>();
+        ArrayList<InfoParaReporte> list = new ArrayList<>();
+        for(String neonodo:disp){
+            listadedatos.addSource(fetchdiasparaelreporte(neonodo, tiempo), new Observer<InfoParaReporte>() {
+                @Override
+                public void onChanged(InfoParaReporte infoParaGraficos) {
+                    if(infoParaGraficos!=null){
+                        if(infoParaGraficos.validarlosdias()&&infoParaGraficos.checknumerodepaquetesaldia()){
+                            list.add(infoParaGraficos);
+                            listadedatos.setValue(list);
+                        }
+                    }
+                }
+            });
+        }
+        return listadedatos;
+    }
+    public LiveData<ArrayList<ArrayList<InfoParaReporte>>> crearlalistadedatosparalosreportescompleto1(ArrayList<ArrayList<String>> disp,ArrayList<ArrayList<Integer>> tiempo){
+        MediatorLiveData<ArrayList<ArrayList<InfoParaReporte>>> listadedatos = new MediatorLiveData<>();
+        ArrayList<ArrayList<InfoParaReporte>> list = new ArrayList<>();
+        for(ArrayList<String> listneolink:disp){
+            listadedatos.addSource(crearlalistadedatosparalosreportes1(listneolink, tiempo), new Observer<ArrayList<InfoParaReporte>>() {
+                @Override
+                public void onChanged(ArrayList<InfoParaReporte> infoParaGraficos) {
+                    if(infoParaGraficos.size()!=0){
+                        if(validarlistadereporte(infoParaGraficos)&&(infoParaGraficos.size()==listneolink.size())){
+                            list.add(infoParaGraficos);
+                            listadedatos.setValue(list);
+                        }
+                    }
+                }
+            });
+        }
+        return listadedatos;
+    }
+    private boolean validarlistadereporte(ArrayList<InfoParaReporte> lista){
+        boolean val = true;
+        for(InfoParaReporte obj:lista){
+            val=obj.validarlosdias()&&val;
+        }
+        return val;
+    }
+    public LiveData<ArrayList<ArrayList<InfoParaReporte>>> crearlalistadedatosparalosreportescompleto2(ArrayList<ArrayList<String>> disp,ArrayList<ArrayList<Integer>> tiempo){
+        MediatorLiveData<ArrayList<ArrayList<InfoParaReporte>>> listadedatos = new MediatorLiveData<>();
+        ArrayList<ArrayList<InfoParaReporte>> list = new ArrayList<>();
+        for(ArrayList<String> listneolink:disp){
+            listadedatos.addSource(crearlalistadedatosparalosreportes2(listneolink, tiempo), new Observer<ArrayList<InfoParaReporte>>() {
+                @Override
+                public void onChanged(ArrayList<InfoParaReporte> infoParaGraficos) {
+                    if(infoParaGraficos.size()!=0){
+                        if(validarlistadereporte(infoParaGraficos)&&(infoParaGraficos.size()==listneolink.size())){
+                            list.add(infoParaGraficos);
+                            listadedatos.setValue(list);
+                        }
+                    }
+                }
+            });
+        }
+        return listadedatos;
+    }
+    public LiveData<ArrayList<InfoParaReporte>> crearlalistadedatosparalosreportes2(ArrayList<String> disp,ArrayList<ArrayList<Integer>> tiempo){
+        MediatorLiveData<ArrayList<InfoParaReporte>> listadedatos = new MediatorLiveData<>();
+        ArrayList<InfoParaReporte> list = new ArrayList<>();
+        for(String neonodo:disp){
+            listadedatos.addSource(fetchmesesnecesariosparaelreporte(neonodo, tiempo), new Observer<InfoParaReporte>() {
+                @Override
+                public void onChanged(InfoParaReporte infoParaGraficos) {
+                    if(infoParaGraficos!=null){
+                        if(infoParaGraficos.validarlosdias()&&infoParaGraficos.checknumerodepaquetesaldia()){
+                            list.add(infoParaGraficos);
+                            listadedatos.setValue(list);
+                        }
+                    }
+                }
+            });
+        }
+        return listadedatos;
+    }
+    public LiveData<InfoParaReporte> fetchdiasparaelreporte(String neolink, ArrayList<ArrayList<Integer>> dias){
+        final MediatorLiveData<InfoParaReporte> estasemana = new MediatorLiveData<>();
+        InfoParaReporte obj2= new InfoParaReporte();
+        obj2.agregardias(dias.size());
+        obj2.agregarnombre(neolink);
+        estasemana.setValue(null);
+        for(ArrayList<Integer> dia:dias){
+            paquetededatacompletoparareporte<Dias,diasstate,DiasG> diarandom = new paquetededatacompletoparareporte<>(fetchdataperdaywithsensork(neolink, dia.get(0), dia.get(1), dia.get(2)),
+                    fetchdataperdaywithsensorstate(neolink, dia.get(0), dia.get(1), dia.get(2)),
+                    fetchdataperdaywithsensorg(neolink, dia.get(0), dia.get(1), dia.get(2)));
+            estasemana.addSource(diarandom, new Observer<objetoconjunto<Dias, diasstate, DiasG>>() {
+                @Override
+                public void onChanged(objetoconjunto<Dias, diasstate, DiasG> diasdiasstateDiasGobjetoconjunto) {
+                    if(diasdiasstateDiasGobjetoconjunto!=null){
+                        if(diarandom.isitready()){
+                            android.util.Pair<Integer, Boolean> pregunta = obj2.buscarpordiadentro(diarandom.damevalorB().damedia(0));
+                            if(pregunta.second){
+                                obj2.actualizardatoespecifico(diarandom,pregunta.first);
+                            } else{
+                                obj2.agregarinfodias(diarandom);
+                            }
+                            obj2.sumardias();
+                            estasemana.setValue(obj2);
+                        }
+                    }
+                }
+            });
+        }
+        return estasemana;
+    }
+    public LiveData<InfoParaReporte> fetchmesesnecesariosparaelreporte(String neolink,ArrayList<ArrayList<Integer>> fechasdemeses){
+        final MediatorLiveData<InfoParaReporte> esteano = new MediatorLiveData<>();
+        InfoParaReporte data = new InfoParaReporte();
+        data.agregardias(fechasdemeses.size());
+        data.agregarnombre(neolink);
+        esteano.setValue(null);
+        for(ArrayList<Integer> mes:fechasdemeses){
+            paquetededatacompletoparareporte<Meses,mesesstate,MesesG> datames = new paquetededatacompletoparareporte<>(fetchdatakpormonth(neolink,mes.get(0), mes.get(1)),fetchdatastatepormonth(neolink,mes.get(0), mes.get(1)),fetchdatagpormonth(neolink,mes.get(0), mes.get(1)));
+            esteano.addSource(datames, new Observer<objetoconjunto<Meses, mesesstate, MesesG>>() {
+                @Override
+                public void onChanged(objetoconjunto<Meses, mesesstate, MesesG> mesesmesesstateMesesGobjetoconjunto) {
+                    if(mesesmesesstateMesesGobjetoconjunto!=null){
+                        if(datames.isitready()){
+                            data.agregarmesinfomes(datames);
+                            esteano.setValue(data);
+                            data.sumardias();
+                        }
+                    }
+                }
+            });
+        }
+        return esteano;
     }
 
 }

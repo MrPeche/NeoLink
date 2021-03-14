@@ -355,7 +355,7 @@ public class InfoParaGraficos {
         for(Meses mes:data){
             for(Dias dia:mes.dameelarraycompleto()){
                 for(int i =0;i<dia.dametamano();i++){
-                    labeldia = mes.damemes(0)+"/"+dia.damedia(i);
+                    labeldia = dia.damedia(i)+"/"+mes.damemes(0);
                     for(int j = 0; j<dia.damehora(i).dametamano();j++){
                         labelhoras = dia.damehora(i).damehora(j);
                         for(int k = 0;k<dia.damehora(i).dameminutos(j).dametamano();k++){
@@ -416,7 +416,7 @@ public class InfoParaGraficos {
         for(MesesG mes:data){
             for(DiasG dia:mes.damearraydedias()){
                 for(int i = 0; i<dia.dametamanoG();i++){
-                    labeldia = mes.damemes(0)+"/"+dia.damedia(i);
+                    labeldia = dia.damedia(i)+"/"+mes.damemes(0);
                     for(int j = 0; j<dia.damehora(i).dametamanoG();j++){
                         labelhora = dia.damehora(i).damehora(j);
                         for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoG();k++){
@@ -491,7 +491,7 @@ public class InfoParaGraficos {
         for(mesesstate mes: data) {
             for (diasstate dia : mes.damearraydedias()) {
                 for (int i = 0; i < dia.dametamano(); i++) {
-                    labeldia = mes.damemeses(0) + "/" + dia.damedia(i);
+                    labeldia = dia.damedia(i)+"/" +mes.damemeses(0);
                     for (int k = 0; k < dia.damehoras(i).dametamano(); k++) {
                         labelhora = dia.damehoras(i).damehora(k);
                         for (int j = 0; j < dia.damehoras(i).dameminutos(k).dametamano(); j++) {
@@ -522,8 +522,4 @@ public class InfoParaGraficos {
         LDtemperaturainterna.setLineWidth(0.8f);
         return new statedatapack(dataseparada(LDhumedadrelativa),dataseparada(LDpresionbarometrica),juntardata(LDS,LDSV),juntardata(LDtemperaturavulvoseco,LDtemperaturainterna),dataseparada(LDwindspeed),XlabelsSTATE);
     }
-    public void agregarano(){
-
-    }
-
 }
