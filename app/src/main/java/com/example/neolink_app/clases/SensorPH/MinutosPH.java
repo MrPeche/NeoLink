@@ -23,5 +23,5 @@ public class MinutosPH {
     public PuertosPH damepaquete(int posicion){
         return this.paquetes.get(posicion);
     }
-    public int dametamanoNPK(){return minutos.size();}
+    public int dametamanoPH(){return minutos.size();}
 }

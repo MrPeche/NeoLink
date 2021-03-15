@@ -6,21 +6,21 @@ import java.util.ArrayList;
 
 public class PuertosPH {
     private ArrayList<String> Puerto = new ArrayList<>();
-    private ArrayList<dataPuertoNPK> data = new ArrayList<>();
+    private ArrayList<dataPuertoPH> data = new ArrayList<>();
     public PuertosPH(){}
-    public PuertosPH(ArrayList<String> Puerto, ArrayList<dataPuertoNPK> data){
+    public PuertosPH(ArrayList<String> Puerto, ArrayList<dataPuertoPH> data){
         this.Puerto = Puerto;
         this.data = data;
     }
-    public void tomaPuerto(String Puerto, dataPuertoNPK data){
+    public void tomaPuerto(String Puerto, dataPuertoPH data){
         this.Puerto.add(Puerto);
         this.data.add(data);
     }
     public String damePuerto(int posicion){
         return this.Puerto.get(posicion);
     }
-    public dataPuertoNPK damedata(int posicion){
+    public dataPuertoPH damedata(int posicion){
         return this.data.get(posicion);
     }
-    public int dametamanoNPK(){return this.Puerto.size();}
+    public int dametamanoPH(){return this.Puerto.size();}
 }

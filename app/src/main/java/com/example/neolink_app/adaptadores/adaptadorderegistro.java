@@ -28,9 +28,13 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
     String[] variablesg = {"ApPer","Depth","PoreCE","PorePer","V1","V2","V3","vwc"};
     String[] variablesk = {"V1","V2"};
     String[] variablesstate = {"AL","BP","BV","dT","iT","OP_TIME","RH","SV","WD","WS"};
+    String[] variablenpk = {"Nitrato","Fosfato","Potasio"};
+    String[] variableph = {"ph"};
     String[] variablesrealesg = {"","","Conductividad eléctrica del poro","Permibilidad del poro","Humedad del suelo","Temperatura del suelo","Conductividad eléctrica","Contenido volumétrico de agua"};
     String[] variablesrealesk = {"Potencial Mátricual","Temperatura"};
     String[] variablesrealesstate = {"Altitud","Presión Barométrica","Voltaje","Temperatura de bulbo seco","Tiempo de operación","Humedad relativa","Voltaje solar","Dirección del viento","Velocidad del viento"};
+    String[] variablesrealesnpk = {"Nitrato","Fosfato","Potasio"};
+    String[] variablesrealesph = {"Ph"};
     private MasterDrawerViewModel archi;
     private AlertDialog.Builder avizodeborrado;
     public adaptadorderegistro(notihist pack){
@@ -143,7 +147,11 @@ public class adaptadorderegistro extends RecyclerView.Adapter<adaptadorderegistr
             return encontrarreal(variablesk,variablesrealesk,variables);
         } else if(sensor.equals("state")){
             return encontrarreal(variablesstate,variablesrealesstate,variables);
-        } else return variables;
+        } else if(sensor.equals("npk")){
+            return encontrarreal(variablenpk,variablesrealesnpk,variables);
+        } else if(sensor.equals("ph")){
+            return encontrarreal(variableph,variablesrealesph,variables);
+        }else return variables;
     }
     private String encontrarreal(String[] variables,String[] variablesreales,String var){
         String resultado = var;

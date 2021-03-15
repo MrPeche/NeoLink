@@ -8,10 +8,14 @@ import com.example.neolink_app.clases.Dias;
 import com.example.neolink_app.clases.Meses;
 import com.example.neolink_app.clases.SensorG.DiasG;
 import com.example.neolink_app.clases.SensorG.MesesG;
+import com.example.neolink_app.clases.SensorPH.DiasPH;
+import com.example.neolink_app.clases.SensorPH.MesesPH;
 import com.example.neolink_app.clases.database_state.diasstate;
 import com.example.neolink_app.clases.database_state.mesesstate;
 import com.example.neolink_app.clases.liveclases.paquetededatacompleto;
 import com.example.neolink_app.clases.paquetedatasetPuertos;
+import com.example.neolink_app.clases.sensorNPK.DiasNPK;
+import com.example.neolink_app.clases.sensorNPK.MesesNPK;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -21,31 +25,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class InfoParaGraficos {
-    private ArrayList<paquetededatacompleto<Dias,diasstate,DiasG>> dias = new ArrayList<>();
-    private ArrayList<paquetededatacompleto<Meses, mesesstate, MesesG>> meses = new ArrayList<>();
+    private ArrayList<paquetededatacompleto<Dias,diasstate,DiasG, DiasNPK, DiasPH>> dias = new ArrayList<>();
+    private ArrayList<paquetededatacompleto<Meses, mesesstate, MesesG, MesesNPK, MesesPH>> meses = new ArrayList<>();
     float LINEWIDTH = 2.5f;
     private int alpha = 250;
     private int[] colores = {Color.argb(alpha,250,128,114),Color.argb(alpha,60,179,113),Color.argb(alpha,100,149,237),Color.argb(alpha,147,112,219)}; //salmon, medium sea green,corn flower blue,  medium purple https://www.rapidtables.com/web/color/RGB_Color.html
 
     public InfoParaGraficos(){}
 
-    public void agregarinfodias(paquetededatacompleto<Dias,diasstate,DiasG> data){
+    public void agregarinfodias(paquetededatacompleto<Dias,diasstate,DiasG, DiasNPK, DiasPH> data){
         this.meses.clear();
         this.dias.add(data);
     }
-    public void agregarmesinfomes(paquetededatacompleto<Meses, mesesstate, MesesG> mes){
+    public void agregarmesinfomes(paquetededatacompleto<Meses, mesesstate, MesesG, MesesNPK, MesesPH> mes){
         this.dias.clear();
         this.meses.add(mes);
     }
     public boolean validarlosdias(){
         boolean validate = true;
         if(dias.size()!=0){
-            for(paquetededatacompleto<Dias,diasstate,DiasG> dia: dias){
+            for(paquetededatacompleto<Dias,diasstate,DiasG, DiasNPK, DiasPH> dia: dias){
                 validate = dia.isitready()&&validate;
             }
             return validate;
         } else if(meses.size()!=0){
-            for(paquetededatacompleto<Meses,mesesstate,MesesG> mes: meses){
+            for(paquetededatacompleto<Meses, mesesstate, MesesG, MesesNPK, MesesPH> mes: meses){
                 validate = mes.isitready()&&validate;
             }
             return validate;
@@ -75,7 +79,7 @@ public class InfoParaGraficos {
         }
         return Pair.create(posicion,hay);
     }
-    public void actualizardatoespecifico(paquetededatacompleto<Dias,diasstate,DiasG> data, int pos){
+    public void actualizardatoespecifico(paquetededatacompleto<Dias,diasstate,DiasG, DiasNPK, DiasPH> data, int pos){
         this.dias.set(pos,data);
     }
     public fulldatapack managedias(){
@@ -83,22 +87,30 @@ public class InfoParaGraficos {
             ArrayList<Dias> sensork = new ArrayList<>();
             ArrayList<diasstate> sensorstate = new ArrayList<>();
             ArrayList<DiasG> sensorg = new ArrayList<>();
-            for(paquetededatacompleto<Dias,diasstate,DiasG> dia: dias){
+            ArrayList<DiasNPK> sensornpk = new ArrayList<>();
+            ArrayList<DiasPH> sensorph = new ArrayList<>();
+            for(paquetededatacompleto<Dias,diasstate,DiasG, DiasNPK, DiasPH> dia: dias){
                 sensork.add(dia.damevalorA());
                 sensorstate.add(dia.damevalorB());
                 sensorg.add(dia.damevalorC());
+                sensornpk.add(dia.damevalorD());
+                sensorph.add(dia.damevalorE());
             }
-            return new fulldatapack(managesensorkendias(sensork),managesensorgendias(sensorg),managesensorstateendias(sensorstate));
+            return new fulldatapack(managesensorkendias(sensork),managesensorgendias(sensorg),managesensorstateendias(sensorstate),managesensorNPKendias(sensornpk),managesensorphendias(sensorph));
         } else {
             ArrayList<Meses> sensorkmes = new ArrayList<>();
             ArrayList<mesesstate> sensorstatemes = new ArrayList<>();
             ArrayList<MesesG> sensorgmes = new ArrayList<>();
-            for(paquetededatacompleto<Meses,mesesstate,MesesG> mes: meses){
+            ArrayList<MesesNPK> sensornpkmes = new ArrayList<>();
+            ArrayList<MesesPH> sensorphmes = new ArrayList<>();
+            for(paquetededatacompleto<Meses, mesesstate, MesesG, MesesNPK, MesesPH> mes: meses){
                 sensorkmes.add(mes.damevalorA());
                 sensorstatemes.add(mes.damevalorB());
                 sensorgmes.add(mes.damevalorC());
+                sensornpkmes.add(mes.damevalorD());
+                sensorphmes.add(mes.damevalorE());
             }
-            return new fulldatapack(managesensorkmes(sensorkmes),managesensorgmes(sensorgmes),managesensorstatemes(sensorstatemes));
+            return new fulldatapack(managesensorkmes(sensorkmes),managesensorgmes(sensorgmes),managesensorstatemes(sensorstatemes),managesensornpkmes(sensornpkmes),managesensorphmes(sensorphmes));
         }
 
         /*
@@ -282,6 +294,127 @@ public class InfoParaGraficos {
         Pair<ArrayList<String>,LineData> conductividaddelporo = extraerdatadelpaquete(conddelporo);
         Pair<ArrayList<String>,LineData> contenidovolumendelagua = extraerdatadelpaquete(contentvolumagua);
         return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,conductividaddelporo,contenidovolumendelagua,humS,tempeS,condE,conddelporo,contentvolumagua);
+    }
+    private phdatapack managesensorphendias(ArrayList<DiasPH> data){
+        Collections.sort(data,new sortpordias<>());
+        paquetedatasetPuertos ph = new paquetedatasetPuertos();
+        DepthPackage Depth = new DepthPackage();
+        String sp = ":";
+        String labeldia;
+        String labelhora;
+        String labelminuto;
+        String nombrePuerto;
+        ArrayList<String> XlabelsG = new ArrayList<>();
+        float l = 0;
+        for(DiasPH dia:data){
+            for(int i = 0; i<dia.dametamanoPH();i++){
+                labeldia = dia.damedia(i);
+                for(int j = 0; j<dia.damehora(i).dametamanoPH();j++){
+                    labelhora = dia.damehora(i).damehora(j);
+                    for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoPH();k++){
+                        labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
+                        XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
+                        for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoPH();m++){
+                            nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                            switch (nombrePuerto){
+                                case "P1":
+                                    ph.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                    Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P2":
+                                    ph.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                    Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P3":
+                                    ph.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                    Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P4":
+                                    ph.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                    Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                            }
+                        }
+                        l++;
+                    }
+                }
+            }
+        }
+        Pair<ArrayList<String>,LineData> php = extraerdatadelpaquete(ph);
+        return new phdatapack(Depth,XlabelsG,php,ph);
+    }
+    private npkdatapack managesensorNPKendias(ArrayList<DiasNPK> data){
+        Collections.sort(data,new sortpordias<>());
+        paquetedatasetPuertos nitrogeno = new paquetedatasetPuertos();
+        paquetedatasetPuertos nitrato = new paquetedatasetPuertos();
+        paquetedatasetPuertos fosforo = new paquetedatasetPuertos();
+        paquetedatasetPuertos fosfato = new paquetedatasetPuertos();
+        paquetedatasetPuertos potasio = new paquetedatasetPuertos();
+        DepthPackage Depth = new DepthPackage();
+        String sp = ":";
+        String labeldia;
+        String labelhora;
+        String labelminuto;
+        String nombrePuerto;
+        ArrayList<String> XlabelsG = new ArrayList<>();
+        float l = 0;
+        for(DiasNPK dia:data){
+            for(int i = 0; i<dia.dametamanoNPK();i++){
+                labeldia = dia.damedia(i);
+                for(int j = 0; j<dia.damehora(i).dametamanoNPK();j++){
+                    labelhora = dia.damehora(i).damehora(j);
+                    for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoNPK();k++){
+                        labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
+                        XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
+                        for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoNPK();m++){
+                            nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                            switch (nombrePuerto){
+                                case "P1":
+                                    nitrogeno.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                    nitrato.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                    fosforo.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                    fosfato.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                    potasio.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                    Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P2":
+                                    nitrogeno.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                    nitrato.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                    fosforo.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                    fosfato.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                    potasio.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                    Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P3":
+                                    nitrogeno.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                    nitrato.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                    fosforo.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                    fosfato.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                    potasio.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                    Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                                case "P4":
+                                    nitrogeno.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                    nitrato.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                    fosforo.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                    fosfato.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                    potasio.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                    Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                    break;
+                            }
+                        }
+                        l++;
+                    }
+                    //l++;
+                }
+            }
+        }
+        Pair<ArrayList<String>,LineData> nitg = extraerdatadelpaquete(nitrogeno);
+        Pair<ArrayList<String>,LineData> nito = extraerdatadelpaquete(nitrato);
+        Pair<ArrayList<String>,LineData> foso = extraerdatadelpaquete(fosforo);
+        Pair<ArrayList<String>,LineData> fosfa = extraerdatadelpaquete(fosfato);
+        Pair<ArrayList<String>,LineData> pot = extraerdatadelpaquete(potasio);
+        return new npkdatapack(Depth,XlabelsG,nitg,nito,foso,fosfa,pot,nitrogeno,nitrato,fosforo,fosfato,potasio);
     }
     private statedatapack managesensorstateendias(ArrayList<diasstate> data){
         Collections.sort(data,new sortpordias<>());
@@ -473,6 +606,131 @@ public class InfoParaGraficos {
         Pair<ArrayList<String>,LineData> conductividaddelporo = extraerdatadelpaquete(conddelporo);
         Pair<ArrayList<String>,LineData> contenidovolumendelagua = extraerdatadelpaquete(contentvolumagua);
         return new gdatapack(Depth,XlabelsG,humedadG,temperaturaG,conductividadG,conductividaddelporo,contenidovolumendelagua,humS,tempeS,condE,conddelporo,contentvolumagua);
+    }
+    private npkdatapack managesensornpkmes(ArrayList<MesesNPK> data){
+        Collections.sort(data, new sortpormes<>());
+        paquetedatasetPuertos nitrogeno = new paquetedatasetPuertos();
+        paquetedatasetPuertos nitrato = new paquetedatasetPuertos();
+        paquetedatasetPuertos fosforo = new paquetedatasetPuertos();
+        paquetedatasetPuertos fosfato = new paquetedatasetPuertos();
+        paquetedatasetPuertos potasio = new paquetedatasetPuertos();
+        DepthPackage Depth = new DepthPackage();
+        String sp = ":";
+        String labeldia;
+        String labelhora;
+        String labelminuto;
+        String nombrePuerto;
+        ArrayList<String> XlabelsG = new ArrayList<>();
+        float l = 0;
+        for(MesesNPK mes:data){
+            for(DiasNPK dia:mes.damearraydedias()){
+                for(int i = 0; i<dia.dametamanoNPK();i++){
+                    labeldia = dia.damedia(i)+"/"+mes.damemes(0);
+                    for(int j = 0; j<dia.damehora(i).dametamanoNPK();j++){
+                        labelhora = dia.damehora(i).damehora(j);
+                        for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoNPK();k++){
+                            labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
+                            XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
+                            for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoNPK();m++){
+                                nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                                switch (nombrePuerto){
+                                    case "P1":
+                                        nitrogeno.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                        nitrato.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                        fosforo.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                        fosfato.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                        potasio.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                        Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P2":
+                                        nitrogeno.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                        nitrato.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                        fosforo.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                        fosfato.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                        potasio.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                        Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P3":
+                                        nitrogeno.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                        nitrato.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                        fosforo.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                        fosfato.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                        potasio.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                        Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P4":
+                                        nitrogeno.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrogen().floatValue()));
+                                        nitrato.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameNitrate().floatValue()));
+                                        fosforo.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphorus().floatValue()));
+                                        fosfato.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePhosphate().floatValue()));
+                                        potasio.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePtassium().floatValue()));
+                                        Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                }
+                            }
+                            l++;
+                        }
+                    }
+                }
+            }
+        }
+
+        Pair<ArrayList<String>,LineData> nitg = extraerdatadelpaquete(nitrogeno);
+        Pair<ArrayList<String>,LineData> nito = extraerdatadelpaquete(nitrato);
+        Pair<ArrayList<String>,LineData> foso = extraerdatadelpaquete(fosforo);
+        Pair<ArrayList<String>,LineData> fosfa = extraerdatadelpaquete(fosfato);
+        Pair<ArrayList<String>,LineData> pot = extraerdatadelpaquete(potasio);
+        return new npkdatapack(Depth,XlabelsG,nitg,nito,foso,fosfa,pot,nitrogeno,nitrato,fosforo,fosfato,potasio);
+    }
+    private phdatapack managesensorphmes(ArrayList<MesesPH> data){
+        Collections.sort(data, new sortpormes<>());
+        paquetedatasetPuertos ph = new paquetedatasetPuertos();
+        DepthPackage Depth = new DepthPackage();
+        String sp = ":";
+        String labeldia;
+        String labelhora;
+        String labelminuto;
+        String nombrePuerto;
+        ArrayList<String> XlabelsG = new ArrayList<>();
+        float l = 0;
+        for(MesesPH mes:data){
+            for(DiasPH dia:mes.damearraydedias()){
+                for(int i = 0; i<dia.dametamanoPH();i++){
+                    labeldia = dia.damedia(i)+"/"+mes.damemes(0);
+                    for(int j = 0; j<dia.damehora(i).dametamanoPH();j++){
+                        labelhora = dia.damehora(i).damehora(j);
+                        for(int k = 0; k<dia.damehora(i).dameminutos(j).dametamanoPH();k++){
+                            labelminuto = dia.damehora(i).dameminutos(j).dameminuto(k);
+                            XlabelsG.add(labeldia+"\n"+labelhora+sp+labelminuto);
+                            for(int m = 0;m<dia.damehora(i).dameminutos(j).damepaquete(k).dametamanoPH();m++){
+                                nombrePuerto = dia.damehora(i).dameminutos(j).damepaquete(k).damePuerto(m);
+                                switch (nombrePuerto){
+                                    case "P1":
+                                        ph.addP1(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                        Depth.addP1(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P2":
+                                        ph.addP2(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                        Depth.addP2(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P3":
+                                        ph.addP3(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                        Depth.addP3(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                    case "P4":
+                                        ph.addP4(new Entry(l,dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).damePH().floatValue()));
+                                        Depth.addP4(dia.damehora(i).dameminutos(j).damepaquete(k).damedata(m).dameDepth());
+                                        break;
+                                }
+                            }
+                            l++;
+                        }
+                    }
+                }
+            }
+        }
+        Pair<ArrayList<String>,LineData> php = extraerdatadelpaquete(ph);
+        return new phdatapack(Depth,XlabelsG,php,ph);
     }
     private statedatapack managesensorstatemes(ArrayList<mesesstate> data){
         Collections.sort(data, new sortpormes<>());

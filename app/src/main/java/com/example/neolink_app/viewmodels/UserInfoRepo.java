@@ -25,6 +25,12 @@ import com.example.neolink_app.clases.SensorG.MesesG;
 import com.example.neolink_app.clases.SensorG.MinutosG;
 import com.example.neolink_app.clases.SensorG.PuertoG;
 import com.example.neolink_app.clases.SensorG.dataPuertoG;
+import com.example.neolink_app.clases.SensorPH.DiasPH;
+import com.example.neolink_app.clases.SensorPH.HorasPH;
+import com.example.neolink_app.clases.SensorPH.MesesPH;
+import com.example.neolink_app.clases.SensorPH.MinutosPH;
+import com.example.neolink_app.clases.SensorPH.PuertosPH;
+import com.example.neolink_app.clases.SensorPH.dataPuertoPH;
 import com.example.neolink_app.clases.clasesdelregistro.notihist;
 import com.example.neolink_app.clases.clasesdelregistro.registrocontenido;
 import com.example.neolink_app.clases.clasesdelregistro.registrodia;
@@ -44,9 +50,16 @@ import com.example.neolink_app.clases.database_state.mesesstate;
 import com.example.neolink_app.clases.database_state.minutosstate;
 import com.example.neolink_app.clases.database_state.statePK;
 import com.example.neolink_app.clases.liveclases.objetoconjunto;
+import com.example.neolink_app.clases.liveclases.objetoconjuntoparagraficos;
 import com.example.neolink_app.clases.liveclases.paquetededatacompleto;
 import com.example.neolink_app.clases.liveclases.paquetededatacompletoparareporte;
 import com.example.neolink_app.clases.paqueteneolinkasociados;
+import com.example.neolink_app.clases.sensorNPK.DiasNPK;
+import com.example.neolink_app.clases.sensorNPK.HorasNPK;
+import com.example.neolink_app.clases.sensorNPK.MesesNPK;
+import com.example.neolink_app.clases.sensorNPK.MinutosNPK;
+import com.example.neolink_app.clases.sensorNPK.PuertoNPK;
+import com.example.neolink_app.clases.sensorNPK.dataPuertoNPK;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -692,15 +705,15 @@ public class UserInfoRepo {
     }
     public LiveData<InfoParaGraficos> fetchhoyayer(String neolink,ArrayList<Integer> fechahoy,ArrayList<Integer> fechaayer){
         final MediatorLiveData<InfoParaGraficos> hoyayer = new MediatorLiveData<>();
-        paquetededatacompleto<Dias,diasstate,DiasG> hoy = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorstate(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorg(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)));
-        paquetededatacompleto<Dias,diasstate,DiasG> ayer = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorstate(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorg(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)));
+        paquetededatacompleto<Dias,diasstate,DiasG,DiasNPK,DiasPH> hoy = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorstate(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)), fetchdataperdaywithsensorg(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)),fetchdataperdaywithsensorNPK(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)),fetchdataperdaywithsensorPH(neolink, fechahoy.get(0), fechahoy.get(1), fechahoy.get(2)));
+        paquetededatacompleto<Dias,diasstate,DiasG,DiasNPK,DiasPH> ayer = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorstate(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)), fetchdataperdaywithsensorg(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)),fetchdataperdaywithsensorNPK(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)),fetchdataperdaywithsensorPH(neolink, fechaayer.get(0), fechaayer.get(1), fechaayer.get(2)));
         InfoParaGraficos data = new InfoParaGraficos();
         //data.actualizarcantidad(2);
         hoyayer.setValue(null);
-        hoyayer.addSource(ayer, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+        hoyayer.addSource(ayer, new Observer<objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH>>() {
             @Override
-            public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
-                if(pairDiasGPair!=null){
+            public void onChanged(objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH> diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos) {
+                if(diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos!=null){
                     if(ayer.isitready()){
                         android.util.Pair<Integer,Boolean> pregunta = data.buscarpordiadentro(ayer.damevalorB().damedia(0));
                         if(pregunta.second){
@@ -713,10 +726,10 @@ public class UserInfoRepo {
                     hoyayer.setValue(data);
             }
         });
-        hoyayer.addSource(hoy, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+        hoyayer.addSource(hoy, new Observer<objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH>>() {
             @Override
-            public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
-                if(pairDiasGPair!=null){
+            public void onChanged(objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH> diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos) {
+                if(diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos!=null){
                     if(hoy.isitready()){
                         android.util.Pair<Integer,Boolean> pregunta = data.buscarpordiadentro(hoy.damevalorB().damedia(0));
                         if(pregunta.second){
@@ -802,6 +815,80 @@ public class UserInfoRepo {
         });
         return datasensorg;
     }
+    public LiveData<DiasNPK> fetchdataperdaywithsensorNPK(String neolink, int ano, int mes, int dia){
+        final MediatorLiveData<DiasNPK> datasensorNPK = new MediatorLiveData<>();
+        String esp = "/";
+        String sensor = "npk";
+        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+ano+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        datasensorNPK.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    HorasNPK horas = new HorasNPK();
+                    for(DataSnapshot childSnap:dataSnapshot.getChildren()){
+                        String horichi = childSnap.getKey(); //hora
+                        MinutosNPK minutos = new MinutosNPK();
+                        for(DataSnapshot chilchilSnap:childSnap.getChildren()){
+                            String min = chilchilSnap.getKey();//minutos
+                            PuertoNPK puerto = new PuertoNPK();
+                            for(DataSnapshot chilchilchilSnap:chilchilSnap.getChildren()){
+                                String a = chilchilchilSnap.getKey();//puerto
+                                dataPuertoNPK b = chilchilchilSnap.getValue(dataPuertoNPK.class);//data
+                                puerto.tomaPuerto(a,b);
+                            }
+                            minutos.tomaMinutos(min,puerto);
+                        }
+                        horas.tomaHoras(horichi,minutos);
+                    }
+                    DiasNPK diadata = new DiasNPK();
+                    diadata.tomadias(operacionfecha(dia)+esp+operacionfecha(mes)+esp+ano,horas);
+                    datasensorNPK.setValue(diadata);
+                } else {
+                    datasensorNPK.setValue(null);
+                }
+            }
+        });
+        return datasensorNPK;
+    }
+    public LiveData<DiasPH> fetchdataperdaywithsensorPH(String neolink, int ano, int mes, int dia){
+        final MediatorLiveData<DiasPH> datasensorPH = new MediatorLiveData<>();
+        String esp = "/";
+        String sensor = "ph";
+        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+ano+esp+operacionfecha(mes)+esp+operacionfecha(dia);
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        datasensorPH.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    HorasPH horas = new HorasPH();
+                    for(DataSnapshot childSnap:dataSnapshot.getChildren()){
+                        String horichi = childSnap.getKey(); //hora
+                        MinutosPH minutos = new MinutosPH();
+                        for(DataSnapshot chilchilSnap:childSnap.getChildren()){
+                            String min = chilchilSnap.getKey();//minutos
+                            PuertosPH puerto = new PuertosPH();
+                            for(DataSnapshot chilchilchilSnap:chilchilSnap.getChildren()){
+                                String a = chilchilchilSnap.getKey();//puerto
+                                dataPuertoPH b = chilchilchilSnap.getValue(dataPuertoPH.class);//data
+                                puerto.tomaPuerto(a,b);
+                            }
+                            minutos.tomaMinutos(min,puerto);
+                        }
+                        horas.tomaHoras(horichi,minutos);
+                    }
+                    DiasPH diadata = new DiasPH();
+                    diadata.tomadias(operacionfecha(dia)+esp+operacionfecha(mes)+esp+ano,horas);
+                    datasensorPH.setValue(diadata);
+                } else {
+                    datasensorPH.setValue(null);
+                }
+            }
+        });
+        return datasensorPH;
+    }
     public LiveData<diasstate> fetchdataperdaywithsensorstate(String neolink, int ano, int mes, int dia){
         final MediatorLiveData<diasstate> datasensorstate = new MediatorLiveData<>();
         String esp = "/";
@@ -838,14 +925,15 @@ public class UserInfoRepo {
         InfoParaGraficos obj = new InfoParaGraficos();
         estasemana.setValue(null);
         for(ArrayList<Integer> dia:semana){
-            paquetededatacompleto<Dias,diasstate,DiasG> diarandom = new paquetededatacompleto<Dias,diasstate,DiasG>(fetchdataperdaywithsensork(neolink,dia.get(0),dia.get(1),dia.get(2)),
+            paquetededatacompleto<Dias,diasstate,DiasG,DiasNPK,DiasPH> diarandom = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink,dia.get(0),dia.get(1),dia.get(2)),
                     fetchdataperdaywithsensorstate(neolink,dia.get(0),dia.get(1),dia.get(2)),
-                    fetchdataperdaywithsensorg(neolink,dia.get(0),dia.get(1),dia.get(2)));
-
-            estasemana.addSource(diarandom, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+                    fetchdataperdaywithsensorg(neolink,dia.get(0),dia.get(1),dia.get(2)),
+                    fetchdataperdaywithsensorNPK(neolink,dia.get(0),dia.get(1),dia.get(2)),
+                    fetchdataperdaywithsensorPH(neolink,dia.get(0),dia.get(1),dia.get(2)));
+            estasemana.addSource(diarandom, new Observer<objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH>>() {
                 @Override
-                public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
-                    if(pairDiasGPair!=null){
+                public void onChanged(objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH> diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos) {
+                    if(diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos!=null){
                         if(diarandom.isitready()){
                             android.util.Pair<Integer,Boolean> pregunta = obj.buscarpordiadentro(diarandom.damevalorB().damedia(0));
                             if(pregunta.second){
@@ -944,6 +1032,92 @@ public class UserInfoRepo {
         });
         return datasensorg;
     }
+    public LiveData<MesesNPK> fetchdataNPKpormonth(String neolink, int ano, int mes){
+        final MediatorLiveData<MesesNPK> datasensorNPK = new MediatorLiveData<>();
+        String esp = "/";
+        String sensor = "npk";
+        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+ano+esp+operacionfecha(mes);
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        datasensorNPK.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    DiasNPK dias = new DiasNPK();
+                    for(DataSnapshot diasFB:dataSnapshot.getChildren()){
+                        String dia = diasFB.getKey(); //hora
+                        HorasNPK horas = new HorasNPK();
+                        for(DataSnapshot horasFB:diasFB.getChildren()){
+                            String hora =horasFB.getKey();
+                            MinutosNPK minutos = new MinutosNPK();
+                            for(DataSnapshot minutosFB:horasFB.getChildren()){
+                                String min = minutosFB.getKey();
+                                PuertoNPK puerto = new PuertoNPK();
+                                for(DataSnapshot puertoFB:minutosFB.getChildren()){
+                                    String a = puertoFB.getKey();//puerto
+                                    dataPuertoNPK b = puertoFB.getValue(dataPuertoNPK.class);//data
+                                    puerto.tomaPuerto(a,b);
+                                }
+                                minutos.tomaMinutos(min,puerto);
+                            }
+                            horas.tomaHoras(hora,minutos);
+                        }
+                        dias.tomadias(dia,horas);
+                    }
+                    MesesNPK meses = new MesesNPK();
+                    //meses.tomameses(ano+esp+operacionfecha(mes),dias);
+                    meses.tomameses(operacionfecha(mes)+esp+ano,dias);
+                    datasensorNPK.setValue(meses);
+                } else {
+                    datasensorNPK.setValue(null);
+                }
+            }
+        });
+        return datasensorNPK;
+    }
+    public LiveData<MesesPH> fetchdataPHpormonth(String neolink, int ano, int mes){
+        final MediatorLiveData<MesesPH> datasensorPH = new MediatorLiveData<>();
+        String esp = "/";
+        String sensor = "npk";
+        String patio = "/NeoLink/"+neolink+"/DataSet/"+sensor+esp+ano+esp+operacionfecha(mes);
+        DatabaseReference BaseDatosNL = FirebaseDatabase.getInstance().getReference(patio);
+        final FirebaseQueryLiveData liveDataNL = new FirebaseQueryLiveData(BaseDatosNL);
+        datasensorPH.addSource(liveDataNL, new Observer<DataSnapshot>() {
+            @Override
+            public void onChanged(DataSnapshot dataSnapshot) {
+                if(dataSnapshot!=null){
+                    DiasPH dias = new DiasPH();
+                    for(DataSnapshot diasFB:dataSnapshot.getChildren()){
+                        String dia = diasFB.getKey(); //hora
+                        HorasPH horas = new HorasPH();
+                        for(DataSnapshot horasFB:diasFB.getChildren()){
+                            String hora =horasFB.getKey();
+                            MinutosPH minutos = new MinutosPH();
+                            for(DataSnapshot minutosFB:horasFB.getChildren()){
+                                String min = minutosFB.getKey();
+                                PuertosPH puerto = new PuertosPH();
+                                for(DataSnapshot puertoFB:minutosFB.getChildren()){
+                                    String a = puertoFB.getKey();//puerto
+                                    dataPuertoPH b = puertoFB.getValue(dataPuertoPH.class);//data
+                                    puerto.tomaPuerto(a,b);
+                                }
+                                minutos.tomaMinutos(min,puerto);
+                            }
+                            horas.tomaHoras(hora,minutos);
+                        }
+                        dias.tomadias(dia,horas);
+                    }
+                    MesesPH meses = new MesesPH();
+                    //meses.tomameses(ano+esp+operacionfecha(mes),dias);
+                    meses.tomameses(operacionfecha(mes)+esp+ano,dias);
+                    datasensorPH.setValue(meses);
+                } else {
+                    datasensorPH.setValue(null);
+                }
+            }
+        });
+        return datasensorPH;
+    }
     public LiveData<mesesstate> fetchdatastatepormonth(String neolink, int ano, int mes){
         final MediatorLiveData<mesesstate> datasensorstate = new MediatorLiveData<>();
         String esp = "/";
@@ -986,11 +1160,11 @@ public class UserInfoRepo {
         final MediatorLiveData<InfoParaGraficos> estemes = new MediatorLiveData<>();
         InfoParaGraficos data = new InfoParaGraficos();
         estemes.setValue(null);
-        paquetededatacompleto<Meses,mesesstate,MesesG> mes = new paquetededatacompleto<>(fetchdatakpormonth(neolink,fechahoy.get(0), fechahoy.get(1)),fetchdatastatepormonth(neolink,fechahoy.get(0), fechahoy.get(1)),fetchdatagpormonth(neolink,fechahoy.get(0), fechahoy.get(1)));
-        estemes.addSource(mes, new Observer<Pair<Pair<Meses, mesesstate>, MesesG>>() {
+        paquetededatacompleto<Meses,mesesstate,MesesG, MesesNPK, MesesPH> mes = new paquetededatacompleto<>(fetchdatakpormonth(neolink,fechahoy.get(0), fechahoy.get(1)),fetchdatastatepormonth(neolink,fechahoy.get(0), fechahoy.get(1)),fetchdatagpormonth(neolink,fechahoy.get(0), fechahoy.get(1)),fetchdataNPKpormonth(neolink,fechahoy.get(0), fechahoy.get(1)),fetchdataPHpormonth(neolink,fechahoy.get(0), fechahoy.get(1)));
+        estemes.addSource(mes, new Observer<objetoconjuntoparagraficos<Meses, mesesstate, MesesG, MesesNPK, MesesPH>>() {
             @Override
-            public void onChanged(Pair<Pair<Meses, mesesstate>, MesesG> pairMesesGPair) {
-                if(pairMesesGPair!=null){
+            public void onChanged(objetoconjuntoparagraficos<Meses, mesesstate, MesesG, MesesNPK, MesesPH> mesesmesesstateMesesGMesesNPKMesesPHobjetoconjuntoparagraficos) {
+                if(mesesmesesstateMesesGMesesNPKMesesPHobjetoconjuntoparagraficos!=null){
                     if(mes.isitready()){
                         data.agregarmesinfomes(mes);
                         estemes.setValue(data);
@@ -1005,11 +1179,11 @@ public class UserInfoRepo {
         InfoParaGraficos data = new InfoParaGraficos();
         esteano.setValue(null);
         for(ArrayList<Integer> mes:fechasdemeses){
-            paquetededatacompleto<Meses,mesesstate,MesesG> datames = new paquetededatacompleto<>(fetchdatakpormonth(neolink,mes.get(0), mes.get(1)),fetchdatastatepormonth(neolink,mes.get(0), mes.get(1)),fetchdatagpormonth(neolink,mes.get(0), mes.get(1)));
-            esteano.addSource(datames, new Observer<Pair<Pair<Meses, mesesstate>, MesesG>>() {
+            paquetededatacompleto<Meses,mesesstate,MesesG, MesesNPK, MesesPH> datames = new paquetededatacompleto<>(fetchdatakpormonth(neolink,mes.get(0), mes.get(1)),fetchdatastatepormonth(neolink,mes.get(0), mes.get(1)),fetchdatagpormonth(neolink,mes.get(0), mes.get(1)),fetchdataNPKpormonth(neolink,mes.get(0), mes.get(1)),fetchdataPHpormonth(neolink,mes.get(0), mes.get(1)));
+            esteano.addSource(datames, new Observer<objetoconjuntoparagraficos<Meses, mesesstate, MesesG, MesesNPK, MesesPH>>() {
                 @Override
-                public void onChanged(Pair<Pair<Meses, mesesstate>, MesesG> pairMesesGPair) {
-                    if(pairMesesGPair!=null){
+                public void onChanged(objetoconjuntoparagraficos<Meses, mesesstate, MesesG, MesesNPK, MesesPH> mesesmesesstateMesesGMesesNPKMesesPHobjetoconjuntoparagraficos) {
+                    if(mesesmesesstateMesesGMesesNPKMesesPHobjetoconjuntoparagraficos!=null){
                         if(datames.isitready()){
                             data.agregarmesinfomes(datames);
                             esteano.setValue(data);
@@ -1025,14 +1199,15 @@ public class UserInfoRepo {
         InfoParaGraficos obj = new InfoParaGraficos();
         diarandom.setValue(null);
         for(ArrayList<Integer> day:dates){
-            paquetededatacompleto<Dias,diasstate,DiasG> dialistener = new paquetededatacompleto<Dias,diasstate,DiasG>(fetchdataperdaywithsensork(neolink,day.get(0),day.get(1),day.get(2)),
+            paquetededatacompleto<Dias,diasstate,DiasG, DiasNPK, DiasPH> dialistener = new paquetededatacompleto<>(fetchdataperdaywithsensork(neolink,day.get(0),day.get(1),day.get(2)),
                     fetchdataperdaywithsensorstate(neolink,day.get(0),day.get(1),day.get(2)),
-                    fetchdataperdaywithsensorg(neolink,day.get(0),day.get(1),day.get(2)));
-
-            diarandom.addSource(dialistener, new Observer<Pair<Pair<Dias, diasstate>, DiasG>>() {
+                    fetchdataperdaywithsensorg(neolink,day.get(0),day.get(1),day.get(2)),
+                    fetchdataperdaywithsensorNPK(neolink,day.get(0),day.get(1),day.get(2)),
+                    fetchdataperdaywithsensorPH(neolink,day.get(0),day.get(1),day.get(2)));
+            diarandom.addSource(dialistener, new Observer<objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH>>() {
                 @Override
-                public void onChanged(Pair<Pair<Dias, diasstate>, DiasG> pairDiasGPair) {
-                    if(pairDiasGPair!=null){
+                public void onChanged(objetoconjuntoparagraficos<Dias, diasstate, DiasG, DiasNPK, DiasPH> diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos) {
+                    if(diasdiasstateDiasGDiasNPKDiasPHobjetoconjuntoparagraficos!=null){
                         if(dialistener.isitready()){
                             android.util.Pair<Integer, Boolean> pregunta = obj.buscarpordiadentro(dialistener.damevalorB().damedia(0));
                             if(pregunta.second){

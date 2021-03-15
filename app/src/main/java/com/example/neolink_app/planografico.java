@@ -26,6 +26,8 @@ import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.clasesparaformargraficos.fulldatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.gdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.kdatapack;
+import com.example.neolink_app.clases.clasesparaformargraficos.npkdatapack;
+import com.example.neolink_app.clases.clasesparaformargraficos.phdatapack;
 import com.example.neolink_app.clases.clasesparaformargraficos.statedatapack;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
 import com.example.neolink_app.clases.configuracion.statesinglelimitspecialvalues;
@@ -53,6 +55,10 @@ public class planografico extends Fragment {
     private chartlinealparadapter graficopresionbarometrica;
     private chartlinealparadapter graficohumedadrelativa;
     private chartlinealparadapter graficotemperaturavulvoseco;
+    private chartlinealparadapter graficoph;
+    private chartlinealparadapter graficonitrato;
+    private chartlinealparadapter graficofosfato;
+    private chartlinealparadapter graficopotasio;
     //private LineChart graficohumedaddelsuelo;
     private chartlinealparadapter graficotemperaturadelsuelo;
     private chartlinealparadapter graficoconductividaddelsuelo;
@@ -64,6 +70,10 @@ public class planografico extends Fragment {
     private CardView cvtemperatura;
     private CardView cvEnergia;
     //private CardView cvhumedaddelsuelo;
+    private CardView cvPh;
+    private CardView cvnitrato;
+    private CardView cvfosfato;
+    private CardView cvpotasio;
     private CardView cvtemperaturadelsuelo;
     private CardView cvconductividadelectrica;
     private CardView cvHumedadrelativa;
@@ -134,6 +144,10 @@ public class planografico extends Fragment {
         graficopresionbarometrica= view.findViewById(R.id.graficoPresionBarometrica);
         graficotemperaturavulvoseco= view.findViewById(R.id.graficotemperaturavulvoseco);
         graficotemperaturadelsuelo= view.findViewById(R.id.graficotemperaturadelsuelo);
+        graficoph = view.findViewById(R.id.graficoph);
+        graficonitrato = view.findViewById(R.id.graficonitrato);
+        graficofosfato = view.findViewById(R.id.graficofosfato);
+        graficopotasio = view.findViewById(R.id.graficopotasio);
         //graficohumedaddelsuelo = view.findViewById(R.id.graficohumedaddelsuelo);
         graficoconductividaddelsuelo = view.findViewById(R.id.graficoConductividadSuelo);
         graficoconductividadelectricadelporo = view.findViewById(R.id.graficoconductividadPoro);
@@ -142,6 +156,10 @@ public class planografico extends Fragment {
         cvpotencialMatricial = view.findViewById(R.id.cvpotencialMatricial);
         cvtemperatura = view.findViewById(R.id.cvtemperatura);
         cvEnergia = view.findViewById(R.id.cvEnergia);
+        cvPh = view.findViewById(R.id.cvph);
+        cvnitrato = view.findViewById(R.id.cvnitrato);
+        cvfosfato = view.findViewById(R.id.cvfosfato);
+        cvpotasio = view.findViewById(R.id.cvpotasio);
         //cvhumedaddelsuelo = view.findViewById(R.id.cvhumedaddelsuelo);
         cvtemperaturadelsuelo = view.findViewById(R.id.cvtemperaturadelsuelo);
         cvconductividadelectrica = view.findViewById(R.id.cvconductividadelectrica);
@@ -160,6 +178,10 @@ public class planografico extends Fragment {
         propiedadesgraficoconductividadelectricadelporo();
         propiedadesgraficocontenidovolumetricodelagua();
         propiedadesgraficorosadelviento();
+        propiedadesgraficoph();
+        propiedadesgraficonitrato();
+        propiedadesgraficofosfato();
+        propiedadesgraficopotasio();
         //propiedadesgraficohumedaddeldelsuelo();
         propiedadesgraficotemperaturadeldelsuelo();
         propiedadesgraficoconductividaddeldelsuelo();
@@ -203,6 +225,16 @@ public class planografico extends Fragment {
                             cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
                             cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                             setgraficoG(commdata.sacargdatapack());
+                        }
+                        if(commdata.sacarnpkdatapack().sacarlabels().size()!=0){
+                            cvnitrato.setVisibility(View.VISIBLE);
+                            cvfosfato.setVisibility(View.VISIBLE);
+                            cvpotasio.setVisibility(View.VISIBLE);
+                            setgraficonpk(commdata.sacarnpkdatapack());
+                        }
+                        if(commdata.sacarphdatapack().sacarlabels().size()!=0){
+                            cvPh.setVisibility(View.VISIBLE);
+                            setgraficoph(commdata.sacarphdatapack());
                         }
                         /*
                         cleanthisshit();
@@ -248,6 +280,10 @@ public class planografico extends Fragment {
         cvpotencialMatricial.setVisibility(View.GONE);
         cvtemperatura.setVisibility(View.GONE);
         cvEnergia.setVisibility(View.GONE);
+        cvPh.setVisibility(View.GONE);
+        cvnitrato.setVisibility(View.GONE);
+        cvfosfato.setVisibility(View.GONE);
+        cvpotasio.setVisibility(View.GONE);
         //cvhumedaddelsuelo.setVisibility(View.GONE);
         cvtemperaturadelsuelo.setVisibility(View.GONE);
         cvconductividadelectrica.setVisibility(View.GONE);
@@ -271,6 +307,66 @@ public class planografico extends Fragment {
         grafico1.setScaleYEnabled(false);
         grafico1.setScaleXEnabled(true);
         Legend L = grafico1.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+    }
+    public void propiedadesgraficoph(){
+        graficoph.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficoph.setDrawGridBackground(false);
+        graficoph.setDrawBorders(false);
+        //grafico1.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficoph.getDescription().setEnabled(false);
+        graficoph.setTouchEnabled(true);
+        graficoph.setDragEnabled(true);
+        graficoph.setScaleYEnabled(false);
+        graficoph.setScaleXEnabled(true);
+        Legend L = graficoph.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+    }
+    public void propiedadesgraficonitrato(){
+        graficonitrato.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficonitrato.setDrawGridBackground(false);
+        graficonitrato.setDrawBorders(false);
+        //grafico1.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficonitrato.getDescription().setEnabled(false);
+        graficonitrato.setTouchEnabled(true);
+        graficonitrato.setDragEnabled(true);
+        graficonitrato.setScaleYEnabled(false);
+        graficonitrato.setScaleXEnabled(true);
+        Legend L = graficonitrato.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+    }
+    public void propiedadesgraficofosfato(){
+        graficofosfato.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficofosfato.setDrawGridBackground(false);
+        graficofosfato.setDrawBorders(false);
+        //grafico1.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficofosfato.getDescription().setEnabled(false);
+        graficofosfato.setTouchEnabled(true);
+        graficofosfato.setDragEnabled(true);
+        graficofosfato.setScaleYEnabled(false);
+        graficofosfato.setScaleXEnabled(true);
+        Legend L = graficofosfato.getLegend();
+        L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+    }
+    public void propiedadesgraficopotasio(){
+        graficopotasio.setBackgroundColor(Color.TRANSPARENT);
+        //grafico1.setGridBackgroundColor(Color.BLACK);
+        graficopotasio.setDrawGridBackground(false);
+        graficopotasio.setDrawBorders(false);
+        //grafico1.setBorderColor(Color.BLACK);
+        //grafico1.setBorderWidth((float) 4);
+        graficopotasio.getDescription().setEnabled(false);
+        graficopotasio.setTouchEnabled(true);
+        graficopotasio.setDragEnabled(true);
+        graficopotasio.setScaleYEnabled(false);
+        graficopotasio.setScaleXEnabled(true);
+        Legend L = graficopotasio.getLegend();
         L.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
     public void propiedadesgraficoTem(){
@@ -729,5 +825,71 @@ public class planografico extends Fragment {
         graficocontenidovolumetricodelagua.invalidate();
         //graficocontenidovolumetricodelagua.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         graficocontenidovolumetricodelagua.fitScreen();
+    }
+    private void setgraficonpk(npkdatapack pack){
+        graficonitrato.setData(pack.sacarlanitrato().second);
+        graficonitrato.setXAxisRenderer(new labelpersonalizadoX(graficonitrato.getViewPortHandler(), graficonitrato.getXAxis(), graficonitrato.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisNT = graficonitrato.getXAxis();
+        xaxisNT.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisNT.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisNT.setGranularityEnabled(true);
+        graficonitrato.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficonitrato.setExtraRightOffset(OFFSETGRAFPHLEFT);
+        graficonitrato.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficonitrato.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterNT = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraiznitrato(),pack.sacarlanitrato().first,pack.sacarlabels(),name,"npk","Nitrato",archi);
+        graficonitrato.setMarker(adapterNT);
+        graficonitrato.invalidate();
+        //graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficonitrato.fitScreen();
+
+        graficofosfato.setData(pack.sacarlafosfato().second);
+        graficofosfato.setXAxisRenderer(new labelpersonalizadoX(graficofosfato.getViewPortHandler(), graficofosfato.getXAxis(), graficofosfato.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisFS = graficofosfato.getXAxis();
+        xaxisFS.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisFS.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisFS.setGranularityEnabled(true);
+        graficofosfato.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficofosfato.setExtraRightOffset(OFFSETGRAFPHLEFT);
+        graficofosfato.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficofosfato.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterFS = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizfosfato(),pack.sacarlafosfato().first,pack.sacarlabels(),name,"npk","Fosfato",archi);
+        graficofosfato.setMarker(adapterFS);
+        graficofosfato.invalidate();
+        //graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficofosfato.fitScreen();
+
+        graficopotasio.setData(pack.sacarlafosfato().second);
+        graficopotasio.setXAxisRenderer(new labelpersonalizadoX(graficopotasio.getViewPortHandler(), graficopotasio.getXAxis(), graficopotasio.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisPT = graficopotasio.getXAxis();
+        xaxisPT.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisPT.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisPT.setGranularityEnabled(true);
+        graficopotasio.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficopotasio.setExtraRightOffset(OFFSETGRAFPHLEFT);
+        graficopotasio.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficopotasio.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterPT = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizpotasio(),pack.sacarelpotasio().first,pack.sacarlabels(),name,"npk","Potasio",archi);
+        graficopotasio.setMarker(adapterPT);
+        graficopotasio.invalidate();
+        //graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficopotasio.fitScreen();
+    }
+    private void setgraficoph(phdatapack pack){
+        graficoph.setData(pack.sacarelph().second);
+        graficoph.setXAxisRenderer(new labelpersonalizadoX(graficoph.getViewPortHandler(), graficoph.getXAxis(), graficoph.getTransformer(YAxis.AxisDependency.LEFT)));
+        XAxis xaxisPH = graficoph.getXAxis();
+        xaxisPH.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxisPH.setValueFormatter(new graficolabelgenerator(pack.sacarlabels()));
+        xaxisPH.setGranularityEnabled(true);
+        graficoph.setExtraTopOffset(OFFSETGRAFPHTOP);
+        graficoph.setExtraRightOffset(OFFSETGRAFPHLEFT);
+        graficoph.setExtraLeftOffset(OFFSETGRAFPHLEFT);
+        graficoph.setExtraBottomOffset(OFFSETGRAFPHBOTTOM);
+        MarkerLineChartAdapter adapterPH = new MarkerLineChartAdapter(getContext(),R.layout.item_dataetiqueta,pack.sacareldepth(),pack.sacarraizph(),pack.sacarelph().first,pack.sacarlabels(),name,"ph","ph",archi);
+        graficoph.setMarker(adapterPH);
+        graficoph.invalidate();
+        //graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
+        graficoph.fitScreen();
     }
 }

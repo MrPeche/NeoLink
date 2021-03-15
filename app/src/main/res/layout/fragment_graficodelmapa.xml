@@ -88,6 +88,126 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardMPph"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensordeph"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
+                        android:id="@+id/graficoMPph"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMPnitrato"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensornitrato"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
+                        android:id="@+id/graficoMPnitrato"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMPfosfato"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensorfosfato"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
+                        android:id="@+id/graficoMPfosfato"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMPpotasio"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tamañoCardScroll"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardRadio"
+                app:cardElevation="@dimen/cardelevasion">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="@dimen/margencard"
+                        android:text="@string/sensorpotasio"
+                        android:textSize="@dimen/Tamañotexto" />
+
+                    <com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter
+                        android:id="@+id/graficoMPpotasio"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margencard"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cardMPcontenidovolumetricodelagua"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tamañoCardScroll"
