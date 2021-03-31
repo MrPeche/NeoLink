@@ -44,7 +44,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -57,14 +60,32 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.BatchUpdateValuesRequest;
+import com.google.api.services.sheets.v4.model.BatchUpdateValuesResponse;
+import com.google.api.services.sheets.v4.model.CellData;
+import com.google.api.services.sheets.v4.model.ExtendedValue;
+import com.google.api.services.sheets.v4.model.GridData;
+import com.google.api.services.sheets.v4.model.GridProperties;
+import com.google.api.services.sheets.v4.model.GridRange;
+import com.google.api.services.sheets.v4.model.PivotGroup;
+import com.google.api.services.sheets.v4.model.PivotTable;
+import com.google.api.services.sheets.v4.model.PivotValue;
+import com.google.api.services.sheets.v4.model.RowData;
+import com.google.api.services.sheets.v4.model.Sheet;
+import com.google.api.services.sheets.v4.model.SheetProperties;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
+import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class configuracioncuenta extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -190,11 +211,6 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
 
         @Override
         public void onClick(View v) {
-            /*
-            Double fecha = fechadias("1900/01/01");
-            Double fecha2 = fechadias2("1900/02/01");
-
-             */
             //reporte = archi.sistemadegenerarreportes(0);
             //reporte.observe(getViewLifecycleOwner(),listenerdelreporte2);
             signIn();
@@ -226,6 +242,11 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
                     public void onSuccess(String sreedsheetID) {
                         mensajelogrado.make(v,"proceso terminado",BaseTransientBottomBar.LENGTH_SHORT).show();
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mensajelogrado.make(v,"proceso fallo",BaseTransientBottomBar.LENGTH_SHORT).show();
+                    }
                 });
                 reporte.removeObservers(getViewLifecycleOwner());
             }
@@ -237,6 +258,40 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
             if(infoParaGraficos.size()>0){
                 mensajelogrado.make(v,"Los datos estan recuperados",BaseTransientBottomBar.LENGTH_SHORT).show();
                 /*
+                mDriveServiceHelper2.funcionpadebuggeo(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<List<Sheet>>() {
+                    @Override
+                    public void onSuccess(List<Sheet> sheets) {
+                        if(sheets.size()>0){
+                            mensajelogrado.make(v,"proceso terminado",BaseTransientBottomBar.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mensajelogrado.make(v,"proceso fallo",BaseTransientBottomBar.LENGTH_SHORT).show();
+                    }
+                });
+                 */
+                clasededebugeo clasesita = new clasededebugeo();
+                clasesita.funcionpadebuggeo(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<List<Sheet>>() {
+                    @Override
+                    public void onSuccess(List<Sheet> sheets) {
+                        if(sheets.size()>0){
+                            Spreadsheet spreadsheet = new Spreadsheet()
+                                    .setProperties(new SpreadsheetProperties()
+                                            .setTitle("Reporte Neolink ")).setSheets(sheets);
+                            mensajelogrado.make(v,"proceso terminado",BaseTransientBottomBar.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mensajelogrado.make(v,"proceso fallo",BaseTransientBottomBar.LENGTH_SHORT).show();
+                    }
+                });
+                reporte.removeObservers(getViewLifecycleOwner());
+
+                /*
                 mDriveServiceHelper2.createFileWithData(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String sreedsheetID) {
@@ -247,36 +302,6 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
             }
         }
     };
-    private double fechadias(String fecha){
-        Calendar datedesde = Calendar.getInstance();
-        Calendar datehasta = Calendar.getInstance();
-        datedesde.set(1899,11,30);
-        String[] dt = fecha.split("/");
-        datehasta.set(Integer.parseInt(dt[0]),Integer.parseInt(dt[1])-1,Integer.parseInt(dt[2]),12,0);
-        datedesde.get(Calendar.DATE);
-        datehasta.get(Calendar.DATE);
-        long dat1=datehasta.getTimeInMillis();
-        long dat2=datedesde.getTimeInMillis();
-        long tiempo = datehasta.getTimeInMillis()-datedesde.getTimeInMillis();
-        double tiempo2=(double) tiempo/(24 * 60 * 60 * 1000);
-        double minutos = (double) (12*60)/1440;
-        return tiempo2;
-    }
-    private double fechadias2(String fecha){
-        Calendar datedesde = Calendar.getInstance();
-        Calendar datehasta = Calendar.getInstance();
-        datedesde.set(1899,11,30);
-        String[] dt = fecha.split("/");
-        datehasta.set(Integer.parseInt(dt[0]),Integer.parseInt(dt[1])-1,Integer.parseInt(dt[2]),15,0);
-        datedesde.get(Calendar.DATE);
-        datehasta.get(Calendar.DATE);
-        long dat1=datehasta.getTimeInMillis();
-        long dat2=datedesde.getTimeInMillis();
-        long tiempo = datehasta.getTimeInMillis()-datedesde.getTimeInMillis();
-        double tiempo2=(double) tiempo/(24 * 60 * 60 * 1000);
-        //double minutos = (double) (15*60)/1440;
-        return tiempo2;
-    }
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 
     private static String getRandomString(final int sizeOfRandomString)
@@ -346,5 +371,121 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+}
+class clasededebugeo {
+    private final Executor mExecutor = Executors.newSingleThreadExecutor();
+
+    public clasededebugeo(){ }
+
+    public Task<List<Sheet>> funcionpadebuggeo(ArrayList<ArrayList<InfoParaReporte>> infoParaReporte, ArrayList<ArrayList<String>> dispositivos,ArrayList<Integer> horas,int opcion){
+        return Tasks.call(mExecutor, () -> {
+            List<Sheet> paginas = new ArrayList<>();
+            for(int i=0;i<infoParaReporte.size();i++){
+                paginas.addAll(creaciondepaginas(infoParaReporte.get(i),dispositivos.get(i).get(0)));
+            }
+            String nombredelaopcion;
+            if(opcion==0){
+                nombredelaopcion="Quincenal";
+            }else if(opcion==1){
+                nombredelaopcion="Mensual";
+            }else nombredelaopcion="Anual";
+            return paginas;
+        });
+    }
+    private List<Sheet> creaciondepaginas(ArrayList<InfoParaReporte> infoParaReporte,String nombredehoja){
+        List<Sheet> paginas = new ArrayList<>();
+        List<RowData> rowsK = new ArrayList<>();
+        List<RowData> rowsG = new ArrayList<>();
+        List<RowData> rowsState = new ArrayList<>();
+        for(InfoParaReporte reporte:infoParaReporte){
+            ArrayList<List<RowData>> datosporsensor = reporte.managedias();
+            rowsK.addAll(datosporsensor.get(0));
+            rowsG.addAll(datosporsensor.get(1));
+            rowsState.addAll(datosporsensor.get(2));
+        }
+        if(rowsK.size()>1){
+            List<GridData> gridK = new ArrayList<>();
+            gridK.add(creategrid(rowsK,0,0));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setTitle("Neolink:"+nombredehoja+" Sensor:TEROS 21").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridK));
+            paginas.add(createpivottablesheet("k",paginas.size()-1,rowsK.size()-1,6-1,"Neolink:"+nombredehoja+" Sensor:TEROS 21 Tabla Dinamica"));
+        }
+        if(rowsG.size()>1){
+            List<GridData> gridG = new ArrayList<>();
+            gridG.add(creategrid(rowsG,0,0));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setTitle("Neolink:"+nombredehoja+" Sensor:TEROS 12").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridG));
+            paginas.add(createpivottablesheet("g",paginas.size()-1,rowsG.size()-1,9-1,"Neolink:"+nombredehoja+" Sensor:TEROS 12 Tabla Dinamica"));
+        }
+        if(rowsState.size()>1){
+            List<GridData> gridState = new ArrayList<>();
+            gridState.add(creategrid(rowsState,0,0));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setTitle("Neolink:"+nombredehoja+" Sensor:ATMOS").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridState));
+            paginas.add(createpivottablesheet("state",paginas.size()-1,rowsState.size()-1,9-1,"Neolink:"+nombredehoja+" Sensor:ATMOS Tabla Dinamica"));
+        }
+        // me falta agregar las tablas
+        return paginas;
+    }
+
+    private Sheet createpivottablesheet(String tipo,int sheetid,int endrow,int endcol,String nombredehoja){
+        List<GridData> gridState = new ArrayList<>();
+        List<RowData> rows = new ArrayList<>();
+        List<CellData> celdas = new ArrayList<>();
+        celdas.add(crealatabladinamica(tipo,sheetid,endrow,endcol));
+        rows.add(new RowData().setValues(celdas));
+        gridState.add(creategrid(rows,0,0));
+        return new Sheet().setProperties(new SheetProperties().setTitle(nombredehoja)).setData(gridState);
+    }
+    private CellData crealatabladinamica(String tipo,int sheetid,int endrow,int endcol){
+        CellData celda = new CellData();
+        if(tipo.equals("k")){
+            List<PivotGroup> columns = new ArrayList<>();
+            columns.add( new PivotGroup().setSourceColumnOffset(1).setShowTotals(false).setSortOrder("ASCENDING"));
+            columns.add( new PivotGroup().setSourceColumnOffset(2).setShowTotals(false).setSortOrder("ASCENDING"));
+            List<PivotValue> values = new ArrayList<>();
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(3));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(4));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(5));
+            celda.setPivotTable(new PivotTable().setSource(new GridRange().setSheetId(sheetid).setStartColumnIndex(0).setStartRowIndex(0).setEndColumnIndex(endcol).setEndRowIndex(endrow)).setRows(Collections.singletonList(new PivotGroup().setSourceColumnOffset(0).setShowTotals(false).setSortOrder("ASCENDING"))).setColumns(columns).setValues(values));
+            return celda;
+        } else if(tipo.equals("g")){
+            List<PivotGroup> columns = new ArrayList<>();
+            columns.add( new PivotGroup().setSourceColumnOffset(1).setShowTotals(false).setSortOrder("ASCENDING"));
+            columns.add( new PivotGroup().setSourceColumnOffset(2).setShowTotals(false).setSortOrder("ASCENDING"));
+            List<PivotValue> values = new ArrayList<>();
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(3));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(4));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(5));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(6));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(7));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(8));
+            celda.setPivotTable(new PivotTable().setSource(new GridRange().setSheetId(sheetid).setStartColumnIndex(0).setStartRowIndex(0).setEndColumnIndex(endcol).setEndRowIndex(endrow)).setRows(Collections.singletonList(new PivotGroup().setSourceColumnOffset(0).setShowTotals(false).setSortOrder("ASCENDING"))).setColumns(columns).setValues(values));
+            return celda;
+        } else{ //Este es el ambiental
+            List<PivotGroup> columns = new ArrayList<>();
+            columns.add( new PivotGroup().setSourceColumnOffset(1).setShowTotals(false).setSortOrder("ASCENDING"));
+            List<PivotValue> values = new ArrayList<>();
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(2));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(3));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(4));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(5));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(6));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(7));
+            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(8));
+            celda.setPivotTable(new PivotTable().setSource(new GridRange().setSheetId(sheetid).setStartColumnIndex(0).setStartRowIndex(0).setEndColumnIndex(endcol).setEndRowIndex(endrow)).setRows(Collections.singletonList(new PivotGroup().setSourceColumnOffset(0).setShowTotals(false).setSortOrder("ASCENDING"))).setColumns(columns).setValues(values));
+            return celda;
+        }
+    }
+
+    private GridData creategrid(List<RowData> rows, int startRow, int startcollum){
+        GridData maingrid = new GridData();
+        maingrid.setStartRow(startRow);
+        maingrid.setStartColumn(startcollum);
+        maingrid.setRowData(rows);
+        return maingrid;
+    }
+    private Sheet createsensorsdatasheet(){
+        Sheet pag = new Sheet();
+
+        return pag;
     }
 }

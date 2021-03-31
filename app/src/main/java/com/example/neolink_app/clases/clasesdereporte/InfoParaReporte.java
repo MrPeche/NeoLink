@@ -22,6 +22,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.google.api.services.sheets.v4.model.Border;
+import com.google.api.services.sheets.v4.model.Borders;
 import com.google.api.services.sheets.v4.model.CellData;
 import com.google.api.services.sheets.v4.model.CellFormat;
 import com.google.api.services.sheets.v4.model.ExtendedValue;
@@ -132,19 +134,29 @@ public class InfoParaReporte {
     private CellData createstringcelldata(String data){
         CellData cells = new CellData();
         ExtendedValue ext = new ExtendedValue();
-        cells.setUserEnteredValue(ext.setStringValue(data)).setUserEnteredFormat(new CellFormat().setVerticalAlignment("MIDDLE").setWrapStrategy("WRAP").setHorizontalAlignment("CENTER"));
+        Border bordegrueso = new Border().setStyle("SOLID_MEDIUM");
+        cells.setUserEnteredValue(ext.setStringValue(data)).setUserEnteredFormat(new CellFormat().setVerticalAlignment("MIDDLE").setWrapStrategy("WRAP").setHorizontalAlignment("CENTER").setBorders(new Borders().setLeft(bordegrueso).setRight(bordegrueso)));
+        return cells;
+    }
+    private CellData createstringtitlecelldata(String data){
+        CellData cells = new CellData();
+        ExtendedValue ext = new ExtendedValue();
+        Border bordegrueso = new Border().setStyle("SOLID_MEDIUM");
+        cells.setUserEnteredValue(ext.setStringValue(data)).setUserEnteredFormat(new CellFormat().setVerticalAlignment("MIDDLE").setWrapStrategy("WRAP").setHorizontalAlignment("CENTER").setBorders(new Borders().setBottom(bordegrueso).setTop(bordegrueso).setLeft(bordegrueso).setRight(bordegrueso)));
         return cells;
     }
     private CellData createDatecelldata(Double fecha){
         CellData cell = new CellData();
         ExtendedValue ext = new ExtendedValue();
-        cell.setUserEnteredValue(ext.setNumberValue(fecha)).setUserEnteredFormat(new CellFormat().setNumberFormat(new NumberFormat().setType("DATE_TIME")).setVerticalAlignment("MIDDLE").setHorizontalAlignment("CENTER"));
+        Border bordegrueso = new Border().setStyle("SOLID_MEDIUM");
+        cell.setUserEnteredValue(ext.setNumberValue(fecha)).setUserEnteredFormat(new CellFormat().setNumberFormat(new NumberFormat().setType("DATE_TIME")).setVerticalAlignment("MIDDLE").setHorizontalAlignment("CENTER").setBorders(new Borders().setLeft(bordegrueso).setRight(bordegrueso)));
         return cell;
     }
     private CellData createNumberscelldata(Double numero){
         CellData cell = new CellData();
         ExtendedValue ext = new ExtendedValue();
-        cell.setUserEnteredValue(ext.setNumberValue(numero)).setUserEnteredFormat(new CellFormat().setNumberFormat(new NumberFormat().setType("NUMBER")).setVerticalAlignment("MIDDLE").setHorizontalAlignment("CENTER"));
+        Border bordegrueso = new Border().setStyle("SOLID_MEDIUM");
+        cell.setUserEnteredValue(ext.setNumberValue(numero)).setUserEnteredFormat(new CellFormat().setNumberFormat(new NumberFormat().setType("NUMBER")).setVerticalAlignment("MIDDLE").setHorizontalAlignment("CENTER").setBorders(new Borders().setLeft(bordegrueso).setRight(bordegrueso)));
         return cell;
     }
     private RowData createrow(List<CellData> listofcells){
@@ -153,8 +165,6 @@ public class InfoParaReporte {
         return row;
     }
     private List<RowData> createsensorKrows(ArrayList<Dias> data){
-        //Collections.sort(data,new sortpordias<>());
-
         String labelhoras;
         String labelminutos;
         double diaT;
@@ -296,7 +306,6 @@ public class InfoParaReporte {
         double horas = (double) (Integer.parseInt(hora)*60+Integer.parseInt(minutos))/1440;
         return dias+horas;
     }
-
      */
     private double fechadias(String fecha){
         Calendar datedesde = Calendar.getInstance();
@@ -309,7 +318,6 @@ public class InfoParaReporte {
         double tiempo = datehasta.getTimeInMillis()-datedesde.getTimeInMillis();
         return Math.floor(tiempo/(24 * 60 * 60 * 1000));
     }
-
     private double fechahorasminutos(String hora, String minutos){
         return (double) (Integer.parseInt(hora)*60+Integer.parseInt(minutos))/1440;
     }
@@ -317,7 +325,7 @@ public class InfoParaReporte {
         String [] titulo = {"Fecha","Nombre","Humedad Relativa (%)","Presión Barométrica (kPa)","Bateria (V)","Voltaje solar (V)","Temperatura de bulbo seco (°C)","Velocidad del Viento (m/s)","Temperatura interna (°C)"};
         List<CellData> listtitle = new ArrayList<>();
         for(String name:titulo){
-            listtitle.add(createstringcelldata(name));
+            listtitle.add(createstringtitlecelldata(name));
         }
         return createrow(listtitle);
     }
@@ -325,7 +333,7 @@ public class InfoParaReporte {
         String[] titulo = {"Fecha","Nombre","Puerto","Profundidad del sensor","Potencial Matricial (KPa)","Temperatura (°C)"};
         List<CellData> listtitle = new ArrayList<>();
         for(String name:titulo){
-            listtitle.add(createstringcelldata(name));
+            listtitle.add(createstringtitlecelldata(name));
         }
         return createrow(listtitle);
     }
@@ -333,7 +341,7 @@ public class InfoParaReporte {
         String[] titulo = {"Fecha","Nombre","Puerto","Profundidad del sensor","Humedad del Suelo (raw)","Temperatura del Suelo (°C)","Conductividad Eléctrica del Suelo (uS/cm)","Conductividad Eléctrica del Poro (uS/cm)","Contenido Volumétrico de agua (m3/m3)"};
         List<CellData> listtitle = new ArrayList<>();
         for(String name:titulo){
-            listtitle.add(createstringcelldata(name));
+            listtitle.add(createstringtitlecelldata(name));
         }
         return createrow(listtitle);
     }
@@ -385,7 +393,6 @@ public class InfoParaReporte {
                 }
             }
         }
-
         return rows;
     }
     private List<RowData> createsensorGrowsmes(ArrayList<MesesG> data){
