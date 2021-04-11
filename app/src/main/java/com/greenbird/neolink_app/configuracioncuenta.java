@@ -105,7 +105,8 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
     private TextView mensajebienvenidadedrive;
     private Spinner opcionesdelapsodetiempo;
     private Button botongenerarreporte;
-    private String [] listadeopciones ={"Últimos 15 días","Últimos 30 días","Últimos 12 meses"};
+    //private String [] listadeopciones ={"Últimos 15 días","Últimos 30 días","Últimos 12 meses"};
+    private String [] listadeopciones ={"Últimos 15 días"};
     private int opcionseleccionada=0;
     private ArrayAdapter<String> adapterlapsodetiempo;
     private GoogleSignInOptions gso;
