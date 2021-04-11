@@ -174,6 +174,7 @@ public class MasterDrawerViewModel extends AndroidViewModel {
     }
     public Boolean cualeselestadofamiliar(){ return this.estadofamiliar.equals("hijo");}
     public void actualizaravizonoerespadre(View vista){ Snackbar.make(vista,"Su cuenta no tiene permiso para esta acción", BaseTransientBottomBar.LENGTH_SHORT).show();}
+    public void actualizaravizonopuedesclickearpadre(View vista){ Snackbar.make(vista,"No puedes hacer esta acción en este momento", BaseTransientBottomBar.LENGTH_SHORT).show();}
     /*
     public void getlistaNLNN(OWNERitems prelista){
         ArrayList<ArrayList<String>> listacompleta = new ArrayList<>();

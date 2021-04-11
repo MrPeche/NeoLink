@@ -22,17 +22,19 @@ public class Listadefamiliareshijos extends RecyclerView.Adapter<Listadefamiliar
     private MasterDrawerViewModel archi;
     private LifecycleOwner act;
     private AlertDialog.Builder avizodeborrado;
+    private RecyclerView RV;
 
     public Listadefamiliareshijos(ArrayList<String> correos, MasterDrawerViewModel archi, LifecycleOwner act){
         this.correos = correos;
         this.archi = archi;
         this.act = act;
     }
-    public Listadefamiliareshijos(ArrayList<String> correos, MasterDrawerViewModel archi, LifecycleOwner act, AlertDialog.Builder avizodeborrado){
+    public Listadefamiliareshijos(ArrayList<String> correos, MasterDrawerViewModel archi, LifecycleOwner act, AlertDialog.Builder avizodeborrado,RecyclerView RV){
         this.correos = correos;
         this.archi = archi;
         this.act = act;
         this.avizodeborrado = avizodeborrado;
+        this.RV = RV;
     }
 
     @NonNull
@@ -46,9 +48,13 @@ public class Listadefamiliareshijos extends RecyclerView.Adapter<Listadefamiliar
         holder.correo.setText(correos.get(position));
         holder.borrar.setOnClickListener(v -> archi.fetchuiddelhijo(correos.get(position)).observe(act, s -> {
             if(s!=null){
-                if(archi.cualeselestadofamiliar()){
+                if(!RV.isClickable()) {
+                    archi.actualizaravizonopuedesclickearpadre(holder.itemView);
+                }
+                else if(archi.cualeselestadofamiliar()){
                     archi.actualizaravizonoerespadre(holder.itemView);
-                } else{
+                }
+                else{
                     avizodeborrado.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

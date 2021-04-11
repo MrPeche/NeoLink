@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neolink_app.R;
+import com.example.neolink_app.actividadbase;
 import com.example.neolink_app.adaptadores.Listadefamiliareshijos;
 import com.example.neolink_app.clases.clasesdereporte.InfoParaReporte;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
@@ -91,6 +93,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
 
     private MasterDrawerViewModel archi;
     private TextView tokendevinculacion;
+    private TextView linkdeldrive;
     private Button botondegenerar;
     private RecyclerView listadefamiliares;
     private Listadefamiliareshijos adapter;
@@ -114,6 +117,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
     private Snackbar mensajelogrado;
     private View v;
     private  LiveData<ArrayList<ArrayList<InfoParaReporte>>> reporte;
+    private ProgressBar cargadodeldrive;
 
 
 
@@ -153,7 +157,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         v = view;
-
+        linkdeldrive = view.findViewById(R.id.linkdeldrive);
         dialogodeborrado = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(),R.style.AlertDialogCustom));
         dialogodeborrado.setMessage("¿Esta seguro que quiere eliminar esta cuenta de su lista de invitados?");
         tokendevinculacion = view.findViewById(R.id.tokendelvinculo);
@@ -174,6 +178,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
         opcionesdelapsodetiempo.setOnItemSelectedListener(this);
         glm = new GridLayoutManager(getActivity(),1);
         listadefamiliares.setLayoutManager(glm);
+        cargadodeldrive = view.findViewById(R.id.cargadodeldrive);
         archi.tokendevinculoanterior().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -189,7 +194,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
             public void onChanged(Pair<ArrayList<String>, ArrayList<String>> arrayListArrayListPair) {
                 if(arrayListArrayListPair!=null){
                     //adapter = new Listadefamiliareshijos(arrayListArrayListPair.second);
-                    adapter = new Listadefamiliareshijos(arrayListArrayListPair.second,archi,getViewLifecycleOwner(),dialogodeborrado);
+                    adapter = new Listadefamiliareshijos(arrayListArrayListPair.second,archi,getViewLifecycleOwner(),dialogodeborrado,listadefamiliares);
                     listadefamiliares.setAdapter(adapter);
                 }
             }
@@ -228,6 +233,8 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
                 }
             });
             */
+            cargadodeldrive.setVisibility(View.VISIBLE);
+            bloquearbotones();
             reporte = archi.sistemadegenerarreportes(opcionseleccionada);
             reporte.observe(getViewLifecycleOwner(),listenerdelreporte);
         }
@@ -236,72 +243,31 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
         @Override
         public void onChanged(ArrayList<ArrayList<InfoParaReporte>> infoParaGraficos) {
             if(infoParaGraficos.size()>0){
-                mensajelogrado.make(v,"Los datos estan recuperados",BaseTransientBottomBar.LENGTH_SHORT).show();
+                mensajelogrado.make(v,"Los datos fueron recibidos y están siendo procesados",BaseTransientBottomBar.LENGTH_SHORT).show();
                 mDriveServiceHelper2.createFileWithData(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String sreedsheetID) {
-                        mensajelogrado.make(v,"proceso terminado",BaseTransientBottomBar.LENGTH_SHORT).show();
+                        mensajelogrado.make(v,"El proceso terminó con exito",BaseTransientBottomBar.LENGTH_SHORT).show();
+                        linkdeldrive.setClickable(true);
+                        String link = "https://docs.google.com/spreadsheets/d/"+sreedsheetID+"/edit#gid=0";
+                        linkdeldrive.setText(link);
+                        cargadodeldrive.setVisibility(View.GONE);
+                        desbloquearbotones();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        mensajelogrado.make(v,"proceso fallo",BaseTransientBottomBar.LENGTH_SHORT).show();
-                    }
-                });
-                reporte.removeObservers(getViewLifecycleOwner());
-            }
-        }
-    };
-    private Observer<ArrayList<ArrayList<InfoParaReporte>>> listenerdelreporte2 = new Observer<ArrayList<ArrayList<InfoParaReporte>>>() {
-        @Override
-        public void onChanged(ArrayList<ArrayList<InfoParaReporte>> infoParaGraficos) {
-            if(infoParaGraficos.size()>0){
-                mensajelogrado.make(v,"Los datos estan recuperados",BaseTransientBottomBar.LENGTH_SHORT).show();
-                /*
-                mDriveServiceHelper2.funcionpadebuggeo(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<List<Sheet>>() {
-                    @Override
-                    public void onSuccess(List<Sheet> sheets) {
-                        if(sheets.size()>0){
-                            mensajelogrado.make(v,"proceso terminado",BaseTransientBottomBar.LENGTH_SHORT).show();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        mensajelogrado.make(v,"proceso fallo",BaseTransientBottomBar.LENGTH_SHORT).show();
-                    }
-                });
-                 */
-                clasededebugeo clasesita = new clasededebugeo();
-                clasesita.funcionpadebuggeo(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<List<Sheet>>() {
-                    @Override
-                    public void onSuccess(List<Sheet> sheets) {
-                        if(sheets.size()>0){
-                            Spreadsheet spreadsheet = new Spreadsheet()
-                                    .setProperties(new SpreadsheetProperties()
-                                            .setTitle("Reporte Neolink ")).setSheets(sheets);
-                            mensajelogrado.make(v,"proceso terminado",BaseTransientBottomBar.LENGTH_SHORT).show();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        mensajelogrado.make(v,"proceso fallo",BaseTransientBottomBar.LENGTH_SHORT).show();
-                    }
-                });
-                reporte.removeObservers(getViewLifecycleOwner());
+                        mensajelogrado.make(v,"El proceso falló",BaseTransientBottomBar.LENGTH_SHORT).show();
+                        cargadodeldrive.setVisibility(View.GONE);
+                        desbloquearbotones();
 
-                /*
-                mDriveServiceHelper2.createFileWithData(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String sreedsheetID) {
-                        mensajelogrado.make(v,"proceso terminado",BaseTransientBottomBar.LENGTH_SHORT).show();
                     }
                 });
-                */
+                reporte.removeObservers(getViewLifecycleOwner());
             }
         }
     };
+
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 
     private static String getRandomString(final int sizeOfRandomString)
@@ -350,9 +316,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
                                 Sheets serviceSS = new Sheets.Builder(AndroidHttp.newCompatibleTransport(),new GsonFactory(), credential)
                                         .setApplicationName("NeoLink")
                                         .build();
-
-
-
+                                
                                 // The DriveServiceHelper encapsulates all REST API and SAF functionality.
                                 // Its instantiation is required before handling any onClick actions.
                                 mDriveServiceHelper2 = new clasedeusosheets(serviceSS);
@@ -372,120 +336,20 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-}
-class clasededebugeo {
-    private final Executor mExecutor = Executors.newSingleThreadExecutor();
-
-    public clasededebugeo(){ }
-
-    public Task<List<Sheet>> funcionpadebuggeo(ArrayList<ArrayList<InfoParaReporte>> infoParaReporte, ArrayList<ArrayList<String>> dispositivos,ArrayList<Integer> horas,int opcion){
-        return Tasks.call(mExecutor, () -> {
-            List<Sheet> paginas = new ArrayList<>();
-            for(int i=0;i<infoParaReporte.size();i++){
-                paginas.addAll(creaciondepaginas(infoParaReporte.get(i),dispositivos.get(i).get(0)));
-            }
-            String nombredelaopcion;
-            if(opcion==0){
-                nombredelaopcion="Quincenal";
-            }else if(opcion==1){
-                nombredelaopcion="Mensual";
-            }else nombredelaopcion="Anual";
-            return paginas;
-        });
+    private void bloquearbotones(){
+        botondegenerar.setClickable(false);
+        botoningresaradrive.setClickable(false);
+        botoncuentaconfirmada.setClickable(false);
+        botongenerarreporte.setClickable(false);
+        listadefamiliares.setClickable(false);
+        ((actividadbase)getActivity()).bloqueardrawer();
     }
-    private List<Sheet> creaciondepaginas(ArrayList<InfoParaReporte> infoParaReporte,String nombredehoja){
-        List<Sheet> paginas = new ArrayList<>();
-        List<RowData> rowsK = new ArrayList<>();
-        List<RowData> rowsG = new ArrayList<>();
-        List<RowData> rowsState = new ArrayList<>();
-        for(InfoParaReporte reporte:infoParaReporte){
-            ArrayList<List<RowData>> datosporsensor = reporte.managedias();
-            rowsK.addAll(datosporsensor.get(0));
-            rowsG.addAll(datosporsensor.get(1));
-            rowsState.addAll(datosporsensor.get(2));
-        }
-        if(rowsK.size()>1){
-            List<GridData> gridK = new ArrayList<>();
-            gridK.add(creategrid(rowsK,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setTitle("Neolink:"+nombredehoja+" Sensor:TEROS 21").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridK));
-            paginas.add(createpivottablesheet("k",paginas.size()-1,rowsK.size()-1,6-1,"Neolink:"+nombredehoja+" Sensor:TEROS 21 Tabla Dinamica"));
-        }
-        if(rowsG.size()>1){
-            List<GridData> gridG = new ArrayList<>();
-            gridG.add(creategrid(rowsG,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setTitle("Neolink:"+nombredehoja+" Sensor:TEROS 12").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridG));
-            paginas.add(createpivottablesheet("g",paginas.size()-1,rowsG.size()-1,9-1,"Neolink:"+nombredehoja+" Sensor:TEROS 12 Tabla Dinamica"));
-        }
-        if(rowsState.size()>1){
-            List<GridData> gridState = new ArrayList<>();
-            gridState.add(creategrid(rowsState,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setTitle("Neolink:"+nombredehoja+" Sensor:ATMOS").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridState));
-            paginas.add(createpivottablesheet("state",paginas.size()-1,rowsState.size()-1,9-1,"Neolink:"+nombredehoja+" Sensor:ATMOS Tabla Dinamica"));
-        }
-        // me falta agregar las tablas
-        return paginas;
-    }
-
-    private Sheet createpivottablesheet(String tipo,int sheetid,int endrow,int endcol,String nombredehoja){
-        List<GridData> gridState = new ArrayList<>();
-        List<RowData> rows = new ArrayList<>();
-        List<CellData> celdas = new ArrayList<>();
-        celdas.add(crealatabladinamica(tipo,sheetid,endrow,endcol));
-        rows.add(new RowData().setValues(celdas));
-        gridState.add(creategrid(rows,0,0));
-        return new Sheet().setProperties(new SheetProperties().setTitle(nombredehoja)).setData(gridState);
-    }
-    private CellData crealatabladinamica(String tipo,int sheetid,int endrow,int endcol){
-        CellData celda = new CellData();
-        if(tipo.equals("k")){
-            List<PivotGroup> columns = new ArrayList<>();
-            columns.add( new PivotGroup().setSourceColumnOffset(1).setShowTotals(false).setSortOrder("ASCENDING"));
-            columns.add( new PivotGroup().setSourceColumnOffset(2).setShowTotals(false).setSortOrder("ASCENDING"));
-            List<PivotValue> values = new ArrayList<>();
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(3));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(4));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(5));
-            celda.setPivotTable(new PivotTable().setSource(new GridRange().setSheetId(sheetid).setStartColumnIndex(0).setStartRowIndex(0).setEndColumnIndex(endcol).setEndRowIndex(endrow)).setRows(Collections.singletonList(new PivotGroup().setSourceColumnOffset(0).setShowTotals(false).setSortOrder("ASCENDING"))).setColumns(columns).setValues(values));
-            return celda;
-        } else if(tipo.equals("g")){
-            List<PivotGroup> columns = new ArrayList<>();
-            columns.add( new PivotGroup().setSourceColumnOffset(1).setShowTotals(false).setSortOrder("ASCENDING"));
-            columns.add( new PivotGroup().setSourceColumnOffset(2).setShowTotals(false).setSortOrder("ASCENDING"));
-            List<PivotValue> values = new ArrayList<>();
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(3));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(4));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(5));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(6));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(7));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(8));
-            celda.setPivotTable(new PivotTable().setSource(new GridRange().setSheetId(sheetid).setStartColumnIndex(0).setStartRowIndex(0).setEndColumnIndex(endcol).setEndRowIndex(endrow)).setRows(Collections.singletonList(new PivotGroup().setSourceColumnOffset(0).setShowTotals(false).setSortOrder("ASCENDING"))).setColumns(columns).setValues(values));
-            return celda;
-        } else{ //Este es el ambiental
-            List<PivotGroup> columns = new ArrayList<>();
-            columns.add( new PivotGroup().setSourceColumnOffset(1).setShowTotals(false).setSortOrder("ASCENDING"));
-            List<PivotValue> values = new ArrayList<>();
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(2));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(3));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(4));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(5));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(6));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(7));
-            values.add(new PivotValue().setSummarizeFunction("SUM").setSourceColumnOffset(8));
-            celda.setPivotTable(new PivotTable().setSource(new GridRange().setSheetId(sheetid).setStartColumnIndex(0).setStartRowIndex(0).setEndColumnIndex(endcol).setEndRowIndex(endrow)).setRows(Collections.singletonList(new PivotGroup().setSourceColumnOffset(0).setShowTotals(false).setSortOrder("ASCENDING"))).setColumns(columns).setValues(values));
-            return celda;
-        }
-    }
-
-    private GridData creategrid(List<RowData> rows, int startRow, int startcollum){
-        GridData maingrid = new GridData();
-        maingrid.setStartRow(startRow);
-        maingrid.setStartColumn(startcollum);
-        maingrid.setRowData(rows);
-        return maingrid;
-    }
-    private Sheet createsensorsdatasheet(){
-        Sheet pag = new Sheet();
-
-        return pag;
+    private void desbloquearbotones(){
+        botondegenerar.setClickable(true);
+        botoningresaradrive.setClickable(true);
+        botoncuentaconfirmada.setClickable(true);
+        botongenerarreporte.setClickable(true);
+        listadefamiliares.setClickable(true);
+        ((actividadbase)getActivity()).desbloqueardrawer();
     }
 }

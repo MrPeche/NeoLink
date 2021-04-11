@@ -34,7 +34,7 @@ public class actividadbase extends AppCompatActivity {
     private TextView correoYO;
     private MasterDrawerViewModel archi;
     public FloatingActionButton fab;
-
+    public DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +53,8 @@ public class actividadbase extends AppCompatActivity {
             }
         });*/
 
-        DrawerLayout drawer = findViewById(R.id.drawer);
+        //DrawerLayout drawer = findViewById(R.id.drawer);
+        drawer = findViewById(R.id.drawer);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -158,5 +159,7 @@ public class actividadbase extends AppCompatActivity {
     public void fabcalendar() {fab.setImageResource(R.drawable.ic_calendar_fab);}
     public void fabplus(){fab.setImageResource(R.drawable.ic_stat_fab);}
     public void fabcheck(){fab.setImageResource(R.drawable.listosign);}
+    public void bloqueardrawer(){ drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); }
+    public void desbloqueardrawer(){ drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);}
 }
 

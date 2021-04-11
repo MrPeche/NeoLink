@@ -157,7 +157,7 @@
                         android:id="@+id/dialogodeusuarioconectado"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical">
 
                         <TextView
@@ -189,6 +189,26 @@
                             android:textColor="@color/colorTextoNegro"
                             android:textSize="@dimen/Tamañotexto" />
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/margencard"
+                            android:fontFamily="@font/lato"
+                            android:text="@string/drivelink"
+                            android:textColor="@color/colorTextoNegro"
+                            android:textSize="@dimen/Tamañotexto" />
+
+                        <TextView
+                            android:id="@+id/linkdeldrive"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoLink="web"
+                            android:clickable="false"
+                            android:layout_marginBottom="@dimen/margencard"
+                            android:fontFamily="@font/lato"
+                            android:textColor="@color/colorTextoNegro"
+                            android:textSize="@dimen/Tamañotexto" />
+
                         <Button
                             android:id="@+id/generarreporte"
                             android:layout_width="wrap_content"
@@ -210,4 +230,16 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/cargadodeldrive"
+        style="?android:attr/progressBarStyle"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

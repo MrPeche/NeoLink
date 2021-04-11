@@ -57,7 +57,7 @@ public class InfoParaReporte {
         numerodepaquetes++;
     }
     public boolean checknumerodepaquetesaldia(){
-        return numerodedias==numerodepaquetes;
+        return numerodedias<=numerodepaquetes;
     }
     public void agregarinfodias(paquetededatacompletoparareporte<Dias,diasstate,DiasG> data){
         this.meses.clear();

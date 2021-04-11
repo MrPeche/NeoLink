@@ -55,7 +55,6 @@ public class clasedeusosheets {
     }
 
 
-
     public Task<String> createFileWithData(ArrayList<ArrayList<InfoParaReporte>> infoParaReporte, ArrayList<ArrayList<String>> dispositivos,ArrayList<Integer> horas,int opcion){
 
         return Tasks.call(mExecutor, () -> {
@@ -97,31 +96,31 @@ public class clasedeusosheets {
         if(rowsK.size()>1){
             List<GridData> gridK = new ArrayList<>();
             gridK.add(creategrid(rowsK,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:TEROS 21").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridK));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:Sensor de Potencial Matricial y Temperatura").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridK));
             index++;
-            paginas.add(createpivottablesheet("k",paginas.size()-1,rowsK.size(),6,"Neolink:"+nombredehoja+" Sensor:TEROS 21 Tabla Dinamica",index));
+            /*paginas.add(createpivottablesheet("k",paginas.size()-1,rowsK.size(),6,"Neolink:"+nombredehoja+" Sensor:Sensor de Potencial Matricial y Temperatura TABLA DINÁMICA",index));
             index++;
-            paginas.add(createchartsheet("k",paginas.size()-1, rowsK.size(),"Neolink:"+nombredehoja+" Sensor:TEROS 21 Graficos",index,infoParaReporte.size()));
-            index++;
+            paginas.add(createchartsheet("k",paginas.size()-1, rowsK.size(),"Neolink:"+nombredehoja+" Sensor:Sensor de Potencial Matricial y Temperatura GRÁFICOS",index,infoParaReporte.size()));
+            index++;*/
         }
         if(rowsG.size()>1){
             List<GridData> gridG = new ArrayList<>();
             gridG.add(creategrid(rowsG,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:TEROS 12").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridG));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:Sensor de Humedad, CE, Temperatura").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridG));
             index++;
-            paginas.add(createpivottablesheet("g",paginas.size()-1,rowsG.size(),9,"Neolink:"+nombredehoja+" Sensor:TEROS 12 Tabla Dinamica",index));
+            /*paginas.add(createpivottablesheet("g",paginas.size()-1,rowsG.size(),9,"Neolink:"+nombredehoja+" Sensor:Sensor de Humedad, CE, Temperatura TABLA DINÁMICA",index));
             index++;
-            paginas.add(createchartsheet("g",paginas.size()-1, rowsG.size(),"Neolink:"+nombredehoja+" Sensor:TEROS 21 Graficos",index,infoParaReporte.size()));
-            index++;
+            paginas.add(createchartsheet("g",paginas.size()-1, rowsG.size(),"Neolink:"+nombredehoja+" Sensor:Sensor de Humedad, CE, Temperatura GRÁFICOS",index,infoParaReporte.size()));
+            index++;*/
         }
         if(rowsState.size()>1){
             List<GridData> gridState = new ArrayList<>();
             gridState.add(creategrid(rowsState,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:ATMOS").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridState));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:Estación Metereológica").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridState));
             index++;
-            paginas.add(createpivottablesheet("state",paginas.size()-1,rowsState.size(),9,"Neolink:"+nombredehoja+" Sensor:ATMOS Tabla Dinamica",index));
+            /*paginas.add(createpivottablesheet("state",paginas.size()-1,rowsState.size(),9,"Neolink:"+nombredehoja+" Sensor:Estación Metereológica TABLA DINÁMICA",index));
             index++;
-            paginas.add(createchartsheet("state",paginas.size()-1, rowsState.size(),"Neolink:"+nombredehoja+" Sensor:ATMOS Graficos",index,infoParaReporte.size()));
+            paginas.add(createchartsheet("state",paginas.size()-1, rowsState.size(),"Neolink:"+nombredehoja+" Sensor:Estación Metereológica GRÁFICOS",index,infoParaReporte.size()));*/
         }
         // me falta agregar las tablas
         return paginas;
@@ -176,15 +175,7 @@ public class clasedeusosheets {
             return celda;
         }
     }
-    /*
-    private List<EmbeddedChart> createchart(){
-        List<EmbeddedChart> charts = new ArrayList<>();
-        for(int i=0;i<3;i++){
-            charts.add(new EmbeddedChart().setChartId(i).set);
-        }
-        return charts;
-    }
-     */
+
     private List<BasicChartAxis> crearsecuenciadevaloresparaaxis(){
         List<BasicChartAxis> charstaxis = new ArrayList<>();
         charstaxis.add(new BasicChartAxis().setTitle("Fechas").setPosition("BOTTOM_AXIS"));
@@ -201,87 +192,67 @@ public class clasedeusosheets {
     private EmbeddedChart createPotencialMatricial(int id,int rowend,int index,int sourceid,int numerodedispositivos){
 
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,2)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,2)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial del Potencial Matricial (KPa)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(0))))
-                .setChartId(id);
+                ;
     }
     private EmbeddedChart createTemperaturaK(int id,int rowend,int index,int sourceid,int numerodedispositivos){
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,3)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,3)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial del Potencial Matricial (KPa)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(19))))
-                .setChartId(id);
+                ;
     }
-    private EmbeddedChart createcharthumedaddelsuelo(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(2).setEndColumnIndex(3))))));
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(8).setEndColumnIndex(9))))));
-         */
-        return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,2)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
-                .setTitle("Historial de la Humedad del Suelo (raw)")
-                .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
-                .setMaximized(false))
-                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(0))))
-                .setChartId(id);
-    }
+
     private EmbeddedChart createcharttemperaturadelsueloG(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(2).setEndColumnIndex(3))))));
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(8).setEndColumnIndex(9))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,3)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,3)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Temperatura del Suelo (°C)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
-                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(19))))
-                .setChartId(id);
+                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(0))))
+                ;
     }
     private EmbeddedChart createchartconductividadelectricadelsuelo(int id,int rowend,int index,int sourceid,int numerodedispositivos){
 
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,4)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,4)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Conductividad Eléctrica del Suelo (uS/cm)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
-                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(38))))
-                .setChartId(id);
+                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(19))))
+                ;
     }
     private EmbeddedChart createchartconductividadelectricadelporo(int id,int rowend,int index,int sourceid,int numerodedispositivos){
 
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,5)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,5)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Conductividad Eléctrica del Poro (uS/cm)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
-                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(57))))
-                .setChartId(id);
+                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(38))))
+                ;
     }
     private EmbeddedChart createchartcontenidovolumetricodeagua(int id,int rowend,int index,int sourceid,int numerodedispositivos){
 
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,6)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,6,4*numerodedispositivos,4,6)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(4).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial del Contenido Volumétrico de agua (m3/m3)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
-                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(76))))
-                .setChartId(id);
+                .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(57))))
+                ;
     }
     private EmbeddedChart createcharthumedadrelativa(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(5).setEndRowIndex(rowend).setStartColumnIndex(1).setEndColumnIndex(2))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,1)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,1)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(3).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Humedad Relativa (%)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
@@ -289,12 +260,9 @@ public class clasedeusosheets {
                 ;
     }
     private EmbeddedChart createchartpresionbarometrica(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(5).setEndRowIndex(rowend).setStartColumnIndex(1).setEndColumnIndex(2))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,2)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,2)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(3).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Presión Barométrica (kPa)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
@@ -302,12 +270,9 @@ public class clasedeusosheets {
                 ;
     }
     private EmbeddedChart createchartbateria(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(5).setEndRowIndex(rowend).setStartColumnIndex(1).setEndColumnIndex(2))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,3)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,3)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(3).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Bateria (V)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
@@ -315,12 +280,9 @@ public class clasedeusosheets {
                 ;
     }
     private EmbeddedChart createchartvoltajesolar(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(5).setEndRowIndex(rowend).setStartColumnIndex(1).setEndColumnIndex(2))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,4)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,4)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(3).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial del Voltaje solar (V)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
@@ -328,12 +290,9 @@ public class clasedeusosheets {
                 ;
     }
     private EmbeddedChart createcharttemperaturadebulboseco(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(5).setEndRowIndex(rowend).setStartColumnIndex(1).setEndColumnIndex(2))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,5)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,5)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(3).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Temperatura de bulbo seco (°C)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
@@ -341,12 +300,9 @@ public class clasedeusosheets {
                 ;
     }
     private EmbeddedChart createchartvelocidaddelviento(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(5).setEndRowIndex(rowend).setStartColumnIndex(1).setEndColumnIndex(2))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,6)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,6)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(3).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Velocidad del Viento (m/s)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
@@ -354,12 +310,9 @@ public class clasedeusosheets {
                 ;
     }
     private EmbeddedChart createcharttemperaturainterna(int id,int rowend,int index,int sourceid,int numerodedispositivos){
-        /*
-        List<BasicChartSeries> chartseries = new ArrayList<>();
-        chartseries.add(new BasicChartSeries().setTargetAxis("LEFT_AXIS").setSeries(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(5).setEndRowIndex(rowend).setStartColumnIndex(1).setEndColumnIndex(2))))));
-         */
+
         return new EmbeddedChart().setSpec(new ChartSpec()
-                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,7)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(0).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
+                .setBasicChart(new BasicChartSpec().setHeaderCount(1).setChartType("LINE").setLegendPosition("BOTTOM_LEGEND").setAxis(crearsecuenciadevaloresparaaxis()).setSeries(crearsecuenciadevaloresparaseries(sourceid,rowend,7,numerodedispositivos,3,7)).setDomains(Collections.singletonList(new BasicChartDomain().setDomain(new ChartData().setSourceRange(new ChartSourceRange().setSources(Collections.singletonList(new GridRange().setSheetId(sourceid).setStartRowIndex(3).setEndRowIndex(rowend).setStartColumnIndex(0).setEndColumnIndex(1))))))))
                 .setTitle("Historial de la Temperatura interna (°C)")
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
@@ -374,8 +327,8 @@ public class clasedeusosheets {
             idchart++;
             graf.add(createTemperaturaK(idchart,rowend,index,id,numerodedispositivos));
         } else if(type.equals("g")){
-            graf.add(createcharthumedaddelsuelo(idchart,rowend,index,id,numerodedispositivos));
-            idchart++;
+            //graf.add(createcharthumedaddelsuelo(idchart,rowend,index,id,numerodedispositivos));
+            //idchart++;
             graf.add(createcharttemperaturadelsueloG(idchart,rowend,index,id,numerodedispositivos));
             idchart++;
             graf.add(createchartconductividadelectricadelsuelo(idchart,rowend,index,id,numerodedispositivos));
