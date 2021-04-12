@@ -96,31 +96,31 @@ public class clasedeusosheets {
         if(rowsK.size()>1){
             List<GridData> gridK = new ArrayList<>();
             gridK.add(creategrid(rowsK,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:Sensor de Potencial Matricial y Temperatura").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridK));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor de Potencial Matricial y Temperatura").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridK));
             index++;
-            /*paginas.add(createpivottablesheet("k",paginas.size()-1,rowsK.size(),6,"Neolink:"+nombredehoja+" Sensor:Sensor de Potencial Matricial y Temperatura TABLA DINÁMICA",index));
+            paginas.add(createpivottablesheet("k",paginas.size()-1,rowsK.size(),6,"Neolink:"+nombredehoja+" Sensor de Potencial Matricial y Temperatura TABLA DINÁMICA",index));
             index++;
-            paginas.add(createchartsheet("k",paginas.size()-1, rowsK.size(),"Neolink:"+nombredehoja+" Sensor:Sensor de Potencial Matricial y Temperatura GRÁFICOS",index,infoParaReporte.size()));
-            index++;*/
+            paginas.add(createchartsheet("k",paginas.size()-1, rowsK.size(),"Neolink:"+nombredehoja+" Sensor de Potencial Matricial y Temperatura GRÁFICOS",index,infoParaReporte.size()));
+            index++;
         }
         if(rowsG.size()>1){
             List<GridData> gridG = new ArrayList<>();
             gridG.add(creategrid(rowsG,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:Sensor de Humedad, CE, Temperatura").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridG));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor de Humedad, CE, Temperatura").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridG));
             index++;
-            /*paginas.add(createpivottablesheet("g",paginas.size()-1,rowsG.size(),9,"Neolink:"+nombredehoja+" Sensor:Sensor de Humedad, CE, Temperatura TABLA DINÁMICA",index));
+            paginas.add(createpivottablesheet("g",paginas.size()-1,rowsG.size(),9,"Neolink:"+nombredehoja+" Sensor de Humedad, CE, Temperatura TABLA DINÁMICA",index));
             index++;
-            paginas.add(createchartsheet("g",paginas.size()-1, rowsG.size(),"Neolink:"+nombredehoja+" Sensor:Sensor de Humedad, CE, Temperatura GRÁFICOS",index,infoParaReporte.size()));
-            index++;*/
+            paginas.add(createchartsheet("g",paginas.size()-1, rowsG.size(),"Neolink:"+nombredehoja+" Sensor de Humedad, CE, Temperatura GRÁFICOS",index,infoParaReporte.size()));
+            index++;
         }
         if(rowsState.size()>1){
             List<GridData> gridState = new ArrayList<>();
             gridState.add(creategrid(rowsState,0,0));
-            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Sensor:Estación Metereológica").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridState));
+            paginas.add(new Sheet().setProperties(new SheetProperties().setSheetId(index).setTitle("Neolink:"+nombredehoja+" Estación Metereológica").setGridProperties(new GridProperties().setFrozenRowCount(1).setFrozenColumnCount(1).setHideGridlines(true))).setData(gridState));
             index++;
-            /*paginas.add(createpivottablesheet("state",paginas.size()-1,rowsState.size(),9,"Neolink:"+nombredehoja+" Sensor:Estación Metereológica TABLA DINÁMICA",index));
+            paginas.add(createpivottablesheet("state",paginas.size()-1,rowsState.size(),9,"Neolink:"+nombredehoja+" Estación Metereológica TABLA DINÁMICA",index));
             index++;
-            paginas.add(createchartsheet("state",paginas.size()-1, rowsState.size(),"Neolink:"+nombredehoja+" Sensor:Estación Metereológica GRÁFICOS",index,infoParaReporte.size()));*/
+            paginas.add(createchartsheet("state",paginas.size()-1, rowsState.size(),"Neolink:"+nombredehoja+" Estación Metereológica GRÁFICOS",index,infoParaReporte.size()));
         }
         // me falta agregar las tablas
         return paginas;

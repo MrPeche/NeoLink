@@ -244,7 +244,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
         @Override
         public void onChanged(ArrayList<ArrayList<InfoParaReporte>> infoParaGraficos) {
             if(infoParaGraficos.size()>0){
-                mensajelogrado.make(v,"Los datos fueron recibidos y están siendo procesados",BaseTransientBottomBar.LENGTH_SHORT).show();
+                mensajelogrado.make(v,"Los datos fueron recibidos. No cierre la venta hasta que termine el proceso",BaseTransientBottomBar.LENGTH_LONG).show();
                 mDriveServiceHelper2.createFileWithData(infoParaGraficos,archi.organizarlosdispositivosparaelreporte(),archi.damelahora(),opcionseleccionada).addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(String sreedsheetID) {
@@ -261,7 +261,6 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
                         mensajelogrado.make(v,"El proceso falló",BaseTransientBottomBar.LENGTH_SHORT).show();
                         cargadodeldrive.setVisibility(View.GONE);
                         desbloquearbotones();
-
                     }
                 });
                 reporte.removeObservers(getViewLifecycleOwner());
