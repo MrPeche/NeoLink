@@ -175,9 +175,9 @@
     //Configuracion cuenta
     <string name="tituloconfiguracioncuenta">Configuración General</string>
     <string name="titulolinkeo">Manejo de cuentas vinculadas</string>
-    <string name="titulodebienvenidadrive">Binvenido ""</string>
+    <string name="titulodebienvenidadrive">Binvenido, ""</string>
     <string name="elegirfecha">Elija el tiempo a reportar</string>
-    <string name="drivelink">Aqui aparecerá el link de su reporte:</string>
+    <string name="drivelink">Aquí aparecerá el link de su reporte:</string>
     <string name="token">Código de vínculo:</string>
     <string name="botongenerar">Generar</string>
     <string name="botonauthgoogle">Ingrese con su cuenta Drive</string>
