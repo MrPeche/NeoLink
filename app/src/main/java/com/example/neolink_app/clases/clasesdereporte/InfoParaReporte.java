@@ -322,7 +322,7 @@ public class InfoParaReporte {
         return (double) (Integer.parseInt(hora)*60+Integer.parseInt(minutos))/1440;
     }
     private RowData creartitulodedataatmosferica(){
-        String [] titulo = {"Fecha","Nombre","Humedad Relativa (%)","Presión Barométrica (kPa)","Bateria (V)","Voltaje solar (V)","Temperatura de bulbo seco (°C)","Velocidad del Viento (m/s)","Temperatura interna (°C)"};
+        String [] titulo = {"Fecha","Nombre","Humedad Relativa (%)","Presión Barométrica (kPa)","Batería (V)","Voltaje solar (V)","Temperatura de bulbo seco (°C)","Velocidad del Viento (m/s)","Temperatura interna (°C)"};
         List<CellData> listtitle = new ArrayList<>();
         for(String name:titulo){
             listtitle.add(createstringtitlecelldata(name));
