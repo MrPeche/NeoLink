@@ -106,7 +106,7 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
     private Spinner opcionesdelapsodetiempo;
     private Button botongenerarreporte;
     //private String [] listadeopciones ={"Últimos 15 días","Últimos 30 días","Últimos 12 meses"};
-    private String [] listadeopciones ={"Últimos 15 días"};
+    private String [] listadeopciones ={"Últimos 15 días","Últimos 30 días","Últimos 12 meses"};
     private int opcionseleccionada=0;
     private ArrayAdapter<String> adapterlapsodetiempo;
     private GoogleSignInOptions gso;
@@ -236,6 +236,14 @@ public class configuracioncuenta extends Fragment implements AdapterView.OnItemS
             */
             cargadodeldrive.setVisibility(View.VISIBLE);
             bloquearbotones();
+            /*archi.sistemadegenerarreportes(2).observe(getViewLifecycleOwner(), new Observer<ArrayList<ArrayList<InfoParaReporte>>>() {
+                @Override
+                public void onChanged(ArrayList<ArrayList<InfoParaReporte>> arrayLists) {
+                    if(arrayLists.size()>0){
+                        mensajelogrado.make(v,"se logro",BaseTransientBottomBar.LENGTH_SHORT);
+                    }
+                }
+            });*/
             reporte = archi.sistemadegenerarreportes(opcionseleccionada);
             reporte.observe(getViewLifecycleOwner(),listenerdelreporte);
         }

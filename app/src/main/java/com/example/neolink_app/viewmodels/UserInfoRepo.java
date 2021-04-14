@@ -1520,8 +1520,8 @@ public class UserInfoRepo {
                     if(mesesmesesstateMesesGobjetoconjunto!=null){
                         if(datames.isitready()){
                             data.agregarmesinfomes(datames);
-                            esteano.setValue(data);
                             data.sumardias();
+                            esteano.setValue(data);
                         }
                     }
                 }
