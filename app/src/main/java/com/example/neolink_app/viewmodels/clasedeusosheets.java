@@ -49,6 +49,7 @@ import java.util.concurrent.Executors;
 public class clasedeusosheets {
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
     private final Sheets mSheetsService;
+    private int idchart = 0;
 
     public clasedeusosheets(Sheets servicio){
         mSheetsService = servicio;
@@ -197,7 +198,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(0))))
-                ;
+                .setChartId(id);
     }
     private EmbeddedChart createTemperaturaK(int id,int rowend,int index,int sourceid,int numerodedispositivos){
         return new EmbeddedChart().setSpec(new ChartSpec()
@@ -206,6 +207,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(19))))
+                .setChartId(id)
                 ;
     }
 
@@ -217,6 +219,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(0))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createchartconductividadelectricadelsuelo(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -227,6 +230,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(19))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createchartconductividadelectricadelporo(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -237,6 +241,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(38))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createchartcontenidovolumetricodeagua(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -247,6 +252,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(57))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createcharthumedadrelativa(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -257,6 +263,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(0))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createchartpresionbarometrica(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -267,6 +274,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(20))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createchartbateria(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -277,6 +285,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(40))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createchartvoltajesolar(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -287,6 +296,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(60))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createcharttemperaturadebulboseco(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -297,6 +307,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(80))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createchartvelocidaddelviento(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -307,6 +318,7 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(100))))
+                .setChartId(id)
                 ;
     }
     private EmbeddedChart createcharttemperaturainterna(int id,int rowend,int index,int sourceid,int numerodedispositivos){
@@ -317,15 +329,16 @@ public class clasedeusosheets {
                 .setTitleTextPosition(new TextPosition().setHorizontalAlignment("CENTER"))
                 .setMaximized(false))
                 .setPosition(new EmbeddedObjectPosition().setOverlayPosition(new OverlayPosition().setAnchorCell(new GridCoordinate().setSheetId(index).setColumnIndex(0).setRowIndex(120))))
+                .setChartId(id)
                 ;
     }
     private Sheet createchartsheet(String type,int id,int rowend,String title,int index,int numerodedispositivos){
         List<EmbeddedChart> graf = new ArrayList<>();
-        int idchart = 0;
         if(type.equals("k")){
             graf.add(createPotencialMatricial(idchart,rowend,index,id,numerodedispositivos));
             idchart++;
             graf.add(createTemperaturaK(idchart,rowend,index,id,numerodedispositivos));
+            idchart++;
         } else if(type.equals("g")){
             //graf.add(createcharthumedaddelsuelo(idchart,rowend,index,id,numerodedispositivos));
             //idchart++;
@@ -336,6 +349,7 @@ public class clasedeusosheets {
             graf.add(createchartconductividadelectricadelporo(idchart,rowend,index,id,numerodedispositivos));
             idchart++;
             graf.add(createchartcontenidovolumetricodeagua(idchart,rowend,index,id,numerodedispositivos));
+            idchart++;
         } else {
             graf.add(createcharthumedadrelativa(idchart,rowend,index,id,numerodedispositivos));
             idchart++;
@@ -350,6 +364,7 @@ public class clasedeusosheets {
             graf.add(createchartvelocidaddelviento(idchart,rowend,index,id,numerodedispositivos));
             idchart++;
             graf.add(createcharttemperaturainterna(idchart,rowend,index,id,numerodedispositivos));
+            idchart++;
         }
         return new Sheet().setProperties(new SheetProperties().setTitle(title).setSheetId(index)).setCharts(graf);
     }
