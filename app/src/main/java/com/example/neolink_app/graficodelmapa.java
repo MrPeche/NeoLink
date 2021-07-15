@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -84,6 +85,18 @@ public class graficodelmapa extends Fragment {
     private static float OFFSETGRAFPHLEFT = 10f;
     private static float OFFSETGRAFPHBOTTOM = 15f;
 
+    private ImageView plegarSn;
+    private ImageView plegarAt;
+    private ImageView desplegarSn;
+    private ImageView desplegarAt;
+
+    private boolean kstate;
+    private boolean gstate;
+    private boolean phstate;
+    private boolean nfpstate;
+
+    private String [] lista ={"Ayer - Hoy","Esta semana","Este mes","Este año","Elige una fecha"};
+
     public graficodelmapa() {
         // Required empty public constructor
     }
@@ -141,6 +154,12 @@ public class graficodelmapa extends Fragment {
         cvconductividadelectricadelporo = view.findViewById(R.id.cardMPconductividadelectricadelporo);
         cvcontenidovolumetricodelagua = view.findViewById(R.id.cardMPcontenidovolumetricodelagua);
 
+        plegarSn = view.findViewById(R.id.plegarsensoresMap);
+        desplegarSn = view.findViewById(R.id.desplegarsensoresMap);
+
+        plegarAt = view.findViewById(R.id.plegaratmosMap);
+        desplegarAt = view.findViewById(R.id.desplegaratmosMap);
+
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         propiedadesgrafico3();
@@ -179,6 +198,7 @@ public class graficodelmapa extends Fragment {
                             cvgrf1.setVisibility(View.VISIBLE);
                             cvgrf2.setVisibility(View.VISIBLE);
                             setgraficosK(commdata.sacarkdatapack());
+                            kstate=true;
                         }
                         if(commdata.sacarstatedatapack().sacaraxislabels().size()!=0){
                             cvgrf3.setVisibility(View.VISIBLE);
@@ -196,16 +216,19 @@ public class graficodelmapa extends Fragment {
                             cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
                             cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                             setgraficoG(commdata.sacargdatapack());
+                            gstate=true;
                         }
                         if(commdata.sacarnpkdatapack().sacarlabels().size()!=0){
                             cvnitrato.setVisibility(View.VISIBLE);
                             cvfosfato.setVisibility(View.VISIBLE);
                             cvpotasio.setVisibility(View.VISIBLE);
                             setgraficonpk(commdata.sacarnpkdatapack());
+                            nfpstate=true;
                         }
                         if(commdata.sacarphdatapack().sacarlabels().size()!=0){
                             cvPh.setVisibility(View.VISIBLE);
                             setgraficoph(commdata.sacarphdatapack());
+                            phstate=true;
                         }
                         /*
                         //Kdata
@@ -238,6 +261,101 @@ public class graficodelmapa extends Fragment {
             public void onChanged(statelimitsport statelimitsport) {
                 if(statelimitsport!=null){
                     arrangelimitlines(statelimitsport);
+                }
+            }
+        });
+
+        plegarAt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvgrf3.setVisibility(View.VISIBLE);
+                cvgrHumedadrelativa.setVisibility(View.VISIBLE);
+                cvgrpresionbarometrica.setVisibility(View.VISIBLE);
+                cvgrtemperaturabulboseco.setVisibility(View.VISIBLE);
+                cvrosadevientos.setVisibility(View.VISIBLE);
+                plegarAt.setVisibility(View.GONE);
+                desplegarAt.setVisibility(View.VISIBLE);
+            }
+        });
+        desplegarAt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvgrf3.setVisibility(View.VISIBLE);
+                cvgrHumedadrelativa.setVisibility(View.VISIBLE);
+                cvgrpresionbarometrica.setVisibility(View.VISIBLE);
+                cvgrtemperaturabulboseco.setVisibility(View.VISIBLE);
+                cvrosadevientos.setVisibility(View.GONE);
+                plegarAt.setVisibility(View.VISIBLE);
+                desplegarAt.setVisibility(View.GONE);
+            }
+        });
+        plegarSn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(kstate){
+                    cvgrf1.setVisibility(View.VISIBLE);
+                    cvgrf2.setVisibility(View.VISIBLE);
+                }
+                if(gstate){
+                    cvgrconductividadelectrica.setVisibility(View.VISIBLE);
+                    //cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
+                    cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                    cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
+                    cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
+                }
+                if(nfpstate){
+                    cvnitrato.setVisibility(View.VISIBLE);
+                    cvfosfato.setVisibility(View.VISIBLE);
+                    cvpotasio.setVisibility(View.VISIBLE);
+                }
+                if(phstate){
+                    cvPh.setVisibility(View.VISIBLE);
+                }
+                plegarSn.setVisibility(View.GONE);
+                desplegarSn.setVisibility(View.VISIBLE);
+            }
+        });
+        desplegarSn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvgrf1.setVisibility(View.VISIBLE);
+                cvgrf2.setVisibility(View.VISIBLE);
+                cvgrconductividadelectrica.setVisibility(View.VISIBLE);
+                //cvgrhumedaddelsuelo.setVisibility(View.VISIBLE);
+                cvgrtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                cvconductividadelectricadelporo.setVisibility(View.GONE);
+                cvcontenidovolumetricodelagua.setVisibility(View.GONE);
+                plegarSn.setVisibility(View.VISIBLE);
+                desplegarSn.setVisibility(View.GONE);
+            }
+        });
+        ((actividadbase)getActivity()).fabcalendar();
+        ((actividadbase)getActivity()).fabaparecer();
+        ((actividadbase)getActivity()).fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(graficodelmapaDirections.actionGraficodelmapaToDialogfechagraf());
+            }
+        });
+        archi.retrivedate().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    if(s.equals(lista[0])){
+                        archi.changemode(0);
+
+                    } else if(s.equals(lista[1])){
+                        archi.changemode(1);
+
+                    } else if(s.equals(lista[2])){
+                        archi.changemode(2);
+
+                    } else if(s.equals(lista[3])){
+                        archi.changemode(3);
+
+                    } else {
+                        archi.changemode(4);
+                    }
                 }
             }
         });
@@ -519,6 +637,8 @@ public class graficodelmapa extends Fragment {
         grafico1.clear();
         grafico2.clear();
         grafico3.clear();
+        ((actividadbase)getActivity()).fabdesparecer();
+        ((actividadbase)getActivity()).fabplus();
     }
     private void arrangelimitlines(statelimitsport obj){
         limitesnormales(obj.dameP1().damek().dameV1(),obj.dameP2().damek().dameV1(),obj.dameP3().damek().dameV1(),obj.dameP4().damek().dameV1(),0);
@@ -871,4 +991,5 @@ public class graficodelmapa extends Fragment {
         //graficoMPtemperaturadelsuelo.setVisibleXRangeMaximum(MAX_DATAVISIBLE);
         graficoph.fitScreen();
     }
+
 }

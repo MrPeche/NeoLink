@@ -1,40 +1,22 @@
 package com.example.neolink_app;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleEventObserver;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavBackStackEntry;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.neolink_app.adaptadores.viewpagergrafiquitosAdapter;
-import com.example.neolink_app.clases.Horas;
 import com.example.neolink_app.clases.OLDneolinksboleto;
-import com.example.neolink_app.clases.OWNERitems;
-import com.example.neolink_app.clases.database_state.horasstate;
-import com.example.neolink_app.clases.liveclases.livedaylydatapackage;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointBackward;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 public class panelesgrafiquito extends Fragment {

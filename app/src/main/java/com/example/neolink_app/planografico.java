@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +20,6 @@ import com.example.neolink_app.adaptadores.MarkerLineChartAdapter;
 import com.example.neolink_app.adaptadores.MarkerLineChartDefault;
 import com.example.neolink_app.adaptadores.graficolabelgenerator;
 import com.example.neolink_app.adaptadores.labelpersonalizadoX;
-import com.example.neolink_app.clases.DepthPackage;
 import com.example.neolink_app.clases.clasesdecharts.chartlinealparadapter;
 import com.example.neolink_app.clases.clasesparaformargraficos.InfoParaGraficos;
 import com.example.neolink_app.clases.clasesparaformargraficos.fulldatapack;
@@ -32,18 +31,12 @@ import com.example.neolink_app.clases.clasesparaformargraficos.statedatapack;
 import com.example.neolink_app.clases.configuracion.statelimitsport;
 import com.example.neolink_app.clases.configuracion.statesinglelimitspecialvalues;
 import com.example.neolink_app.clases.configuracion.statesinglelimitvalues;
-import com.example.neolink_app.clases.paquetedatasetPuertos;
 import com.example.neolink_app.viewmodels.MasterDrawerViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.LineData;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
 
 
 public class planografico extends Fragment {
@@ -95,6 +88,16 @@ public class planografico extends Fragment {
 
     private AlertDialog.Builder builder;
     private AppCompatEditText input;
+
+    private ImageView plegarSn;
+    private ImageView plegarAt;
+    private ImageView desplegarSn;
+    private ImageView desplegarAt;
+
+    private boolean kstate;
+    private boolean gstate;
+    private boolean phstate;
+    private boolean nfpstate;
 
 
     public planografico() {
@@ -169,6 +172,13 @@ public class planografico extends Fragment {
         cvconductividadelectricadelporo = view.findViewById(R.id.cvconductividadelectricadelporo);
         cvcontenidovolumetricodelagua = view.findViewById(R.id.cvcontenidovolumetricodelagua);
         cvrosadevientos = view.findViewById(R.id.cvrosadevientos);
+
+        plegarSn = view.findViewById(R.id.plegarsensores);
+        desplegarSn = view.findViewById(R.id.desplegarsensores);
+
+        plegarAt = view.findViewById(R.id.plegaratmos);
+        desplegarAt = view.findViewById(R.id.desplegaratmos);
+
         propiedadesgraficoPM();
         propiedadesgraficoTem();
         propiedadesgrafico3();
@@ -202,12 +212,14 @@ public class planografico extends Fragment {
                 if(infoParaGraficos!=null){
                     if(infoParaGraficos.validarlosdias()){
                         fulldatapack commdata = infoParaGraficos.managedias();
+                        desactivarestados();
                         //Kdata
                         if(commdata.sacarkdatapack().sacarloslabels().size()!=0){
                             cleanthisshit();
                             cvpotencialMatricial.setVisibility(View.VISIBLE);
                             cvtemperatura.setVisibility(View.VISIBLE);
                             setgraficosK(commdata.sacarkdatapack());
+                            kstate=true;
                         }
                         if(commdata.sacarstatedatapack().sacaraxislabels().size()!=0){
                             cvEnergia.setVisibility(View.VISIBLE);
@@ -225,16 +237,19 @@ public class planografico extends Fragment {
                             cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
                             cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
                             setgraficoG(commdata.sacargdatapack());
+                            gstate=true;
                         }
                         if(commdata.sacarnpkdatapack().sacarlabels().size()!=0){
                             cvnitrato.setVisibility(View.VISIBLE);
                             cvfosfato.setVisibility(View.VISIBLE);
                             cvpotasio.setVisibility(View.VISIBLE);
                             setgraficonpk(commdata.sacarnpkdatapack());
+                            nfpstate=true;
                         }
                         if(commdata.sacarphdatapack().sacarlabels().size()!=0){
                             cvPh.setVisibility(View.VISIBLE);
                             setgraficoph(commdata.sacarphdatapack());
+                            phstate=true;
                         }
                         /*
                         cleanthisshit();
@@ -262,7 +277,76 @@ public class planografico extends Fragment {
                 }
             }
         });
-
+        plegarAt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvEnergia.setVisibility(View.VISIBLE);
+                cvHumedadrelativa.setVisibility(View.VISIBLE);
+                cvpresionbarometrica.setVisibility(View.VISIBLE);
+                cvtemperaturabulboseco.setVisibility(View.VISIBLE);
+                cvrosadevientos.setVisibility(View.VISIBLE);
+                plegarAt.setVisibility(View.GONE);
+                desplegarAt.setVisibility(View.VISIBLE);
+            }
+        });
+        desplegarAt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvEnergia.setVisibility(View.GONE);
+                cvHumedadrelativa.setVisibility(View.GONE);
+                cvpresionbarometrica.setVisibility(View.GONE);
+                cvtemperaturabulboseco.setVisibility(View.GONE);
+                cvrosadevientos.setVisibility(View.GONE);
+                plegarAt.setVisibility(View.VISIBLE);
+                desplegarAt.setVisibility(View.GONE);
+            }
+        });
+        plegarSn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(kstate){
+                    cvpotencialMatricial.setVisibility(View.VISIBLE);
+                    cvtemperatura.setVisibility(View.VISIBLE);
+                }
+                if(gstate){
+                    cvconductividadelectrica.setVisibility(View.VISIBLE);
+                    //cvhumedaddelsuelo.setVisibility(View.VISIBLE);
+                    cvtemperaturadelsuelo.setVisibility(View.VISIBLE);
+                    cvconductividadelectricadelporo.setVisibility(View.VISIBLE);
+                    cvcontenidovolumetricodelagua.setVisibility(View.VISIBLE);
+                }
+                if(nfpstate){
+                    cvnitrato.setVisibility(View.VISIBLE);
+                    cvfosfato.setVisibility(View.VISIBLE);
+                    cvpotasio.setVisibility(View.VISIBLE);
+                }
+                if(phstate){
+                    cvPh.setVisibility(View.VISIBLE);
+                }
+                plegarSn.setVisibility(View.GONE);
+                desplegarSn.setVisibility(View.VISIBLE);
+            }
+        });
+        desplegarSn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvpotencialMatricial.setVisibility(View.GONE);
+                cvtemperatura.setVisibility(View.GONE);
+                cvconductividadelectrica.setVisibility(View.GONE);
+                //cvhumedaddelsuelo.setVisibility(View.VISIBLE);
+                cvtemperaturadelsuelo.setVisibility(View.GONE);
+                cvconductividadelectricadelporo.setVisibility(View.GONE);
+                cvcontenidovolumetricodelagua.setVisibility(View.GONE);
+                plegarSn.setVisibility(View.VISIBLE);
+                desplegarSn.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void desactivarestados(){
+        kstate=false;
+        gstate=false;
+        phstate=false;
+        nfpstate=false;
     }
     private void cleanthisshit(){
         grafico1.clear();

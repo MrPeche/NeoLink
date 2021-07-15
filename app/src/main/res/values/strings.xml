@@ -66,6 +66,7 @@
     <string name="neolinktit">NeoLink +</string>
     <string name="salida">Salir</string>
     <string name="comentarios">Comentarios</string>
+    <string name="plagas">Servicio de plagas</string>
 
     //datos generales
     <string name="primernombre">Humedad del suelo</string>
@@ -114,6 +115,10 @@
     <string name="Contenidovolumetricodelagua">Contenido Volumétrico de agua (m3/m3)</string>
     <string name="Conductividaddelsuelo">Conductividad Eléctrica del Suelo (uS/cm)</string>
     <string name="Rosadevientos">Velocidad del Viento (m/s)</string>
+    <string name="atmos">Atmos</string>
+    <string name="sensoresgraphs">Sensores</string>
+    <string name="desplegarcontentdes">Icono de despliegue</string>
+    <string name="plegarcontentdes">Icono de pliegue</string>
 
     //Menu de configuraciones
     <string name="minutos">min</string>
@@ -188,7 +193,8 @@
     //adaptadoresdelimites
     <string name="iconoplegableplegado">Icono plegable plegado</string>
     <string name="iconoplegabledesplegado">Icono plegable plegado</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

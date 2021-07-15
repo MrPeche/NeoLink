@@ -101,6 +101,9 @@
         <action
             android:id="@+id/action_graficodelmapa_to_dialogodeagregarcomentarios"
             app:destination="@id/dialogodeagregarcomentarios" />
+        <action
+            android:id="@+id/action_graficodelmapa_to_dialogfechagraf"
+            app:destination="@id/dialogfechagraf" />
     </fragment>
     <dialog
         android:id="@+id/dialogfechagraf"
@@ -169,5 +172,10 @@
         android:name="com.example.neolink_app.dialogneonodo"
         android:label="fragment_dialogneonodo"
         tools:layout="@layout/fragment_dialogneonodo" />
+    <fragment
+        android:id="@+id/serviciodeplagas"
+        android:name="com.example.neolink_app.serviciodeplagas"
+        android:label="fragment_serviciodeplagas"
+        tools:layout="@layout/fragment_serviciodeplagas" />
 
 </navigation>

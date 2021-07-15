@@ -22,6 +22,47 @@
                 android:fontFamily="@font/lato_bold"
                 android:textSize="@dimen/Tamañotitulo" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margencard"
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="@dimen/Tamañotitulo"
+                    android:text="@string/sensoresgraphs"
+                    android:layout_marginStart="@dimen/margencard" />
+
+                <ImageView
+                    android:id="@+id/desplegarsensores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/desplegar_icon"
+                    android:layout_gravity="bottom"
+                    app:tint="@color/colorTextoNegro"
+                    android:clickable="true"
+                    android:contentDescription="@string/plegarcontentdes"
+                    android:focusable="true" />
+
+                <ImageView
+                    android:id="@+id/plegarsensores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:clickable="true"
+                    android:src="@drawable/plegar_icon"
+                    android:layout_gravity="bottom"
+                    app:tint="@color/colorTextoNegro"
+                    android:contentDescription="@string/desplegarcontentdes"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvpotencialMatricial"
                 android:layout_width="match_parent"
@@ -324,6 +365,46 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margencard"
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="@dimen/Tamañotitulo"
+                    android:text="@string/atmos"
+                    android:layout_marginStart="@dimen/margencard" />
+
+                <ImageView
+                    android:id="@+id/desplegaratmos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/desplegar_icon"
+                    android:layout_gravity="bottom"
+                    app:tint="@color/colorTextoNegro"
+                    android:clickable="true"
+                    android:contentDescription="@string/desplegarcontentdes"
+                    android:focusable="true" />
+
+                <ImageView
+                    android:id="@+id/plegaratmos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:src="@drawable/plegar_icon"
+                    android:layout_gravity="bottom"
+                    app:tint="@color/colorTextoNegro"
+                    android:clickable="true"
+                    android:contentDescription="@string/desplegarcontentdes"
+                    android:focusable="true" />
+
+            </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvpresionbarometrica"
                 android:layout_width="match_parent"

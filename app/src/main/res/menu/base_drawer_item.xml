@@ -15,6 +15,9 @@
         <item
             android:id="@+id/registrodealertas"
             android:title="@string/comentarios" />
+        <item
+            android:id="@+id/serviciodeplagas"
+            android:title="@string/plagas" />
 
 
     </group>
